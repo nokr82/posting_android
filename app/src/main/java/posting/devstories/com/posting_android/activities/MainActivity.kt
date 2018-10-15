@@ -1,7 +1,8 @@
-package posting.devstories.com.posting_android
+package posting.devstories.com.posting_android.activities
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import posting.devstories.com.posting_android.R
 
 class MainActivity : AppCompatActivity() {
 
