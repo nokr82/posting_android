@@ -1,7 +1,6 @@
 package posting.devstories.com.posting_android.base;
 
 import android.content.Context;
-import kr.co.threemeals.android.R;
 
 import java.text.ParseException;
 import java.text.ParsePosition;
@@ -9,6 +8,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
+
+import posting.devstories.com.posting_android.R;
 
 public class DateUtils {
 	private static SimpleDateFormat oFor = new SimpleDateFormat(
@@ -127,20 +128,20 @@ public class DateUtils {
 		long interval = client - server;
 
 		String result = null;
-		if (interval < minite) {// in spot
-			result = context.getString(R.string.interval_spot);
-		} else if (interval >= minite && interval < hour) {// in minite
-			result = String.format(context.getString(R.string.interval_minite), (int) (interval / minite));
-		} else if (interval >= hour && interval < day) {// in hour
-			result = String.format(context.getString(R.string.interval_hour), (int) (interval / hour));
-		} else if (interval >= day && interval < (2 * day)) {// in yesterday
-			result = context.getString(R.string.interval_yesterday);
-		} else if (interval >= (2 * day) && interval < (4 * day)) {// in 3day
-			result = String.format(context.getString(R.string.interval_day), (int) (interval / day));
-		} else {
-			cal.setTimeInMillis(convertUTCtoLocal(date.getTime()));
-			result = webForm.format(cal.getTime());
-		}
+//		if (interval < minite) {// in spot
+//			result = context.getString(R.string.interval_spot);
+//		} else if (interval >= minite && interval < hour) {// in minite
+//			result = String.format(context.getString(R.string.interval_minite), (int) (interval / minite));
+//		} else if (interval >= hour && interval < day) {// in hour
+//			result = String.format(context.getString(R.string.interval_hour), (int) (interval / hour));
+//		} else if (interval >= day && interval < (2 * day)) {// in yesterday
+//			result = context.getString(R.string.interval_yesterday);
+//		} else if (interval >= (2 * day) && interval < (4 * day)) {// in 3day
+//			result = String.format(context.getString(R.string.interval_day), (int) (interval / day));
+//		} else {
+//			cal.setTimeInMillis(convertUTCtoLocal(date.getTime()));
+//			result = webForm.format(cal.getTime());
+//		}
 		return result;
 	}
 

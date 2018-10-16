@@ -4,76 +4,23 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal">
-    <Button
-        android:layout_width="15.35dp"
-        android:layout_height="15.35dp"
-        android:background="@mipmap/x"/>
-
-    <Button
-        android:layout_width="25.5dp"
-        android:layout_height="17dp"
-        android:background="@mipmap/next"
-        android:layout_marginLeft="289.90dp"/>
     
-    
-</LinearLayout>
-    
-
     <ImageView
-        android:layout_marginTop="58.53dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@mipmap/join2"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        android:src="@mipmap/campus"
+        android:layout_marginTop="252.99dp"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@mipmap/start"
+        android:layout_gravity="center"
+        android:layout_marginTop="22.48dp"
+        />
+
+
     
-    <TextView
-        android:layout_marginLeft="80dp"
-        android:layout_marginTop="40.47dp"
-        android:layout_width="50dp"
-        android:layout_height="17dp"
-        android:textSize="12.75dp"
-        android:text="학교입력"/>
-
-
-    <LinearLayout
-        android:layout_marginTop="24.88dp"
-        android:layout_width="234.83dp"
-        android:layout_height="11.51dp"
-        android:layout_gravity="center">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/glass"
-            android:layout_gravity="center"/>
-
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:hint=""
-            android:background="@null"
-            />
-
-    </LinearLayout>
     
-    <TextView
-        android:layout_marginLeft="80dp"
-        android:layout_marginTop="40.47dp"
-        android:layout_width="50dp"
-        android:layout_height="17dp"
-        android:textSize="12.75dp"
-        android:text="학교선택"/>
     
-    <ListView
-        android:layout_width="234.83dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"></ListView>
-
-
-
 </LinearLayout>

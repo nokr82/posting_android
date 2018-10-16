@@ -1,7 +1,5 @@
 package posting.devstories.com.posting_android.base;
 
-import android.accounts.Account;
-import android.accounts.AccountManager;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentResolver;
@@ -19,7 +17,6 @@ import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore.Images;
-import android.telephony.TelephonyManager;
 import android.text.*;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
@@ -27,11 +24,10 @@ import android.util.DisplayMetrics;
 import android.view.*;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-import kr.co.threemeals.android.R;
-import kr.co.threemeals.android.activities.MainActivity;
+import posting.devstories.com.posting_android.activities.LoginActivity;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -792,40 +788,40 @@ public class Utils {
             return false;
     }
 
-    public static String getDeviceToken(Context context){
-        if (!isStrEmpty(getDeviceSerial())) {
-            return getDeviceSerial();
-        }
-
-        if (!isStrEmpty(getDeviceIMEI(context))) {
-            return getDeviceIMEI(context);
-        }
-
-        if (!isStrEmpty(getDeviceGoogleAccount(context))) {
-            return getDeviceGoogleAccount(context);
-        }
-
-        return null;
-    }
+//    public static String getDeviceToken(Context context){
+//        if (!isStrEmpty(getDeviceSerial())) {
+//            return getDeviceSerial();
+//        }
+//
+//        if (!isStrEmpty(getDeviceIMEI(context))) {
+//            return getDeviceIMEI(context);
+//        }
+//
+//        if (!isStrEmpty(getDeviceGoogleAccount(context))) {
+//            return getDeviceGoogleAccount(context);
+//        }
+//
+//        return null;
+//    }
 
     private static String getDeviceSerial(){
         return Build.SERIAL;
     }
 
-    private static String getDeviceIMEI(Context context){
-        TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-        return tm.getDeviceId();
-    }
+//    private static String getDeviceIMEI(Context context){
+//        TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+//        return tm.getDeviceId();
+//    }
 
-    private static String getDeviceGoogleAccount(Context context){
-        AccountManager ac = (AccountManager) context.getSystemService(Context.ACCOUNT_SERVICE);
-        for (Account account : ac.getAccounts()) {
-            if (account.type.equals("com.google"))
-                return account.name;
-
-        }
-        return ac.getAccounts()[0].name;
-    }
+//    private static String getDeviceGoogleAccount(Context context){
+//        AccountManager ac = (AccountManager) context.getSystemService(Context.ACCOUNT_SERVICE);
+//        for (Account account : ac.getAccounts()) {
+//            if (account.type.equals("com.google"))
+//                return account.name;
+//
+//        }
+//        return ac.getAccounts()[0].name;
+//    }
 
     /**
      * Enables/Disables all child views in a view group.
@@ -871,16 +867,16 @@ public class Utils {
 
     public static DisplayImageOptions UILoptionsProfile = new DisplayImageOptions.Builder()
         // .displayer(new RoundedBitmapDisplayer(2))
-         .showImageOnLoading(R.mipmap.food_img01)
-         .showImageForEmptyUri(R.mipmap.food_img01)
-        .showImageOnFail(R.mipmap.food_img01).delayBeforeLoading(100)
+//         .showImageOnLoading(R.mipmap.food_img01)
+//         .showImageForEmptyUri(R.mipmap.food_img01)
+//        .showImageOnFail(R.mipmap.food_img01).delayBeforeLoading(100)
         .cacheInMemory(true).cacheOnDisk(true).considerExifParams(true).imageScaleType(ImageScaleType.EXACTLY).bitmapConfig(Bitmap.Config.RGB_565).build();
 
     public static DisplayImageOptions UILoptionsUserProfile = new DisplayImageOptions.Builder()
         // .displayer(new RoundedBitmapDisplayer(2))
-         .showImageOnLoading(R.mipmap.game_profile)
-         .showImageForEmptyUri(R.mipmap.game_profile)
-        .showImageOnFail(R.mipmap.game_profile).delayBeforeLoading(100)
+//         .showImageOnLoading(R.mipmap.game_profile)
+//         .showImageForEmptyUri(R.mipmap.game_profile)
+//        .showImageOnFail(R.mipmap.game_profile).delayBeforeLoading(100)
         .cacheInMemory(true).cacheOnDisk(true).considerExifParams(true).imageScaleType(ImageScaleType.EXACTLY).bitmapConfig(Bitmap.Config.RGB_565).build();
 
     public static String fullDateTime(String created) {
@@ -1047,7 +1043,7 @@ public class Utils {
                         }
 
                         //Intent intent = new Intent(context, TimelineActivity.class);
-                        Intent intent = new Intent(context, MainActivity.class);
+                        Intent intent = new Intent(context, LoginActivity.class);
                         intent.putExtra("nickname", tag);
                         context.startActivity(intent);
                     }
@@ -1248,11 +1244,11 @@ public class Utils {
         listView.requestLayout();
     }
 
-    public static void setPullToRefreshListViewLabel(PullToRefreshListView listView) {
-        listView.getLoadingLayoutProxy().setPullLabel("당겨서 새로고침...");
-        listView.getLoadingLayoutProxy().setReleaseLabel("놓아서 새로고침...");
-        listView.getLoadingLayoutProxy().setRefreshingLabel("처리 중...");
-    }
+//    public static void setPullToRefreshListViewLabel(PullToRefreshListView listView) {
+//        listView.getLoadingLayoutProxy().setPullLabel("당겨서 새로고침...");
+//        listView.getLoadingLayoutProxy().setReleaseLabel("놓아서 새로고침...");
+//        listView.getLoadingLayoutProxy().setRefreshingLabel("처리 중...");
+//    }
 
     public static void setupUI(View view, final Context context) {
         // Set up touch listener for non-text box views to hide keyboard.

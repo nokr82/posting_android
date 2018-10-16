@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/x"/>
+
+
+            </LinearLayout>
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@mipmap/join2" />
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="82.2dp"
+                android:layout_marginTop="41.87dp"
+                android:src="@mipmap/info" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="82.2dp"
+                android:layout_marginRight="62dp"
+                android:layout_marginTop="34.71dp"
+                android:orientation="vertical">
+
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:hint="이메일"
+                    android:textSize="11.33sp"
+                    android:background="@null"
+                    android:paddingLeft="7dp"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="#888888"
+                    />
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:hint="비밀번호"
+                    android:textSize="11.33sp"
+                    android:background="@null"
+                    android:paddingLeft="7dp"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="#888888"
+                    />
+                <EditText
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:hint="비밀번호 확인"
+                android:textSize="11.33sp"
+                android:background="@null"
+                android:paddingLeft="7dp"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="#888888"
+                    />
+                <EditText
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:hint="닉네임을 입력해주세요(6자이하)"
+                android:textSize="11.33sp"
+                android:background="@null"
+                android:paddingLeft="7dp"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="#888888"
+                    />
+
+            </LinearLayout>
+
+
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="82.2dp"
+                android:layout_marginTop="41.87dp"
+                android:src="@mipmap/info2" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="82.2dp"
+            android:layout_marginRight="62dp"
+            android:layout_marginTop="34.71dp"
+            android:orientation="vertical">
+
+            <EditText
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:hint="이름"
+                android:textSize="11.33sp"
+                android:background="@null"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="#888888"
+                />
+
+            <Spinner
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:hint="태어난 연도"
+                android:textSize="11.33sp" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="#888888"
+                />
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:hint="성별"
+                android:textSize="11.33sp" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="#888888"/>
+
+
+        </LinearLayout>
+
+
+
+            <LinearLayout
+                android:layout_marginTop="85.73dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="24.5dp"
+                    android:layout_height="16.25dp"
+                    android:layout_marginLeft="82.2dp"
+                    android:text="약관"
+                    android:textSize="12.25dp" />
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="119.11dp"
+                    android:textColor="#20408C"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="9.33dp"
+                    android:textColor="#20408C"
+                    android:text="전체 약관에 동의합니다" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="82.2dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="10.07dp"
+                    android:text="서비스 이용 약관 동의"
+                    android:textSize="9.5dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_marginLeft="82.2dp"
+                android:layout_marginRight="62dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="69dp"
+                    android:layout_height="12.75dp"
+                    android:text="포스팅 이용약관"
+                    android:textSize="11.67dp" />
+
+
+                <WebView
+                    android:layout_width="265.75dp"
+                    android:layout_height="366.25dp"
+                    android:layout_gravity="center">
+
+
+                </WebView>
+
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="31.66dp">
+
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        />
+
+                    <TextView
+                        android:layout_width="115.25dp"
+                        android:layout_height="13.00dp"
+                        android:text="개인정보 수집 및 이용동의"
+                        android:textSize="9.75dp" />
+
+                </LinearLayout>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="개인정보취급방침"
+                    android:textSize="13dp" />
+
+                <WebView
+                    android:layout_width="331.67dp"
+                    android:layout_height="46.63dp"
+                    android:layout_gravity="center">
+
+                </WebView>
+
+                <ImageView
+                    android:layout_marginTop="52.93dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/start"
+                    />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</LinearLayout>
