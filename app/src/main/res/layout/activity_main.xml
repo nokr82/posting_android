@@ -292,15 +292,22 @@
                             android:layout_height="7.35dp"
                             android:layout_alignParentBottom="true"
                             android:gravity="center"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:layout_marginBottom="7dp">
 
                         </LinearLayout>
 
                     </posting.devstories.com.posting_android.base.RationalRelativeLayout>
 
                     <com.github.paolorotolo.expandableheightlistview.ExpandableHeightListView
+                        android:id="@+id/mainLV"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:divider="@null"
+                        android:dividerHeight="5dp"
+                        android:listSelector="@null"
+                        android:layout_marginTop="5dp">
 
                     </com.github.paolorotolo.expandableheightlistview.ExpandableHeightListView>
 
