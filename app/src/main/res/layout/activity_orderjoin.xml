@@ -225,6 +225,7 @@
                     android:textSize="12.25dp" />
 
                 <CheckBox
+                    android:id="@+id/allCK"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="119.11dp"
@@ -244,6 +245,7 @@
                 android:layout_height="wrap_content">
 
                 <CheckBox
+                    android:id="@+id/serviceCK"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="82.2dp" />
@@ -285,6 +287,7 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/soloCK"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
 

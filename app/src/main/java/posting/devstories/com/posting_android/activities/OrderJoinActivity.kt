@@ -19,6 +19,10 @@ class OrderJoinActivity : RootActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_orderjoin)
 
+
+
+
+
         PostingStartIV.setOnClickListener {
             val intent = Intent(this,MainActivity::class.java)
             startActivity(intent)
