@@ -4,6 +4,17 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+
+
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -37,15 +48,15 @@
     
 
     <ImageView
-        android:layout_marginTop="58.53dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@mipmap/join2"
         android:layout_gravity="center"/>
     
     <TextView
-        android:layout_marginLeft="80dp"
-        android:layout_marginTop="40.47dp"
+        android:layout_marginTop="41.20dp"
+        android:layout_marginLeft="62.83dp"
+        android:layout_marginRight="62.35dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="12.75dp"
@@ -54,7 +65,9 @@
 
     <LinearLayout
         android:layout_marginTop="24.88dp"
-        android:layout_width="234.83dp"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="62.83dp"
+        android:layout_marginRight="62.35dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center">
 
@@ -75,8 +88,10 @@
 
     </LinearLayout>
     <LinearLayout
-        android:layout_width="234.83dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="62.83dp"
+        android:layout_marginRight="62.35dp"
         android:layout_gravity="center"
         android:orientation="vertical">
         <View
@@ -86,8 +101,8 @@
             />
     </LinearLayout>
     <LinearLayout
-        android:layout_marginLeft="80dp"
-        android:layout_marginRight="80dp"
+        android:layout_marginLeft="62.83dp"
+        android:layout_marginRight="62.35dp"
         android:layout_marginTop="40.47dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -101,11 +116,15 @@
 
     
     <ListView
-        android:id="@+id/SchoolLT"
+        android:id="@+id/SchoolLV"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center"></ListView>
+        android:layout_gravity="center">
+
+    </ListView>
 
 
     </LinearLayout>
+    </LinearLayout>
+    </ScrollView>
 </LinearLayout>

@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
     <RelativeLayout
         android:layout_marginTop="13.03dp"
         android:layout_marginLeft="10dp"
@@ -11,23 +12,63 @@
         android:background="@mipmap/bg">
 
 
-
-        <ImageView
-
+        <RelativeLayout
             android:layout_width="123.73dp"
             android:layout_height="123.73dp"
-            android:layout_centerInParent="true"
-            android:background="@mipmap/img"
-            android:gravity="center">
+            android:layout_centerInParent="true">
 
-        </ImageView>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@mipmap/img"
+                android:gravity="center">
+
+            </ImageView>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="3.25dp"
+                android:layout_marginLeft="4.25dp"
+                android:gravity="center_vertical">
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/bg_logo"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="9"
+                    android:textStyle="bold"
+                    android:textSize="12sp"
+                    android:textColor="#FFFFFF"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1시간"
+                    android:layout_marginLeft="10.88dp"
+                    android:textStyle="bold"
+                    android:textSize="12sp"
+                    android:textColor="#FFFFFF"/>
+
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:src="@mipmap/apjung"/>
-
     </RelativeLayout>
 
 </LinearLayout>

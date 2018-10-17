@@ -49,8 +49,10 @@
                     android:layout_marginTop="78dp"
                     android:background="@null"
                     android:hint="E-mail"
+                    android:id="@+id/IDET"
                     android:paddingBottom="11dp"
                     android:paddingLeft="5dp"
+
                     android:textSize="17sp" />
 
                 <View
@@ -64,6 +66,8 @@
                     android:layout_marginTop="20dp"
                     android:background="@null"
                     android:hint="P/W"
+                    android:inputType="textPassword"
+                    android:id="@+id/PWET"
                     android:paddingBottom="11dp"
                     android:paddingLeft="5dp"
                     android:textSize="17sp" />
@@ -76,32 +80,32 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="150dp"
                     android:orientation="horizontal">
 
                     <CheckBox
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="150dp"
+                       android:layout_gravity="center"
                         />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="자동로그인"
+                        android:layout_gravity="center_vertical"
                         android:textSize="9.5sp" />
 
                 </LinearLayout>
 
 
-                <Button
-                    android:layout_width="match_parent"
+                <ImageView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
                     android:layout_marginTop="11.67dp"
-                    android:background="@mipmap/btn"
-                    android:text="로그인"
-                    android:id="@+id/StartBT"
-                    android:textSize="11.39dp" />
+                    android:src="@mipmap/login"
+                    android:id="@+id/StartIV"
+                    />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -125,6 +129,7 @@
                     android:id="@+id/OrderjoinIV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
                     android:layout_marginTop="13.11dp"
                     android:src="@mipmap/order"
                     />

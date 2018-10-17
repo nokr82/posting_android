@@ -9,15 +9,17 @@ import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_schooljoin.*
 import kotlinx.android.synthetic.main.activity_schooljoin.view.*
 import kotlinx.android.synthetic.main.activity_studentjoin.*
+import org.json.JSONObject
 import posting.devstories.com.posting_android.R
+import posting.devstories.com.posting_android.adapter.SchoolAdapter
 import posting.devstories.com.posting_android.base.RootActivity
 
 class SchoolActivity : RootActivity() {
 
 
 
-
-
+    private var adapterData :ArrayList<JSONObject> = ArrayList<JSONObject>()
+    private lateinit var adapter: SchoolAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,8 +34,18 @@ class SchoolActivity : RootActivity() {
         }
 
 
+        var data = JSONObject()
+        data.put("school_name", "경기대학교")
 
+        adapterData.add(data)
+        adapterData.add(data)
+        adapterData.add(data)
+        adapterData.add(data)
+        adapterData.add(data)
 
+        adapter = SchoolAdapter(this, R.layout.school_item, adapterData)
+        SchoolLV.adapter = adapter
+        adapter.notifyDataSetChanged()
 
 
 

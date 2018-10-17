@@ -34,11 +34,12 @@
                 android:layout_height="20dp"
                 android:src="@mipmap/glass" />
 
-            <TextView
+            <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="검색"
+                android:hint="검색"
+                android:id="@+id/SearchET"
                 android:textColor="#A19F9B"
                 android:textSize="14sp" />
 
@@ -78,6 +79,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:text="자유"
+                android:id="@+id/freeTX"
                 android:textColor="#99a0a0"
                 android:textSize="12.95dp" />
 
@@ -88,6 +90,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:background="#01b4ec"
+                android:id="@+id/freeV"
                 android:visibility="invisible"/>
 
         </RelativeLayout>
@@ -103,6 +106,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:text="정보"
+                android:id="@+id/infoTX"
                 android:textColor="#99a0a0"
                 android:textSize="12.95dp" />
 
@@ -112,6 +116,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
+                android:id="@+id/infoV"
                 android:background="#01b4ec"
                 android:visibility="invisible" />
 
@@ -128,6 +133,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:text="스터디"
+                android:id="@+id/StudyTX"
                 android:textColor="#99a0a0"
                 android:textSize="12.95dp" />
 
@@ -137,6 +143,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
+                android:id="@+id/StudyV"
                 android:background="#01b4ec"
                 android:visibility="invisible" />
 
@@ -153,6 +160,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:text="동아리"
+                android:id="@+id/classTX"
                 android:textColor="#99a0a0"
                 android:textSize="12.95dp" />
 
@@ -162,6 +170,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
+                android:id="@+id/classV"
                 android:background="#01b4ec"
                 android:visibility="invisible" />
 
@@ -177,6 +186,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:text="미팅"
+                android:id="@+id/MitingTX"
                 android:textColor="#99a0a0"
                 android:textSize="12.95dp" />
 
@@ -186,6 +196,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
+                android:id="@+id/mitingV"
                 android:background="#01b4ec"
                 android:visibility="invisible" />
 
@@ -201,6 +212,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:text="쿠폰"
+                android:id="@+id/CouponTX"
                 android:textColor="#99a0a0"
                 android:textSize="12.95dp" />
 
@@ -210,6 +222,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
+                android:id="@+id/couponV"
                 android:background="#01b4ec"
                 android:visibility="invisible" />
 
