@@ -7,7 +7,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="10dp"
         android:text="자유 New"
         android:textColor="#1D9AD7"
         android:textSize="13dp" />
@@ -18,24 +18,21 @@
         android:layout_marginTop="3.55dp">
 
         <RelativeLayout
+            android:layout_marginLeft="10dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@mipmap/bg">
+
+
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:src="@mipmap/posting_bg" />
-
-            <LinearLayout
                 android:layout_width="123.73dp"
                 android:layout_height="123.73dp"
                 android:layout_centerInParent="true"
                 android:background="@mipmap/img"
                 android:gravity="center">
 
-            </LinearLayout>
+            </ImageView>
 
             <ImageView
                 android:layout_width="wrap_content"

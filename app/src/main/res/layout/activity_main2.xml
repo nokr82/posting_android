@@ -8,18 +8,18 @@
     android:focusableInTouchMode="true"
     android:orientation="vertical">
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <ImageView
+            android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@mipmap/school"
             android:layout_marginLeft="13.11dp"/>
         <LinearLayout
-            android:layout_width="202.77dp"
-            android:layout_height="34.73dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_weight="1"
             android:background="@mipmap/whitebar"
@@ -43,14 +43,15 @@
 
         </LinearLayout>
         <LinearLayout
-            android:layout_width="30dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:gravity="center">
 
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="29dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:src="@mipmap/menu" />
 
         </LinearLayout>
@@ -58,6 +59,7 @@
 
 
     </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"

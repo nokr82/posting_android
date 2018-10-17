@@ -209,8 +209,9 @@
                 <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="119.11dp" />
-
+                    android:layout_marginLeft="119.11dp"
+                    android:buttonTint="#20408C"
+                    />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -231,7 +232,7 @@
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="10.07dp"
+                    android:layout_height="wrap_content"
                     android:text="서비스 이용 약관 동의"
                     android:textSize="9.5dp" />
 
@@ -245,16 +246,16 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:layout_width="69dp"
-                    android:layout_height="12.75dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text="포스팅 이용약관"
                     android:textSize="11.67dp" />
 
 
                 <WebView
-                    android:layout_width="265.75dp"
-                    android:layout_height="366.25dp"
-                    android:layout_gravity="center">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    >
 
 
                 </WebView>
@@ -273,8 +274,8 @@
                        />
 
                     <TextView
-                        android:layout_width="115.25dp"
-                        android:layout_height="13.00dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:text="개인정보 수집 및 이용동의"
                         android:textSize="9.75dp" />
 
@@ -287,8 +288,8 @@
                     android:textSize="13dp" />
 
                 <WebView
-                    android:layout_width="331.67dp"
-                    android:layout_height="46.63dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center">
 
                 </WebView>

@@ -77,28 +77,40 @@
     </LinearLayout>
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="234.83dp"
+        android:layout_gravity="center"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
     <EditText
         android:layout_marginTop="58.48dp"
-        android:layout_width="234.83dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="이름"
         android:textSize="8.5dp"
         android:layout_gravity="center"/>
 
     <EditText
-        android:layout_width="234.83dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="이메일"
         android:textSize="8.5dp"
         android:layout_gravity="center"/>
-    <Button
-        android:layout_marginTop="42.37dp"
-        android:layout_width="237.5dp"
-        android:layout_height="28.14dp"
-        android:background="@mipmap/idfind"
-        android:layout_gravity="center"/>
+        <Button
+            android:layout_marginTop="42.37dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="아이디 찾기"
+            android:textSize="15.33dp"
+            android:textColor="#20408C"
+            android:background="#FEDA44"
+            android:layout_gravity="center"/>
 
 
 
+
+    </LinearLayout>
 
 </LinearLayout>

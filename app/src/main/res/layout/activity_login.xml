@@ -81,7 +81,8 @@
                     <CheckBox
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="200dp" />
+                        android:layout_marginLeft="200dp"
+                        />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -94,7 +95,7 @@
 
                 <Button
                     android:layout_width="match_parent"
-                    android:layout_height="37dp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="11.67dp"
                     android:background="@mipmap/btn"

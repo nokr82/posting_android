@@ -47,6 +47,11 @@
             </intent-filter -->
         </activity>
 
+        <!-- 푸시 -->
+        <activity
+            android:name=".activities.DlgActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/full_screen_dialog1"/>
         <!-- 로그인>
         <activity
             android:name=".activities.LoginActivity"
