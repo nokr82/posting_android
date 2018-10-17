@@ -52,8 +52,8 @@
                     android:id="@+id/IDET"
                     android:paddingBottom="11dp"
                     android:paddingLeft="5dp"
-
-                    android:textSize="17sp" />
+                    android:textSize="17sp"
+                    android:inputType="textEmailAddress"/>
 
                 <View
                     android:layout_width="match_parent"
@@ -80,7 +80,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="150dp"
+                    android:gravity="right"
                     android:orientation="horizontal">
 
                     <CheckBox
@@ -108,12 +108,12 @@
                     />
 
                 <TextView
+                    android:id="@+id/idpwfindTX"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="7.65dp"
                     android:text="아이디/비밀번호 찾기"
-                    android:id="@+id/idpwfindTX"
                     android:textColor="#888888"
                     android:textSize="12.67dp" />
 
@@ -135,7 +135,9 @@
                     />
 
             </LinearLayout>
+
         </LinearLayout>
+
     </ScrollView>
 
 </LinearLayout>
