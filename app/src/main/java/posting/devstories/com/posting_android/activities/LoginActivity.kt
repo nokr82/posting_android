@@ -20,7 +20,7 @@ class LoginActivity : RootActivity() {
         setContentView(R.layout.activity_login)
 
         JoinStudentIV.setOnClickListener {
-            val intent = Intent(this,StudentJoinActivity::class.java)
+            val intent = Intent(this,SchoolActivity::class.java)
             startActivity(intent)
         }
         OrderjoinIV.setOnClickListener {
