@@ -67,4 +67,5 @@ dependencies {
 //    implementation group: project.KAKAO_SDK_GROUP, name: 'usermgmt', version: project.KAKAO_SDK_VERSION
 
 
+    compile 'com.github.paolorotolo:expandableheightlistview:1.0.0'
 }
