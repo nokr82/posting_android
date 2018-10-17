@@ -211,8 +211,6 @@ class MainActivity : FragmentActivity() {
         handler = object : Handler() {
             override fun handleMessage(msg: Message) {
 
-                println("test ==================================== " + adTime)
-
                 adTime++
 
                 val index = adverVP.getCurrentItem()
