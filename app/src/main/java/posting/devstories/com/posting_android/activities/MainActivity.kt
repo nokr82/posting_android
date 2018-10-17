@@ -24,56 +24,42 @@ class MainActivity : RootActivity() {
 
 
         freeTX.setOnClickListener {
+            setView()
+
             freeTX.setTextColor(Color.parseColor("#01b4ec"))
-            infoTX.setTextColor(Color.parseColor("#A19F9B"))
-            StudyTX.setTextColor(Color.parseColor("#A19F9B"))
-            classTX.setTextColor(Color.parseColor("#A19F9B"))
-            MitingTX.setTextColor(Color.parseColor("#A19F9B"))
-            CouponTX.setTextColor(Color.parseColor("#A19F9B"))
+            freeV.visibility = View.VISIBLE
+
 
         }
         infoTX.setOnClickListener {
-            freeTX.setTextColor(Color.parseColor("#A19F9B"))
+            setView()
+            infoV.visibility = View.VISIBLE
             infoTX.setTextColor(Color.parseColor("#01b4ec"))
-            StudyTX.setTextColor(Color.parseColor("#A19F9B"))
-            classTX.setTextColor(Color.parseColor("#A19F9B"))
-            MitingTX.setTextColor(Color.parseColor("#A19F9B"))
-            CouponTX.setTextColor(Color.parseColor("#A19F9B"))
-
         }
         StudyTX.setOnClickListener {
-            freeTX.setTextColor(Color.parseColor("#A19F9B"))
-            infoTX.setTextColor(Color.parseColor("#A19F9B"))
+            setView()
+            StudyV.visibility = View.VISIBLE
             StudyTX.setTextColor(Color.parseColor("#01b4ec"))
-            classTX.setTextColor(Color.parseColor("#A19F9B"))
-            MitingTX.setTextColor(Color.parseColor("#A19F9B"))
-            CouponTX.setTextColor(Color.parseColor("#A19F9B"))
 
         }
         classTX.setOnClickListener {
-            freeTX.setTextColor(Color.parseColor("#A19F9B"))
-            infoTX.setTextColor(Color.parseColor("#A19F9B"))
-            StudyTX.setTextColor(Color.parseColor("#A19F9B"))
+
+            setView()
+            classV.visibility = View.VISIBLE
             classTX.setTextColor(Color.parseColor("#01b4ec"))
-            MitingTX.setTextColor(Color.parseColor("#A19F9B"))
-            CouponTX.setTextColor(Color.parseColor("#A19F9B"))
 
         }
         MitingTX.setOnClickListener {
-            freeTX.setTextColor(Color.parseColor("#A19F9B"))
-            infoTX.setTextColor(Color.parseColor("#A19F9B"))
-            StudyTX.setTextColor(Color.parseColor("#A19F9B"))
-            classTX.setTextColor(Color.parseColor("#A19F9B"))
+
+            setView()
+            mitingV.visibility = View.VISIBLE
             MitingTX.setTextColor(Color.parseColor("#01b4ec"))
-            CouponTX.setTextColor(Color.parseColor("#A19F9B"))
 
         }
         CouponTX.setOnClickListener {
-            freeTX.setTextColor(Color.parseColor("#A19F9B"))
-            infoTX.setTextColor(Color.parseColor("#A19F9B"))
-            StudyTX.setTextColor(Color.parseColor("#A19F9B"))
-            classTX.setTextColor(Color.parseColor("#A19F9B"))
-            MitingTX.setTextColor(Color.parseColor("#A19F9B"))
+
+            setView()
+            couponV.visibility = View.VISIBLE
             CouponTX.setTextColor(Color.parseColor("#01b4ec"))
 
         }
@@ -86,6 +72,25 @@ class MainActivity : RootActivity() {
 
 
 
+
+
+
+    }
+
+
+    fun setView(){
+        freeTX.setTextColor(Color.parseColor("#A19F9B"))
+        infoTX.setTextColor(Color.parseColor("#A19F9B"))
+        StudyTX.setTextColor(Color.parseColor("#A19F9B"))
+        classTX.setTextColor(Color.parseColor("#A19F9B"))
+        MitingTX.setTextColor(Color.parseColor("#A19F9B"))
+        CouponTX.setTextColor(Color.parseColor("#A19F9B"))
+        freeV.visibility = View.INVISIBLE
+        infoV.visibility = View.INVISIBLE
+        StudyV.visibility = View.INVISIBLE
+        classV.visibility = View.INVISIBLE
+        mitingV.visibility = View.INVISIBLE
+        couponV.visibility = View.INVISIBLE
 
 
 

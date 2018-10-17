@@ -7,124 +7,127 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
 
-
-
-
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal">
-   <RelativeLayout
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       >
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@mipmap/x"/>
-   </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-    <ImageView
-
-        android:layout_marginLeft="300dp"
-        android:id="@+id/nextTX"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@mipmap/next"
-
-
-        ></ImageView>
-    </RelativeLayout>
-    
-</LinearLayout>
-    
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@mipmap/join2"
-        android:layout_gravity="center"/>
-    
-    <TextView
-        android:layout_marginTop="41.20dp"
-        android:layout_marginLeft="62.83dp"
-        android:layout_marginRight="62.35dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="12.75dp"
-        android:text="학교입력"/>
-
-
-    <LinearLayout
-        android:layout_marginTop="24.88dp"
-        android:layout_width="match_parent"
-        android:layout_marginLeft="62.83dp"
-        android:layout_marginRight="62.35dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/glass"
-            android:layout_gravity="center"/>
-
-
-        <EditText
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint=""
-            android:textSize="12.75dp"
-            android:background="@null"
-            />
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="62.83dp"
-        android:layout_marginRight="62.35dp"
-        android:layout_gravity="center"
-        android:orientation="vertical">
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="#888888"
-            />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_marginLeft="62.83dp"
-        android:layout_marginRight="62.35dp"
-        android:layout_marginTop="40.47dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-    <TextView
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="12.75dp"
-        android:text="학교선택"/>
-
-    
-    <ListView
-        android:id="@+id/SchoolLV"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center">
-
-    </ListView>
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
 
-    </LinearLayout>
-    </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@mipmap/x" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+
+                        android:id="@+id/nextTX"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="300dp"
+                        android:background="@mipmap/next"
+
+
+                        ></ImageView>
+                </RelativeLayout>
+
+            </LinearLayout>
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@mipmap/join2" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="62.83dp"
+                android:layout_marginRight="62.35dp"
+                android:layout_marginTop="41.20dp"
+                android:text="학교입력"
+                android:textSize="12.75dp" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="62.83dp"
+                android:layout_marginRight="62.35dp"
+                android:layout_marginTop="24.88dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@mipmap/glass" />
+
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:hint=""
+                    android:textSize="12.75dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="62.83dp"
+                android:layout_marginRight="62.35dp"
+                android:orientation="vertical">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="#888888" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="62.83dp"
+                android:layout_marginRight="62.35dp"
+                android:layout_marginTop="40.47dp"
+                android:orientation="vertical">
+
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="학교선택"
+                    android:textSize="12.75dp" />
+
+
+                <ListView
+                    android:id="@+id/SchoolLV"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center">
+
+                </ListView>
+
+
+            </LinearLayout>
+        </LinearLayout>
     </ScrollView>
 </LinearLayout>
