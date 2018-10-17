@@ -39,6 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:hint="검색"
+                android:background="@null"
                 android:id="@+id/SearchET"
                 android:textColor="#A19F9B"
                 android:textSize="14sp" />

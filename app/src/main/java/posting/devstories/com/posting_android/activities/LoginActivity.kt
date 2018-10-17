@@ -42,10 +42,10 @@ class LoginActivity : RootActivity() {
             val getName:String = IDET.text.toString()
             val getPW:String = PWET.text.toString()
         if (getName==""||getName==null){
-            Toast.makeText(this,"이메일을 입력해주세요",Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,"이름을 입력해주세요",Toast.LENGTH_SHORT).show()
 
         }else if (getPW==""||getPW == null){
-            Toast.makeText(this,"패스워드를 입력해주세요",Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,"이메일을 입력해주세요",Toast.LENGTH_SHORT).show()
 
         }else{
             val intent = Intent(this,MainActivity::class.java)

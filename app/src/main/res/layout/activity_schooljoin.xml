@@ -19,31 +19,42 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <RelativeLayout
+                <LinearLayout
+                    android:id="@+id/finishLL"
+                    android:padding="16dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
+
                     <ImageView
+                        android:layout_weight="1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@mipmap/x" />
-                </RelativeLayout>
 
-                <RelativeLayout
+                </LinearLayout>
+                <View
+                    android:layout_weight="1"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    />
+                <LinearLayout
+                    android:id="@+id/nextLL"
+                    android:padding="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                  >
 
                     <ImageView
 
-                        android:id="@+id/nextTX"
+
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="300dp"
                         android:background="@mipmap/next"
 
 
                         ></ImageView>
-                </RelativeLayout>
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -76,6 +87,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:paddingRight="10dp"
                     android:src="@mipmap/glass" />
 
 
@@ -84,11 +96,13 @@
                     android:layout_height="wrap_content"
                     android:background="@null"
                     android:hint=""
+
                     android:textSize="12.75dp" />
 
             </LinearLayout>
 
             <LinearLayout
+                android:layout_marginTop="7dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -118,13 +132,13 @@
                     android:textSize="12.75dp" />
 
 
-                <ListView
+                <com.github.paolorotolo.expandableheightlistview.ExpandableHeightListView
                     android:id="@+id/SchoolLV"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center">
 
-                </ListView>
+                </com.github.paolorotolo.expandableheightlistview.ExpandableHeightListView>
 
 
             </LinearLayout>

@@ -65,13 +65,8 @@
 
             android:screenOrientation="portrait"
             android:theme="@style/NoTitleDialog"
-            android:windowSoftInputMode="adjustResize|stateHidden"/>
-        <activity
-            android:name=".activities.SchoolActivity"
-
-            android:screenOrientation="portrait"
-            android:theme="@style/NoTitleDialog"
             android:windowSoftInputMode="adjustResize|stateHidden">
+
 
             <!-- intent-filter>
                 <action android:name="android.intent.action.VIEW" />

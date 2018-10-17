@@ -47,7 +47,8 @@
                     android:layout_alignParentBottom="true"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:background="#20408C" />
+                    android:background="#20408C"
+                    android:id="@+id/idfindV"/>
 
             </RelativeLayout>
 
@@ -73,7 +74,8 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:background="#20408C"
-                    android:visibility="invisible" />
+                    android:visibility="invisible"
+                    android:id="@+id/pwfindV"/>
 
             </RelativeLayout>
     </LinearLayout>
@@ -91,6 +93,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="이름"
+        android:id="@+id/nameET"
         android:textSize="8.5dp"
         android:layout_gravity="center"/>
 
@@ -99,6 +102,7 @@
         android:layout_height="wrap_content"
         android:hint="이메일"
         android:textSize="8.5dp"
+        android:id="@+id/idET"
         android:layout_gravity="center"/>
         <Button
             android:layout_marginTop="42.37dp"
@@ -108,6 +112,7 @@
             android:textSize="15.33dp"
             android:textColor="#20408C"
             android:background="#FEDA44"
+            android:id="@+id/findBT"
             android:layout_gravity="center"/>
 
 

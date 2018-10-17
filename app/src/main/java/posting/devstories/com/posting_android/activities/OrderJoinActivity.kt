@@ -24,6 +24,14 @@ class OrderJoinActivity : RootActivity() {
             startActivity(intent)
         }
 
+        finishLL.setOnClickListener {
+            val intent = Intent(this,LoginActivity::class.java)
+            startActivity(intent)
+        }
+        SchoolLL.setOnClickListener {
+            val intent = Intent(this,SchoolActivity::class.java)
+            startActivity(intent)
+        }
 
 
     }
