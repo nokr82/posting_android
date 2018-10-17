@@ -81,7 +81,7 @@
                     <CheckBox
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="200dp"
+                        android:layout_marginLeft="150dp"
                         />
 
                     <TextView
@@ -100,6 +100,7 @@
                     android:layout_marginTop="11.67dp"
                     android:background="@mipmap/btn"
                     android:text="로그인"
+                    android:id="@+id/StartBT"
                     android:textSize="11.39dp" />
 
                 <TextView
@@ -108,6 +109,7 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="7.65dp"
                     android:text="아이디/비밀번호 찾기"
+                    android:id="@+id/idpwfindTX"
                     android:textColor="#888888"
                     android:textSize="12.67dp" />
 
@@ -116,14 +118,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="58.99dp"
-                    android:src="@mipmap/join" />
+                    android:src="@mipmap/join"
+                    android:id="@+id/JoinStudentIV"/>
 
                 <ImageView
-                    android:id="@+id/orderjoin"
+                    android:id="@+id/OrderjoinIV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="13.11dp"
-                    android:src="@mipmap/order" />
+                    android:src="@mipmap/order"
+                    />
 
             </LinearLayout>
         </LinearLayout>

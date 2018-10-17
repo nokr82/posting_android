@@ -32,6 +32,37 @@
 
         <activity
             android:name=".activities.LoginActivity"
+
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleDialog"
+            android:windowSoftInputMode="adjustResize|stateHidden"/>
+        <activity
+            android:name=".activities.OrderJoinActivity"
+
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleDialog"
+            android:windowSoftInputMode="adjustResize|stateHidden"/>
+        <activity
+            android:name=".activities.MainActivity"
+
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleDialog"
+            android:windowSoftInputMode="adjustResize|stateHidden"/>
+        <activity
+            android:name=".activities.StudentJoinActivity"
+
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleDialog"
+            android:windowSoftInputMode="adjustResize|stateHidden"/>
+        <activity
+            android:name=".activities.IDfindActivity"
+
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleDialog"
+            android:windowSoftInputMode="adjustResize|stateHidden"/>
+        <activity
+            android:name=".activities.SchoolActivity"
+
             android:screenOrientation="portrait"
             android:theme="@style/NoTitleDialog"
             android:windowSoftInputMode="adjustResize|stateHidden">
@@ -47,7 +78,7 @@
             </intent-filter -->
         </activity>
 
-        <!-- 푸시 -->
+    <!-- 푸시 -->
         <activity
             android:name=".activities.DlgActivity"
             android:screenOrientation="portrait"

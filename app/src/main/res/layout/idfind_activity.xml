@@ -38,7 +38,8 @@
                     android:layout_centerVertical="true"
                     android:text="아이디찾기"
                     android:textColor="#888888"
-                    android:textSize="12.95dp" />
+                    android:textSize="12.95dp"
+                    android:id="@+id/idfindTX"/>
 
                 <View
                     android:layout_width="match_parent"
@@ -62,6 +63,7 @@
                     android:layout_centerVertical="true"
                     android:text="비밀번호찾기"
                     android:textColor="#888888"
+                    android:id="@+id/pwfindTX"
                     android:textSize="12.95dp" />
 
                 <View

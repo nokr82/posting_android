@@ -269,10 +269,12 @@
                 </WebView>
 
                 <ImageView
+                    android:id="@+id/joinDoneIV"
                     android:layout_marginTop="52.93dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@mipmap/start"
+
                     />
 
             </LinearLayout>

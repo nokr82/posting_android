@@ -21,48 +21,48 @@ public class RationalRelativeLayout extends RelativeLayout {
     public RationalRelativeLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-//        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.app, 0, 0);
-//        try {
-//            String ratioStr = ta.getString(R.styleable.app_ratio);
-//            if(ratioStr != null && ratioStr.indexOf(":") > 0) {
-//
-//                // 6.5 : 3 = width : height
-//                // height = 3 * width / 6.5
-//                String[] arr = ratioStr.split(":");
-//                if (arr != null && arr.length == 2) {
-//                    this.ratio1 = Float.parseFloat(arr[0]);
-//                    this.ratio2 = Float.parseFloat(arr[1]);
-//                }
-//
-//            }
-//
-//        } finally {
-//            ta.recycle();
-//        }
+        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.app, 0, 0);
+        try {
+            String ratioStr = ta.getString(R.styleable.app_ratio);
+            if(ratioStr != null && ratioStr.indexOf(":") > 0) {
+
+                // 6.5 : 3 = width : height
+                // height = 3 * width / 6.5
+                String[] arr = ratioStr.split(":");
+                if (arr != null && arr.length == 2) {
+                    this.ratio1 = Float.parseFloat(arr[0]);
+                    this.ratio2 = Float.parseFloat(arr[1]);
+                }
+
+            }
+
+        } finally {
+            ta.recycle();
+        }
 
     }
 
     public RationalRelativeLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 //
-//        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.app, 0, 0);
-//        try {
-//            String ratioStr = ta.getString(R.styleable.app_ratio);
-//            if(ratioStr != null && ratioStr.indexOf(":") > 0) {
-//
-//                // 6.5 : 3 = width : height
-//                // height = 3 * width / 6.5
-//                String[] arr = ratioStr.split(":");
-//                if (arr != null && arr.length == 2) {
-//                    this.ratio1 = Float.parseFloat(arr[0]);
-//                    this.ratio2 = Float.parseFloat(arr[1]);
-//                }
-//
-//            }
-//
-//        } finally {
-//            ta.recycle();
-//        }
+        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.app, 0, 0);
+        try {
+            String ratioStr = ta.getString(R.styleable.app_ratio);
+            if(ratioStr != null && ratioStr.indexOf(":") > 0) {
+
+                // 6.5 : 3 = width : height
+                // height = 3 * width / 6.5
+                String[] arr = ratioStr.split(":");
+                if (arr != null && arr.length == 2) {
+                    this.ratio1 = Float.parseFloat(arr[0]);
+                    this.ratio2 = Float.parseFloat(arr[1]);
+                }
+
+            }
+
+        } finally {
+            ta.recycle();
+        }
 
     }
 
