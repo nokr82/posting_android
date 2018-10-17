@@ -101,6 +101,7 @@
                     android:id="@+id/nickET"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
+                    android:maxLength="6"
                 android:hint="닉네임을 입력해주세요(6자이하)"
                 android:textSize="11.33sp"
                 android:background="@null"
@@ -196,6 +197,7 @@
                     android:textSize="12.25dp" />
 
                 <CheckBox
+                    android:id="@+id/allCK"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="119.11dp"
@@ -216,6 +218,7 @@
                 android:layout_height="wrap_content">
 
                 <CheckBox
+                    android:id="@+id/serviceCK"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="82.2dp" />
@@ -258,6 +261,7 @@
                     android:layout_marginTop="31.66dp">
 
                     <CheckBox
+                        android:id="@+id/soloCK"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
 

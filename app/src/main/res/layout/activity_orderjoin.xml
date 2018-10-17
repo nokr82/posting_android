@@ -102,6 +102,7 @@
                     android:layout_height="30dp"
                     android:background="@null"
                     android:hint="상호명(6자이하)"
+                    android:maxLength="6"
                     android:paddingLeft="7dp"
                     android:textSize="11.33sp" />
 
@@ -182,7 +183,7 @@
                     <EditText
                         android:id="@+id/phoneET"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="30dp"
                         android:layout_weight="1"
                         android:hint="휴대폰"
                         android:inputType="number"
