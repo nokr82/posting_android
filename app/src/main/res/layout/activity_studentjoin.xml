@@ -15,6 +15,8 @@
 
 
             <LinearLayout
+                android:id="@+id/finishLL"
+                android:padding="16dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center">
@@ -54,6 +56,7 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
+                    android:id="@+id/idET"
                     android:hint="이메일"
                     android:textSize="11.33sp"
                     android:background="@null"
@@ -65,12 +68,14 @@
                     android:background="#888888"
                     />
                 <EditText
+                    android:id="@+id/pwET"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:hint="비밀번호"
                     android:textSize="11.33sp"
                     android:background="@null"
-                    android:paddingLeft="7dp"/>
+                    android:paddingLeft="7dp"
+                    android:inputType="textPassword"/>
 
                 <View
                     android:layout_width="match_parent"
@@ -78,6 +83,8 @@
                     android:background="#888888"
                     />
                 <EditText
+                    android:id="@+id/pw2ET"
+                    android:inputType="textPassword"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:hint="비밀번호 확인"
@@ -91,6 +98,7 @@
                     android:background="#888888"
                     />
                 <EditText
+                    android:id="@+id/nickET"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:hint="닉네임을 입력해주세요(6자이하)"
@@ -125,11 +133,13 @@
 
             <EditText
 
+                android:id="@+id/nameET"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:hint="이름"
                 android:textSize="11.33sp"
+                android:inputType="text"
                 android:background="@null"/>
             <View
                 android:layout_width="match_parent"
@@ -138,27 +148,34 @@
                 />
 
             <Spinner
-
+                android:id="@+id/birthSP"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:hint="태어난 연도"
-                android:textSize="11.33sp" />
+                android:textSize="11.33sp"
+                android:background="@null" />
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:background="#888888"
                 />
+
+
             <Spinner
+                android:id="@+id/genderSP"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:hint="성별"
-                android:textSize="11.33sp" />
+                android:textSize="11.33sp"
+                android:background="@null"/>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:background="#888888"/>
+
 
 
         </LinearLayout>

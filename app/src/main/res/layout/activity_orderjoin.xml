@@ -15,8 +15,10 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/finishLL"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:padding="16dp">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -28,7 +30,6 @@
 
 
             <ImageView
-                android:layout_marginTop="28dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -52,6 +53,7 @@
 
 
                 <EditText
+                    android:id="@+id/OfficeET"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:background="@null"
@@ -65,11 +67,13 @@
                     android:background="#888888" />
 
                 <EditText
+                    android:id="@+id/pwET"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:background="@null"
                     android:hint="비밀번호"
                     android:paddingLeft="7dp"
+                    android:inputType="textPassword"
                     android:textSize="11.33sp" />
 
                 <View
@@ -78,9 +82,11 @@
                     android:background="#888888" />
 
                 <EditText
+                    android:id="@+id/pw2ET"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:background="@null"
+                    android:inputType="textPassword"
                     android:hint="비밀번호 확인"
                     android:paddingLeft="7dp"
                     android:textSize="11.33sp" />
@@ -91,6 +97,7 @@
                     android:background="#888888" />
 
                 <EditText
+                    android:id="@+id/StoreET"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:background="@null"
@@ -123,12 +130,13 @@
                 android:orientation="vertical">
 
                 <EditText
+                    android:id="@+id/ceoET"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:background="@null"
                     android:hint="대표자 성명"
-                    android:textSize="11.33sp"
-                    android:background="@null"/>
+                    android:textSize="11.33sp" />
 
                 <View
                     android:layout_width="match_parent"
@@ -136,7 +144,7 @@
                     android:background="#888888" />
 
                 <Spinner
-
+                    android:id="@+id/StoreSP"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -147,8 +155,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
                     android:background="#888888" />
-
+                <LinearLayout
+                    android:id="@+id/SchoolLL"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
                 <Spinner
+                    android:id="@+id/SchoolSP"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -159,6 +172,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
                     android:background="#888888" />
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -166,19 +180,23 @@
                     android:orientation="horizontal">
 
                     <EditText
+                        android:id="@+id/phoneET"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:hint="휴대폰"
+                        android:inputType="number"
+                        android:background="@null"
                         android:textSize="11.33sp" />
 
 
                     <ImageView
+                        android:id="@+id/agreeIV"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
                         android:layout_weight="1"
-                        android:src="@mipmap/agree2"
-                        android:layout_gravity="center_vertical"/>
+                        android:src="@mipmap/agree2" />
 
                 </LinearLayout>
 
@@ -210,14 +228,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="119.11dp"
-                    android:buttonTint="#20408C"
-                    />
+                    android:buttonTint="#20408C" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="9.33dp"
+                    android:text="전체 약관에 동의합니다"
                     android:textColor="#20408C"
-                    android:text="전체 약관에 동의합니다" />
+                    android:textSize="9.33dp" />
 
             </LinearLayout>
 
@@ -254,8 +272,7 @@
 
                 <WebView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    >
+                    android:layout_height="match_parent">
 
 
                 </WebView>
@@ -264,14 +281,14 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="31.66dp">
+                    android:layout_marginTop="31.66dp"
+                    android:orientation="horizontal">
 
                     <CheckBox
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
 
-                       />
+                        />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -294,14 +311,12 @@
 
                 </WebView>
 
-               <ImageView
-                   android:layout_marginTop="52.93dp"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:src="@mipmap/start"
-                   android:id="@+id/PostingStartIV"
-                   />
-
+                <ImageView
+                    android:id="@+id/PostingStartIV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="52.93dp"
+                    android:src="@mipmap/start" />
 
 
             </LinearLayout>

@@ -5,10 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Button
-import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_schooljoin.*
-import kotlinx.android.synthetic.main.activity_schooljoin.view.*
-import kotlinx.android.synthetic.main.activity_studentjoin.*
 import org.json.JSONObject
 import posting.devstories.com.posting_android.R
 import posting.devstories.com.posting_android.adapter.SchoolAdapter
@@ -28,10 +25,17 @@ class SchoolActivity : RootActivity() {
 
 
 
-        nextTX.setOnClickListener {
+        nextLL.setOnClickListener {
             val intent = Intent(this,StudentJoinActivity::class.java)
             startActivity(intent)
         }
+
+        finishLL.setOnClickListener {
+            val intent = Intent(this,LoginActivity::class.java)
+            startActivity(intent)
+        }
+
+
 
 
         var data = JSONObject()
@@ -43,10 +47,24 @@ class SchoolActivity : RootActivity() {
         adapterData.add(data)
         adapterData.add(data)
 
+        adapterData.add(data)
+        adapterData.add(data)
+        adapterData.add(data)
+        adapterData.add(data)
+        adapterData.add(data)
+
+        adapterData.add(data)
+        adapterData.add(data)
+        adapterData.add(data)
+        adapterData.add(data)
+        adapterData.add(data)
+
+
+        SchoolLV.isExpanded = true
+
         adapter = SchoolAdapter(this, R.layout.school_item, adapterData)
         SchoolLV.adapter = adapter
         adapter.notifyDataSetChanged()
-
 
 
 
