@@ -6,28 +6,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="130.76dp">
-
-        <android.support.v4.view.ViewPager
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="7.35dp"
-            android:layout_alignParentBottom="true"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-
-
-        </LinearLayout>
-
-    </RelativeLayout>
-
-
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -35,13 +13,6 @@
 
 
     </ListView>
-
-
-
-
-
-
-
 
 </LinearLayout>
 
