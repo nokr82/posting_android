@@ -176,17 +176,17 @@ class StudentJoinActivity : RootActivity() {
                     if ("ok" == result) {
                         val data = response.getJSONObject("member")
 
-                        PrefUtils.setPreference(context, "member_id", Utils.getInt(data, "id"))
-                        PrefUtils.setPreference(context, "email", Utils.getString(data, "email"))
-                        PrefUtils.setPreference(context, "name", Utils.getString(data, "name"))
-
-                        PrefUtils.setPreference(context, "nick_name", Utils.getString(data, "nick_name"))
-                        PrefUtils.setPreference(context, "passwd", Utils.getString(data, "passwd"))
-                        PrefUtils.setPreference(context, "member_type", Utils.getString(data, "member_type"))
-
-                        PrefUtils.setPreference(context, "birth", Utils.getString(data, "birth"))
-                        PrefUtils.setPreference(context, "gender", Utils.getString(data, "gender"))
-                        PrefUtils.setPreference(context, "school_id", Utils.getString(data, "school_id"))
+//                        PrefUtils.setPreference(context, "member_id", Utils.getInt(data, "id"))
+//                        PrefUtils.setPreference(context, "email", Utils.getString(data, "email"))
+//                        PrefUtils.setPreference(context, "name", Utils.getString(data, "name"))
+//
+//                        PrefUtils.setPreference(context, "nick_name", Utils.getString(data, "nick_name"))
+//                        PrefUtils.setPreference(context, "passwd", Utils.getString(data, "passwd"))
+//                        PrefUtils.setPreference(context, "member_type", Utils.getString(data, "member_type"))
+//
+//                        PrefUtils.setPreference(context, "birth", Utils.getString(data, "birth"))
+//                        PrefUtils.setPreference(context, "gender", Utils.getString(data, "gender"))
+//                        PrefUtils.setPreference(context, "school_id", Utils.getString(data, "school_id"))
 
                         val intent = Intent(context,LoginActivity::class.java)
                         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK

@@ -15,9 +15,14 @@ object JoinAction {
         HttpClient.post("/join/sms_code.json", params, handler)
     }
 
-    // 핸드폰 인증
+    // 회원가입
     fun join(params: RequestParams, handler: JsonHttpResponseHandler) {
         HttpClient.post("/join/join.json", params, handler)
+    }
+
+    // 닉네임 체크
+    fun check_nick_name(params: RequestParams, handler: JsonHttpResponseHandler) {
+        HttpClient.post("/join/check_nick_name.json", params, handler)
     }
 
 }
