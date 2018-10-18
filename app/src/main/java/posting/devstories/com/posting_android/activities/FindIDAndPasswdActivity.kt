@@ -4,11 +4,12 @@ import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import com.loopj.android.http.JsonHttpResponseHandler
 import com.loopj.android.http.RequestParams
 import cz.msebera.android.httpclient.Header
-import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.android.synthetic.main.find_id_and_passwd_activity.*
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
@@ -18,73 +19,81 @@ import posting.devstories.com.posting_android.base.PrefUtils
 import posting.devstories.com.posting_android.base.RootActivity
 import posting.devstories.com.posting_android.base.Utils
 
-class LoginActivity : RootActivity() {
+class FindIDAndPasswdActivity : RootActivity() {
 
-    lateinit var context:Context
+    lateinit var context: Context
     private var progressDialog: ProgressDialog? = null
-    var autoLogin = false
+
+    var tab = "id"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
+        setContentView(R.layout.find_id_and_passwd_activity)
 
         this.context = this
         progressDialog = ProgressDialog(context)
 
-        JoinStudentLL.setOnClickListener {
-            val intent = Intent(this, SchoolActivity::class.java)
-            intent.putExtra("member_type", "2")
-            startActivity(intent)
+
+        finishLL.setOnClickListener {
+            finish()
         }
 
-        OrderjoinLL.setOnClickListener {
-            val intent = Intent(this, OrderJoinActivity::class.java)
-            startActivity(intent)
+        findPWRL.setOnClickListener {
+
+            tab = "pw"
+
+            getView()
+            pwfindV.visibility=View.VISIBLE
+            findTV.text = "패스워드 찾기"
         }
 
-        StartTV.setOnClickListener {
+        findIDRL.setOnClickListener {
 
-            var getName = Utils.getString(IDET)
-            var getPW = Utils.getString(PWET)
+            tab = "id"
 
-            // 자동 로그인
-            autoLogin = autoCK.isChecked
-
-            if (getName == "" || getName == null || getName.isEmpty()) {
-                Toast.makeText(context, "이메일을 입력해주세요", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-
-            if (getPW == "" || getPW == null || getPW.isEmpty()) {
-                Toast.makeText(context, "패스워드를 입력해주세요", Toast.LENGTH_SHORT).show()
-                PWET.requestFocus()
-                return@setOnClickListener
-            }
-
-            if(!Utils.isValidEmail(getName)) {
-                Toast.makeText(context, "이메일을 확인해주세요.", Toast.LENGTH_LONG).show();
-                IDET.requestFocus()
-                return@setOnClickListener
-            }
-
-            login(getName, getPW)
+            getView()
+            idfindV.visibility = View.VISIBLE
+            findTV.text = "아이디 찾기"
 
         }
 
-        idpwfindTX.setOnClickListener {
-            val intent = Intent(this, FindIDAndPasswdActivity::class.java)
-            startActivity(intent)
+        findTV.setOnClickListener {
+            val getId:String = idET.text.toString()
+            val getName:String = nameET.text.toString()
+
+            if (getId==""||getId==null){
+                Toast.makeText(this,"이메일을 입력해주세요", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            if (getName==""||getName == null){
+                Toast.makeText(this,"이름를 입력해주세요", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+//            Toast.makeText(this,"찾는중...", Toast.LENGTH_SHORT).show()
+            if("id" == tab) {
+
+            } else {
+                findPW(getId, getName)
+            }
+
         }
 
     }
 
-    fun login(email:String, passwd:String){
+    fun getView(){
+        pwfindV.visibility = View.INVISIBLE
+        idfindV.visibility = View.INVISIBLE
+    }
+
+
+    fun findPW(email:String, name:String){
         val params = RequestParams()
+        params.put("name", name)
         params.put("email", email)
-        params.put("passwd", passwd)
 
-
-        LoginAction.login(params, object : JsonHttpResponseHandler() {
+        LoginAction.find_passwd(params, object : JsonHttpResponseHandler() {
 
             override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
                 if (progressDialog != null) {
@@ -97,18 +106,7 @@ class LoginActivity : RootActivity() {
                     if ("ok" == result) {
                         val data = response.getJSONObject("member")
 
-                        PrefUtils.setPreference(context, "member_id", Utils.getInt(data, "id"))
-                        PrefUtils.setPreference(context, "email", Utils.getString(data, "email"))
-                        PrefUtils.setPreference(context, "passwd", Utils.getString(data, "passwd"))
-                        PrefUtils.setPreference(context, "autoLogin", autoLogin)
-
-
-
-
-
-                        val intent = Intent(context, MainActivity::class.java)
-                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                        startActivity(intent)
+                        Toast.makeText(context, "패스워드 : " + Utils.getString(data, "passwd"), Toast.LENGTH_LONG).show()
 
                     } else {
                         Toast.makeText(context, "일치하는 회원이 존재하지 않습니다.", Toast.LENGTH_LONG).show()
@@ -176,12 +174,5 @@ class LoginActivity : RootActivity() {
         })
     }
 
-
-    override fun onDestroy() {
-        super.onDestroy()
-
-        progressDialog = null
-
-    }
 
 }

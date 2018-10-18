@@ -56,7 +56,7 @@
             android:theme="@style/NoTitleDialog"
             android:windowSoftInputMode="adjustResize|stateHidden"/>
         <activity
-            android:name=".activities.IDfindActivity"
+            android:name=".activities.FindIDAndPasswdActivity"
 
             android:screenOrientation="portrait"
             android:theme="@style/NoTitleDialog"

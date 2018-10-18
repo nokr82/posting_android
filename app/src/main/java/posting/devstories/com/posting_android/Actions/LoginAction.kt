@@ -14,4 +14,9 @@ object LoginAction {
     fun login(params: RequestParams, handler: JsonHttpResponseHandler) {
         HttpClient.post("/login/email_login.json", params, handler)
     }
+
+    // 비밀번호 찾기
+    fun find_passwd(params: RequestParams, handler: JsonHttpResponseHandler) {
+        HttpClient.post("/login/find_passwd.json", params, handler)
+    }
 }
