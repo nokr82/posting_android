@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.*
 import org.json.JSONObject
 import posting.devstories.com.posting_android.R
+import posting.devstories.com.posting_android.R.mipmap.school
 import posting.devstories.com.posting_android.base.Utils
 
 
@@ -34,8 +35,11 @@ open class SchoolAdapter(context:Context, view:Int, data:ArrayList<JSONObject>) 
         }
 
         var data : JSONObject = getItem(position)
+        var school = data.getJSONObject("School")
 
-        item.schoolNameTV.text = Utils.getString(data, "school_name")
+        println(school)
+
+        item.schoolNameTV.text = Utils.getString(school, "name")
 
         return retView
     }

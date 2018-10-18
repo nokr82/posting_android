@@ -1,5 +1,6 @@
 package posting.devstories.com.posting_android.activities
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -37,9 +38,7 @@ class StudentJoinActivity : RootActivity() {
         }
 
 
-
-
-        joinDoneIV.setOnClickListener {
+        PostingStartTX.setOnClickListener {
             val getid:String = Utils.getString(idET)
             val getPW:String = Utils.getString(pwET)
             val getPW2:String = Utils.getString(pw2ET)
@@ -89,8 +88,7 @@ class StudentJoinActivity : RootActivity() {
             startActivity(intent)
         }
         finishLL.setOnClickListener {
-            val intent = Intent(this,LoginActivity::class.java)
-            startActivity(intent)
+            finish()
         }
 
 
@@ -112,5 +110,9 @@ class StudentJoinActivity : RootActivity() {
 
 
     }
+
+
+
+
 
 }

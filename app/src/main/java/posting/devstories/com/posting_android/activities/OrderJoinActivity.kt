@@ -1,12 +1,10 @@
 package posting.devstories.com.posting_android.activities
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import android.os.Bundle
-import android.view.View
 import android.widget.*
-import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_orderjoin.*
 import posting.devstories.com.posting_android.R
 import posting.devstories.com.posting_android.base.RootActivity
@@ -19,6 +17,9 @@ class OrderJoinActivity : RootActivity() {
     var store = arrayOf("삼성", "엘지")
     var school2= arrayOf("서울대","인하대","경희대","한양대")
     lateinit var adpater: ArrayAdapter<String>
+    var agree = 1
+
+    val SELECT_SCHOOL = 101
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,13 +53,31 @@ class OrderJoinActivity : RootActivity() {
     }
 
 
+        agreeTX.setOnClickListener {
+            val getPhone:String = Utils.getString(phoneET)
 
+            if (getPhone==""||getPhone==null||getPhone.isEmpty()){
+                Toast.makeText(context,"휴대폰번호를 입력해주세요",Toast.LENGTH_SHORT).show()
+
+            }else{
+                agree = 2
+                Toast.makeText(context,"인증되었습니다",Toast.LENGTH_SHORT).show()
+            }
+        }
+
+
+
+        SchoolTX.setOnClickListener {
+            val intent = Intent(this,SchoolActivity::class.java)
+            intent.putExtra("member_type", "3")
+            startActivityForResult(intent, SELECT_SCHOOL)
+        }
         
 
 
 
 
-        PostingStartIV.setOnClickListener {
+        PostingStartTX.setOnClickListener {
 
             val getOffice:String = Utils.getString(OfficeET)
             val getPW:String = Utils.getString(pwET)
@@ -110,6 +129,10 @@ class OrderJoinActivity : RootActivity() {
                 Toast.makeText(context, "이용약관에 동의해주세요", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
+            if (agree != 2){
+                Toast.makeText(context,"휴대폰을 인증해주세요",Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
 
 
 
@@ -119,14 +142,25 @@ class OrderJoinActivity : RootActivity() {
         }
 
         finishLL.setOnClickListener {
-            val intent = Intent(this,LoginActivity::class.java)
-            startActivity(intent)
-        }
-        SchoolLL.setOnClickListener {
-            val intent = Intent(this,SchoolActivity::class.java)
-            startActivity(intent)
+            finish()
         }
 
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (resultCode == Activity.RESULT_OK) {
+
+            when(requestCode) {
+
+                SELECT_SCHOOL -> {
+                    data!!.getStringExtra("school_id")
+                }
+
+
+            }
+        }
 
     }
 
