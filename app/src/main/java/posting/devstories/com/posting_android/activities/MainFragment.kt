@@ -22,6 +22,7 @@ open class MainFragment : Fragment() {
 
     lateinit var gideGV: GridView
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
