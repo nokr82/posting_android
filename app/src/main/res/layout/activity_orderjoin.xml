@@ -161,11 +161,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
-                <Spinner
-                    android:id="@+id/SchoolSP"
+                <TextView
+                    android:id="@+id/SchoolTX"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+
                     android:hint="학교 검색(1개 선택)"
                     android:textSize="11.33sp" />
 
