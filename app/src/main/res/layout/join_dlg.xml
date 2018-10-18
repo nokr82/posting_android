@@ -22,7 +22,7 @@
 
             <TextView
                 android:textSize="15.07dp"
-                android:text="가입이 완료 되었습니다.\n캠퍼스생활 이제 떼고,붙이세요!"
+                android:text="가입이 완료 되었습니다.\n\n캠퍼스생활 이제 떼고,붙이세요!"
                 android:textColor="#6D6E71"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
