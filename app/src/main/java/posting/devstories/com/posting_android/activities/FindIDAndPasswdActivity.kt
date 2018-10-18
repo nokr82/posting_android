@@ -42,7 +42,7 @@ class FindIDAndPasswdActivity : RootActivity() {
 
             tab = "pw"
 
-            getView()
+            setView()
             pwfindV.visibility=View.VISIBLE
             findTV.text = "패스워드 찾기"
         }
@@ -51,17 +51,17 @@ class FindIDAndPasswdActivity : RootActivity() {
 
             tab = "id"
 
-            getView()
+            setView()
             idfindV.visibility = View.VISIBLE
             findTV.text = "아이디 찾기"
 
         }
 
         findTV.setOnClickListener {
-            val getId:String = idET.text.toString()
+            val email:String = emailET.text.toString()
             val getName:String = nameET.text.toString()
 
-            if (getId==""||getId==null){
+            if (email==""||email==null || email.isEmpty()){
                 Toast.makeText(this,"이메일을 입력해주세요", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
@@ -75,14 +75,18 @@ class FindIDAndPasswdActivity : RootActivity() {
             if("id" == tab) {
 
             } else {
-                findPW(getId, getName)
+                findPW(email, getName)
             }
 
         }
 
     }
 
-    fun getView(){
+    fun setView(){
+
+        emailET.setText("")
+        nameET.setText("")
+
         pwfindV.visibility = View.INVISIBLE
         idfindV.visibility = View.INVISIBLE
     }
