@@ -13,10 +13,7 @@ import kotlinx.android.synthetic.main.activity_studentjoin.*
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
-import posting.devstories.com.posting_android.Actions.LoginAction
-import posting.devstories.com.posting_android.Actions.NIckcheckAction
-import posting.devstories.com.posting_android.Actions.SchoolAction
-import posting.devstories.com.posting_android.Actions.StudentJoinAction
+import posting.devstories.com.posting_android.Actions.*
 import posting.devstories.com.posting_android.R
 import posting.devstories.com.posting_android.base.PrefUtils
 import posting.devstories.com.posting_android.base.RootActivity
@@ -166,7 +163,7 @@ class StudentJoinActivity : RootActivity() {
         params.put("school_id", school_id)
 
 
-        StudentJoinAction.StudentJoin(params, object : JsonHttpResponseHandler() {
+        JoinAction.join(params, object : JsonHttpResponseHandler() {
 
             override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
                 if (progressDialog != null) {
@@ -267,8 +264,7 @@ class StudentJoinActivity : RootActivity() {
         val params = RequestParams()
         params.put("nick_name", nick_name)
 
-
-        NIckcheckAction.Nick(params, object : JsonHttpResponseHandler() {
+        JoinAction.check_nick_name(params, object : JsonHttpResponseHandler() {
 
             override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
                 if (progressDialog != null) {
