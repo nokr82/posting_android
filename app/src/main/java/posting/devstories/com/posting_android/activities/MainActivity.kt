@@ -20,6 +20,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import org.json.JSONObject
 import posting.devstories.com.posting_android.R
 import posting.devstories.com.posting_android.adapter.FullScreenImageAdapter
+import posting.devstories.com.posting_android.adapter.MainAdapter
 import posting.devstories.com.posting_android.base.Utils
 import java.util.ArrayList
 
@@ -33,12 +34,17 @@ class MainActivity : FragmentActivity() {
     lateinit var pagerAdapter: PagerAdapter
 
     var adverImagePaths = ArrayList<String>()
-    private val adverAdapterData = ArrayList<JSONObject>()
+    private var adverAdapterData = ArrayList<JSONObject>()
     private lateinit var adverAdapter: FullScreenImageAdapter
     var adPosition = 0;
 
     private var adTime = 0
     private lateinit var handler: Handler
+
+    lateinit var mainAdapter: MainAdapter
+    var mainAdapterData = ArrayList<JSONObject>();
+
+    var tabType = 1;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,29 +52,14 @@ class MainActivity : FragmentActivity() {
 
         this.context = this
 
-        var path = "http://13.124.13.37/data/ad/5ba1ebab-0018-486f-ace1-624cac1f0bcc";
-
-        adverImagePaths.add(path);
-        adverImagePaths.add(path);
-        adverImagePaths.add(path);
-        adverImagePaths.add(path);
-        adverImagePaths.add(path);
-        adverImagePaths.add(path);
-
-        var data = JSONObject();
-        data.put("path", path)
-
-        adverAdapterData.add(data)
-        adverAdapterData.add(data)
-        adverAdapterData.add(data)
-        adverAdapterData.add(data)
-        adverAdapterData.add(data)
-        adverAdapterData.add(data)
+        // 메인 데이터
+        mainAdapter = MainAdapter(context, R.layout.item_main, mainAdapterData)
+        mainLV.isExpanded = true
+        mainLV.adapter = mainAdapter
 
         // 메인 광고 뷰페이저
         adverAdapter = FullScreenImageAdapter(this, adverImagePaths)
         adverVP.adapter = adverAdapter
-        adverAdapter.notifyDataSetChanged()
         adverVP.setOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
                 adPosition = position
@@ -106,35 +97,49 @@ class MainActivity : FragmentActivity() {
                 sendBroadcast(intent)
                 when (position) {
                     0 -> {
+
+                        tabType = 1;
+
                         setMenuTabView()
+
                         freeTX.setTextColor(Color.parseColor("#01b4ec"))
                         freeV.visibility = View.VISIBLE
                     }
                     1 -> {
+                        tabType = 2;
+
                         setMenuTabView()
 
                         infoV.visibility = View.VISIBLE
                         infoTX.setTextColor(Color.parseColor("#01b4ec"))
                     }
                     2 -> {
+                        tabType = 3;
+
                         setMenuTabView()
 
                         StudyV.visibility = View.VISIBLE
                         StudyTX.setTextColor(Color.parseColor("#01b4ec"))
                     }
                     3 -> {
+                        tabType = 4;
+
                         setMenuTabView()
 
                         classV.visibility = View.VISIBLE
                         classTX.setTextColor(Color.parseColor("#01b4ec"))
                     }
                     4 -> {
+                        tabType = 5;
+
                         setMenuTabView()
 
                         mitingV.visibility = View.VISIBLE
                         MitingTX.setTextColor(Color.parseColor("#01b4ec"))
                     }
                     5 -> {
+                        tabType = 6;
+
                         setMenuTabView()
 
                         couponV.visibility = View.VISIBLE
@@ -152,60 +157,90 @@ class MainActivity : FragmentActivity() {
         }
 
         freeRL.setOnClickListener {
-            setMenuTabView()
-
-            freeTX.setTextColor(Color.parseColor("#01b4ec"))
-            freeV.visibility = View.VISIBLE
-
+            pagerVP.currentItem = 0
         }
 
         infoRL.setOnClickListener {
-            setMenuTabView()
-
-            infoV.visibility = View.VISIBLE
-            infoTX.setTextColor(Color.parseColor("#01b4ec"))
+            pagerVP.currentItem = 1
         }
 
         studyRL.setOnClickListener {
-            setMenuTabView()
-
-            StudyV.visibility = View.VISIBLE
-            StudyTX.setTextColor(Color.parseColor("#01b4ec"))
-
+            pagerVP.currentItem = 2
         }
 
         classRL.setOnClickListener {
-
-            setMenuTabView()
-
-            classV.visibility = View.VISIBLE
-            classTX.setTextColor(Color.parseColor("#01b4ec"))
-
+            pagerVP.currentItem = 3
         }
 
         meetingRL.setOnClickListener {
-
-            setMenuTabView()
-
-            mitingV.visibility = View.VISIBLE
-            MitingTX.setTextColor(Color.parseColor("#01b4ec"))
-
+            pagerVP.currentItem = 4
         }
 
         couponRL.setOnClickListener {
-
-            setMenuTabView()
-
-            couponV.visibility = View.VISIBLE
-            CouponTX.setTextColor(Color.parseColor("#01b4ec"))
+            pagerVP.currentItem = 5
         }
 
-
-
         timer()
+        mainLoadData()
 
     }
 
+    private fun mainLoadData(){
+
+        adverImagePaths.clear()
+        adverAdapterData.clear()
+        mainAdapterData.clear()
+
+
+        var path = "http://13.124.13.37/data/ad/5ba1ebab-0018-486f-ace1-624cac1f0bcc";
+
+        adverImagePaths.add(path);
+        adverImagePaths.add(path);
+        adverImagePaths.add(path);
+        adverImagePaths.add(path);
+        adverImagePaths.add(path);
+        adverImagePaths.add(path);
+
+        var data = JSONObject();
+        data.put("path", path)
+
+        adverAdapterData.add(data)
+        adverAdapterData.add(data)
+        adverAdapterData.add(data)
+        adverAdapterData.add(data)
+        adverAdapterData.add(data)
+        adverAdapterData.add(data)
+
+        adverAdapter.notifyDataSetChanged()
+
+        data = JSONObject();
+        data.put("type", "free")
+        mainAdapterData.add(data);
+
+        data = JSONObject();
+        data.put("type", "info")
+        mainAdapterData.add(data);
+
+        data = JSONObject();
+        data.put("type", "study")
+        mainAdapterData.add(data);
+
+        data = JSONObject();
+        data.put("type", "class")
+        mainAdapterData.add(data);
+
+        data = JSONObject();
+        data.put("type", "meeting")
+        mainAdapterData.add(data);
+
+        data = JSONObject();
+
+        data.put("type", "coupon")
+        mainAdapterData.add(data);
+
+        mainAdapter.notifyDataSetChanged()
+
+    }
 
     private fun timer() {
         handler = object : Handler() {
@@ -326,6 +361,9 @@ class MainActivity : FragmentActivity() {
 
         mainLL.visibility = View.VISIBLE
         pagerVP.visibility = View.GONE
+
+        mainLoadData();
+
     }
 
     fun setMenuTabView() {
