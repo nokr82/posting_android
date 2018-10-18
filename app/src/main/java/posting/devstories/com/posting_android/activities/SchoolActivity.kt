@@ -71,8 +71,8 @@ class SchoolActivity : RootActivity() {
                     var intent = Intent()
                     intent.putExtra("school_id", school_id)
                     intent.putExtra("schoolname",schoolname)
-
-                    setResult(Activity.RESULT_OK, intent)
+                    setResult(RESULT_OK, intent)
+                    finish()
                 }
 
             }

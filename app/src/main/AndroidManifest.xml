@@ -80,17 +80,17 @@
             </intent-filter -->
         </activity>
 
-    <!-- 푸시 -->
         <activity
             android:name=".activities.DlgActivity"
             android:screenOrientation="portrait"
             android:theme="@style/full_screen_dialog1"/>
-        <!-- 로그인>
+
+        <!-- 주소찾기 -->
         <activity
-            android:name=".activities.LoginActivity"
+            android:name=".activities.AddressActivity"
             android:screenOrientation="portrait"
             android:theme="@style/NoTitleDialog"
-            android:windowSoftInputMode="adjustResize|stateHidden" / -->
+            android:windowSoftInputMode="adjustResize|stateHidden"/>
 
 
     </application>

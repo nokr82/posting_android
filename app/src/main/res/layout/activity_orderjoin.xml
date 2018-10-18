@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+              xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
     <LinearLayout
@@ -21,13 +21,14 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="82.2dp"
-            android:layout_marginRight="62dp"
+            android:layout_marginLeft="72dp"
+            android:layout_marginRight="72dp"
             android:orientation="vertical">
 
 
@@ -54,15 +55,16 @@
                 android:layout_marginTop="34.71dp"
                 android:orientation="vertical">
 
-
                 <EditText
                     android:id="@+id/OfficeET"
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
+                    android:layout_height="40dp"
                     android:background="@null"
                     android:hint="사업자등록번호"
                     android:paddingLeft="7dp"
-                    android:textSize="11.33sp" />
+                    android:textSize="11.33sp"
+                    android:inputType="number"
+                    android:textColorHint="#BCBEC0" />
 
                 <View
                     android:layout_width="match_parent"
@@ -72,12 +74,13 @@
                 <EditText
                     android:id="@+id/pwET"
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
+                    android:layout_height="40dp"
                     android:background="@null"
                     android:hint="비밀번호"
                     android:paddingLeft="7dp"
                     android:inputType="textPassword"
-                    android:textSize="11.33sp" />
+                    android:textSize="11.33sp"
+                    android:textColorHint="#BCBEC0" />
 
                 <View
                     android:layout_width="match_parent"
@@ -87,12 +90,13 @@
                 <EditText
                     android:id="@+id/pw2ET"
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
+                    android:layout_height="40dp"
                     android:background="@null"
                     android:inputType="textPassword"
                     android:hint="비밀번호 확인"
                     android:paddingLeft="7dp"
-                    android:textSize="11.33sp" />
+                    android:textSize="11.33sp"
+                    android:textColorHint="#BCBEC0" />
 
                 <View
                     android:layout_width="match_parent"
@@ -102,12 +106,13 @@
                 <EditText
                     android:id="@+id/StoreET"
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
+                    android:layout_height="40dp"
                     android:background="@null"
                     android:hint="상호명(6자이하)"
                     android:maxLength="6"
                     android:paddingLeft="7dp"
-                    android:textSize="11.33sp" />
+                    android:textSize="11.33sp"
+                    android:textColorHint="#BCBEC0" />
 
                 <View
                     android:layout_width="match_parent"
@@ -124,7 +129,6 @@
                 android:text="사업자 정보입력"
                 android:textColor="#888888"/>
 
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -134,11 +138,12 @@
                 <EditText
                     android:id="@+id/ceoET"
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
+                    android:layout_height="40dp"
                     android:paddingLeft="7dp"
                     android:layout_gravity="center"
                     android:background="@null"
                     android:hint="대표자 성명"
+                    android:textColorHint="#BCBEC0"
                     android:textSize="11.33sp" />
 
                 <View
@@ -146,62 +151,79 @@
                     android:layout_height="0.5dp"
                     android:background="#888888" />
 
-                <Spinner
-                    android:id="@+id/StoreSP"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:hint="사업장 주소"
-                    android:background="@null"
-                    android:textSize="11.33sp" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:background="#888888" />
                 <TextView
-                    android:id="@+id/SchoolTX"
-
+                    android:id="@+id/addressTV"
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
+                    android:layout_height="40dp"
+                    android:paddingLeft="7dp"
+                    android:hint="사업장 주소"
+                    android:textSize="11.33sp"
+                    android:textColorHint="#BCBEC0"
+                    android:gravity="center_vertical"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="#888888" />
+
+                <EditText
+                    android:id="@+id/addressDetailET"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:hint="사업장 상세 주소"
+                    android:paddingLeft="7dp"
+                    android:textSize="11.33sp"
+                    android:textColorHint="#BCBEC0"
+                    android:background="@null"
+                    android:gravity="center_vertical"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="#888888" />
+
+                <TextView
+                    android:id="@+id/schoolTV"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
                     android:gravity="center_vertical"
                     android:paddingLeft="7dp"
-                    android:textColor="#BCBEC0"
                     android:hint="학교 검색(1개 선택)"
+                    android:textColorHint="#BCBEC0"
                     android:textSize="11.33sp" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
                     android:background="#888888" />
-
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
                     android:orientation="horizontal">
 
                     <EditText
                         android:id="@+id/phoneET"
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
+                        android:layout_height="match_parent"
                         android:paddingLeft="7dp"
                         android:layout_weight="1"
                         android:hint="휴대폰"
                         android:inputType="number"
                         android:background="@null"
-                        android:textSize="11.33sp" />
-
+                        android:textSize="11.33sp"
+                        android:textColorHint="#BCBEC0" />
 
                     <TextView
-                        android:id="@+id/agreeTX"
+                        android:id="@+id/sendSMSTV"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
                         android:text="인증받기"
-                        android:textSize="7dp"
+                        android:textSize="8dp"
                         android:textColor="#20408C"
-                        android:layout_gravity="center_vertical"
-
-                         />
+                        android:gravity="center"/>
 
                 </LinearLayout>
 
@@ -210,10 +232,46 @@
                     android:layout_height="0.5dp"
                     android:background="#888888" />
 
-                <ImageView
+                <LinearLayout
+                    android:id="@+id/smsCodeLL"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:visibility="gone">
+
+                    <EditText
+                        android:id="@+id/smsCodeET"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:paddingLeft="7dp"
+                        android:layout_weight="1"
+                        android:hint="인증번호"
+                        android:inputType="number"
+                        android:background="@null"
+                        android:textSize="11.33sp" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="#888888" />
+
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/phon" />
+                    android:layout_marginTop="6dp"
+                    android:textColor="#BCBEC0"
+                    android:textSize="8dp"
+                    android:text="*인증번호 전송은 통신사 사정에따라 최대 1분까지 소요될 수 있습니다."/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp"
+                    android:textColor="#BCBEC0"
+                    android:textSize="8dp"
+                    android:text="*인증번호가 도착하지 않을 경우 '인증번호 재전송'을 눌러주세요."/>
+
             </LinearLayout>
 
 
@@ -235,7 +293,7 @@
                     android:gravity="right">
 
                 <CheckBox
-                    android:id="@+id/allCK"
+                    android:id="@+id/allCB"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:buttonTint="#20408C" />
@@ -254,7 +312,7 @@
                 android:layout_height="wrap_content">
 
                 <CheckBox
-                    android:id="@+id/serviceCK"
+                    android:id="@+id/serviceCB"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
@@ -277,14 +335,12 @@
                     android:text="포스팅 이용약관"
                     android:textSize="11.67dp" />
 
-
                 <WebView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
 
                 </WebView>
-
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -293,11 +349,9 @@
                     android:orientation="horizontal">
 
                     <CheckBox
-                        android:id="@+id/soloCK"
+                        android:id="@+id/soloCB"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-
-                        />
+                        android:layout_height="wrap_content"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -330,12 +384,12 @@
                     android:textColor="#FFFFFF"
                     android:background="@drawable/background_round_01b0b9"
                     android:layout_marginTop="52.93dp"
-                     />
-
+                    android:layout_marginBottom="50dp"/>
 
             </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
 
+        </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>
