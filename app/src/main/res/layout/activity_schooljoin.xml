@@ -59,11 +59,14 @@
             </LinearLayout>
 
 
-            <ImageView
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:src="@mipmap/join2" />
+                android:textSize="16.67dp"
+                android:textColor="#20408C"
+                android:text="회원가입"
+                />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -96,8 +99,10 @@
                     android:layout_height="wrap_content"
                     android:background="@null"
                     android:hint=""
-
-                    android:textSize="12.75dp" />
+                    android:id="@+id/schoolET"
+                    android:textSize="12.75dp"
+                    android:imeOptions="actionSearch"
+                    android:singleLine="true"/>
 
             </LinearLayout>
 

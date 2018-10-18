@@ -4,6 +4,21 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+
+    <LinearLayout
+        android:id="@+id/finishLL"
+        android:padding="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/x"/>
+
+
+    </LinearLayout>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -11,49 +26,38 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginLeft="82.2dp"
+            android:layout_marginRight="62dp"
             android:orientation="vertical">
 
 
-            <LinearLayout
-                android:id="@+id/finishLL"
-                android:padding="16dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center">
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/x"/>
-
-
-            </LinearLayout>
-
-
-            <ImageView
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:src="@mipmap/join2" />
+                android:textSize="16.67dp"
+                android:textColor="#20408C"
+                android:text="회원가입"
+                />
 
 
-            <ImageView
+            <TextView
+                android:layout_marginTop="41.87dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="82.2dp"
-                android:layout_marginTop="41.87dp"
-                android:src="@mipmap/info" />
+                android:text="회원정보입력"
+                android:textColor="#888888"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="82.2dp"
-                android:layout_marginRight="62dp"
                 android:layout_marginTop="34.71dp"
                 android:orientation="vertical">
 
 
-                <EditText
+
+            <EditText
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:id="@+id/idET"
@@ -117,26 +121,23 @@
 
 
 
-
-            <ImageView
+            <TextView
+                android:layout_marginTop="42.5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="82.2dp"
-                android:layout_marginTop="41.87dp"
-                android:src="@mipmap/info2" />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="82.2dp"
-            android:layout_marginRight="62dp"
-            android:layout_marginTop="34.71dp"
-            android:orientation="vertical">
-
+                android:text="개인정보입력"
+                android:textColor="#888888"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="34.71dp"
+                android:orientation="vertical">
             <EditText
 
                 android:id="@+id/nameET"
+                android:paddingLeft="7dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
                 android:layout_gravity="center"
                 android:hint="이름"
                 android:textSize="11.33sp"
@@ -151,7 +152,7 @@
             <Spinner
                 android:id="@+id/birthSP"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
                 android:layout_gravity="center"
                 android:hint="태어난 연도"
                 android:textSize="11.33sp"
@@ -166,7 +167,7 @@
             <Spinner
                 android:id="@+id/genderSP"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
                 android:layout_gravity="center"
                 android:hint="성별"
                 android:textSize="11.33sp"
@@ -192,24 +193,27 @@
                 <TextView
                     android:layout_width="24.5dp"
                     android:layout_height="16.25dp"
-                    android:layout_marginLeft="82.2dp"
                     android:text="약관"
                     android:textSize="12.25dp" />
-
-                <CheckBox
-                    android:id="@+id/allCK"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="119.11dp"
-                    android:buttonTint="#20408C"
-                    />
+                    android:orientation="horizontal"
+                    android:gravity="right">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="9.33dp"
-                    android:textColor="#20408C"
-                    android:text="전체 약관에 동의합니다" />
+                    <CheckBox
+                        android:id="@+id/allCK"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:buttonTint="#20408C" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="전체 약관에 동의합니다"
+                        android:textColor="#20408C"
+                        android:textSize="9.33dp" />
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -220,20 +224,18 @@
                 <CheckBox
                     android:id="@+id/serviceCK"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="82.2dp" />
+                    android:layout_height="wrap_content"/>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="서비스 이용 약관 동의"
                     android:textSize="9.5dp" />
+
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_marginLeft="82.2dp"
-                android:layout_marginRight="62dp"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
@@ -246,19 +248,17 @@
 
                 <WebView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center">
+                    android:layout_height="match_parent">
 
 
                 </WebView>
 
 
-
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="31.66dp">
+                    android:layout_marginTop="31.66dp"
+                    android:orientation="horizontal">
 
                     <CheckBox
                         android:id="@+id/soloCK"
@@ -275,7 +275,6 @@
 
                 </LinearLayout>
 
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -285,24 +284,25 @@
                 <WebView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                   >
+                    android:layout_gravity="center">
 
                 </WebView>
 
-                <ImageView
-                    android:id="@+id/joinDoneIV"
+                <TextView
+                    android:id="@+id/PostingStartTX"
+                    android:layout_width="match_parent"
+                    android:layout_height="37.51dp"
+                    android:gravity="center"
+                    android:text="POSTING 시작하기"
+                    android:textSize="15.33dp"
+                    android:textColor="#20408C"
+                    android:background="#FEDA44"
                     android:layout_marginTop="52.93dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/start"
-
                     />
 
+
             </LinearLayout>
-
-
         </LinearLayout>
-
     </ScrollView>
 
 
