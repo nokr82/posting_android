@@ -8,6 +8,7 @@ import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.idfind_activity.*
 import posting.devstories.com.posting_android.R
+import posting.devstories.com.posting_android.R.id.findTX
 import posting.devstories.com.posting_android.base.RootActivity
 
 class IDfindActivity : RootActivity() {
@@ -24,18 +25,18 @@ class IDfindActivity : RootActivity() {
 
             getView()
             pwfindV.visibility=View.VISIBLE
-            findBT.setText("패스워드 찾기")
+            findTX.setText("패스워드 찾기")
         }
 
         idfindTX.setOnClickListener {
 
             getView()
             idfindV.visibility = View.VISIBLE
-            findBT.setText("아이디 찾기")
+            findTX.setText("아이디 찾기")
 
         }
 
-        findBT.setOnClickListener {
+        findTX.setOnClickListener {
             val getId:String = idET.text.toString()
             val getName:String = nameET.text.toString()
 

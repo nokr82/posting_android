@@ -13,22 +13,31 @@
         android:background="@drawable/background_round_ffffff">
 
         <LinearLayout
+            android:layout_marginLeft="44.43dp"
+            android:layout_marginRight="44.43dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:gravity="center">
 
-            <ImageView
+            <TextView
+                android:textSize="15.07dp"
+                android:text="가입이 완료 되었습니다.\n캠퍼스생활 이제 떼고,붙이세요!"
+                android:textColor="#6D6E71"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@mipmap/campus"/>
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@mipmap/start"
-                android:layout_gravity="center"
-                android:layout_marginTop="22.48dp"
+            <TextView
+                android:id="@+id/PostingStartTX"
+                android:layout_width="match_parent"
+                android:layout_height="37.51dp"
+                android:gravity="center"
+                android:text="POSTING 시작하기"
+                android:textSize="15.33dp"
+                android:textColor="#20408C"
+                android:background="#FEDA44"
+                android:layout_marginTop="52.93dp"
                 />
 
         </LinearLayout>

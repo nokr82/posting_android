@@ -3,6 +3,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+    <LinearLayout
+        android:id="@+id/finishLL"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/x" />
+
+
+    </LinearLayout>
+
 
 
     <ScrollView
@@ -12,42 +26,31 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginLeft="82.2dp"
+            android:layout_marginRight="62dp"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/finishLL"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="16dp">
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/x" />
-
-
-            </LinearLayout>
-
-
-            <ImageView
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:src="@mipmap/orderjoin" />
+                android:textSize="16.67dp"
+                android:textColor="#20408C"
+                android:text="사업자 회원가입"
+                 />
 
 
-            <ImageView
+            <TextView
+                android:layout_marginTop="41.87dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="82.2dp"
-                android:layout_marginTop="41.87dp"
-                android:src="@mipmap/orderinfo2" />
+                android:text="사업자 회원정보입력"
+                android:textColor="#888888"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="82.2dp"
-                android:layout_marginRight="62dp"
                 android:layout_marginTop="34.71dp"
                 android:orientation="vertical">
 
@@ -102,6 +105,7 @@
                     android:layout_height="30dp"
                     android:background="@null"
                     android:hint="상호명(6자이하)"
+                    android:maxLength="6"
                     android:paddingLeft="7dp"
                     android:textSize="11.33sp" />
 
@@ -113,26 +117,25 @@
             </LinearLayout>
 
 
-            <ImageView
+            <TextView
+                android:layout_marginTop="42.5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="82.2dp"
-                android:layout_marginTop="41.87dp"
-                android:src="@mipmap/orderinfo3" />
+                android:text="사업자 정보입력"
+                android:textColor="#888888"/>
 
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="82.2dp"
-                android:layout_marginRight="62dp"
                 android:layout_marginTop="34.71dp"
                 android:orientation="vertical">
 
                 <EditText
                     android:id="@+id/ceoET"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="30dp"
+                    android:paddingLeft="7dp"
                     android:layout_gravity="center"
                     android:background="@null"
                     android:hint="대표자 성명"
@@ -146,25 +149,23 @@
                 <Spinner
                     android:id="@+id/StoreSP"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_height="30dp"
                     android:hint="사업장 주소"
+                    android:background="@null"
                     android:textSize="11.33sp" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
                     android:background="#888888" />
-                <LinearLayout
-                    android:id="@+id/SchoolLL"
+                <TextView
+                    android:id="@+id/SchoolTX"
+
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                <Spinner
-                    android:id="@+id/SchoolSP"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_height="30dp"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="7dp"
+                    android:textColor="#BCBEC0"
                     android:hint="학교 검색(1개 선택)"
                     android:textSize="11.33sp" />
 
@@ -172,7 +173,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
                     android:background="#888888" />
-                </LinearLayout>
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -182,7 +183,8 @@
                     <EditText
                         android:id="@+id/phoneET"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="30dp"
+                        android:paddingLeft="7dp"
                         android:layout_weight="1"
                         android:hint="휴대폰"
                         android:inputType="number"
@@ -190,13 +192,16 @@
                         android:textSize="11.33sp" />
 
 
-                    <ImageView
-                        android:id="@+id/agreeIV"
+                    <TextView
+                        android:id="@+id/agreeTX"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="인증받기"
+                        android:textSize="7dp"
+                        android:textColor="#20408C"
                         android:layout_gravity="center_vertical"
-                        android:layout_weight="1"
-                        android:src="@mipmap/agree2" />
+
+                         />
 
                 </LinearLayout>
 
@@ -213,6 +218,7 @@
 
 
             <LinearLayout
+                android:layout_marginTop="85.73dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -220,15 +226,18 @@
                 <TextView
                     android:layout_width="24.5dp"
                     android:layout_height="16.25dp"
-                    android:layout_marginLeft="82.2dp"
                     android:text="약관"
                     android:textSize="12.25dp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="right">
 
                 <CheckBox
                     android:id="@+id/allCK"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="119.11dp"
                     android:buttonTint="#20408C" />
 
                 <TextView
@@ -237,7 +246,7 @@
                     android:text="전체 약관에 동의합니다"
                     android:textColor="#20408C"
                     android:textSize="9.33dp" />
-
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -247,8 +256,7 @@
                 <CheckBox
                     android:id="@+id/serviceCK"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="82.2dp" />
+                    android:layout_height="wrap_content"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -261,8 +269,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="82.2dp"
-                android:layout_marginRight="62dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -314,12 +320,17 @@
 
                 </WebView>
 
-                <ImageView
-                    android:id="@+id/PostingStartIV"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <TextView
+                    android:id="@+id/PostingStartTX"
+                    android:layout_width="match_parent"
+                    android:layout_height="37.51dp"
+                    android:gravity="center"
+                    android:text="POSTING 시작하기"
+                    android:textSize="15.33dp"
+                    android:textColor="#FFFFFF"
+                    android:background="@drawable/background_round_01b0b9"
                     android:layout_marginTop="52.93dp"
-                    android:src="@mipmap/start" />
+                     />
 
 
             </LinearLayout>
