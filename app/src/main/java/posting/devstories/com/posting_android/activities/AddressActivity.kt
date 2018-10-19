@@ -160,4 +160,5 @@ class AddressActivity : RootActivity(), AbsListView.OnScrollListener {
 
         super.onDestroy()
     }
+
 }
