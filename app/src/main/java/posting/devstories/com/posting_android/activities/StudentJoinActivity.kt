@@ -66,6 +66,17 @@ class StudentJoinActivity : RootActivity() {
                 soloCK.isChecked=false
             }
         }
+        serviceCK.setOnCheckedChangeListener { compoundButton, b ->
+
+            val check = soloCK.isChecked
+            allCK.isChecked = b&&check
+
+
+        }
+        soloCK.setOnCheckedChangeListener { compoundButton, b ->
+            val check = serviceCK.isChecked
+            allCK.isChecked = b&&check
+        }
 
 
         PostingStartTX.setOnClickListener {
@@ -150,17 +161,17 @@ class StudentJoinActivity : RootActivity() {
 
     }
 
-    fun schooljoin(email:String, passwd:String, nick_name:String, name:String, member_type:Int, birth: String, gender:String, school_id:Int){
+    fun schooljoin(){
         val params = RequestParams()
-        params.put("email", email)
-        params.put("name", name)
+        params.put("email", getid)
+        params.put("name", getName)
 
-        params.put("nick_name", nick_name)
-        params.put("passwd", passwd)
-        params.put("member_type", member_type)
-        params.put("birth", birth)
-        params.put("gender", gender)
-        params.put("school_id", school_id)
+        params.put("nick_name", getNick)
+        params.put("passwd", getPW)
+        params.put("member_type", membertype)
+        params.put("birth", getBirth)
+        params.put("gender", gendertype)
+        params.put("school_id",schoolid )
 
 
         JoinAction.join(params, object : JsonHttpResponseHandler() {
@@ -279,7 +290,7 @@ class StudentJoinActivity : RootActivity() {
 
                     if ("ok" == result) {
 
-                        schooljoin(getid,getPW,getNick,getName,membertype,getBirth,gendertype,schoolid)
+                        schooljoin()
 
                     } else {
                         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()

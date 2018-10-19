@@ -157,11 +157,13 @@ class MainActivity : FragmentActivity() {
         }
 
         freeRL.setOnClickListener {
-            pagerVP.currentItem = 0
+          pagerVP.currentItem = 0
+
         }
 
         infoRL.setOnClickListener {
-            pagerVP.currentItem = 1
+          pagerVP.currentItem = 1
+
         }
 
         studyRL.setOnClickListener {
@@ -178,6 +180,16 @@ class MainActivity : FragmentActivity() {
 
         couponRL.setOnClickListener {
             pagerVP.currentItem = 5
+        }
+
+        WriteLL.setOnClickListener {
+            var intent = Intent(context, PostWriteActivity::class.java)
+            startActivity(intent)
+
+        }
+        MyLL.setOnClickListener {
+            var intent = Intent(context, MyPostingActivity::class.java)
+            startActivity(intent)
         }
 
         timer()

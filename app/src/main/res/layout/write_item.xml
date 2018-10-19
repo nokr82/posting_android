@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <posting.devstories.com.posting_android.base.RationalRelativeLayout
+        android:id="@+id/popup"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:ratio="1:1"
+        android:background="@drawable/background_round_ffffff">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/textimg"
+            android:background="#00000000"
+            android:id="@+id/imageIV"/>
+
+
+    </posting.devstories.com.posting_android.base.RationalRelativeLayout>
+
+
+
+
+</LinearLayout>

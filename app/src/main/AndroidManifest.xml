@@ -2,6 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="posting.devstories.com.posting_android" >
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+
+
     <application
         android:name=".base.GlobalApplication"
         android:allowBackup="true"
@@ -91,6 +96,26 @@
             android:screenOrientation="portrait"
             android:theme="@style/NoTitleDialog"
             android:windowSoftInputMode="adjustResize|stateHidden"/>
+
+        <!-- 주소찾기 -->
+        <activity
+            android:name=".activities.MyPostingActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleDialog"
+            android:windowSoftInputMode="adjustResize|stateHidden"/>
+        <!-- 주소찾기 -->
+        <activity
+            android:name=".activities.MyPostingWriteActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleDialog"
+            android:windowSoftInputMode="adjustResize|stateHidden"/>
+
+        <activity
+            android:name=".activities.PostWriteActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleDialog"
+            android:windowSoftInputMode="adjustResize|stateHidden"/>
+
 
 
     </application>

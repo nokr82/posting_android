@@ -30,33 +30,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:background="@mipmap/postbg_logo"
                 android:layout_alignParentBottom="true"
                 android:layout_marginBottom="3.25dp"
                 android:layout_marginLeft="4.25dp"
                 android:gravity="center_vertical">
 
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/bg_logo"/>
-
                 <TextView
+                    android:layout_marginLeft="4.9dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="9"
-                    android:textStyle="bold"
-                    android:textSize="12sp"
-                    android:textColor="#FFFFFF"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="1시간"
-                    android:layout_marginLeft="10.88dp"
-                    android:textStyle="bold"
-                    android:textSize="12sp"
-                    android:textColor="#FFFFFF"/>
+                    android:text="3"
+                    android:textSize="17.67dp"
+                    android:textColor="#575759"
+                    />
 
 
             </LinearLayout>

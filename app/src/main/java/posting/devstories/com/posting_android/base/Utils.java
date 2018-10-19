@@ -16,6 +16,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.provider.MediaStore.Images;
 import android.text.*;
 import android.text.style.ClickableSpan;
@@ -307,6 +308,69 @@ public class Utils {
 
         return null;
     }
+
+
+
+
+    public static Bitmap getImage(ContentResolver resolver, String imageIdOrPath, int reqSize) {
+        try {
+            String photoPath = null;
+            int orientation = 0;
+
+            try {
+                int uid = Integer.parseInt(imageIdOrPath);
+                String[] proj = { MediaStore.Images.Media.DATA, MediaStore.Images.Media.ORIENTATION };
+
+                String selection = MediaStore.Images.Media._ID + " = " + uid;
+
+                Cursor cursor = MediaStore.Images.Media.query(resolver, MediaStore.Images.Media.EXTERNAL_CONTENT_URI, proj, selection, MediaStore.Images.Media.DATE_ADDED + " DESC");
+                if (cursor != null && cursor.moveToFirst()) {
+                    photoPath = cursor.getString(cursor.getColumnIndex(proj[0]));
+                    orientation = cursor.getInt(cursor.getColumnIndex(proj[1]));
+                }
+                cursor.close();
+
+            } catch (NumberFormatException e) {
+                photoPath = imageIdOrPath;
+
+                // rotation
+                ExifInterface exif;
+                try {
+                    exif = new ExifInterface(photoPath);
+                    int exifOrientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+                    orientation = Utils.exifOrientationToDegrees(exifOrientation);
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+
+            }
+
+            // 비트맵 이미지로 가져온다
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inJustDecodeBounds = true;
+            BitmapFactory.decodeStream(new FileInputStream(photoPath), null, options);
+
+            // Calculate inSampleSize
+            if (orientation == 90 || orientation == 270) {
+                options.inSampleSize = Utils.calculateInSampleSizeByHeight(options, reqSize);
+            } else if (orientation == 0 || orientation == 180) {
+                options.inSampleSize = Utils.calculateInSampleSizeByWidth(options, reqSize);
+            }
+
+            // //// System.out.println("options.inSampleSize : " + options.inSampleSize + ", orientation : " + orientation);
+
+            // Decode bitmap with inSampleSize set
+            options.inJustDecodeBounds = false;
+            Bitmap bm = BitmapFactory.decodeStream(new FileInputStream(photoPath), null, options);
+            return Utils.rotate(bm, orientation);
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
 
     public static Bitmap getImage(Context context, ContentResolver resolver, String imageIdOrPath, int i) {
         try {

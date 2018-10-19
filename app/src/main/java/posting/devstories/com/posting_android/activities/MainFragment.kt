@@ -12,8 +12,6 @@ import posting.devstories.com.posting_android.adapter.PostAdapter
 
 open class MainFragment : Fragment() {
 
-    var context = null
-
     lateinit var activity: MainActivity
     var tabType = 1;
 
@@ -28,7 +26,6 @@ open class MainFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        context = container!!.context as Nothing?
 
         return inflater.inflate(R.layout.fra_main, container, false)
     }
