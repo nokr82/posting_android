@@ -1,8 +1,10 @@
 package posting.devstories.com.posting_android.activities
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -37,6 +39,7 @@ class OrderJoinActivity : RootActivity() {
     var ori_phone = ""
     var name = ""
     var passwd = ""
+    var geterror = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -106,63 +109,77 @@ class OrderJoinActivity : RootActivity() {
             val addressDetail: String = Utils.getString(addressDetailET)
 
             if (company_num == "" || company_num == null || company_num.isEmpty()) {
-                Toast.makeText(context, "사업자등록번호를 입력해주세요", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
+                geterror = "사업자등록번호를 입력해주세요"
+
+                dlgView( geterror)
             }
 
-            if (getPW == "" || getPW == null || getPW.isEmpty()) {
-                Toast.makeText(context, "비밀번호를 입력해주세요", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
+           else if (getPW == "" || getPW == null || getPW.isEmpty()) {
+                geterror = "비밀번호를 입력해주세요"
+
+                dlgView( geterror)
             }
 
-            if (getPW != getPW2) {
-                Toast.makeText(context, "비밀번호가 일치하지 않습니다", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
+            else if (getPW != getPW2) {
+                geterror = "비밀번호가 일치하지 않습니다"
+
+                dlgView( geterror)
             }
 
-            if (company_name == "" || company_name == null || company_name.isEmpty()) {
-                Toast.makeText(context, "상호명을 입력해주세요", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
+            else if (company_name == "" || company_name == null || company_name.isEmpty()) {
+                geterror = "상호명을 입력해주세요"
+
+                dlgView( geterror)
             }
 
-            if (name == "" || name == null || name.isEmpty()) {
-                Toast.makeText(context, "대표자 성명을 입력해주세요", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
+            else if (name == "" || name == null || name.isEmpty()) {
+                geterror = "대표자 성명을 입력해주세요"
+
+                dlgView( geterror)
             }
 
-            if (getPhone == "" || getPhone == null || getPhone.isEmpty()) {
-                Toast.makeText(context, "휴대폰번호를 입력해주세요", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
+            else if (getPhone == "" || getPhone == null || getPhone.isEmpty()) {
+                geterror = "휴대폰번호를 입력해주세요"
+
+                dlgView( geterror)
             }
 
-            if (allCB.isChecked != true) {
-                Toast.makeText(context, "이용약관에 동의해주세요", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
+            else if (allCB.isChecked != true) {
+                geterror = "이용약관에 동의해주세요"
+
+                dlgView( geterror)
             }
 
-            if (serviceCB.isChecked != true) {
-                Toast.makeText(context, "이용약관에 동의해주세요", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
+            else if (serviceCB.isChecked != true) {
+                geterror = "이용약관에 동의해주세요"
+
+                dlgView( geterror)
             }
 
-            if (soloCB.isChecked != true) {
-                Toast.makeText(context, "이용약관에 동의해주세요", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
+            else if (soloCB.isChecked != true) {
+                geterror = "이용약관에 동의해주세요"
+
+                dlgView( geterror)
             }
 
-            if(getPhone != ori_phone) {
-                Toast.makeText(context, "휴대폰 인증을 해주세요", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
+            else if(getPhone != ori_phone) {
+                geterror = "휴대폰인증을 해주세요"
+
+                dlgView( geterror)
             }
 
-            if(sms_code != Utils.getString(smsCodeET)) {
-                Toast.makeText(context, "인증번호를 다시 확인해주세요", Toast.LENGTH_LONG).show()
-                return@setOnClickListener
+            else if(sms_code != Utils.getString(smsCodeET)) {
+                geterror = "인증번호를 다시 확인해주세요"
+
+                dlgView( geterror)
+            }else{
+                passwd = getPW
+
+                join()
+
             }
 
-            passwd = getPW
 
-            join()
 
         }
 
@@ -292,11 +309,7 @@ class OrderJoinActivity : RootActivity() {
 
                     if ("ok" == result) {
 
-                        Toast.makeText(context, "회원가입이 완료되었습니다. 로그인 후 이용하세요", Toast.LENGTH_LONG).show()
-
-                        val intent = Intent(context, LoginActivity::class.java)
-                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                        startActivity(intent)
+                        dlgView2()
 
                     } else {
 
@@ -405,5 +418,38 @@ class OrderJoinActivity : RootActivity() {
         }
 
     }
+//다이얼로그
+    fun dlgView(error:String){
+        var mPopupDlg: DialogInterface? = null
+
+        val builder = AlertDialog.Builder(this)
+        val dialogView = layoutInflater.inflate(R.layout.joinerror_dlg, null)
+        val errorTX = dialogView.findViewById<TextView>(R.id.errorTX)
+        val PostingStartTX = dialogView.findViewById<TextView>(R.id.PostingStartTX)
+        errorTX.setText(error)
+        mPopupDlg =  builder.setView(dialogView).show()
+        PostingStartTX.setOnClickListener {
+
+            mPopupDlg.dismiss()
+        }
+
+    }
+    fun dlgView2(){
+        var mPopupDlg: DialogInterface? = null
+
+        val builder = AlertDialog.Builder(this)
+        val dialogView = layoutInflater.inflate(R.layout.join_dlg, null)
+        val PostingStartTX = dialogView.findViewById<TextView>(R.id.PostingStartTX)
+        mPopupDlg =  builder.setView(dialogView).show()
+        PostingStartTX.setOnClickListener {
+            val intent = Intent(context,LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+
+        }
+
+    }
+
+
 
 }

@@ -1,10 +1,12 @@
 package posting.devstories.com.posting_android.activities
 
+import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ArrayAdapter
+import android.widget.TextView
 import android.widget.Toast
 import com.loopj.android.http.JsonHttpResponseHandler
 import com.loopj.android.http.RequestParams
@@ -18,6 +20,9 @@ import posting.devstories.com.posting_android.R
 import posting.devstories.com.posting_android.base.PrefUtils
 import posting.devstories.com.posting_android.base.RootActivity
 import posting.devstories.com.posting_android.base.Utils
+import android.content.DialogInterface
+
+
 
 class StudentJoinActivity : RootActivity() {
     lateinit var context: Context
@@ -40,6 +45,7 @@ class StudentJoinActivity : RootActivity() {
     var getName = ""
     var getBirth=""
     var getGender = ""
+    var geterror = ""
 
 
 
@@ -95,41 +101,44 @@ class StudentJoinActivity : RootActivity() {
             }else{
                 gendertype = "F"
             }
-
             if(getid==""||getid==null|| getid.isEmpty()){
-                Toast.makeText(context, "이메일을 입력해주세요", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
+               geterror = "이메일을 입력해주세요"
+
+                dlgView( geterror)
             }
             else if(getPW==""||getPW==null|| getPW.isEmpty()){
-                Toast.makeText(context, "비밀번호를 입력해주세요", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
+                geterror = "비밀번호를 입력해주세요"
+
+                dlgView( geterror)
             }
             else if(getPW!=getPW2){
-                Toast.makeText(context, "비밀번호가 일치하지 않습니다", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-            if(getNick==""||getNick==null|| getNick.isEmpty()){
-                Toast.makeText(context, "닉네임을 입력해주세요", Toast.LENGTH_SHORT).show()
+                geterror = "비밀번호가 일치하지 않습니다"
 
-                return@setOnClickListener
+                dlgView( geterror)
+            }else if(getNick==""||getNick==null|| getNick.isEmpty()){
+                geterror = "닉네임을 입력해주세요"
+
+                dlgView( geterror)
+            }else if(getName==""||getName==null|| getName.isEmpty()){
+                geterror = "이름을 입력해주세요"
+
+                dlgView( geterror)
+            }else if (allCK.isChecked!=true){
+                geterror = "이용약관에 동의해주세요"
+
+                dlgView( geterror)
+            }else if (serviceCK.isChecked!=true){
+                geterror = "이용약관에 동의해주세요"
+
+                dlgView( geterror)
+            }else if (soloCK.isChecked!=true){
+                geterror = "이용약관에 동의해주세요"
+
+                dlgView( geterror)
+            }else {
+                Nick(getNick)
             }
-            if(getName==""||getName==null|| getName.isEmpty()){
-                Toast.makeText(context, "이름을 입력해주세요", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-            if (allCK.isChecked!=true){
-                Toast.makeText(context, "이용약관에 동의해주세요", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-            if (serviceCK.isChecked!=true){
-                Toast.makeText(context, "이용약관에 동의해주세요", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-            if (soloCK.isChecked!=true){
-                Toast.makeText(context, "이용약관에 동의해주세요", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-            Nick(getNick)
+
 
 //            email:String,passwd:String,nick_name:String,name:String, member_type:String,birth:Int, gender:String,school_id:Int
 
@@ -198,13 +207,11 @@ class StudentJoinActivity : RootActivity() {
 //                        PrefUtils.setPreference(context, "birth", Utils.getString(data, "birth"))
 //                        PrefUtils.setPreference(context, "gender", Utils.getString(data, "gender"))
 //                        PrefUtils.setPreference(context, "school_id", Utils.getString(data, "school_id"))
-
-                        val intent = Intent(context,LoginActivity::class.java)
-                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                        startActivity(intent)
-
+                        dlgView2()
                     } else {
-                        Toast.makeText(context, "가입실패", Toast.LENGTH_LONG).show()
+                        geterror = "가입실패"
+
+                        dlgView( geterror)
                     }
 
                 } catch (e: JSONException) {
@@ -293,7 +300,9 @@ class StudentJoinActivity : RootActivity() {
                         schooljoin()
 
                     } else {
-                        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+                        geterror =message
+
+                        dlgView( geterror)
                     }
 
                 } catch (e: JSONException) {
@@ -367,6 +376,36 @@ class StudentJoinActivity : RootActivity() {
     }
 
 
+    fun dlgView(error:String){
+        var mPopupDlg: DialogInterface? = null
+
+        val builder = AlertDialog.Builder(this)
+        val dialogView = layoutInflater.inflate(R.layout.joinerror_dlg, null)
+        val errorTX = dialogView.findViewById<TextView>(R.id.errorTX)
+        val PostingStartTX = dialogView.findViewById<TextView>(R.id.PostingStartTX)
+        errorTX.setText(error)
+        mPopupDlg =  builder.setView(dialogView).show()
+        PostingStartTX.setOnClickListener {
+
+            mPopupDlg.dismiss()
+        }
+
+    }
+    fun dlgView2(){
+        var mPopupDlg: DialogInterface? = null
+
+        val builder = AlertDialog.Builder(this)
+        val dialogView = layoutInflater.inflate(R.layout.join_dlg, null)
+        val PostingStartTX = dialogView.findViewById<TextView>(R.id.PostingStartTX)
+        mPopupDlg =  builder.setView(dialogView).show()
+        PostingStartTX.setOnClickListener {
+            val intent = Intent(context,LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+
+        }
+
+    }
 
 
 
