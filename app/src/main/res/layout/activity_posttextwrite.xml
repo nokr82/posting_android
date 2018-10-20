@@ -126,11 +126,12 @@
             android:paddingBottom="13dp"
             android:layout_weight="1">
 
-            <ImageView
+            <RelativeLayout
+                    android:id="@+id/img2RL"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@mipmap/textimg"
-                android:scaleType="centerCrop"
+                android:background="@mipmap/img"
+
                 android:layout_centerInParent="true" />
 
         </posting.devstories.com.posting_android.base.RationalRelativeLayout>

@@ -31,13 +31,9 @@
             android:layout_weight="1"
             android:orientation="horizontal">
             <Spinner
-
                 android:id="@+id/meetingSP2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
-                android:layout_gravity="center_vertical"
-                android:gravity="center"
                 android:background="@null"
                 >
 
@@ -47,6 +43,7 @@
 
 
             <ImageView
+                    android:layout_marginRight="48dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@mipmap/semo"
@@ -54,13 +51,12 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
                 android:orientation="horizontal">
                 <Spinner
+
                     android:id="@+id/mostSP2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
                     android:background="@null">
 
                 </Spinner>
@@ -96,6 +92,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1.5"
+        android:orientation="vertical"
         android:gravity="center"
         >
 
@@ -108,6 +105,7 @@
              >
             
             <RelativeLayout
+                    android:id="@+id/imgRL"
                 android:layout_width="247.23dp"
                 android:layout_height="261.21dp"
                 android:background="@mipmap/write_img">
