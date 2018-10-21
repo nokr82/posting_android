@@ -108,7 +108,7 @@
                     android:id="@+id/imgRL"
                 android:layout_width="247.23dp"
                 android:layout_height="261.21dp"
-                android:background="@mipmap/write_img">
+               >
 
             </RelativeLayout>
 

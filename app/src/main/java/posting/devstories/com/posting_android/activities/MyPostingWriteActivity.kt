@@ -5,6 +5,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.view.View
 import android.widget.ArrayAdapter
 import kotlinx.android.synthetic.main.activity_posttextwrite.*
 import posting.devstories.com.posting_android.R
@@ -33,6 +34,9 @@ class MyPostingWriteActivity : RootActivity() {
 
         //이미지
         img2RL.background = Drawable.createFromPath(imgid)
+        if (imgid !=null){
+            popupRL.visibility = View.VISIBLE
+        }
 
 
         adpater = ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,mee)

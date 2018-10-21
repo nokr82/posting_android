@@ -100,6 +100,10 @@
         android:layout_width="match_parent"
         android:layout_height="0.3dp"
         android:background="#D0D0D0"/>
+
+
+
+
     <LinearLayout
         android:layout_marginTop="12.5dp"
         android:layout_width="match_parent"
@@ -114,10 +118,11 @@
 
 
         <posting.devstories.com.posting_android.base.RationalRelativeLayout
-            android:id="@+id/popup"
+            android:id="@+id/popupRL"
             android:layout_marginLeft="8.5dp"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:visibility="gone"
             app:ratio="200:200"
             android:background="@mipmap/text_bg"
             android:paddingTop="3dp"
@@ -136,21 +141,29 @@
 
         </posting.devstories.com.posting_android.base.RationalRelativeLayout>
 
-
+<LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+              android:layout_weight="2.5"
+android:orientation="vertical">
 
         <EditText
             android:background="@null"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="2.5"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:textSize="11dp"
             android:hint="문구입력"/>
 
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="0.3dp"
+            android:background="#D0D0D0"/>
 
 
+</LinearLayout>
     </LinearLayout>
+
+
 
         <View
             android:layout_width="match_parent"
