@@ -49,6 +49,7 @@ class ImageAdapter(internal var mContext: Context, internal var photoList: Array
             holder = ViewHolder()
             convertView = View.inflate(this.mContext, R.layout.write_item, null)
             holder.imageIV = convertView.findViewById(R.id.imageIV) as ImageView
+            holder.selectRL = convertView.findViewById(R.id.selectRL) as posting.devstories.com.posting_android.base.RationalRelativeLayout
 
 
             convertView.tag = holder
@@ -64,7 +65,9 @@ class ImageAdapter(internal var mContext: Context, internal var photoList: Array
         if (selected.contains(position.toString())) {
             val idx = selected.indexOf(position.toString())
 
+
         } else {
+
 
         }
         holder.photoPath = photo.photoPath
@@ -78,6 +81,8 @@ class ImageAdapter(internal var mContext: Context, internal var photoList: Array
         var number: String? = null
         var selected: Boolean = false
         var photoPath: String? = null
+        var selectedLL: LinearLayout? = null
+        var selectRL: posting.devstories.com.posting_android.base.RationalRelativeLayout? = null
     }
 
     internal inner class ImageItem {

@@ -21,6 +21,7 @@
             android:gravity="center">
 
             <TextView
+                    android:id="@+id/errorTX"
                 android:textSize="15.07dp"
                 android:text="정보입력이 완료되지 않았습니다.\n확인 후 시작해 주십시오!"
                 android:textColor="#6D6E71"
@@ -33,7 +34,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="37.51dp"
                 android:gravity="center"
-                android:text="POSTING 시작하기"
+                android:text="회원정보 입력하기"
                 android:textSize="15.33dp"
                 android:textColor="#20408C"
                 android:background="#FEDA44"

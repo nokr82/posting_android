@@ -4,6 +4,8 @@ import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.database.Cursor
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.ArrayAdapter
@@ -18,6 +20,8 @@ import java.util.*
 import android.widget.Toast
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
+import com.loopj.android.http.BinaryHttpResponseHandler
+import kotlinx.android.synthetic.main.write_item.*
 
 
 class PostWriteActivity : RootActivity() {
@@ -30,6 +34,8 @@ class PostWriteActivity : RootActivity() {
 
     var mee = arrayOf("Metting")
     var most =  arrayOf("수량")
+
+    var imgid :String? = null
 
 
 
@@ -92,12 +98,8 @@ class PostWriteActivity : RootActivity() {
 
         }
 
-
-
         adpater = ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,mee)
         meetingSP2.adapter = adpater
-
-
 
         adpater = ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,most)
         mostSP2.adapter = adpater
@@ -109,7 +111,10 @@ class PostWriteActivity : RootActivity() {
 
 
         nextTX.setOnClickListener {
+
             var intent = Intent(context, MyPostingWriteActivity::class.java)
+
+            intent.putExtra("imgid", imgid)
             startActivity(intent)
         }
 
@@ -120,6 +125,16 @@ class PostWriteActivity : RootActivity() {
 
         val adapter = ImageAdapter(this, photoList, imageLoader, selected)
         listGV.adapter = adapter
+ listGV.setOnItemClickListener { parent, view, position, id ->
+
+     val photo=photoList[position]
+
+     imgRL.background = Drawable.createFromPath(photo.photoPath)
+     //이미지가져오기
+     imgid = photo.photoPath
+
+
+ }
 
 
 
