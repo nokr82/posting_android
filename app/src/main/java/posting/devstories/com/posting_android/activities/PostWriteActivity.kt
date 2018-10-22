@@ -26,17 +26,16 @@ import kotlinx.android.synthetic.main.write_item.*
 
 class PostWriteActivity : RootActivity() {
 
-    lateinit var context:Context
+    lateinit var context: Context
     private var progressDialog: ProgressDialog? = null
 
     private val photoList = ArrayList<ImageAdapter.PhotoData>()
     private val selected = LinkedList<String>()
 
     var mee = arrayOf("Metting")
-    var most =  arrayOf("수량")
+    var most = arrayOf("수량")
 
-    var imgid :String? = null
-
+    var imgid: String = ""
 
 
     lateinit var adpater: ArrayAdapter<String>
@@ -98,10 +97,10 @@ class PostWriteActivity : RootActivity() {
 
         }
 
-        adpater = ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,mee)
+        adpater = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, mee)
         meetingSP2.adapter = adpater
 
-        adpater = ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,most)
+        adpater = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, most)
         mostSP2.adapter = adpater
 
 
@@ -113,7 +112,6 @@ class PostWriteActivity : RootActivity() {
         nextTX.setOnClickListener {
 
             var intent = Intent(context, MyPostingWriteActivity::class.java)
-
             intent.putExtra("imgid", imgid)
             startActivity(intent)
         }
@@ -125,16 +123,16 @@ class PostWriteActivity : RootActivity() {
 
         val adapter = ImageAdapter(this, photoList, imageLoader, selected)
         listGV.adapter = adapter
- listGV.setOnItemClickListener { parent, view, position, id ->
+        listGV.setOnItemClickListener { parent, view, position, id ->
 
-     val photo=photoList[position]
+            val photo = photoList[position]
 
-     imgRL.background = Drawable.createFromPath(photo.photoPath)
-     //이미지가져오기
-     imgid = photo.photoPath
+            imgRL.background = Drawable.createFromPath(photo.photoPath)
+            //이미지가져오기
+            imgid = photo.photoPath!!
 
 
- }
+        }
 
 
 
@@ -154,7 +152,7 @@ class PostWriteActivity : RootActivity() {
         TedPermission.with(this)
                 .setPermissionListener(permissionlistener)
                 .setDeniedMessage("[설정] > [권한] 에서 권한을 허용할 수 있습니다.")
-                .setPermissions(android.Manifest.permission.WRITE_EXTERNAL_STORAGE,android.Manifest.permission.CAMERA,android.Manifest.permission.READ_EXTERNAL_STORAGE)
+                .setPermissions(android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.CAMERA, android.Manifest.permission.READ_EXTERNAL_STORAGE)
                 .check();
 
 
