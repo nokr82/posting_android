@@ -113,6 +113,7 @@ class StudentJoinActivity : RootActivity() {
 
                 return@setOnClickListener
             }
+
             if(getName==""||getName==null|| getName.isEmpty()){
                 Toast.makeText(context, "이름을 입력해주세요", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
