@@ -2,13 +2,11 @@ package posting.devstories.com.posting_android.activities
 
 import android.app.ProgressDialog
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
-import kotlinx.android.synthetic.main.activity_myposting.*
 import posting.devstories.com.posting_android.R
 import posting.devstories.com.posting_android.base.RootActivity
 
-class MyPostingActivity : RootActivity() {
+class MyPageActivity : RootActivity() {
 
     lateinit var context:Context
     private var progressDialog: ProgressDialog? = null
@@ -16,22 +14,10 @@ class MyPostingActivity : RootActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_myposting)
+        setContentView(R.layout.activity_mypage)
 
         this.context = this
         progressDialog = ProgressDialog(context)
-
-
-        myIV.setOnClickListener {
-            val intent = Intent(this, MyPageActivity::class.java)
-            startActivity(intent)
-        }
-        myCV.setOnClickListener {
-            val intent = Intent(this, PostChatActivity::class.java)
-            startActivity(intent)
-        }
-
-
 
     }
 

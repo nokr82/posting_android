@@ -7,15 +7,6 @@
 
 
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -61,25 +52,25 @@
                 android:layout_height="wrap_content"
                 android:src="@mipmap/semo"
                 android:layout_gravity="center_vertical"/>
-   <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-            android:orientation="horizontal">
-            <Spinner
-                android:id="@+id/mostSP"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:background="@null">
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+                <Spinner
+                    android:id="@+id/mostSP"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@null">
 
-            </Spinner>
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/semo"
-                android:layout_gravity="center_vertical"/>
-        </LinearLayout>
+                </Spinner>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/semo"
+                    android:layout_gravity="center_vertical"/>
+            </LinearLayout>
         </LinearLayout>
 
         <TextView
@@ -101,6 +92,16 @@
         android:layout_height="0.3dp"
         android:background="#D0D0D0"/>
 
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
 
 

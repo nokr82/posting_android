@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <posting.devstories.com.posting_android.base.RationalRelativeLayout
+        android:id="@+id/popup"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:ratio="566:582"
+        android:background="@mipmap/storage_dlg">
+
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="My Storage로\n이동/보관됩니다 !"
+            android:textColor="#20408C"
+            android:textSize="17dp"
+            />
+
+
+
+    </posting.devstories.com.posting_android.base.RationalRelativeLayout>
+
+
+
+</LinearLayout>

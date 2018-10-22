@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="63.61dp"
+        android:orientation="horizontal">
+        
+        
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="43.89dp"
+            android:layout_height="43.89dp"
+            android:src="@mipmap/alram_my"/>
+        <LinearLayout
+            android:layout_marginLeft="10.63dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="8월31일"
+                android:textSize="11.33dp"
+                android:textColor="#595757"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="lala_girl 회원님의 포스팅을 떼었습니다"
+                android:textSize="16.33dp"
+                android:textColor="#050000"/>
+        </LinearLayout>
+        <RelativeLayout
+            android:layout_width="66.37dp"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/alram_bg">
+
+
+
+            <RelativeLayout
+                android:layout_width="52.41dp"
+                android:layout_height="52.20dp"
+                android:layout_centerInParent="true"
+                android:background="@mipmap/storage_img">
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="6.39dp"
+                android:layout_height="6.61dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+
+                android:background="@mipmap/green"
+                >
+
+            </RelativeLayout>
+            
+            
+
+
+        </RelativeLayout>
+        
+        
+        
+        
+        
+        
+    </LinearLayout>
+    
+    
+    
+    
+    
+    
+    
+    
+
+</LinearLayout>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+
+
+
+    <TextView
+        android:layout_marginTop="21.3dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="sky 1202"
+        android:textSize="13.6dp"
+        />
+
+
+    
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="129.24dp"
+        android:layout_height="129.24dp"
+        android:layout_gravity="center"
+        android:background="@mipmap/myimg"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/chat_plus"
+            android:padding="5dp"
+            android:layout_marginLeft="10dp"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/chat_bg">
+
+
+            <EditText
+                android:layout_marginLeft="17.23dp"
+                android:layout_gravity="center_vertical"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:layout_height="wrap_content"
+                android:hint="메시지를 입력하세요..."
+                android:textSize="13.6dp"/>
+
+
+            <ImageView
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:src="@mipmap/smile"/>
+
+
+
+
+        </LinearLayout>
+
+
+
+        <ImageView
+            android:id="@+id/policeIV"
+            android:layout_gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="7dp"
+            android:src="@mipmap/police"/>
+
+    </LinearLayout>
+
+
+
+
+
+</LinearLayout>

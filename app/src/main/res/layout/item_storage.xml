@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    
+    
+    <RelativeLayout
+        android:layout_width="151.05dp"
+        android:layout_height="154.56dp"
+        android:background="@mipmap/storage_bg">
+        
+        
+        <ImageView
+            android:id="@+id/storageIV"
+            android:layout_width="133.34dp"
+            android:layout_height="137.85dp"
+            android:layout_centerInParent="true"
+            android:src="@mipmap/storage_img"
+            android:padding="2dp"/>
+
+
+
+
+    </RelativeLayout>
+    
+
+
+
+
+
+
+
+
+
+
+
+</LinearLayout>
