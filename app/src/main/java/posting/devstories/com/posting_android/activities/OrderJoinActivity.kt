@@ -3,6 +3,7 @@ package posting.devstories.com.posting_android.activities
 import android.app.Activity
 import android.app.AlertDialog
 import android.app.ProgressDialog
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
@@ -16,6 +17,7 @@ import kotlinx.android.synthetic.main.activity_orderjoin.*
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
+import posting.devstories.com.posting_android.Actions.AddressAction
 import posting.devstories.com.posting_android.Actions.JoinAction
 import posting.devstories.com.posting_android.Actions.LoginAction
 import posting.devstories.com.posting_android.R
@@ -40,6 +42,9 @@ class OrderJoinActivity : RootActivity() {
     var name = ""
     var passwd = ""
     var geterror = ""
+
+    var lng:String = "";
+    var lat:String = "";
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -291,6 +296,8 @@ class OrderJoinActivity : RootActivity() {
         params.put("company_num", company_num)
         params.put("company_name", company_name)
         params.put("address", Utils.getString(addressTV))
+        params.put("lat", lat)
+        params.put("lng", lng)
         params.put("address_detail", Utils.getString(addressDetailET))
         params.put("passwd", passwd)
         params.put("phone", ori_phone)
@@ -412,13 +419,125 @@ class OrderJoinActivity : RootActivity() {
 
                     addressTV.text = address
 
+                    if (address != null && "" != address && address.length > 0) {
+                        find_location(address)
+                    }
+
                 }
 
             }
         }
 
     }
-//다이얼로그
+
+
+    private fun find_location(address: String) {
+        val params = RequestParams()
+        params.put("address", address)
+
+        AddressAction.search_map(address, 1, 1, object : JsonHttpResponseHandler() {
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+
+                try {
+                    if (response!!.getJSONObject("meta") != null) {
+                        val region = response.getJSONObject("meta")
+                        val list = response.getJSONArray("documents")
+
+                        if (list.length() > 0) {
+                            val obj = list.get(0) as JSONObject
+                            val address = obj.getJSONObject("road_address")
+
+                            lng = Utils.getString(address, "x")
+                            lat = Utils.getString(address, "y")
+
+                        }
+                    }
+
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+
+            }
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONArray?) {
+                super.onSuccess(statusCode, headers, response)
+            }
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, responseString: String?) {
+
+                // System.out.println(responseString);
+            }
+
+            private fun error() {
+                if (progressDialog != null) {
+                    Utils.alert(context, "조회중 장애가 발생하였습니다.")
+                }
+            }
+
+            override fun onFailure(
+                statusCode: Int,
+                headers: Array<Header>?,
+                responseString: String?,
+                throwable: Throwable
+            ) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+
+                //                System.out.println(responseString);
+
+                throwable.printStackTrace()
+                error()
+            }
+
+            override fun onFailure(
+                statusCode: Int,
+                headers: Array<Header>?,
+                throwable: Throwable,
+                errorResponse: JSONObject?
+            ) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+                throwable.printStackTrace()
+                error()
+            }
+
+            override fun onFailure(
+                statusCode: Int,
+                headers: Array<Header>?,
+                throwable: Throwable,
+                errorResponse: JSONArray?
+            ) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+                throwable.printStackTrace()
+                error()
+            }
+
+            override fun onStart() {
+                // show dialog
+                if (progressDialog != null) {
+
+                    progressDialog!!.show()
+                }
+            }
+
+            override fun onFinish() {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+            }
+        })
+    }
+
+
+    //다이얼로그
     fun dlgView(error:String){
         var mPopupDlg: DialogInterface? = null
 
