@@ -18,4 +18,7 @@ object PostingAction {
     fun view(params: RequestParams, handler: JsonHttpResponseHandler) {
         HttpClient.post("/posting/index.json", params, handler)
     }
+    fun mainlist(params: RequestParams, handler: JsonHttpResponseHandler) {
+        HttpClient.post("/main/index.json", params, handler)
+    }
 }

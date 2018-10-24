@@ -1,5 +1,6 @@
 package posting.devstories.com.posting_android.activities
 
+import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -16,8 +17,14 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
+import com.loopj.android.http.JsonHttpResponseHandler
+import com.loopj.android.http.RequestParams
+import cz.msebera.android.httpclient.Header
 import kotlinx.android.synthetic.main.activity_main.*
+import org.json.JSONArray
+import org.json.JSONException
 import org.json.JSONObject
+import posting.devstories.com.posting_android.Actions.PostingAction
 import posting.devstories.com.posting_android.R
 import posting.devstories.com.posting_android.adapter.FullScreenImageAdapter
 import posting.devstories.com.posting_android.adapter.MainAdapter
@@ -26,9 +33,9 @@ import posting.devstories.com.posting_android.base.Utils
 import java.util.ArrayList
 
 class MainActivity : FragmentActivity() {
-
+    private var progressDialog: ProgressDialog? = null
     lateinit var context: Context
-
+    var adapterData: ArrayList<JSONObject> = ArrayList<JSONObject>()
     private val BACK_PRESSED_TERM = (1000 * 2).toLong()
     private var backPressedTime: Long = 0
 
@@ -46,6 +53,7 @@ class MainActivity : FragmentActivity() {
     var mainAdapterData = ArrayList<JSONObject>();
 
     var tabType = 1;
+    var type = ""
 
     var member_id = -1
 
@@ -61,6 +69,9 @@ class MainActivity : FragmentActivity() {
         mainAdapter = MainAdapter(context, R.layout.item_main, mainAdapterData)
         mainLV.isExpanded = true
         mainLV.adapter = mainAdapter
+
+
+       maindata()
 
         // 메인 광고 뷰페이저
         adverAdapter = FullScreenImageAdapter(this, adverImagePaths)
@@ -421,6 +432,105 @@ class MainActivity : FragmentActivity() {
             Toast.makeText(this, "\'뒤로\' 버튼을 한번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show()
             backPressedTime = System.currentTimeMillis()
         }
+    }
+
+
+
+    fun maindata() {
+        val params = RequestParams()
+        params.put("member_id",member_id)
+        params.put("type",type)
+
+        println("====================================================== type " );
+
+        PostingAction.mainlist(params, object : JsonHttpResponseHandler() {
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+
+                try {
+                    val result = response!!.getString("result")
+
+                    if ("ok" == result) {
+                        val list = response.getJSONArray("list")
+
+                        for (i in 0..list.length()-1){
+
+
+
+                                adapterData.add(list[i] as JSONObject)
+                            println("=============================list"+list[i] as JSONObject)
+                        }
+
+                        mainAdapter.notifyDataSetChanged()
+
+
+                    } else {
+                        Toast.makeText(context, "일치하는 회원이 존재하지 않습니다.", Toast.LENGTH_LONG).show()
+                    }
+
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+
+            }
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONArray?) {
+                super.onSuccess(statusCode, headers, response)
+            }
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, responseString: String?) {
+
+                // System.out.println(responseString);
+            }
+
+            private fun error() {
+                Utils.alert(context, "조회중 장애가 발생하였습니다.")
+            }
+
+            override fun onFailure(statusCode: Int, headers: Array<Header>?, responseString: String?, throwable: Throwable) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+
+                // System.out.println(responseString);
+
+                throwable.printStackTrace()
+                error()
+            }
+
+            override fun onFailure(statusCode: Int, headers: Array<Header>?, throwable: Throwable, errorResponse: JSONObject?) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+                throwable.printStackTrace()
+                error()
+            }
+
+            override fun onFailure(statusCode: Int, headers: Array<Header>?, throwable: Throwable, errorResponse: JSONArray?) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+                throwable.printStackTrace()
+                error()
+            }
+
+            override fun onStart() {
+                // show dialog
+                if (progressDialog != null) {
+
+                    progressDialog!!.show()
+                }
+            }
+
+            override fun onFinish() {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+            }
+        })
     }
 
 }

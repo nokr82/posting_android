@@ -176,6 +176,7 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/cameraRL"
             android:gravity="center"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -198,11 +199,13 @@
                 />
         </RelativeLayout>
         <RelativeLayout
+            android:id="@+id/textRL"
             android:layout_width="0dp"
             android:gravity="center"
             android:layout_height="match_parent"
             android:layout_weight="1">
         <TextView
+
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="TEXT"

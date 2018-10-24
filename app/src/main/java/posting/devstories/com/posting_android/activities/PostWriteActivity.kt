@@ -104,6 +104,15 @@ class PostWriteActivity : RootActivity() {
         mostSP2.adapter = adpater
 
 
+        textRL.setOnClickListener {
+            var intent = Intent(context, MyPostingWriteActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+        cameraRL.setOnClickListener {
+
+        }
+
 
 
         finishLL.setOnClickListener {

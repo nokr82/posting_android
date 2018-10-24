@@ -2,12 +2,15 @@ package posting.devstories.com.posting_android.adapter
 
 import android.content.Context
 import android.graphics.Color
+
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import com.nostra13.universalimageloader.core.ImageLoader
 import org.json.JSONObject
 import posting.devstories.com.posting_android.R
 import posting.devstories.com.posting_android.base.Utils
+import posting.devstories.com.posting_android.base.Config
 
 
 open class MainAdapter(context:Context, view:Int, data:ArrayList<JSONObject>) : ArrayAdapter<JSONObject>(context, view, data) {
@@ -15,6 +18,7 @@ open class MainAdapter(context:Context, view:Int, data:ArrayList<JSONObject>) : 
     private lateinit var item: ViewHolder
     var view:Int = view
     var data:ArrayList<JSONObject> = data
+
 
     override fun getView(position: Int, convertView: View?, parent : ViewGroup?): View {
 
@@ -36,8 +40,37 @@ open class MainAdapter(context:Context, view:Int, data:ArrayList<JSONObject>) : 
 
         var json = data.get(position)
 
+       var type = Utils.getString(json, "type")
+//      var list = json.getJSONArray("list")
+        println("-----------list"+json)
 
-        var type = Utils.getString(json, "type")
+//        for (i in 0 ..list.length()-1){
+//
+//            var posting = json.getJSONObject("Posting")
+//
+//            var id = Utils.getString(posting, "id")
+//
+//            var member_id =   Utils.getString(posting, "member_id")
+//            var Image = Utils.getString(posting, "Image")
+//            var created =   Utils.getString(posting, "created")
+//            var contents =   Utils.getString(posting, "contents")
+//            var image_uri = Utils.getString(posting, "image_uri")
+//            var image:String = Config.url+image_uri
+//            ImageLoader.getInstance().displayImage(image, item.mainIV, Utils.UILoptionsPosting)
+//
+//
+//
+//
+//
+//        }
+
+
+
+
+
+
+
+//        var type = Utils.getString(json, "type")
 
         println(type + " ====================================================== ")
 
@@ -82,6 +115,10 @@ open class MainAdapter(context:Context, view:Int, data:ArrayList<JSONObject>) : 
 
         }
 
+
+
+
+
         item.titleTV.text = title
         item.titleTV.setTextColor(Color.parseColor(color))
 
@@ -113,8 +150,10 @@ open class MainAdapter(context:Context, view:Int, data:ArrayList<JSONObject>) : 
 
         var titleTV: TextView
         var tackIV: ImageView
+        var mainIV: ImageView
 
         init {
+            mainIV = v.findViewById(R.id.mainIV) as ImageView
             titleTV = v.findViewById(R.id.titleTV) as TextView
             tackIV = v.findViewById(R.id.tackIV) as ImageView
         }
