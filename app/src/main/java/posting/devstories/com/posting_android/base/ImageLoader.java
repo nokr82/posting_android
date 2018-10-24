@@ -48,7 +48,6 @@ public class ImageLoader {
         }
 
         if (!positionRequested.containsKey(uid)) {
-            System.out.println(uid+path+"#######################");
             positionRequested.put(uid, path);
             if (runningCount >= 15) {
                 queue.push(new ItemPair(uid, path, orientation));

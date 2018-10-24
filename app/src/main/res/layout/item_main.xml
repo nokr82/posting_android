@@ -15,68 +15,28 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="14dp"
-            android:layout_marginBottom="4dp"
             android:text="자유 New"
             android:textColor="#1D9AD7"
             android:textSize="13dp" />
 
         <HorizontalScrollView
             android:layout_width="match_parent"
-            android:layout_height="140.23dp"
-            android:layout_marginLeft="8dp">
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="13dp"
+            android:scrollbars="none">
 
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@mipmap/bg">
-
-                <RelativeLayout
-                    android:layout_width="123.73dp"
-                    android:layout_height="123.73dp"
-                    android:layout_centerInParent="true">
-
-                    <ImageView
-                        android:id="@+id/mainIV"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:scaleType="centerCrop"
-                        android:src="@mipmap/img" />
+            <LinearLayout
+                android:id="@+id/postingLL"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginBottom="3.25dp"
-                        android:layout_marginLeft="4.25dp"
-                        android:background="@mipmap/postbg_logo"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="4.9dp"
-                            android:text="3"
-                            android:textColor="#575759"
-                            android:textSize="17.67dp" />
-
-
-                    </LinearLayout>
-
-                </RelativeLayout>
-
-                <ImageView
-                    android:id="@+id/tackIV"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:src="@mipmap/apjung" />
-
-            </RelativeLayout>
+            </LinearLayout>
 
         </HorizontalScrollView>
-
 
     </LinearLayout>
 
