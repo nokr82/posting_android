@@ -6,14 +6,11 @@ import android.graphics.Color
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import com.nostra13.universalimageloader.core.ImageLoader
 import org.json.JSONObject
 import posting.devstories.com.posting_android.R
 import posting.devstories.com.posting_android.base.Utils
-import posting.devstories.com.posting_android.base.Config
 
-
-open class MainAdapter(context:Context, view:Int, data:ArrayList<JSONObject>) : ArrayAdapter<JSONObject>(context, view, data) {
+open class MainAdapter(context: Context?, view:Int, data:ArrayList<JSONObject>) : ArrayAdapter<JSONObject>(context, view, data) {
 
     private lateinit var item: ViewHolder
     var view:Int = view
