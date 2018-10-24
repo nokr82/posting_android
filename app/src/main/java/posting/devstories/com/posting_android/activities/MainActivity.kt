@@ -97,7 +97,7 @@ class MainActivity : FragmentActivity() {
                     fragment = PostFragment()
                     fragment.arguments = args
 
-                    return fragment
+                    return fragment.newInstance()
                 }
                 1 -> {
                     fragment = WriteFragment()

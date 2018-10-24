@@ -85,6 +85,10 @@ open class PostFragment : Fragment() {
 
     lateinit var mainActivity:MainActivity
 
+    fun newInstance(): PostFragment {
+        return PostFragment()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
