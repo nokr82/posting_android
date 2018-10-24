@@ -33,11 +33,12 @@ class MyPostingWriteActivity : RootActivity() {
     var imgid:String? = null
     var mee2 = arrayOf("Free","Info","Study","Class","Metting","Coupon")
     var mount2=arrayOf("1","2","3","4","5","6","7","8","9","10")
-    lateinit var capture: Bitmap
+    var capture: Bitmap?= null
 
 
     var str:String? = null
 
+    var text:String? = null
     var member_id = -1
     var type=""
     var contents = ""
@@ -58,8 +59,15 @@ class MyPostingWriteActivity : RootActivity() {
         progressDialog = ProgressDialog(context)
 
         intent = getIntent()
+        text = intent.getStringExtra("text")
         imgid = intent.getStringExtra("imgid")
-            capture = intent.getParcelableExtra("capture")
+        capture = intent.getParcelableExtra("capture")
+
+
+
+        if (text.equals("1")){
+            popupRL.visibility = View.GONE
+        }
 
 
         val options = BitmapFactory.Options()
@@ -79,7 +87,7 @@ class MyPostingWriteActivity : RootActivity() {
 
         //이미지
         img2RL.background = Drawable.createFromPath(imgid)
-        captureIV.setImageBitmap(capture )
+        captureIV.setImageBitmap(capture)
 
 
         if (imgid != null && "" != imgid && imgid!!.length> 1&&capture != null){
@@ -149,9 +157,22 @@ class MyPostingWriteActivity : RootActivity() {
         params.put("contents", contents)
         params.put("count", count)
 
+
+        if (capture==null){
+
+        }else{
+            params.put("upload",ByteArrayInputStream(Utils.getByteArray(capture)))
+
+
+//            params.put("upload",capture)
+        }
+
+
+
         if (imgid.equals("")){
 
         }else{
+
 
             val add_file = Utils.getImage(context.contentResolver, imgid)
             params.put("upload",ByteArrayInputStream(Utils.getByteArray(add_file)))
