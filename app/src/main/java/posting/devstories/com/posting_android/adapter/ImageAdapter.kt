@@ -2,14 +2,12 @@ package posting.devstories.com.posting_android.adapter
 
 import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.Color
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import org.json.JSONObject
 import posting.devstories.com.posting_android.R
+import posting.devstories.com.posting_android.activities.WriteFragment
 import posting.devstories.com.posting_android.base.ImageLoader
-import posting.devstories.com.posting_android.base.Utils
 import java.util.*
 
 

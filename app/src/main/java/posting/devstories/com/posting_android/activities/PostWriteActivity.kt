@@ -140,7 +140,7 @@ class PostWriteActivity : RootActivity() {
 
         println(photoList)
 
-        val adapter = ImageAdapter(this, photoList, imageLoader, selected)
+        val adapter = ImageAdapter(context, photoList, imageLoader, selected)
         listGV.adapter = adapter
         listGV.setOnItemClickListener { parent, view, position, id ->
 
