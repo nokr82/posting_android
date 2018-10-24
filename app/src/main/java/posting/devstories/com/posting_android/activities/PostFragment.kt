@@ -24,8 +24,7 @@ import org.json.JSONObject
 import posting.devstories.com.posting_android.Actions.PostingAction
 import posting.devstories.com.posting_android.R
 import posting.devstories.com.posting_android.adapter.FullScreenImageAdapter
-import posting.devstories.com.posting_android.adapter.MainAdapter
-import posting.devstories.com.posting_android.adapter.PostAdapter
+import posting.devstories.com.posting_android.adapter.MainPostAdapter
 import posting.devstories.com.posting_android.base.NonSwipeableViewPager
 import posting.devstories.com.posting_android.base.PrefUtils
 import posting.devstories.com.posting_android.base.Utils
@@ -35,19 +34,16 @@ open class PostFragment : Fragment() {
     var ctx: Context? = null
     private var progressDialog: ProgressDialog? = null
 
-    var adapterData: ArrayList<JSONObject> = ArrayList<JSONObject>()
-    lateinit var adapterMain: PostAdapter
-
-    var adverImagePaths = java.util.ArrayList<String>()
-    private var adverAdapterData = java.util.ArrayList<JSONObject>()
+    var adverImagePaths = ArrayList<String>()
+    private var adverAdapterData = ArrayList<JSONObject>()
     private lateinit var adverAdapter: FullScreenImageAdapter
     var adPosition = 0;
 
     private var adTime = 0
     private lateinit var handler: Handler
 
-    lateinit var mainAdapter: MainAdapter
-    var mainAdapterData = java.util.ArrayList<JSONObject>();
+    lateinit var mainAdapter: MainPostAdapter
+    var mainAdapterData = ArrayList<JSONObject>();
 
     var type = ""
     var tabType = 1
@@ -151,12 +147,9 @@ open class PostFragment : Fragment() {
         member_id = PrefUtils.getIntPreference(context, "member_id")
 
         // 메인 데이터
-        mainAdapter = MainAdapter(ctx, R.layout.item_main, mainAdapterData)
+        mainAdapter = MainPostAdapter(ctx, R.layout.item_main, mainAdapterData)
         mainLV.isExpanded = true
         mainLV.adapter = mainAdapter
-
-
-        maindata()
 
         // 메인 광고 뷰페이저
         adverAdapter = FullScreenImageAdapter(mainActivity, adverImagePaths)
@@ -193,54 +186,34 @@ open class PostFragment : Fragment() {
 
                 when (position) {
                     0 -> {
-
                         tabType = 1;
 
                         setMenuTabView()
-
-                        freeTV.setTextColor(Color.parseColor("#01b4ec"))
-                        freeV.visibility = View.VISIBLE
-
                     }
                     1 -> {
                         tabType = 2;
 
                         setMenuTabView()
-
-                        infoV.visibility = View.VISIBLE
-                        infoTV.setTextColor(Color.parseColor("#01b4ec"))
                     }
                     2 -> {
                         tabType = 3;
 
                         setMenuTabView()
-
-                        studyV.visibility = View.VISIBLE
-                        studyTV.setTextColor(Color.parseColor("#01b4ec"))
                     }
                     3 -> {
                         tabType = 4;
 
                         setMenuTabView()
-
-                        classV.visibility = View.VISIBLE
-                        classTV.setTextColor(Color.parseColor("#01b4ec"))
                     }
                     4 -> {
                         tabType = 5;
 
                         setMenuTabView()
-
-                        meetingV.visibility = View.VISIBLE
-                        meetingTV.setTextColor(Color.parseColor("#01b4ec"))
                     }
                     5 -> {
                         tabType = 6;
 
                         setMenuTabView()
-
-                        couponV.visibility = View.VISIBLE
-                        couponTV.setTextColor(Color.parseColor("#01b4ec"))
                     }
                 }
             }
@@ -254,89 +227,61 @@ open class PostFragment : Fragment() {
         }
 
         freeRL.setOnClickListener {
-            pagerVP.currentItem = 0
+            if (0 == pagerVP.currentItem) {
+                tabType = 1;
 
+                setMenuTabView()
+            }
+            pagerVP.currentItem = 0
         }
 
         infoRL.setOnClickListener {
+            if (1 == pagerVP.currentItem) {
+                tabType = 2;
+
+                setMenuTabView()
+            }
             pagerVP.currentItem = 1
         }
 
         studyRL.setOnClickListener {
+            if (2 == pagerVP.currentItem) {
+                tabType = 3;
+
+                setMenuTabView()
+            }
             pagerVP.currentItem = 2
         }
 
         classRL.setOnClickListener {
+            if (3 == pagerVP.currentItem) {
+                tabType = 4;
+
+                setMenuTabView()
+            }
             pagerVP.currentItem = 3
         }
 
         meetingRL.setOnClickListener {
+            if (4 == pagerVP.currentItem) {
+                tabType = 5;
+
+                setMenuTabView()
+            }
             pagerVP.currentItem = 4
         }
 
         couponRL.setOnClickListener {
+            if (5 == pagerVP.currentItem) {
+                tabType = 6;
+
+                setMenuTabView()
+            }
             pagerVP.currentItem = 5
         }
 
         timer()
-        mainLoadData()
-
-    }
-
-    private fun mainLoadData(){
-
-        adverImagePaths.clear()
-        adverAdapterData.clear()
-        mainAdapterData.clear()
-
-
-        var path = "http://13.124.13.37/data/ad/5ba1ebab-0018-486f-ace1-624cac1f0bcc";
-
-        adverImagePaths.add(path);
-        adverImagePaths.add(path);
-        adverImagePaths.add(path);
-        adverImagePaths.add(path);
-        adverImagePaths.add(path);
-        adverImagePaths.add(path);
-
-        var data = JSONObject();
-        data.put("path", path)
-
-        adverAdapterData.add(data)
-        adverAdapterData.add(data)
-        adverAdapterData.add(data)
-        adverAdapterData.add(data)
-        adverAdapterData.add(data)
-        adverAdapterData.add(data)
-
-        adverAdapter.notifyDataSetChanged()
-
-        data = JSONObject();
-        data.put("type", "free")
-        mainAdapterData.add(data);
-
-        data = JSONObject();
-        data.put("type", "info")
-        mainAdapterData.add(data);
-
-        data = JSONObject();
-        data.put("type", "study")
-        mainAdapterData.add(data);
-
-        data = JSONObject();
-        data.put("type", "class")
-        mainAdapterData.add(data);
-
-        data = JSONObject();
-        data.put("type", "meeting")
-        mainAdapterData.add(data);
-
-        data = JSONObject();
-
-        data.put("type", "coupon")
-        mainAdapterData.add(data);
-
-        mainAdapter.notifyDataSetChanged()
+        mainData()
 
     }
 
@@ -389,12 +334,6 @@ open class PostFragment : Fragment() {
 
         override fun getItem(i: Int): Fragment {
 
-            val freeFragment: FreeFragment
-            val infoFragment: InfoFragment
-            val studyFragment: StudyFragment
-            val classFragment: ClassFragment
-            val meetingFragment: MeetingFragment
-            val couponFragment: CouponFragment
             var fragment: Fragment
 
             val args = Bundle()
@@ -470,7 +409,7 @@ open class PostFragment : Fragment() {
         mainLL.visibility = View.VISIBLE
         pagerVP.visibility = View.GONE
 
-        maindata()
+        mainData()
     }
 
     fun setMenuTabView() {
@@ -490,14 +429,33 @@ open class PostFragment : Fragment() {
 
         mainLL.visibility = View.GONE
         pagerVP.visibility = View.VISIBLE
+
+        if(tabType == 1) {
+            freeTV.setTextColor(Color.parseColor("#01b4ec"))
+            freeV.visibility = View.VISIBLE
+        } else if (tabType == 2) {
+            infoV.visibility = View.VISIBLE
+            infoTV.setTextColor(Color.parseColor("#01b4ec"))
+        } else if (tabType == 3) {
+            studyV.visibility = View.VISIBLE
+            studyTV.setTextColor(Color.parseColor("#01b4ec"))
+        } else if (tabType == 4) {
+            classV.visibility = View.VISIBLE
+            classTV.setTextColor(Color.parseColor("#01b4ec"))
+        } else if (tabType == 5) {
+            meetingV.visibility = View.VISIBLE
+            meetingTV.setTextColor(Color.parseColor("#01b4ec"))
+        } else if (tabType == 6) {
+            couponV.visibility = View.VISIBLE
+            couponTV.setTextColor(Color.parseColor("#01b4ec"))
+        }
+
     }
 
-    fun maindata() {
+    fun mainData() {
         val params = RequestParams()
         params.put("member_id",member_id)
         params.put("type",type)
-
-        println("====================================================== type " );
 
         PostingAction.mainlist(params, object : JsonHttpResponseHandler() {
 
@@ -507,21 +465,41 @@ open class PostFragment : Fragment() {
                 }
 
                 try {
+
+                    adverImagePaths.clear()
+                    adverAdapterData.clear()
+                    mainAdapterData.clear()
+
+                    var path = "http://13.124.13.37/data/ad/5ba1ebab-0018-486f-ace1-624cac1f0bcc";
+
+                    adverImagePaths.add(path);
+                    adverImagePaths.add(path);
+                    adverImagePaths.add(path);
+                    adverImagePaths.add(path);
+                    adverImagePaths.add(path);
+                    adverImagePaths.add(path);
+
+                    var data = JSONObject();
+                    data.put("path", path)
+
+                    adverAdapterData.add(data)
+                    adverAdapterData.add(data)
+                    adverAdapterData.add(data)
+                    adverAdapterData.add(data)
+                    adverAdapterData.add(data)
+                    adverAdapterData.add(data)
+
                     val result = response!!.getString("result")
 
                     if ("ok" == result) {
                         val list = response.getJSONArray("list")
 
-                        for (i in 0..list.length()-1){
-
-
-
-                            adapterData.add(list[i] as JSONObject)
-                            println("=============================list"+list[i] as JSONObject)
+                        for (i in 0..(list.length()-1)){
+                            mainAdapterData.add(list[i] as JSONObject)
                         }
 
                         mainAdapter.notifyDataSetChanged()
-
+                        adverAdapter.notifyDataSetChanged()
 
                     } else {
                         Toast.makeText(context, "일치하는 회원이 존재하지 않습니다.", Toast.LENGTH_LONG).show()

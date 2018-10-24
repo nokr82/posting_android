@@ -82,7 +82,6 @@ class IntroActivity : RootActivity() {
 
     private fun login() {
 
-
         val params = RequestParams()
         params.put("email", PrefUtils.getStringPreference(context,"email"))
         params.put("passwd", PrefUtils.getStringPreference(context,"passwd"))

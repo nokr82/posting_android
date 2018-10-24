@@ -3,12 +3,10 @@ package posting.devstories.com.posting_android.activities
 import android.app.ProgressDialog
 import android.content.Context
 import android.os.Bundle
-import android.widget.ArrayAdapter
 import kotlinx.android.synthetic.main.activity_postchat.*
 import org.json.JSONObject
 import posting.devstories.com.posting_android.R
 import posting.devstories.com.posting_android.adapter.ChatAdapter
-import posting.devstories.com.posting_android.adapter.MainAdapter
 import posting.devstories.com.posting_android.base.RootActivity
 import java.util.ArrayList
 

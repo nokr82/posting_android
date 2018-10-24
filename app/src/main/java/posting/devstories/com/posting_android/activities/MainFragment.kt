@@ -17,7 +17,6 @@ import org.json.JSONException
 import org.json.JSONObject
 import posting.devstories.com.posting_android.Actions.PostingAction
 import posting.devstories.com.posting_android.R
-import posting.devstories.com.posting_android.adapter.MainPostAdapter
 import posting.devstories.com.posting_android.adapter.PostAdapter
 import posting.devstories.com.posting_android.base.PrefUtils
 import posting.devstories.com.posting_android.base.Utils
@@ -31,9 +30,7 @@ open class MainFragment : Fragment() {
     var adapterData: ArrayList<JSONObject> = ArrayList<JSONObject>()
     lateinit var adapterMain: PostAdapter
 
-
     lateinit var gideGV: GridView
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

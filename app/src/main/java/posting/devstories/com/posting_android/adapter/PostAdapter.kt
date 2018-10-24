@@ -40,7 +40,6 @@ open class PostAdapter(context:Context, view:Int, data:ArrayList<JSONObject>) : 
         var posting = json.getJSONObject("Posting")
 
 
-
         var id = Utils.getString(posting, "id")
 
         var member_id =   Utils.getString(posting, "member_id")
@@ -49,10 +48,17 @@ open class PostAdapter(context:Context, view:Int, data:ArrayList<JSONObject>) : 
         var contents =   Utils.getString(posting, "contents")
         var image_uri = Utils.getString(posting, "image_uri")
 
-        var image = Config.url + image_uri
-        ImageLoader.getInstance().displayImage(image, item.postIV, Utils.UILoptionsPosting)
+        item.postIV.visibility = View.GONE
+        item.contentsTV.visibility = View.GONE
 
-        item.contentsTV.text = contents
+        if (!image_uri.isEmpty() && image_uri != "") {
+            var image = Config.url + image_uri
+            ImageLoader.getInstance().displayImage(image, item.postIV, Utils.UILoptionsPosting)
+            item.postIV.visibility = View.VISIBLE
+        } else {
+            item.contentsTV.text = contents
+            item.contentsTV.visibility = View.VISIBLE
+        }
 
         return retView
     }
