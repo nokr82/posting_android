@@ -27,6 +27,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+
+import posting.devstories.com.posting_android.R;
 import posting.devstories.com.posting_android.activities.LoginActivity;
 
 import org.json.JSONException;
@@ -934,6 +936,13 @@ public class Utils {
 //         .showImageOnLoading(R.mipmap.food_img01)
 //         .showImageForEmptyUri(R.mipmap.food_img01)
 //        .showImageOnFail(R.mipmap.food_img01).delayBeforeLoading(100)
+        .cacheInMemory(true).cacheOnDisk(true).considerExifParams(true).imageScaleType(ImageScaleType.EXACTLY).bitmapConfig(Bitmap.Config.RGB_565).build();
+
+    public static DisplayImageOptions UILoptionsPosting = new DisplayImageOptions.Builder()
+        // .displayer(new RoundedBitmapDisplayer(2))
+         .showImageOnLoading(R.mipmap.bg)
+         .showImageForEmptyUri(R.mipmap.bg)
+        .showImageOnFail(R.mipmap.bg).delayBeforeLoading(100)
         .cacheInMemory(true).cacheOnDisk(true).considerExifParams(true).imageScaleType(ImageScaleType.EXACTLY).bitmapConfig(Bitmap.Config.RGB_565).build();
 
     public static DisplayImageOptions UILoptionsUserProfile = new DisplayImageOptions.Builder()

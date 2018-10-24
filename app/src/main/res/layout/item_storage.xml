@@ -10,7 +10,31 @@
         android:layout_width="151.05dp"
         android:layout_height="154.56dp"
         android:background="@mipmap/storage_bg">
-        
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="32"
+            android:textSize="10dp"
+            android:textColor="#FFFFFF"
+            android:layout_marginLeft="50dp"
+            android:background="@drawable/circle_red"
+            android:layout_marginBottom="1dp"
+            android:gravity="center"
+            android:paddingLeft="2.5dp"
+            android:paddingRight="2.5dp"
+            />
+        </LinearLayout>
         
         <ImageView
             android:id="@+id/storageIV"

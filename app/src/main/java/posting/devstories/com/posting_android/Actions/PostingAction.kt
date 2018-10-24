@@ -14,4 +14,8 @@ object PostingAction {
     fun write(params: RequestParams, handler: JsonHttpResponseHandler) {
         HttpClient.post("/posting/write.json", params, handler)
     }
+    //글목록보기
+    fun view(params: RequestParams, handler: JsonHttpResponseHandler) {
+        HttpClient.post("/posting/index.json", params, handler)
+    }
 }

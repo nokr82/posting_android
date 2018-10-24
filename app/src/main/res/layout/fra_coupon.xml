@@ -56,7 +56,7 @@
                 android:layout_width="42.5dp"
                 android:layout_height="42.5dp"
                 android:layout_marginLeft="26.6dp"
-                android:src="@mipmap/myimg"/>
+                android:src="@mipmap/order_bg"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -64,7 +64,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="12.4dp"
                 android:textSize="16.33dp"
-                android:text="lala_girl"/>
+                android:text="Pizza Hut_고대점"/>
             <TextView
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -74,11 +74,18 @@
                 android:textSize="11dp"
                 android:text="8월31일"/>
             <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:src="@mipmap/police"
+            android:padding="15dp"/>
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:src="@mipmap/police"
-                android:padding="15dp"/>
+                android:src="@mipmap/myimg_w"
+                android:layout_marginRight="10dp"
+               />
 
 
 
@@ -104,71 +111,75 @@
         android:layout_height="0dp"
         android:layout_weight="0.55">
 
-    <LinearLayout
-        android:layout_marginLeft="34.1dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="안녕하세요 이화여대 17학번 영문학과 재학생이며,\n부전공은 국어교육학 입니다.
-\n인문학 스터디 그룹원 모집중입니다.\n대상 : 고대/이대/서강대 재학생이면 누구나\n 인문학에 관심 있는 16~18 학번"
-            android:textSize="13.6dp"/>
-
         <LinearLayout
+            android:layout_marginRight="34dp"
+            android:layout_marginLeft="34.1dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="#스터디"
-                android:textColor="#063588"
-                android:textSize="13dp"/>
-            <TextView
-                android:layout_width="wrap_content"
+                android:text="안녕하세요 이화여대 17학번 영문학과 재학생이며,\n부전공은 국어교육학 입니다.
+\n인문학 스터디 그룹원 모집중입니다.\n대상 : 고대/이대/서강대 재학생이면 누구나\n 인문학에 관심 있는 16~18 학번"
+                android:textSize="13.6dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="#스터디"
-                android:textColor="#063588"
-                android:textSize="13dp"/>
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="#스터디"
+                    android:textColor="#063588"
+                    android:textSize="13dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="#스터디"
+                    android:textColor="#063588"
+                    android:textSize="13dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="#인문학"
+                    android:textColor="#063588"
+                    android:textSize="13dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="#인문학스터디"
+                    android:textColor="#063588"
+                    android:textSize="13dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="#STUDY"
+                    android:textColor="#063588"
+                    android:textSize="13dp"/>
+
+            </LinearLayout>
+
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="#인문학"
-                android:textColor="#063588"
-                android:textSize="13dp"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="#인문학스터디"
-                android:textColor="#063588"
-                android:textSize="13dp"/>
-            <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="#STUDY"
-            android:textColor="#063588"
-            android:textSize="13dp"/>
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="37dp"
+                android:background="#FEDF2F"
+                android:text="쿠폰사용확인"
+                android:gravity="center"/>
+
+
+
+
+
 
         </LinearLayout>
 
-        <ListView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-
-
-
-        </ListView>
-
-
-
-
-        
-
-    </LinearLayout>
 
 
     </ScrollView>
@@ -177,53 +188,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/chat_plus"
-            android:padding="5dp"
-            android:layout_marginLeft="10dp"/>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:background="@mipmap/chat_bg">
 
 
-            <EditText
-                android:layout_marginLeft="17.23dp"
-                android:layout_gravity="center_vertical"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:background="@null"
-                android:layout_height="wrap_content"
-                android:hint="메시지를 입력하세요..."
-                android:textSize="13.6dp"/>
-
-
-            <ImageView
-                android:layout_gravity="center_vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:src="@mipmap/smile"/>
-
-
-
-
-        </LinearLayout>
-
-
-
-        <ImageView
-            android:layout_gravity="center_vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="7dp"
-            android:src="@mipmap/police"/>
 
     </LinearLayout>
 

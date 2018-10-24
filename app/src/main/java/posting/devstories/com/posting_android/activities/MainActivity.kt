@@ -21,6 +21,7 @@ import org.json.JSONObject
 import posting.devstories.com.posting_android.R
 import posting.devstories.com.posting_android.adapter.FullScreenImageAdapter
 import posting.devstories.com.posting_android.adapter.MainAdapter
+import posting.devstories.com.posting_android.base.PrefUtils
 import posting.devstories.com.posting_android.base.Utils
 import java.util.ArrayList
 
@@ -46,11 +47,15 @@ class MainActivity : FragmentActivity() {
 
     var tabType = 1;
 
+    var member_id = -1
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         this.context = this
+
+        member_id = PrefUtils.getIntPreference(context, "member_id")
 
         // 메인 데이터
         mainAdapter = MainAdapter(context, R.layout.item_main, mainAdapterData)
@@ -91,10 +96,6 @@ class MainActivity : FragmentActivity() {
 
             override fun onPageSelected(position: Int) {
 
-                val intent = Intent()
-                intent.action = "MENU_REFRESH"
-                intent.putExtra("menu_type", position.toString())
-                sendBroadcast(intent)
                 when (position) {
                     0 -> {
 
@@ -104,6 +105,7 @@ class MainActivity : FragmentActivity() {
 
                         freeTX.setTextColor(Color.parseColor("#01b4ec"))
                         freeV.visibility = View.VISIBLE
+
                     }
                     1 -> {
                         tabType = 2;
@@ -163,7 +165,6 @@ class MainActivity : FragmentActivity() {
 
         infoRL.setOnClickListener {
           pagerVP.currentItem = 1
-
         }
 
         studyRL.setOnClickListener {
@@ -191,6 +192,12 @@ class MainActivity : FragmentActivity() {
             var intent = Intent(context, MyPostingActivity::class.java)
             startActivity(intent)
         }
+        HomeLL.setOnClickListener {
+            var intent = Intent(context, MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
 
         timer()
         mainLoadData()
@@ -302,17 +309,27 @@ class MainActivity : FragmentActivity() {
     class PagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
 
         override fun getItem(i: Int): Fragment {
-            val fragment: Fragment
+
+            val freeFragment: FreeFragment
+            val infoFragment: InfoFragment
+            val studyFragment: StudyFragment
+            val classFragment: ClassFragment
+            val meetingFragment: MeetingFragment
+            val couponFragment: CouponFragment
+            var fragment: Fragment
+
             val args = Bundle()
             when (i) {
                 0 -> {
                     fragment = FreeFragment()
                     fragment.arguments = args
+
                     return fragment
                 }
                 1 -> {
                     fragment = InfoFragment()
                     fragment.arguments = args
+
                     return fragment
                 }
                 2 -> {

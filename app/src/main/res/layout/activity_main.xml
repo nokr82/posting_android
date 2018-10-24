@@ -78,12 +78,12 @@
             android:layout_weight="1">
 
             <TextView
+                android:id="@+id/freeTX"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:text="자유"
-                android:id="@+id/freeTX"
                 android:textColor="#99a0a0"
                 android:textSize="12.95dp" />
 
@@ -106,12 +106,12 @@
             android:layout_weight="1">
 
             <TextView
+                android:id="@+id/infoTX"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:text="정보"
-                android:id="@+id/infoTX"
                 android:textColor="#99a0a0"
                 android:textSize="12.95dp" />
 
@@ -264,6 +264,20 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="23.37dp"
+                    android:layout_height="22.42dp"
+                    android:src="@mipmap/home" />
+
+            </LinearLayout>
+
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -318,18 +332,20 @@
         </LinearLayout>
 
     </RelativeLayout>
-
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:background="#f0f0f0"/>
+        android:background="#888888" />
 
     <LinearLayout
+        android:gravity="bottom"
+        android:layout_gravity="bottom"
         android:layout_width="match_parent"
         android:layout_height="51dp"
         android:orientation="horizontal">
 
         <LinearLayout
+            android:id="@+id/HomeLL"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -339,7 +355,7 @@
             <ImageView
                 android:layout_width="23.37dp"
                 android:layout_height="22.42dp"
-                android:src="@mipmap/home" />
+                android:src="@mipmap/noclickhome" />
 
         </LinearLayout>
 
@@ -358,27 +374,81 @@
 
 
         </LinearLayout>
-        <LinearLayout
-            android:id="@+id/MyLL"
+        <RelativeLayout
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
             android:gravity="center"
-            android:orientation="vertical">
 
-            <ImageView
-                android:layout_width="22.37dp"
-                android:layout_height="22.42dp"
-                android:src="@mipmap/my" />
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:id="@+id/MyLL"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="알림"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="11.75dp">
+
+                <ImageView
+                    android:layout_width="23.37dp"
+                    android:layout_height="22.42dp"
+                    android:src="@mipmap/clickmy" />
 
 
-        </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_centerInParent="true"
+                android:layout_alignParentTop="true">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="32"
+                    android:textSize="10dp"
+                    android:textColor="#FFFFFF"
+                    android:layout_marginLeft="27dp"
+                    android:layout_marginTop="3.5dp"
+                    android:background="@drawable/circle_red"
+                    android:layout_marginBottom="1dp"
+                    android:gravity="center"
+                    android:paddingLeft="2.5dp"
+                    android:paddingRight="2.5dp"
+                    />
+
+
+            </LinearLayout>
+
+
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:layout_alignParentBottom="true"
+                android:visibility="invisible"
+                android:background="#D0D0D0"
+                />
+
+
+
+
+        </RelativeLayout>
+
 
 
 
 
 
     </LinearLayout>
+
+
+
 
 </LinearLayout>
 

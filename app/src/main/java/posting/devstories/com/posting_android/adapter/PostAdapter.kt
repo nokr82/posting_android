@@ -1,13 +1,14 @@
 package posting.devstories.com.posting_android.adapter
 
 import android.content.Context
-import android.graphics.Color
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import com.nostra13.universalimageloader.core.ImageLoader
 import org.json.JSONObject
 import posting.devstories.com.posting_android.R
 import posting.devstories.com.posting_android.base.Utils
+import posting.devstories.com.posting_android.base.Config
 
 
 open class PostAdapter(context:Context, view:Int, data:ArrayList<JSONObject>) : ArrayAdapter<JSONObject>(context, view, data) {
@@ -36,54 +37,22 @@ open class PostAdapter(context:Context, view:Int, data:ArrayList<JSONObject>) : 
 
         var json = data.get(position)
 
+        var posting = json.getJSONObject("Posting")
 
-        var type = Utils.getString(json, "type")
 
-        println(type + " ====================================================== ")
 
-        var title = "자유 NEW"
-        var color = "#1D9AD7"
+        var id = Utils.getString(posting, "id")
 
-        if(type == "free") {
+        var member_id =   Utils.getString(posting, "member_id")
+        var Image = Utils.getString(posting, "Image")
+        var created =   Utils.getString(posting, "created")
+        var contents =   Utils.getString(posting, "contents")
+        var image_uri = Utils.getString(posting, "image_uri")
 
-            title = "자유 NEW"
-            color = "#1D9AD7"
-            item.tackIV.setImageResource(R.mipmap.apjung)
+        var image = Config.url + image_uri
+        ImageLoader.getInstance().displayImage(image, item.postIV, Utils.UILoptionsPosting)
 
-        } else if (type == "info") {
-
-            title = "정보 NEW"
-            color = "#2A3890"
-            item.tackIV.setImageResource(R.mipmap.blue)
-
-        } else if (type == "study") {
-
-            title = "스터디 NEW"
-            color = "#FAA71A"
-            item.tackIV.setImageResource(R.mipmap.yellow)
-
-        } else if (type == "class") {
-
-            title = "동아리 NEW"
-            color = "#00A99D"
-            item.tackIV.setImageResource(R.mipmap.green)
-
-        } else if (type == "meeting") {
-
-            title = "미팅 NEW"
-            color = "#EC4095"
-            item.tackIV.setImageResource(R.mipmap.pink)
-
-        } else if (type == "coupon") {
-
-            title = "쿠폰 NEW"
-            color = "#ED2123"
-            item.tackIV.setImageResource(R.mipmap.red)
-
-        }
-
-        item.titleTV.text = title
-        item.titleTV.setTextColor(Color.parseColor(color))
+        item.contentsTV.text = contents
 
         return retView
     }
@@ -110,13 +79,12 @@ open class PostAdapter(context:Context, view:Int, data:ArrayList<JSONObject>) : 
     }
 
     class ViewHolder(v: View) {
-
-        var titleTV: TextView
-        var tackIV: ImageView
+        var postIV :ImageView
+        var contentsTV :TextView
 
         init {
-            titleTV = v.findViewById(R.id.titleTV) as TextView
-            tackIV = v.findViewById(R.id.tackIV) as ImageView
+            postIV = v.findViewById(R.id.postIV) as ImageView
+            contentsTV = v.findViewById(R.id.contentsTV) as TextView
         }
     }
 }

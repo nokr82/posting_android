@@ -32,8 +32,8 @@ class PostWriteActivity : RootActivity() {
     private val photoList = ArrayList<ImageAdapter.PhotoData>()
     private val selected = LinkedList<String>()
 
-    var mee = arrayOf("Metting")
-    var most = arrayOf("수량")
+    var mee = arrayOf("Free","Info","Study","Class","Metting","Coupon")
+    var  most =arrayOf("1","2","3","4","5","6","7","8","9","10")
 
     var imgid: String = ""
 
@@ -106,7 +106,9 @@ class PostWriteActivity : RootActivity() {
 
 
 
-
+        finishLL.setOnClickListener {
+            finish()
+        }
 
 
         nextTX.setOnClickListener {

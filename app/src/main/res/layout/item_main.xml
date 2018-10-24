@@ -26,9 +26,9 @@
             android:layout_marginLeft="8dp">
 
             <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@mipmap/bg">
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@mipmap/bg">
 
                 <RelativeLayout
                     android:layout_width="123.73dp"
@@ -38,28 +38,27 @@
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:src="@mipmap/img"
-                        android:scaleType="centerCrop" />
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/img" />
 
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:background="@mipmap/postbg_logo"
                         android:layout_alignParentBottom="true"
                         android:layout_marginBottom="3.25dp"
                         android:layout_marginLeft="4.25dp"
-                        android:gravity="center_vertical">
+                        android:background="@mipmap/postbg_logo"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
                         <TextView
-                            android:layout_marginLeft="4.9dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginLeft="4.9dp"
                             android:text="3"
-                            android:textSize="17.67dp"
                             android:textColor="#575759"
-                            />
+                            android:textSize="17.67dp" />
 
 
                     </LinearLayout>
@@ -67,11 +66,11 @@
                 </RelativeLayout>
 
                 <ImageView
-                        android:id="@+id/tackIV"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:src="@mipmap/apjung"/>
+                    android:id="@+id/tackIV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:src="@mipmap/apjung" />
 
             </RelativeLayout>
 

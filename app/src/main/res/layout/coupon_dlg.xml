@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <posting.devstories.com.posting_android.base.RationalRelativeLayout
+        android:id="@+id/popup"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:ratio="960:515"
+        android:background="@drawable/background_round_ffffff">
+
+        <LinearLayout
+            android:layout_marginLeft="44.43dp"
+            android:layout_marginRight="44.43dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <TextView
+                android:textSize="15.07dp"
+                android:text="쿠폰 사용확인 체크를 하시면\n재사용이 불가합니다.\n사용확인 체크 하시겠습니까?"
+                android:textColor="#6D6E71"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/campus"/>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:id="@+id/couponnoTX"
+                    android:layout_width="0dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_weight="1"
+                    android:layout_height="37.51dp"
+                    android:gravity="center"
+                    android:text="취소"
+                    android:textSize="15.33dp"
+                    android:textColor="#20408C"
+                    android:background="@mipmap/coupon_no"
+                    android:layout_marginTop="52.93dp"
+                    />
+                <TextView
+
+                    android:layout_marginLeft="2dp"
+                    android:id="@+id/couponyTX"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="37.51dp"
+                    android:gravity="center"
+                    android:text="쿠폰사용확인"
+                    android:textSize="15.33dp"
+                    android:textColor="#20408C"
+                    android:background="@mipmap/coupon_y"
+                    android:layout_marginTop="52.93dp"
+                    />
+
+
+            </LinearLayout>
+
+
+
+
+        </LinearLayout>
+
+    </posting.devstories.com.posting_android.base.RationalRelativeLayout>
+
+
+
+</LinearLayout>

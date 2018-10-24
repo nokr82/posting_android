@@ -31,8 +31,8 @@ class MyPostingWriteActivity : RootActivity() {
     private var progressDialog: ProgressDialog? = null
 
     var imgid:String? = null
-    var mee = arrayOf("Free","Info","Study","Class","Metting","Coupon")
-    var mount=arrayOf("1","2","3","4","5","6","7","8","9","10")
+    var mee2 = arrayOf("Free","Info","Study","Class","Metting","Coupon")
+    var mount2=arrayOf("1","2","3","4","5","6","7","8","9","10")
 
 
 var str:String? = null
@@ -65,7 +65,9 @@ var str:String? = null
         options.inJustDecodeBounds = false
 
 
-
+        backLL.setOnClickListener {
+            finish()
+        }
 
 
 
@@ -79,11 +81,11 @@ var str:String? = null
         }
 
 
-        adpater = ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,mee)
+        adpater = ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,mee2)
         meetingSP.adapter = adpater
 
 
-        adpater = ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,mount)
+        adpater = ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,mount2)
         mostSP.adapter = adpater
 
 
@@ -145,7 +147,7 @@ var str:String? = null
 
         }else{
 
-            val add_file = Utils.getImage(context.contentResolver, imgid, 10)
+            val add_file = Utils.getImage(context.contentResolver, imgid)
             params.put("upload",ByteArrayInputStream(Utils.getByteArray(add_file)))
 
         }

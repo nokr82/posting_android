@@ -531,9 +531,9 @@
 
 
         <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="#888888" />
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#888888" />
 
         <LinearLayout
             android:gravity="bottom"
@@ -543,6 +543,7 @@
             android:orientation="horizontal">
 
             <LinearLayout
+
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -572,57 +573,63 @@
             </LinearLayout>
             <RelativeLayout
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
                 android:gravity="center"
 
-                android:orientation="vertical">
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
                 <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="알림"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textSize="11.75dp">
 
-
-
-
-
-                    <RelativeLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:gravity="center"
-                            android:layout_centerInParent="true"
-                            android:layout_alignParentTop="true">
-                        <ImageView
-                                android:layout_width="22.37dp"
-                                android:layout_height="22.42dp"
-                                android:src="@mipmap/clickmy" />
-
-
-
-
-                    </RelativeLayout>
+                    <ImageView
+                        android:layout_width="23.37dp"
+                        android:layout_height="22.42dp"
+                        android:src="@mipmap/clickmy" />
 
 
                 </LinearLayout>
-                <TextView
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_centerInParent="true"
+                    android:layout_alignParentTop="true">
+
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
-                        android:layout_centerInParent="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginTop="10dp"
-                       android:layout_marginRight="45dp"
                         android:text="32"
                         android:textSize="10dp"
                         android:textColor="#FFFFFF"
+                        android:layout_marginLeft="27dp"
+                        android:layout_marginTop="3.5dp"
                         android:background="@drawable/circle_red"
+                        android:layout_marginBottom="1dp"
                         android:gravity="center"
                         android:paddingLeft="2.5dp"
                         android:paddingRight="2.5dp"
-                />
+                        />
 
 
+                </LinearLayout>
+
+
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:layout_alignParentBottom="true"
+                    android:visibility="invisible"
+                    android:background="#D0D0D0"
+                    />
 
 
 
@@ -634,8 +641,7 @@
 
 
 
-
-    </LinearLayout>
+        </LinearLayout>
 
 
 
