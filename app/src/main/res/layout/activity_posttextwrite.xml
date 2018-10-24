@@ -121,7 +121,6 @@
             android:layout_marginLeft="8.5dp"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:visibility="gone"
             app:ratio="200:200"
             android:background="@mipmap/text_bg"
             android:paddingTop="3dp"
@@ -134,9 +133,15 @@
                     android:id="@+id/img2RL"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@mipmap/img"
+                android:layout_centerInParent="true" >
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/captureIV"/>
 
-                android:layout_centerInParent="true" />
+
+
+            </RelativeLayout>
 
         </posting.devstories.com.posting_android.base.RationalRelativeLayout>
 

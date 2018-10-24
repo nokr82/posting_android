@@ -4,24 +4,21 @@ import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.database.Cursor
-import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.ArrayAdapter
-import android.widget.GridView
-import kotlinx.android.synthetic.main.activity_posttextwrite.*
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_postwrite.*
 import posting.devstories.com.posting_android.R
 import posting.devstories.com.posting_android.adapter.ImageAdapter
 import posting.devstories.com.posting_android.base.ImageLoader
 import posting.devstories.com.posting_android.base.RootActivity
 import java.util.*
-import android.widget.Toast
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
-import com.loopj.android.http.BinaryHttpResponseHandler
-import kotlinx.android.synthetic.main.write_item.*
+import android.app.Activity
+import android.graphics.Bitmap
 
 
 class PostWriteActivity : RootActivity() {
@@ -31,11 +28,13 @@ class PostWriteActivity : RootActivity() {
 
     private val photoList = ArrayList<ImageAdapter.PhotoData>()
     private val selected = LinkedList<String>()
-
+    private val REQUEST_CAMERA = 0
     var mee = arrayOf("Free","Info","Study","Class","Metting","Coupon")
     var  most =arrayOf("1","2","3","4","5","6","7","8","9","10")
 
     var imgid: String = ""
+
+    lateinit var capture:Bitmap
 
 
     lateinit var adpater: ArrayAdapter<String>
@@ -104,15 +103,6 @@ class PostWriteActivity : RootActivity() {
         mostSP2.adapter = adpater
 
 
-        textRL.setOnClickListener {
-            var intent = Intent(context, MyPostingWriteActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
-        cameraRL.setOnClickListener {
-
-        }
-
 
 
         finishLL.setOnClickListener {
@@ -120,12 +110,30 @@ class PostWriteActivity : RootActivity() {
         }
 
 
+        textRL.setOnClickListener {
+            var intent = Intent(context, MyPostingWriteActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
         nextTX.setOnClickListener {
 
             var intent = Intent(context, MyPostingWriteActivity::class.java)
             intent.putExtra("imgid", imgid)
+            intent.putExtra("capture", capture)
+
             startActivity(intent)
         }
+        cameraRL.setOnClickListener {
+            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            if (intent.resolveActivity(packageManager)!=null){
+
+                startActivityForResult(intent,REQUEST_CAMERA)
+            }
+
+
+        }
+
 
 
         val imageLoader = ImageLoader(resolver)
@@ -168,6 +176,33 @@ class PostWriteActivity : RootActivity() {
 
 
     }
+
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+
+        super.onActivityResult(requestCode, resultCode, data)
+
+        when(requestCode){
+            REQUEST_CAMERA ->{
+                if(resultCode== Activity.RESULT_OK && data !=null){
+                 imgIV.setImageBitmap(data.extras.get("data") as Bitmap)
+
+
+                   capture = data.extras.get("data") as Bitmap
+
+
+                }
+            }
+            else -> {
+                Toast.makeText(this,"Unrecognized request code",Toast.LENGTH_SHORT)
+            }
+        }
+
+
+
+    }
+
+
 
     override fun onDestroy() {
         super.onDestroy()

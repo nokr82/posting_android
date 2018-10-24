@@ -33,9 +33,10 @@ class MyPostingWriteActivity : RootActivity() {
     var imgid:String? = null
     var mee2 = arrayOf("Free","Info","Study","Class","Metting","Coupon")
     var mount2=arrayOf("1","2","3","4","5","6","7","8","9","10")
+    lateinit var capture: Bitmap
 
 
-var str:String? = null
+    var str:String? = null
 
     var member_id = -1
     var type=""
@@ -58,6 +59,8 @@ var str:String? = null
 
         intent = getIntent()
         imgid = intent.getStringExtra("imgid")
+            capture = intent.getParcelableExtra("capture")
+
 
         val options = BitmapFactory.Options()
         options.inJustDecodeBounds = true
@@ -76,7 +79,10 @@ var str:String? = null
 
         //이미지
         img2RL.background = Drawable.createFromPath(imgid)
-        if (imgid != null && "" != imgid && imgid!!.length> 1){
+        captureIV.setImageBitmap(capture )
+
+
+        if (imgid != null && "" != imgid && imgid!!.length> 1&&capture != null){
             popupRL.visibility = View.VISIBLE
         }
 

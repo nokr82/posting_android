@@ -103,12 +103,18 @@
             android:background="@mipmap/wtite_bg"
             android:gravity="center"
              >
-            
+
             <RelativeLayout
                     android:id="@+id/imgRL"
                 android:layout_width="247.23dp"
                 android:layout_height="261.21dp"
                >
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/imgIV"/>
+
+
 
             </RelativeLayout>
 
