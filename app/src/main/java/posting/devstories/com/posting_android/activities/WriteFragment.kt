@@ -10,6 +10,7 @@ import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.provider.MediaStore
 import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentManager
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import posting.devstories.com.posting_android.R
@@ -42,7 +43,6 @@ open class WriteFragment : Fragment() {
 
     val text = "1"
 
-
     lateinit var adpater: ArrayAdapter<String>
     lateinit var mainActivity:MainActivity
 
@@ -56,11 +56,6 @@ open class WriteFragment : Fragment() {
     lateinit var cameraRL: RelativeLayout
     lateinit var textRL: RelativeLayout
 
-
-
-
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -72,6 +67,7 @@ open class WriteFragment : Fragment() {
         }
 
         mainActivity = activity as MainActivity
+
         return inflater.inflate(R.layout.fra_write, container, false)
     }
     fun doSomethingWithContext(context: Context) {
