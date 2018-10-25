@@ -14,4 +14,5 @@ object SchoolAction {
     fun School(params: RequestParams, handler: JsonHttpResponseHandler) {
         HttpClient.post("/school/index.json", params, handler)
     }
+
 }
