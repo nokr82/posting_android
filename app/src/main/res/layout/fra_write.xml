@@ -18,7 +18,6 @@
 
 
         <LinearLayout
-            android:id="@+id/finishLL"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="16dp">
@@ -69,9 +68,10 @@
                     android:id="@+id/dateTX"
                     android:text="기간"/>
                 <TextView
+                    android:layout_marginRight="20dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="까지"
+
                     android:id="@+id/limitTX"/>
 
                 <ImageView

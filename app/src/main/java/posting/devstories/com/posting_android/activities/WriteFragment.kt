@@ -11,6 +11,7 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import posting.devstories.com.posting_android.R
@@ -51,6 +52,10 @@ open class WriteFragment : Fragment() {
     var capture: Bitmap? = null
 
     val text = "1"
+    var startd = ""
+    var last = ""
+
+    var mount:Int? = null
 
     lateinit var adpater: ArrayAdapter<String>
     lateinit var mainActivity:MainActivity
@@ -92,7 +97,6 @@ open class WriteFragment : Fragment() {
         imgRL = view.findViewById(R.id.imgRL)
         meetingSP2 = view.findViewById(R.id.meetingSP2)
         mostSP2 = view.findViewById(R.id.mostSP2)
-        finishLL = view.findViewById(R.id.finishLL)
         nextTX = view.findViewById(R.id.nextTX)
         listGV = view.findViewById(R.id.listGV)
         cameraRL = view.findViewById(R.id.cameraRL)
@@ -167,12 +171,26 @@ open class WriteFragment : Fragment() {
             adpater = ArrayAdapter<String>(mainActivity.context, android.R.layout.simple_spinner_item, most)
             meetingSP2.adapter = adpater
 
+          startd = dateTX.text.toString()
+          last = limitTX.text.toString()
+
+
+          meetingSP2.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+              override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
+                  Log.d("yjs","position : " + position.toString())
+                  mount = position
+              }
+
+              override fun onNothingSelected(p0: AdapterView<*>?) {
+                  TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+              }
+          }
+
+
             adpater = ArrayAdapter<String>(mainActivity.context, android.R.layout.simple_spinner_item, day)
             mostSP2.adapter = adpater
 
-
-
-          dateTX.text = SimpleDateFormat("dd.MM.yyyy").format(System.currentTimeMillis())
+          dateTX.text = SimpleDateFormat("yyyy.MM.dd").format(System.currentTimeMillis())
 
           var cal = Calendar.getInstance()
 
@@ -181,9 +199,9 @@ open class WriteFragment : Fragment() {
               cal.set(Calendar.MONTH, monthOfYear)
               cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
 
-              val myFormat = "dd.MM.yyyy" // mention the format you need
-              val sdf = SimpleDateFormat(myFormat, Locale.US)
-              dateTX.text = sdf.format(cal.time)
+              val myFormat = "yyyy.MM.dd" // mention the format you need
+              val sdf = SimpleDateFormat(myFormat, Locale.KOREA)
+              dateTX.text = sdf.format(cal.time)+"~"
 
           }
 
@@ -192,22 +210,25 @@ open class WriteFragment : Fragment() {
               cal.set(Calendar.MONTH, monthOfYear)
               cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
 
-              val myFormat = "dd.MM.yyyy" // mention the format you need
-              val sdf = SimpleDateFormat(myFormat, Locale.US)
-              dateTX.text = sdf.format(cal.time)
+              val myFormat = "MM.dd" // mention the format you need
+              val sdf = SimpleDateFormat(myFormat, Locale.KOREA)
+              limitTX.text = sdf.format(cal.time)
 
           }
 
           dateTX.setOnClickListener {
+              DatePickerDialog(context, dateSetListener2,
+              cal.get(Calendar.YEAR),
+              cal.get(Calendar.MONTH),
+              cal.get(Calendar.DAY_OF_MONTH)).show()
               DatePickerDialog(context, dateSetListener,
                       cal.get(Calendar.YEAR),
                       cal.get(Calendar.MONTH),
                       cal.get(Calendar.DAY_OF_MONTH)).show()
           }
 
-
-
         }else{
+          dateTX.visibility = View.GONE
             adpater = ArrayAdapter<String>(mainActivity.context, android.R.layout.simple_spinner_item, mee)
             meetingSP2.adapter = adpater
 
@@ -217,9 +238,7 @@ open class WriteFragment : Fragment() {
         }
 
 
-        finishLL.setOnClickListener {
 
-        }
 
 
         textRL.setOnClickListener {
@@ -229,11 +248,21 @@ open class WriteFragment : Fragment() {
 
         }
 
+
+
+
+
+
         nextTX.setOnClickListener {
+
 
             var intent = Intent(context, MyPostingWriteActivity::class.java)
             intent.putExtra("imgid", imgid)
             intent.putExtra("capture", capture)
+            intent.putExtra("startd", startd)
+            intent.putExtra("last",last)
+            intent.putExtra("mount",mount)
+
 
             startActivity(intent)
         }
