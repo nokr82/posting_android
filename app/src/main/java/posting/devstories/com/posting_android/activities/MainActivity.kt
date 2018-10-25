@@ -11,6 +11,7 @@ import kotlinx.android.synthetic.main.tab_home_view.*
 import kotlinx.android.synthetic.main.tab_mypage_view.*
 import kotlinx.android.synthetic.main.tab_write_view.*
 import posting.devstories.com.posting_android.R
+import posting.devstories.com.posting_android.base.PrefUtils
 
 class MainActivity : FragmentActivity() {
     private var progressDialog: ProgressDialog? = null
@@ -22,6 +23,7 @@ class MainActivity : FragmentActivity() {
     var type = ""
 
     var member_id = -1
+    var member_type = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +46,18 @@ class MainActivity : FragmentActivity() {
         fragmentFT.addTab(fragmentFT.newTabSpec("myPage").setIndicator(tabMypageV), MyPageFragment::class.java, null)
 
         fragmentFT.tabWidget.dividerDrawable = null
+
+        member_type = PrefUtils.getStringPreference(context, "member_type")
+
+        if(member_type.equals("3")){
+            fragmentFT.addTab(fragmentFT.newTabSpec("post").setIndicator("post"), PostFragment::class.java, null)
+            fragmentFT.addTab(fragmentFT.newTabSpec("write").setIndicator("write"), WriteFragment::class.java, null)
+            fragmentFT.addTab(fragmentFT.newTabSpec("myPage").setIndicator("myPage"), OrderPageFragment::class.java, null)
+        }else{
+            fragmentFT.addTab(fragmentFT.newTabSpec("post").setIndicator("post"), PostFragment::class.java, null)
+            fragmentFT.addTab(fragmentFT.newTabSpec("write").setIndicator("write"), WriteFragment::class.java, null)
+            fragmentFT.addTab(fragmentFT.newTabSpec("myPage").setIndicator("myPage"), MyPageFragment::class.java, null)
+        }
 
 //        val fragmentManager = supportFragmentManager
 //        var fragment: Fragment = PostFragment()

@@ -24,6 +24,7 @@ class LoginActivity : RootActivity() {
     private var progressDialog: ProgressDialog? = null
     var autoLogin = false
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -105,15 +106,18 @@ class LoginActivity : RootActivity() {
                         PrefUtils.setPreference(context, "member_id", Utils.getInt(data, "id"))
                         PrefUtils.setPreference(context, "email", Utils.getString(data, "email"))
                         PrefUtils.setPreference(context, "passwd", Utils.getString(data, "passwd"))
+                        PrefUtils.setPreference(context, "member_type", Utils.getString(data, "member_type"))
                         PrefUtils.setPreference(context, "autoLogin", autoLogin)
+                        val member_type = PrefUtils.getStringPreference(context,"member_type")
+                        println("====================="+member_type)
+
+                            val intent = Intent(context, MainActivity::class.java)
+                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                            startActivity(intent)
 
 
 
 
-
-                        val intent = Intent(context, MainActivity::class.java)
-                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                        startActivity(intent)
 
                     } else {
                         Toast.makeText(context, "일치하는 회원이 존재하지 않습니다.", Toast.LENGTH_LONG).show()

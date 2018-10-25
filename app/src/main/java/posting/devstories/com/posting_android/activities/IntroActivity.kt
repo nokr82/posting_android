@@ -59,9 +59,10 @@ class IntroActivity : RootActivity() {
         val autoLogin = PrefUtils.getBooleanPreference(context, "autoLogin")
 //        val first = PrefUtils.getBooleanPreference(context, "first")
 
+
+
         if (!autoLogin) {
             PrefUtils.clear(context)
-
             val intent = Intent(context, LoginActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
@@ -84,7 +85,8 @@ class IntroActivity : RootActivity() {
         val params = RequestParams()
         params.put("email", PrefUtils.getStringPreference(context,"loginID"))
         params.put("passwd", PrefUtils.getStringPreference(context,"passwd"))
-
+        val member_type = PrefUtils.getStringPreference(context,"member_type")
+        println("====================="+member_type)
         LoginAction.login(params, object : JsonHttpResponseHandler() {
 
             override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
@@ -102,11 +104,16 @@ class IntroActivity : RootActivity() {
                         PrefUtils.setPreference(context, "member_id", Utils.getInt(data, "id"))
                         PrefUtils.setPreference(context, "email", Utils.getString(data, "email"))
                         PrefUtils.setPreference(context, "passwd", Utils.getString(data, "passwd"))
+                        PrefUtils.setPreference(context, "member_type", Utils.getString(data, "member_type"))
                         PrefUtils.setPreference(context, "autoLogin", true)
 
-                        val intent = Intent(context, MainActivity::class.java)
-                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                        startActivity(intent)
+                            val intent = Intent(context, MainActivity::class.java)
+                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                            startActivity(intent)
+
+
+
+
 
                     } else {
 

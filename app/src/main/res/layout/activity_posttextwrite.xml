@@ -157,6 +157,8 @@ android:orientation="vertical">
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:textSize="11dp"
+            android:minHeight="120dp"
+            android:gravity="top"
             android:hint="문구입력"/>
 
     <View
