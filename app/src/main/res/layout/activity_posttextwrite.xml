@@ -16,7 +16,7 @@
             android:id="@+id/backLL"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="16dp">
+            android:padding="10dp">
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -33,7 +33,7 @@
             android:padding="16dp">
 
             <Spinner
-                android:id="@+id/meetingSP"
+                android:id="@+id/meetingSP2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@null">
@@ -49,13 +49,14 @@
                 android:src="@mipmap/semo" />
 
             <LinearLayout
+                    android:id="@+id/date2LL"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <Spinner
 
-                    android:id="@+id/mostSP"
+                    android:id="@+id/mostSP2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@null">
@@ -80,6 +81,10 @@
                     android:src="@mipmap/semo" />
             </LinearLayout>
         </LinearLayout>
+<LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+android:id="@+id/nextLL2">
 
         <TextView
             android:id="@+id/next2TX"
@@ -92,6 +97,8 @@
             android:textSize="11.5dp"
 
             />
+
+</LinearLayout>
 
 
     </LinearLayout>

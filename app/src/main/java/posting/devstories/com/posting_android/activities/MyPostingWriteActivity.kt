@@ -39,7 +39,7 @@ class MyPostingWriteActivity : RootActivity() {
     var imgid:String? = null
     var mee = arrayOf("자유","정보","스터디","동아리","미팅")
     var  most =arrayOf("수량","1","2","3","4","5","6","7","8","9","10")
-    var day = arrayOf("기간","10월2일","10월3일","10월4일","10월5일")
+
     var capture: Bitmap?= null
     var member_type = ""
 
@@ -47,9 +47,9 @@ class MyPostingWriteActivity : RootActivity() {
 
     var text:String? = null
     var member_id = -1
-    var type=""
+    var type:String?=null
     var contents = ""
-    var count=""
+    var count:String?=null
     var geterror = ""
     var startd = ""
     var last = ""
@@ -111,21 +111,16 @@ class MyPostingWriteActivity : RootActivity() {
 
         if (member_type.equals("3")){
 
-            mostSP.visibility = View.GONE
+            mostSP2.visibility = View.GONE
 
             adpater = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, most)
-            meetingSP.adapter = adpater
+            meetingSP2.adapter = adpater
 
            date2TX.text = startd
             limit2TX.text = last
 
-           meetingSP.setSelection(mount!!)
+           meetingSP2.setSelection(mount!!)
 
-
-            adpater = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, day)
-            mostSP.adapter = adpater
-
-            date2TX.text = SimpleDateFormat("yyyy.MM.dd").format(System.currentTimeMillis())
 
             var cal = Calendar.getInstance()
 
@@ -134,7 +129,7 @@ class MyPostingWriteActivity : RootActivity() {
                 cal.set(Calendar.MONTH, monthOfYear)
                 cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
 
-                val myFormat = "MM.dd" // mention the format you need
+                val myFormat = "yy.MM.dd" // mention the format you need
                 val sdf = SimpleDateFormat(myFormat, Locale.KOREA)
                 date2TX.text = sdf.format(cal.time)+"~"
 
@@ -145,13 +140,13 @@ class MyPostingWriteActivity : RootActivity() {
                 cal.set(Calendar.MONTH, monthOfYear)
                 cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
 
-                val myFormat = "MM.dd" // mention the format you need
+                val myFormat = "yy.MM.dd" // mention the format you need
                 val sdf = SimpleDateFormat(myFormat, Locale.KOREA)
                 limit2TX.text = sdf.format(cal.time)
 
             }
 
-            date2TX.setOnClickListener {
+            date2LL.setOnClickListener {
                 DatePickerDialog(context, dateSetListener2,
                         cal.get(Calendar.YEAR),
                         cal.get(Calendar.MONTH),
@@ -165,10 +160,10 @@ class MyPostingWriteActivity : RootActivity() {
         }else{
             dateTX.visibility = View.GONE
             adpater = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, mee)
-            meetingSP.adapter = adpater
+            meetingSP2.adapter = adpater
 
             adpater = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, most)
-            mostSP.adapter = adpater
+            mostSP2.adapter = adpater
 
         }
 
@@ -178,36 +173,56 @@ class MyPostingWriteActivity : RootActivity() {
 
 
 
-        next2TX.setOnClickListener {
+        nextLL2.setOnClickListener {
 
             contents = Utils.getString(contentET)
 
-            type = meetingSP2.selectedItem.toString()
-            count = mostSP2.selectedItem.toString()
+
 //            "Free","Info","Study","Class","Metting","Coupon"
 
-            if (type.equals("자유")){
-                type = "1"
-            }else if (type.equals("정보")){
-                type = "2"
-            }else if (type.equals("스터디")){
-                type = "3"
-            }else if (type.equals("동아리")){
-                type = "4"
-            }else if (type.equals("미팅")){
-                type = "5"
-            }else if (type.equals("쿠폰")){
+
+            if (member_type.equals("3")){
                 type = "6"
+                count = meetingSP2.selectedItem.toString()
+                startd = Utils.getString(date2TX)
+                last = Utils.getString(limit2TX)
+
+                if(contents==""||contents==null|| contents.isEmpty()){
+                    geterror = "내용을 입력해주세요"
+
+                    Toast.makeText(context,geterror,Toast.LENGTH_SHORT).show()
+                }else{
+                    write()
+
+                }
+
+            }else {
+                type = meetingSP2.selectedItem.toString()
+                count = mostSP2.selectedItem.toString()
+                if (type.equals("자유")) {
+                    type = "1"
+                } else if (type.equals("정보")) {
+                    type = "2"
+                } else if (type.equals("스터디")) {
+                    type = "3"
+                } else if (type.equals("동아리")) {
+                    type = "4"
+                } else if (type.equals("미팅")) {
+                    type = "5"
+                } else if (type.equals("쿠폰")) {
+                    type = "6"
+                }
+
+                if (contents == "" || contents == null || contents.isEmpty()) {
+                    geterror = "내용을 입력해주세요"
+
+                    Toast.makeText(context, geterror, Toast.LENGTH_SHORT).show()
+                } else {
+                    write()
+
+                }
             }
 
-            if(contents==""||contents==null|| contents.isEmpty()){
-                geterror = "내용을 입력해주세요"
-
-                Toast.makeText(context,geterror,Toast.LENGTH_SHORT).show()
-            }else{
-                write()
-
-            }
 
 
         }
@@ -226,6 +241,8 @@ class MyPostingWriteActivity : RootActivity() {
         params.put("type", type)
         params.put("contents", contents)
         params.put("count", count)
+        params.put("uses_start_date",startd)
+        params.put("uses_end_date",last)
 
 
         if (capture==null){

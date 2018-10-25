@@ -34,7 +34,7 @@
             android:padding="16dp">
 
             <Spinner
-                android:id="@+id/meetingSP2"
+                android:id="@+id/meetingSP"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@null">
@@ -50,13 +50,14 @@
                 android:src="@mipmap/semo" />
 
             <LinearLayout
+                    android:id="@+id/dateLL"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <Spinner
 
-                    android:id="@+id/mostSP2"
+                    android:id="@+id/mostSP"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@null">
@@ -81,7 +82,8 @@
                     android:src="@mipmap/semo" />
             </LinearLayout>
         </LinearLayout>
-
+<LinearLayout android:layout_width="wrap_content" android:layout_height="match_parent"
+android:id="@+id/nextLL">
         <TextView
             android:id="@+id/nextTX"
             android:layout_width="wrap_content"
@@ -94,7 +96,7 @@
 
             />
 
-
+</LinearLayout>
     </LinearLayout>
 
     <LinearLayout

@@ -26,6 +26,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import kotlinx.android.synthetic.main.activity_posttextwrite.*
 import kotlinx.android.synthetic.main.fra_write.*
 import posting.devstories.com.posting_android.R.id.imgIV
 import posting.devstories.com.posting_android.base.PrefUtils
@@ -62,8 +63,8 @@ open class WriteFragment : Fragment() {
 
     lateinit var imgRL: RelativeLayout
     lateinit var imgIV: ImageView
-    lateinit var meetingSP2: Spinner
-    lateinit var mostSP2: Spinner
+    lateinit var meetingSP: Spinner
+    lateinit var mostSP: Spinner
     lateinit var finishLL: LinearLayout
     lateinit var nextTX: TextView
     lateinit var listGV: GridView
@@ -95,8 +96,8 @@ open class WriteFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         imgIV = view.findViewById(R.id.imgIV)
         imgRL = view.findViewById(R.id.imgRL)
-        meetingSP2 = view.findViewById(R.id.meetingSP2)
-        mostSP2 = view.findViewById(R.id.mostSP2)
+        meetingSP = view.findViewById(R.id.meetingSP)
+        mostSP = view.findViewById(R.id.mostSP)
         nextTX = view.findViewById(R.id.nextTX)
         listGV = view.findViewById(R.id.listGV)
         cameraRL = view.findViewById(R.id.cameraRL)
@@ -166,16 +167,13 @@ open class WriteFragment : Fragment() {
         member_type = PrefUtils.getStringPreference(context, "member_type")
       if (member_type.equals("3")){
 
-          mostSP2.visibility = View.GONE
+          mostSP.visibility = View.GONE
 
             adpater = ArrayAdapter<String>(mainActivity.context, android.R.layout.simple_spinner_item, most)
-            meetingSP2.adapter = adpater
-
-          startd = dateTX.text.toString()
-          last = limitTX.text.toString()
+            meetingSP.adapter = adpater
 
 
-          meetingSP2.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+          meetingSP.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
               override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
                   Log.d("yjs","position : " + position.toString())
                   mount = position
@@ -188,9 +186,9 @@ open class WriteFragment : Fragment() {
 
 
             adpater = ArrayAdapter<String>(mainActivity.context, android.R.layout.simple_spinner_item, day)
-            mostSP2.adapter = adpater
+            mostSP.adapter = adpater
 
-          dateTX.text = SimpleDateFormat("yyyy.MM.dd").format(System.currentTimeMillis())
+          dateTX.text = SimpleDateFormat("yy.MM.dd").format(System.currentTimeMillis())+"~"
 
           var cal = Calendar.getInstance()
 
@@ -199,7 +197,7 @@ open class WriteFragment : Fragment() {
               cal.set(Calendar.MONTH, monthOfYear)
               cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
 
-              val myFormat = "yyyy.MM.dd" // mention the format you need
+              val myFormat = "yy.MM.dd" // mention the format you need
               val sdf = SimpleDateFormat(myFormat, Locale.KOREA)
               dateTX.text = sdf.format(cal.time)+"~"
 
@@ -210,13 +208,13 @@ open class WriteFragment : Fragment() {
               cal.set(Calendar.MONTH, monthOfYear)
               cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
 
-              val myFormat = "MM.dd" // mention the format you need
+              val myFormat = "yy.MM.dd" // mention the format you need
               val sdf = SimpleDateFormat(myFormat, Locale.KOREA)
               limitTX.text = sdf.format(cal.time)
 
           }
 
-          dateTX.setOnClickListener {
+          dateLL.setOnClickListener {
               DatePickerDialog(context, dateSetListener2,
               cal.get(Calendar.YEAR),
               cal.get(Calendar.MONTH),
@@ -227,13 +225,15 @@ open class WriteFragment : Fragment() {
                       cal.get(Calendar.DAY_OF_MONTH)).show()
           }
 
+
+
         }else{
           dateTX.visibility = View.GONE
             adpater = ArrayAdapter<String>(mainActivity.context, android.R.layout.simple_spinner_item, mee)
-            meetingSP2.adapter = adpater
+            meetingSP.adapter = adpater
 
             adpater = ArrayAdapter<String>(mainActivity.context, android.R.layout.simple_spinner_item, most)
-            mostSP2.adapter = adpater
+            mostSP.adapter = adpater
 
         }
 
@@ -253,9 +253,9 @@ open class WriteFragment : Fragment() {
 
 
 
-        nextTX.setOnClickListener {
-
-
+        nextLL.setOnClickListener {
+            startd = dateTX.text.toString()
+            last = limitTX.text.toString()
             var intent = Intent(context, MyPostingWriteActivity::class.java)
             intent.putExtra("imgid", imgid)
             intent.putExtra("capture", capture)
