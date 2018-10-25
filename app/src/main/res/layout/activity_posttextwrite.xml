@@ -66,7 +66,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/date2TX"
-                    android:text="기간"/>
+                    android:text=""/>
                 <TextView
                     android:layout_marginRight="20dp"
                     android:layout_width="wrap_content"

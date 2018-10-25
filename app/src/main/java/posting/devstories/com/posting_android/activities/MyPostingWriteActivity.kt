@@ -51,8 +51,8 @@ class MyPostingWriteActivity : RootActivity() {
     var contents = ""
     var count:String?=null
     var geterror = ""
-    var startd = ""
-    var last = ""
+    var startd:String?=null
+    var last:String?=null
     var mount:Int? = 0
 
 
@@ -119,6 +119,10 @@ class MyPostingWriteActivity : RootActivity() {
            date2TX.text = startd
             limit2TX.text = last
 
+            if (startd==null||startd.equals("")){
+                date2TX.text = SimpleDateFormat("yy.MM.dd").format(System.currentTimeMillis())+"~"
+            }
+
            meetingSP2.setSelection(mount!!)
 
 
@@ -158,7 +162,8 @@ class MyPostingWriteActivity : RootActivity() {
             }
 
         }else{
-            dateTX.visibility = View.GONE
+           // dateTX.visibility = View.GONE
+
             adpater = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, mee)
             meetingSP2.adapter = adpater
 
@@ -191,7 +196,12 @@ class MyPostingWriteActivity : RootActivity() {
                     geterror = "내용을 입력해주세요"
 
                     Toast.makeText(context,geterror,Toast.LENGTH_SHORT).show()
-                }else{
+                }
+                if(count.equals("수량")){
+
+                    Toast.makeText(context,"수량을 선택해주세요",Toast.LENGTH_SHORT).show()
+                    }
+                else{
                     write()
 
                 }
@@ -212,8 +222,12 @@ class MyPostingWriteActivity : RootActivity() {
                 } else if (type.equals("쿠폰")) {
                     type = "6"
                 }
+                if(count.equals("수량")){
 
-                if (contents == "" || contents == null || contents.isEmpty()) {
+                    Toast.makeText(context,"수량을 선택해주세요",Toast.LENGTH_SHORT).show()
+                }
+
+                else if (contents == "" || contents == null || contents.isEmpty()) {
                     geterror = "내용을 입력해주세요"
 
                     Toast.makeText(context, geterror, Toast.LENGTH_SHORT).show()
@@ -256,7 +270,7 @@ class MyPostingWriteActivity : RootActivity() {
 
 
 
-        if (imgid.equals("")){
+        if (imgid.equals("")||imgid==null){
 
         }else{
 
@@ -280,6 +294,8 @@ class MyPostingWriteActivity : RootActivity() {
                     val result = response!!.getString("result")
 
                     if ("ok" == result) {
+
+
                         val intent = Intent(context,MainActivity::class.java)
                         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                         startActivity(intent)
