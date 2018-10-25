@@ -47,11 +47,9 @@ class DetailActivity : RootActivity() {
 
         id = intent.getStringExtra("id")
 
-
         member_id = PrefUtils.getIntPreference(context, "member_id")
 
         detaildata(member_id,id)
-
 
     }
 
@@ -59,8 +57,6 @@ class DetailActivity : RootActivity() {
         val params = RequestParams()
         params.put("member_id",member_id)
         params.put("posting_id", posting_id)
-
-        println("====================================================== id " + posting_id);
 
         detail(params, object : JsonHttpResponseHandler() {
 
@@ -72,8 +68,6 @@ class DetailActivity : RootActivity() {
                 try {
                     val result = response!!.getString("result")
 
-
-                    print("=============================="+result)
                     if ("ok" == result) {
                         val data = response.getJSONObject("posting")
                         val posting = data.getJSONObject("Posting")
@@ -86,17 +80,14 @@ class DetailActivity : RootActivity() {
                         var contents =   Utils.getString(posting, "contents")
                         var nick_name = Utils.getString(member, "nick_name")
 
-
                         contentTV.text = contents
                         wnameTX.text = nick_name
                         upTX.text = created
 
-
                         //uri를 이미지로 변환시켜준다
                         if (!image_uri.isEmpty() && image_uri != "") {
                             var image = Config.url + image_uri
-                            ImageLoader.getInstance().displayImage(image, imgIV, Utils.UILoptionsPosting)
-
+                            ImageLoader.getInstance().displayImage(image, imgIV, Utils.UILoptionsUserProfile)
                         } else {
 
                         }
