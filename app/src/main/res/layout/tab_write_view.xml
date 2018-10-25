@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/writeLL"
+        android:layout_width="match_parent"
+        android:layout_height="51dp"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/writeIV"
+            android:layout_width="23.37dp"
+            android:layout_height="22.42dp"
+            android:src="@mipmap/plus" />
+
+    </LinearLayout>
+</LinearLayout>
+
