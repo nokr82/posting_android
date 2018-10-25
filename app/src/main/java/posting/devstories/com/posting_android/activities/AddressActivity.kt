@@ -88,6 +88,7 @@ class AddressActivity : RootActivity(), AbsListView.OnScrollListener {
             //페이지 로딩 종료시 호출
             override fun onPageFinished(view: WebView, Url: String) {}
         }
+
     }
 
     private inner class AndroidBridge {
