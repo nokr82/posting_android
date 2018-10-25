@@ -22,9 +22,20 @@ object PostingAction {
     fun mainlist(params: RequestParams, handler: JsonHttpResponseHandler) {
         HttpClient.post("/main/index.json", params, handler)
     }
+
     //상세페이지
     fun detail(params: RequestParams, handler: JsonHttpResponseHandler) {
         HttpClient.post("/posting/detail.json", params, handler)
+    }
+
+    // 저장하기
+    fun save_posting(params: RequestParams, handler: JsonHttpResponseHandler) {
+        HttpClient.post("/posting/save_posting.json", params, handler)
+    }
+
+    // 댓글 작성
+    fun write_comments(params: RequestParams, handler: JsonHttpResponseHandler) {
+        HttpClient.post("/posting/write_comments.json", params, handler)
     }
 
 }

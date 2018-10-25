@@ -1,7 +1,10 @@
 package posting.devstories.com.posting_android.activities
 
 import android.app.ProgressDialog
+import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
@@ -85,6 +88,34 @@ open class PostFragment : Fragment() {
 
     lateinit var mainActivity:MainActivity
 
+    internal var savePostingReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent?) {
+            if (intent != null) {
+                var posting_id = intent.getStringExtra("posting_id")
+
+                for (i in 0 .. (mainAdapterData.size - 1)) {
+                    var data = mainAdapterData[i]
+                    var list = data.getJSONArray("list")
+
+                    for (j in 0 .. (list.length() - 1)) {
+
+                        var p: JSONObject = list[j] as JSONObject
+                        var posting = p.getJSONObject("Posting")
+
+                        if(Utils.getString(posting, "id") == posting_id) {
+                            var cnt = Utils.getInt(posting, "leftCount") - 1
+                            posting.put("leftCount", cnt)
+                        }
+
+                    }
+                }
+
+                mainAdapter.notifyDataSetChanged()
+
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -96,6 +127,10 @@ open class PostFragment : Fragment() {
         }
 
         mainActivity = activity as MainActivity
+
+        val filter1 = IntentFilter("SAVE_POSTING")
+        mainActivity.registerReceiver(savePostingReceiver, filter1)
+
         return inflater.inflate(R.layout.fra_post, container, false)
     }
     fun doSomethingWithContext(context: Context) {
@@ -501,8 +536,6 @@ open class PostFragment : Fragment() {
                         mainAdapter.notifyDataSetChanged()
                         adverAdapter.notifyDataSetChanged()
 
-                    } else {
-                        Toast.makeText(context, "일치하는 회원이 존재하지 않습니다.", Toast.LENGTH_LONG).show()
                     }
 
                 } catch (e: JSONException) {

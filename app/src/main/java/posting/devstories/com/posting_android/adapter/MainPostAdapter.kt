@@ -1,6 +1,7 @@
 package posting.devstories.com.posting_android.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 
 import android.view.View
@@ -11,6 +12,7 @@ import posting.devstories.com.posting_android.R
 import posting.devstories.com.posting_android.base.Utils
 import posting.devstories.com.posting_android.base.Config
 import com.nostra13.universalimageloader.core.ImageLoader
+import posting.devstories.com.posting_android.activities.DetailActivity
 
 open class MainPostAdapter(context: Context?, view: Int, data: ArrayList<JSONObject>) :
     ArrayAdapter<JSONObject>(context, view, data) {
@@ -88,10 +90,10 @@ open class MainPostAdapter(context: Context?, view: Int, data: ArrayList<JSONObj
             var p: JSONObject = list[i] as JSONObject
             var posting = p.getJSONObject("Posting")
 
-            var id = Utils.getInt(posting, "id")
+            var id = Utils.getString(posting, "id")
             var contents = Utils.getString(posting, "contents")
             var image_uri = Utils.getString(posting, "image_uri")
-            var leftCnt = Utils.getString(posting, "leftCnt")
+            var leftCnt = Utils.getString(posting, "leftCount")
 
             val postingView = View.inflate(context, R.layout.item_post, null)
 
@@ -111,6 +113,12 @@ open class MainPostAdapter(context: Context?, view: Int, data: ArrayList<JSONObj
             } else {
                 contentsTV.visibility = View.VISIBLE
                 contentsTV.text = contents
+            }
+
+            postRL.setOnClickListener {
+                var intent = Intent(context, DetailActivity::class.java)
+                intent.putExtra("id", id)
+                context.startActivity(intent)
             }
 
             leftCntTV.text = leftCnt

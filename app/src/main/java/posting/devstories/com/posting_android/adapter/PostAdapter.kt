@@ -47,6 +47,7 @@ open class PostAdapter(context:Context, view:Int, data:ArrayList<JSONObject>) : 
         var created =   Utils.getString(posting, "created")
         var contents =   Utils.getString(posting, "contents")
         var image_uri = Utils.getString(posting, "image_uri")
+        var leftCount = Utils.getString(posting, "leftCount")
 
         item.postIV.visibility = View.GONE
         item.contentsTV.visibility = View.GONE
@@ -59,6 +60,8 @@ open class PostAdapter(context:Context, view:Int, data:ArrayList<JSONObject>) : 
             item.contentsTV.text = contents
             item.contentsTV.visibility = View.VISIBLE
         }
+
+        item.leftCntTV.text = leftCount
 
         return retView
     }
@@ -87,10 +90,12 @@ open class PostAdapter(context:Context, view:Int, data:ArrayList<JSONObject>) : 
     class ViewHolder(v: View) {
         var postIV :ImageView
         var contentsTV :TextView
+        var leftCntTV :TextView
 
         init {
             postIV = v.findViewById(R.id.postIV) as ImageView
             contentsTV = v.findViewById(R.id.contentsTV) as TextView
+            leftCntTV = v.findViewById(R.id.leftCntTV) as TextView
         }
     }
 }
