@@ -6,11 +6,10 @@ import android.content.Context
 import android.content.Intent
 import android.database.Cursor
 import android.graphics.Bitmap
-import android.graphics.drawable.Drawable
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import posting.devstories.com.posting_android.R
@@ -25,6 +24,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import posting.devstories.com.posting_android.base.Utils
 
 open class WriteFragment : Fragment() {
 
@@ -34,7 +34,7 @@ open class WriteFragment : Fragment() {
     private val photoList = ArrayList<ImageAdapter.PhotoData>()
     private val selected = LinkedList<String>()
     private val REQUEST_CAMERA = 0
-    var mee = arrayOf("Free","Info","Study","Class","Metting","Coupon")
+    var mee = arrayOf("Free","Info","Study","Class","Meeting")
     var  most =arrayOf("1","2","3","4","5","6","7","8","9","10")
 
     var imgid: String = ""
@@ -179,10 +179,40 @@ open class WriteFragment : Fragment() {
             startActivity(intent)
         }
         cameraRL.setOnClickListener {
-            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            if (intent.resolveActivity(mainActivity.packageManager)!=null){
 
-                startActivityForResult(intent,REQUEST_CAMERA)
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+
+                val permissionlistener = object : PermissionListener {
+                    override fun onPermissionGranted() {
+
+                        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                        if (intent.resolveActivity(mainActivity.packageManager)!=null){
+
+                            startActivityForResult(intent,REQUEST_CAMERA)
+                        }
+
+                    }
+
+                    override fun onPermissionDenied(deniedPermissions: List<String>) {
+                    }
+
+                }
+
+                TedPermission.with(mainActivity.context)
+                    .setPermissionListener(permissionlistener)
+                    .setDeniedMessage("[설정] > [권한] 에서 권한을 허용할 수 있습니다.")
+                    .setPermissions(android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.CAMERA, android.Manifest.permission.READ_EXTERNAL_STORAGE)
+                    .check();
+
+            } else {
+
+                val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                if (intent.resolveActivity(mainActivity.packageManager)!=null){
+
+                    startActivityForResult(intent,REQUEST_CAMERA)
+                }
+
             }
 
 
@@ -200,17 +230,14 @@ open class WriteFragment : Fragment() {
 
             val photo = photoList[position]
 
-            imgRL.background = Drawable.createFromPath(photo.photoPath)
+//            imgRL.background = Drawable.createFromPath(photo.photoPath)
             //이미지가져오기
             imgid = photo.photoPath!!
-
+            imgIV.setImageBitmap(Utils.getImage(mainActivity.contentResolver, imgid))
 
         }
 
-
-
         imageLoader.setListener(adapter)
-
 
         val permissionlistener = object : PermissionListener {
             override fun onPermissionGranted() {
@@ -241,11 +268,7 @@ open class WriteFragment : Fragment() {
                 if(resultCode== Activity.RESULT_OK && data !=null){
                     capture = data.extras.get("data") as Bitmap
                     imgIV.setImageBitmap(capture)
-
-
-
-
-
+                    imgid = "";
                 }
             }
             else -> {

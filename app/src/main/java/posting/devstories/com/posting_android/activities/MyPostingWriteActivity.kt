@@ -15,7 +15,6 @@ import kotlinx.android.synthetic.main.activity_posttextwrite.*
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
-import posting.devstories.com.posting_android.Actions.JoinAction
 import posting.devstories.com.posting_android.Actions.PostingAction
 import posting.devstories.com.posting_android.R
 import posting.devstories.com.posting_android.base.PrefUtils
