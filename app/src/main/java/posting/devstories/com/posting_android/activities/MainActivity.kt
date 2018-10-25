@@ -29,11 +29,12 @@ class MainActivity : FragmentActivity() {
 
         this.context = this
 
+
         fragmentFT.setup(context, supportFragmentManager, R.id.fragmentFL)
 
         fragmentFT.addTab(fragmentFT.newTabSpec("post").setIndicator("post"), PostFragment::class.java, null)
-        fragmentFT.addTab(fragmentFT.newTabSpec("write").setIndicator("write", null), WriteFragment::class.java, null)
-        fragmentFT.addTab(fragmentFT.newTabSpec("myPage").setIndicator("myPage", null), MyPageFragment::class.java, null)
+        fragmentFT.addTab(fragmentFT.newTabSpec("write").setIndicator("write"), WriteFragment::class.java, null)
+        fragmentFT.addTab(fragmentFT.newTabSpec("myPage").setIndicator("myPage"), MyPageFragment::class.java, null)
 //        val fragmentManager = supportFragmentManager
 //        var fragment: Fragment = PostFragment()
 
