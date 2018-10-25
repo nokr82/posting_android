@@ -83,7 +83,7 @@ class IntroActivity : RootActivity() {
     private fun login() {
 
         val params = RequestParams()
-        params.put("email", PrefUtils.getStringPreference(context,"email"))
+        params.put("email", PrefUtils.getStringPreference(context,"loginID"))
         params.put("passwd", PrefUtils.getStringPreference(context,"passwd"))
 
         LoginAction.login(params, object : JsonHttpResponseHandler() {

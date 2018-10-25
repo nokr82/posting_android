@@ -117,9 +117,9 @@
                     android:id="@+id/idpwfindTX"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="7.65dp"
-                    android:text="아이디/비밀번호 찾기"
+                    android:layout_gravity="right"
+                    android:layout_marginTop="10dp"
+                    android:text="비밀번호 찾기"
                     android:textColor="#888888"
                     android:textSize="12.67dp" />
 

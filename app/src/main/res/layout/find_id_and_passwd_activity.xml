@@ -94,10 +94,11 @@
                     android:layout_gravity="center"/>
 
 <LinearLayout
-    android:layout_marginTop="345dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:gravity="bottom"
+    android:layout_marginBottom="64dp"
     >
 
     <TextView
