@@ -48,13 +48,6 @@ class DetailActivity : RootActivity() {
         id = intent.getStringExtra("id")
 
 
-        var image = Config.url + image_uri
-
-        imgRL.background = Drawable.createFromPath(image)
-        contentTV.setText(contents)
-
-
-
         member_id = PrefUtils.getIntPreference(context, "member_id")
 
         detaildata(member_id,id)
@@ -83,26 +76,30 @@ class DetailActivity : RootActivity() {
                     print("=============================="+result)
                     if ("ok" == result) {
                         val data = response.getJSONObject("posting")
-                        var id = Utils.getString(data, "id")
-                        var member_id =   Utils.getString(data, "member_id")
-                        var Image = Utils.getString(data, "Image")
-                        var created =   Utils.getString(data, "created")
-                        var contents =   Utils.getString(data, "contents")
-                        var image_uri = Utils.getString(data, "image_uri")
+                        val posting = data.getJSONObject("Posting")
+                        val member  = data.getJSONObject("Member")
+                        var id = Utils.getString(posting, "id")
+                        var member_id =   Utils.getString(posting, "member_id")
+                        var Image = Utils.getString(posting, "Image")
+                        var image_uri = Utils.getString(posting, "image_uri")
+                        var created =   Utils.getString(posting, "created")
+                        var contents =   Utils.getString(posting, "contents")
+                        var nick_name = Utils.getString(member, "nick_name")
 
 
+                        contentTV.text = contents
+                        wnameTX.text = nick_name
+                        upTX.text = created
 
 
-//                        if (!image_uri.isEmpty() && image_uri != "") {
-//                            var image = Config.url + image_uri
-//                            ImageLoader.getInstance().displayImage(image,imgRL, Utils.UILoptionsPosting)
-//                        } else {
-//                            item.contentsTV.text = contents
-//                            item.contentsTV.visibility = View.VISIBLE
-//                        }
+                        //uri를 이미지로 변환시켜준다
+                        if (!image_uri.isEmpty() && image_uri != "") {
+                            var image = Config.url + image_uri
+                            ImageLoader.getInstance().displayImage(image, imgIV, Utils.UILoptionsPosting)
 
+                        } else {
 
-
+                        }
 
 
 

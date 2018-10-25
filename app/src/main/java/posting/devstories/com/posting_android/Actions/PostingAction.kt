@@ -18,7 +18,13 @@ object PostingAction {
     fun view(params: RequestParams, handler: JsonHttpResponseHandler) {
         HttpClient.post("/posting/index.json", params, handler)
     }
+    //메인목록
     fun mainlist(params: RequestParams, handler: JsonHttpResponseHandler) {
         HttpClient.post("/main/index.json", params, handler)
     }
+    //상세페이지
+    fun detail(params: RequestParams, handler: JsonHttpResponseHandler) {
+        HttpClient.post("/posting/detail.json", params, handler)
+    }
+
 }

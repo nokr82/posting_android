@@ -38,24 +38,7 @@ class FindIDAndPasswdActivity : RootActivity() {
             finish()
         }
 
-        findPWRL.setOnClickListener {
 
-            tab = "pw"
-
-            setView()
-            pwfindV.visibility=View.VISIBLE
-            findTV.text = "패스워드 찾기"
-        }
-
-        findIDRL.setOnClickListener {
-
-            tab = "id"
-
-            setView()
-            idfindV.visibility = View.VISIBLE
-            findTV.text = "아이디 찾기"
-
-        }
 
         findTV.setOnClickListener {
             val email:String = emailET.text.toString()
@@ -87,8 +70,7 @@ class FindIDAndPasswdActivity : RootActivity() {
         emailET.setText("")
         nameET.setText("")
 
-        pwfindV.visibility = View.INVISIBLE
-        idfindV.visibility = View.INVISIBLE
+
     }
 
 
