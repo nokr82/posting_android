@@ -53,16 +53,15 @@
             android:background="@mipmap/wtite_bg"
             >
 
-            <RelativeLayout
-                android:id="@+id/imgRL"
+            <ImageView
+                android:id="@+id/imgIV"
                 android:layout_width="287.4dp"
                 android:layout_height="290.58dp"
-                android:background="@mipmap/textimg"
                 android:layout_centerInParent="true">
 
 
 
-            </RelativeLayout>
+            </ImageView>
 
 
 
