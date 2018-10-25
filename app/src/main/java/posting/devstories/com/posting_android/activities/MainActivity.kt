@@ -29,7 +29,6 @@ class MainActivity : FragmentActivity() {
 
         this.context = this
 
-
         fragmentFT.setup(context, supportFragmentManager, R.id.fragmentFL)
 
         fragmentFT.addTab(fragmentFT.newTabSpec("post").setIndicator("post"), PostFragment::class.java, null)
