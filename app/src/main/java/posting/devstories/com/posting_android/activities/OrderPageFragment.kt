@@ -7,6 +7,8 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.GridView
+import android.widget.LinearLayout
 import posting.devstories.com.posting_android.R
 
 open class OrderPageFragment : Fragment() {
@@ -15,6 +17,16 @@ open class OrderPageFragment : Fragment() {
     private var progressDialog: ProgressDialog? = null
 
     lateinit var mainActivity:MainActivity
+
+
+
+
+    lateinit var reviewLL: LinearLayout
+    lateinit var reviewV:View
+    lateinit var couponLL: LinearLayout
+    lateinit var couponV:View
+    lateinit var couponGV:GridView
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +49,12 @@ open class OrderPageFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        reviewLL = view.findViewById(R.id.reviewLL)
+        reviewV = view.findViewById(R.id.reviewV)
+        couponLL = view.findViewById(R.id.couponLL)
+        couponV = view.findViewById(R.id.couponV)
+        couponGV = view.findViewById(R.id.couponGV)
+
 
     }
 
@@ -45,6 +63,19 @@ open class OrderPageFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
 
+        reviewLL.setOnClickListener {
+            reviewV.visibility = View.VISIBLE
+            couponV.visibility = View.INVISIBLE
+        }
+        couponLL.setOnClickListener {
+            couponV.visibility = View.VISIBLE
+            reviewV.visibility = View.INVISIBLE
+        }
+
+
+
     }
+
+
 
 }
