@@ -217,6 +217,7 @@ open class PostFragment : Fragment() {
 
             }
 
+
             override fun onPageSelected(position: Int) {
 
                 when (position) {
