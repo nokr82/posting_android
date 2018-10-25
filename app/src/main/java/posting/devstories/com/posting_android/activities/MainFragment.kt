@@ -2,11 +2,13 @@ package posting.devstories.com.posting_android.activities
 
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.GridView
 import android.widget.Toast
 import com.loopj.android.http.JsonHttpResponseHandler
@@ -60,6 +62,24 @@ open class MainFragment : Fragment() {
         gideGV.adapter = adapterMain
         member_id = PrefUtils.getIntPreference(context, "member_id")
 
+        gideGV.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
+            try {
+                val Posting = adapterData[position].getJSONObject("Posting")
+
+                //                    Intent intent = new Intent(context, _StoreDetailActivity.class);
+                val intent = Intent(context, DetailActivity::class.java)
+                intent.putExtra("id", Utils.getString(Posting, "id"))
+                startActivity(intent)
+
+            } catch (e: JSONException) {
+                e.printStackTrace()
+            }
+        }
+
+
+
+
+
 
 
 
@@ -106,9 +126,6 @@ open class MainFragment : Fragment() {
 
             }
 
-            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONArray?) {
-                super.onSuccess(statusCode, headers, response)
-            }
 
             override fun onSuccess(statusCode: Int, headers: Array<Header>?, responseString: String?) {
 
@@ -130,21 +147,7 @@ open class MainFragment : Fragment() {
                 error()
             }
 
-            override fun onFailure(statusCode: Int, headers: Array<Header>?, throwable: Throwable, errorResponse: JSONObject?) {
-                if (progressDialog != null) {
-                    progressDialog!!.dismiss()
-                }
-                throwable.printStackTrace()
-                error()
-            }
 
-            override fun onFailure(statusCode: Int, headers: Array<Header>?, throwable: Throwable, errorResponse: JSONArray?) {
-                if (progressDialog != null) {
-                    progressDialog!!.dismiss()
-                }
-                throwable.printStackTrace()
-                error()
-            }
 
             override fun onStart() {
                 // show dialog
