@@ -111,6 +111,7 @@ open class MainFragment : Fragment() {
 
                         }
 
+
                         adapterMain.notifyDataSetChanged()
 
 

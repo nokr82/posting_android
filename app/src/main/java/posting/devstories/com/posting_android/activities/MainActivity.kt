@@ -42,6 +42,7 @@ class MainActivity : FragmentActivity() {
 
             setTabBar();
 
+
             homeIV.setImageResource(R.mipmap.home)
 
             fragmentFT.onTabChanged("post")
