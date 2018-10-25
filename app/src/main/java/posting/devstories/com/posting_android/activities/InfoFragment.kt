@@ -28,6 +28,8 @@ class InfoFragment : MainFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var view = super.onCreateView(inflater, container, savedInstanceState)
 
+        //리스트뷰초기화 중복생성방지
+        adapterData.clear()
         loadData(2)
 
         return view

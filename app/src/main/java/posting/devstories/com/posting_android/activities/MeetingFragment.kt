@@ -21,7 +21,7 @@ class MeetingFragment : MainFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var view = super.onCreateView(inflater, container, savedInstanceState)
 
-
+        adapterData.clear()
         loadData(5)
 
         return view

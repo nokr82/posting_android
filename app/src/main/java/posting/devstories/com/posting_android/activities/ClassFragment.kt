@@ -19,7 +19,7 @@ class ClassFragment : MainFragment() {
     }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var view = super.onCreateView(inflater, container, savedInstanceState)
-
+        adapterData.clear()
         loadData(4)
 
         return view
