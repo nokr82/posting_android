@@ -3,15 +3,15 @@ package posting.devstories.com.posting_android.activities
 import android.app.ProgressDialog
 import android.content.Context
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
-import android.support.v4.app.FragmentTabHost
 import android.view.View
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.tab_home_view.*
+import kotlinx.android.synthetic.main.tab_mypage_view.*
+import kotlinx.android.synthetic.main.tab_write_view.*
 import posting.devstories.com.posting_android.R
 import posting.devstories.com.posting_android.base.PrefUtils
-import java.util.zip.Inflater
 
 class MainActivity : FragmentActivity() {
     private var progressDialog: ProgressDialog? = null
@@ -19,14 +19,11 @@ class MainActivity : FragmentActivity() {
     private val BACK_PRESSED_TERM = (1000 * 2).toLong()
     private var backPressedTime: Long = 0
 
-    var tabType = 1;
+    var tabType = 1
     var type = ""
 
     var member_id = -1
     var member_type = ""
-
-// var member_type = PrefUtils.getStringPreference(context,"member_type")
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,18 +31,25 @@ class MainActivity : FragmentActivity() {
 
         this.context = this
 
+        // sliding_tabs.addTab(tabLayout.newTab().setText("Tab 1"));
+        // tabLayout.addTab(tabLayout.newTab().setText("Tab 2"));
+        // tabLayout.addTab(tabLayout.newTab().setText("Tab 3"));
 
         fragmentFT.setup(context, supportFragmentManager, R.id.fragmentFL)
 
+        val tabHomeV = View.inflate(context, R.layout.tab_home_view, null)
+        val tabWriteV = View.inflate(context, R.layout.tab_write_view, null)
+        val tabMypageV = View.inflate(context, R.layout.tab_mypage_view, null)
+
+        fragmentFT.addTab(fragmentFT.newTabSpec("post").setIndicator(tabHomeV), PostFragment::class.java, null)
+        fragmentFT.addTab(fragmentFT.newTabSpec("write").setIndicator(tabWriteV), WriteFragment::class.java, null)
+        fragmentFT.addTab(fragmentFT.newTabSpec("myPage").setIndicator(tabMypageV), MyPageFragment::class.java, null)
+
+        fragmentFT.tabWidget.dividerDrawable = null
 
         member_type = PrefUtils.getStringPreference(context, "member_type")
 
-
-        if (member_type.equals("2")){
-            fragmentFT.addTab(fragmentFT.newTabSpec("post").setIndicator("post"), PostFragment::class.java, null)
-            fragmentFT.addTab(fragmentFT.newTabSpec("write").setIndicator("write"), WriteFragment::class.java, null)
-            fragmentFT.addTab(fragmentFT.newTabSpec("myPage").setIndicator("myPage"), MyPageFragment::class.java, null)
-        }else if(member_type.equals("3")){
+        if(member_type.equals("3")){
             fragmentFT.addTab(fragmentFT.newTabSpec("post").setIndicator("post"), PostFragment::class.java, null)
             fragmentFT.addTab(fragmentFT.newTabSpec("write").setIndicator("write"), WriteFragment::class.java, null)
             fragmentFT.addTab(fragmentFT.newTabSpec("myPage").setIndicator("myPage"), OrderPageFragment::class.java, null)
@@ -53,7 +57,6 @@ class MainActivity : FragmentActivity() {
             fragmentFT.addTab(fragmentFT.newTabSpec("post").setIndicator("post"), PostFragment::class.java, null)
             fragmentFT.addTab(fragmentFT.newTabSpec("write").setIndicator("write"), WriteFragment::class.java, null)
             fragmentFT.addTab(fragmentFT.newTabSpec("myPage").setIndicator("myPage"), MyPageFragment::class.java, null)
-
         }
 
 //        val fragmentManager = supportFragmentManager
@@ -61,7 +64,7 @@ class MainActivity : FragmentActivity() {
 
         homeLL.setOnClickListener {
 
-            setTabBar();
+            setTabBar()
 
 
             homeIV.setImageResource(R.mipmap.home)
@@ -78,7 +81,7 @@ class MainActivity : FragmentActivity() {
 
         writeLL.setOnClickListener {
 
-            setTabBar();
+            setTabBar()
 
             writeIV.setImageResource(R.mipmap.clickplus)
             fragmentFT.onTabChanged("write")
@@ -92,7 +95,7 @@ class MainActivity : FragmentActivity() {
 
         myPageLL.setOnClickListener {
 
-            setTabBar();
+            setTabBar()
 
             myPageIV.setImageResource(R.mipmap.clickmy)
             fragmentFT.onTabChanged("myPage")

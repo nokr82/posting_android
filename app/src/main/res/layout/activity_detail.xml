@@ -1,28 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
+              android:layout_width="match_parent"
+              android:layout_height="match_parent" xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_height="47.5dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingLeft="15.5dp">
 
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/myIV"
-            android:padding="16dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/myimg"/>
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@mipmap/myimg"
+            android:layout_marginRight="7dp"/>
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="post_0904"
-            android:gravity="center_vertical"/>
+            android:gravity="center_vertical"
+            android:textSize="13dp"/>
 
 
         <ImageView
@@ -33,116 +36,121 @@
             android:src="@mipmap/menu"
             />
 
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#A19F9B"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14.5dp"
+        android:layout_marginBottom="5dp"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <posting.devstories.com.posting_android.base.RationalRelativeLayout
+            android:id="@+id/postingLL"
+            android:layout_width="246.5dp"
+            android:layout_height="0dp"
+            app:ratio="1.1:1"
+            android:background="@mipmap/wtite_bg">
 
 
+            <posting.devstories.com.posting_android.base.RationalRelativeLayout
+                android:layout_width="215.5dp"
+                android:layout_height="0dp"
+                android:layout_centerInParent="true"
+                app:ratio="1.1:1">
 
+                <ImageView
+                    android:id="@+id/imgIV"
+                    android:layout_width="215.5dp"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/contentsTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text=""
+                    android:visibility="gone"/>
+
+            </posting.devstories.com.posting_android.base.RationalRelativeLayout>
+
+                <ImageView
+                    android:layout_width="40.2dp"
+                    android:layout_height="40.2dp"
+                    android:src="@mipmap/blue"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerInParent="true"/>
+
+        </posting.devstories.com.posting_android.base.RationalRelativeLayout>
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1.7"
-        android:orientation="vertical"
-        android:gravity="center"
-        >
+        android:layout_height="36dp"
+        android:gravity="center_vertical">
 
-        <RelativeLayout
-            android:layout_width="327.98dp"
-            android:layout_height="328.18dp"
-            android:background="@mipmap/wtite_bg"
-            >
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginLeft="20dp"
+            android:id="@+id/writerIV"
+            android:src="@mipmap/myimg"/>
 
-            <ImageView
-                android:id="@+id/imgIV"
-                android:layout_width="287.4dp"
-                android:layout_height="290.58dp"
-                android:layout_centerInParent="true">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="9dp"
+            android:textSize="16.33dp"
+            android:text="lala_girl"
+            android:id="@+id/wnameTX"/>
 
-
-
-            </ImageView>
-
-
-
-
-            <ImageView
-                android:layout_width="40.2dp"
-                android:layout_height="40.2dp"
-                android:src="@mipmap/blue"
-                android:layout_alignParentTop="true"
-                android:layout_centerInParent="true"
-                />
-
-
-
-        </RelativeLayout>
-
+        <TextView
+            android:id="@+id/upTX"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="20dp"
+            android:textSize="11dp"
+            android:text="8월31일"/>
 
         <LinearLayout
+            android:layout_width="36dp"
+            android:layout_height="match_parent"
+            android:gravity="center">
 
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_width="42.5dp"
-                android:layout_height="42.5dp"
-                android:layout_marginLeft="26.6dp"
-                android:id="@+id/writerIV"
-                android:src="@mipmap/myimg"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="12.4dp"
-                android:textSize="16.33dp"
-                android:text="lala_girl"
-                android:id="@+id/wnameTX"/>
-            <TextView
-                android:id="@+id/upTX"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="26.2dp"
-                android:textSize="11dp"
-                android:text="8월31일"/>
             <ImageView
-
                 android:id="@+id/policeIV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:src="@mipmap/police"
-                android:padding="15dp"/>
-
-
+                android:src="@mipmap/police"/>
 
         </LinearLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.3dp"
-            android:layout_alignParentBottom="true"
-            android:background="#A19F9B"
-
-            />
-
-
-
-
-
 
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.3dp"
+        android:background="#A19F9B"/>
+
     <ScrollView
-        android:layout_marginTop="18.47dp"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.55">
 
         <LinearLayout
-            android:layout_marginLeft="34.1dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -151,77 +159,49 @@
                 android:id="@+id/contentTV"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="안녕하세요 이화여대 17학번 영문학과 재학생이며,\n부전공은 국어교육학 입니다.
-\n인문학 스터디 그룹원 모집중입니다.\n대상 : 고대/이대/서강대 재학생이면 누구나\n 인문학에 관심 있는 16~18 학번"
-                android:textSize="13.6dp"/>
+                android:layout_marginLeft="25.5dp"
+                android:layout_marginRight="25.5dp"
+                android:text=""
+                android:textSize="13.6dp"
+                android:layout_marginTop="14dp"/>
 
-            <LinearLayout
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.3dp"
+                android:background="#A19F9B"
+                android:layout_marginTop="14dp"/>
+
+            <com.github.paolorotolo.expandableheightlistview.ExpandableHeightListView
+                android:id="@+id/commentsLV"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="#스터디"
-                    android:textColor="#063588"
-                    android:textSize="13dp"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="#스터디"
-                    android:textColor="#063588"
-                    android:textSize="13dp"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="#인문학"
-                    android:textColor="#063588"
-                    android:textSize="13dp"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="#인문학스터디"
-                    android:textColor="#063588"
-                    android:textSize="13dp"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="#STUDY"
-                    android:textColor="#063588"
-                    android:textSize="13dp"/>
+                android:layout_marginLeft="25.5dp"
+                android:layout_marginRight="25.5dp">
 
-            </LinearLayout>
-
-            <ListView
-                android:id="@+id/reLV"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-
-
-
-            </ListView>
-
-
-
-
-
+            </com.github.paolorotolo.expandableheightlistview.ExpandableHeightListView>
 
         </LinearLayout>
-
 
     </ScrollView>
 
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/chat_plus"
-            android:padding="5dp"
-            android:layout_marginLeft="10dp"/>
+        android:layout_height="36dp"
+        android:layout_marginBottom="4.5dp"
+        android:gravity="center_vertical">
+
+        <LinearLayout
+            android:layout_width="36dp"
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/chat_plus"/>
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="0dp"
@@ -229,9 +209,8 @@
             android:layout_height="wrap_content"
             android:background="@mipmap/chat_bg">
 
-
             <EditText
-                android:id="@+id/reET"
+                android:id="@+id/commentsET"
                 android:layout_marginLeft="17.23dp"
                 android:layout_gravity="center_vertical"
                 android:layout_width="0dp"
@@ -249,44 +228,12 @@
                 android:layout_marginRight="10dp"
                 android:src="@mipmap/smile"/>
 
-
-
-
         </LinearLayout>
 
-
-
-        <ImageView
-            android:layout_gravity="center_vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="7dp"
-            android:src="@mipmap/police"/>
+        <View
+            android:layout_width="36dp"
+            android:layout_height="match_parent"/>
 
     </LinearLayout>
 
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.3dp"
-        android:background="#A19F9B"
-
-        />
-
-
-
-
-
-
-
 </LinearLayout>
-
-
-
-
-
-
-
-
