@@ -62,11 +62,11 @@ class LoginActivity : RootActivity() {
                 return@setOnClickListener
             }
 
-            if(!Utils.isValidEmail(getName)) {
-                Toast.makeText(context, "이메일을 확인해주세요.", Toast.LENGTH_LONG).show();
-                IDET.requestFocus()
-                return@setOnClickListener
-            }
+//            if(!Utils.isValidEmail(getName)) {
+//                Toast.makeText(context, "이메일을 확인해주세요.", Toast.LENGTH_LONG).show();
+//                IDET.requestFocus()
+//                return@setOnClickListener
+//            }
 
             login(getName, getPW)
 
@@ -96,8 +96,12 @@ class LoginActivity : RootActivity() {
                     val result = response!!.getString("result")
 
                     if ("ok" == result) {
+                        val loginID = response.getString("loginID")
                         val data = response.getJSONObject("member")
 
+
+
+                        PrefUtils.setPreference(context, "loginID", loginID)
                         PrefUtils.setPreference(context, "member_id", Utils.getInt(data, "id"))
                         PrefUtils.setPreference(context, "email", Utils.getString(data, "email"))
                         PrefUtils.setPreference(context, "passwd", Utils.getString(data, "passwd"))
