@@ -24,7 +24,9 @@ class DlgStorageActivity : RootActivity() {
     lateinit var context: Context
     private var progressDialog: ProgressDialog? = null
 
-    var tab = "id"
+    protected var _splashTime = 2000 // time to display the splash screen in ms
+    private val _active = true
+    private var splashThread: Thread? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,12 +35,32 @@ class DlgStorageActivity : RootActivity() {
         this.context = this
         progressDialog = ProgressDialog(context)
 
-        this.setFinishOnTouchOutside(true)
+//        this.setFinishOnTouchOutside(true)
 
-        var intent = Intent();
-        intent.action = "SAVE_POSTING"
-        sendBroadcast(intent)
+        splashThread = object : Thread() {
+            override fun run() {
+                try {
+                    var waited = 0
+                    while (waited < _splashTime && _active) {
+                        Thread.sleep(100)
+                        waited += 100
+                    }
+                } catch (e: InterruptedException) {
+                    // do nothing
+                } finally {
+                    stopDlg()
+                }
+            }
+        }
+        (splashThread as Thread).start()
 
     }
+
+    private fun stopDlg() {
+
+        finish()
+
+    }
+
 
 }

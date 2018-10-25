@@ -1,7 +1,10 @@
 package posting.devstories.com.posting_android.activities
 
 import android.app.ProgressDialog
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -32,6 +35,28 @@ open class MainFragment : Fragment() {
 
     lateinit var gideGV: GridView
 
+    internal var savePostingReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent?) {
+            if (intent != null) {
+                var posting_id = intent.getStringExtra("posting_id")
+
+                for (i in 0..(adapterData.size - 1)) {
+                    var data = adapterData[i]
+                    var posting = data.getJSONObject("Posting")
+
+                    if (Utils.getString(posting, "id") == posting_id) {
+                        var cnt = Utils.getInt(posting, "leftCount") - 1
+                        posting.put("leftCount", cnt)
+                    }
+
+                }
+
+                adapterMain.notifyDataSetChanged()
+
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -56,6 +81,9 @@ open class MainFragment : Fragment() {
         activity = getActivity() as MainActivity
         tabType = activity.tabType
 
+        val filter1 = IntentFilter("SAVE_POSTING")
+        activity.registerReceiver(savePostingReceiver, filter1)
+
         adapterMain = PostAdapter(activity, R.layout.item_post, adapterData)
         gideGV.adapter = adapterMain
         member_id = PrefUtils.getIntPreference(context, "member_id")
@@ -74,21 +102,12 @@ open class MainFragment : Fragment() {
             }
         }
 
-
-
-
-
-
-
-
     }
 
     fun loadData(type: Int) {
         val params = RequestParams()
-        params.put("member_id",member_id)
+        params.put("member_id", member_id)
         params.put("type", type)
-
-        println("====================================================== type " + type);
 
         PostingAction.view(params, object : JsonHttpResponseHandler() {
 
@@ -103,7 +122,7 @@ open class MainFragment : Fragment() {
                     if ("ok" == result) {
                         val data = response.getJSONArray("list")
 
-                        for (i in 0..data.length()-1){
+                        for (i in 0..data.length() - 1) {
 
                             println("data[i] : " + data[i])
 
@@ -135,7 +154,12 @@ open class MainFragment : Fragment() {
                 Utils.alert(context, "조회중 장애가 발생하였습니다.")
             }
 
-            override fun onFailure(statusCode: Int, headers: Array<Header>?, responseString: String?, throwable: Throwable) {
+            override fun onFailure(
+                statusCode: Int,
+                headers: Array<Header>?,
+                responseString: String?,
+                throwable: Throwable
+            ) {
                 if (progressDialog != null) {
                     progressDialog!!.dismiss()
                 }
@@ -145,7 +169,6 @@ open class MainFragment : Fragment() {
                 throwable.printStackTrace()
                 error()
             }
-
 
 
             override fun onStart() {

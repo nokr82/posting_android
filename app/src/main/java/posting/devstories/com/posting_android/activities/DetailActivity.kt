@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import com.loopj.android.http.JsonHttpResponseHandler
 import com.loopj.android.http.RequestParams
@@ -15,6 +16,8 @@ import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 import posting.devstories.com.posting_android.Actions.PostingAction.detail
+import posting.devstories.com.posting_android.Actions.PostingAction.save_posting
+import posting.devstories.com.posting_android.Actions.PostingAction.write_comments
 import posting.devstories.com.posting_android.R
 import posting.devstories.com.posting_android.base.Config
 import posting.devstories.com.posting_android.base.PrefUtils
@@ -29,9 +32,11 @@ class DetailActivity : RootActivity() {
     private var progressDialog: ProgressDialog? = null
     var autoLogin = false
     var member_id = -1
-    var pstting_id  = ""
+    var posting_id  = ""
     var image_uri = ""
     var contents = ""
+    var p_comments_id = -1
+    var count = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,28 +47,52 @@ class DetailActivity : RootActivity() {
 
         intent = getIntent()
 
-        pstting_id = intent.getStringExtra("id")
+        posting_id = intent.getStringExtra("id")
 
         member_id = PrefUtils.getIntPreference(context, "member_id")
 
-        detaildata(member_id,pstting_id)
+        commentsET.setOnEditorActionListener { textView, i, keyEvent ->
 
-//        commentsET.
+            when (i) {
+                EditorInfo.IME_ACTION_DONE -> {
+
+                    var comments = Utils.getString(commentsET)
+
+                    if(!comments.isEmpty() && comments != "") {
+                        writeComments(comments)
+                    }
+
+                }
+            }
+            return@setOnEditorActionListener true
+
+        }
 
         postingLL.setOnClickListener {
+
+            if(count < 1) {
+
+                Toast.makeText(context, "남은 포스팅 갯수가 없습니다.", Toast.LENGTH_LONG).show()
+
+                return@setOnClickListener
+            }
 
             savePosting();
 
         }
 
+        detaildata()
+
     }
 
-    fun savePosting() {
+    fun writeComments(comments:String) {
         val params = RequestParams()
         params.put("member_id",member_id)
-        params.put("posting_id", pstting_id)
+        params.put("posting_id", posting_id)
+        params.put("comments", comments)
+        params.put("p_comments_id", p_comments_id)
 
-        detail(params, object : JsonHttpResponseHandler() {
+        write_comments(params, object : JsonHttpResponseHandler() {
 
             override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
                 if (progressDialog != null) {
@@ -75,11 +104,8 @@ class DetailActivity : RootActivity() {
 
                     if ("ok" == result) {
 
-                        var intent = Intent(context, DlgStorageActivity::class.java);
-                        startActivity(intent)
+                        detaildata()
 
-                    } else {
-                        Toast.makeText(context, "일치하는 회원이 존재하지 않습니다.", Toast.LENGTH_LONG).show()
                     }
 
                 } catch (e: JSONException) {
@@ -92,14 +118,9 @@ class DetailActivity : RootActivity() {
                 super.onSuccess(statusCode, headers, response)
             }
 
-
-
             private fun error() {
                 Utils.alert(context, "조회중 장애가 발생하였습니다.")
             }
-
-
-
 
             override fun onFailure(statusCode: Int, headers: Array<Header>?, throwable: Throwable, errorResponse: JSONArray?) {
                 if (progressDialog != null) {
@@ -125,7 +146,73 @@ class DetailActivity : RootActivity() {
         })
     }
 
-    fun detaildata(member_id:Int ,posting_id: String) {
+    fun savePosting() {
+        val params = RequestParams()
+        params.put("member_id",member_id)
+        params.put("posting_id", posting_id)
+
+        save_posting(params, object : JsonHttpResponseHandler() {
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+
+                try {
+                    val result = response!!.getString("result")
+
+                    if ("ok" == result) {
+
+                        var intent = Intent(context, DlgStorageActivity::class.java)
+                        startActivity(intent)
+
+
+                        intent = Intent()
+                        intent.putExtra("posting_id", posting_id)
+                        intent.action = "SAVE_POSTING"
+                        sendBroadcast(intent)
+
+                    }
+
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+
+            }
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONArray?) {
+                super.onSuccess(statusCode, headers, response)
+            }
+
+            private fun error() {
+                Utils.alert(context, "조회중 장애가 발생하였습니다.")
+            }
+
+            override fun onFailure(statusCode: Int, headers: Array<Header>?, throwable: Throwable, errorResponse: JSONArray?) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+                throwable.printStackTrace()
+                error()
+            }
+
+            override fun onStart() {
+                // show dialog
+                if (progressDialog != null) {
+
+                    progressDialog!!.show()
+                }
+            }
+
+            override fun onFinish() {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+            }
+        })
+    }
+
+    fun detaildata() {
         val params = RequestParams()
         params.put("member_id",member_id)
         params.put("posting_id", posting_id)
@@ -142,19 +229,23 @@ class DetailActivity : RootActivity() {
 
                     if ("ok" == result) {
                         val data = response.getJSONObject("posting")
+
                         val posting = data.getJSONObject("Posting")
-                        val member  = data.getJSONObject("Member")
+
                         var id = Utils.getString(posting, "id")
                         var member_id =   Utils.getString(posting, "member_id")
                         var Image = Utils.getString(posting, "Image")
                         var image_uri = Utils.getString(posting, "image_uri")
+                        count = Utils.getInt(posting, "leftCount")
 //                        var created =   Utils.getString(posting, "created")
+
+                        val member  = data.getJSONObject("Member")
+
                         var contents =   Utils.getString(posting, "contents")
                         var nick_name = Utils.getString(member, "nick_name")
 
                         contentTV.text = contents
                         wnameTX.text = nick_name
-
 
                         val sdf = SimpleDateFormat("MM월dd일", Locale.KOREA)
                         val created = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(Utils.getString(posting, "created"))
@@ -172,8 +263,6 @@ class DetailActivity : RootActivity() {
                             contentsTV.visibility = View.VISIBLE
                         }
 
-                    } else {
-                        Toast.makeText(context, "일치하는 회원이 존재하지 않습니다.", Toast.LENGTH_LONG).show()
                     }
 
                 } catch (e: JSONException) {
@@ -186,14 +275,9 @@ class DetailActivity : RootActivity() {
                 super.onSuccess(statusCode, headers, response)
             }
 
-
-
             private fun error() {
                 Utils.alert(context, "조회중 장애가 발생하였습니다.")
             }
-
-
-
 
             override fun onFailure(statusCode: Int, headers: Array<Header>?, throwable: Throwable, errorResponse: JSONArray?) {
                 if (progressDialog != null) {
