@@ -6,12 +6,22 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <fragment
-        android:id="@+id/fragment"
+    <android.support.v4.app.FragmentTabHost
+        android:id="@+id/fragmentFT"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:name="posting.devstories.com.posting_android.activities.PostFragment"/>
+        android:layout_weight="1">
+
+        <FrameLayout
+                android:id="@+id/fragmentFL"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+
+        </FrameLayout>
+
+    </android.support.v4.app.FragmentTabHost>
 
     <View
         android:layout_width="match_parent"

@@ -5,9 +5,12 @@ import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
+import android.support.v4.app.FragmentTabHost
+import android.view.View
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import posting.devstories.com.posting_android.R
+import java.util.zip.Inflater
 
 class MainActivity : FragmentActivity() {
     private var progressDialog: ProgressDialog? = null
@@ -25,8 +28,14 @@ class MainActivity : FragmentActivity() {
         setContentView(R.layout.activity_main)
 
         this.context = this
-        val fragmentManager = supportFragmentManager
-        var fragment: Fragment = PostFragment()
+
+        fragmentFT.setup(context, supportFragmentManager, R.id.fragmentFL)
+
+        fragmentFT.addTab(fragmentFT.newTabSpec("post").setIndicator("post"), PostFragment::class.java, null)
+        fragmentFT.addTab(fragmentFT.newTabSpec("write").setIndicator("write", null), WriteFragment::class.java, null)
+        fragmentFT.addTab(fragmentFT.newTabSpec("myPage").setIndicator("myPage", null), MyPageFragment::class.java, null)
+//        val fragmentManager = supportFragmentManager
+//        var fragment: Fragment = PostFragment()
 
         homeLL.setOnClickListener {
 
@@ -34,11 +43,13 @@ class MainActivity : FragmentActivity() {
 
             homeIV.setImageResource(R.mipmap.home)
 
-            val fragmentTransaction = fragmentManager.beginTransaction()
-            fragment = PostFragment()
-            fragmentTransaction.replace(R.id.fragment, fragment)
-            fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.commit()
+            fragmentFT.onTabChanged("post")
+
+//            val fragmentTransaction = fragmentManager.beginTransaction()
+//            fragment = PostFragment()
+//            fragmentTransaction.replace(R.id.fragment, fragment)
+//            fragmentTransaction.addToBackStack(null);
+//            fragmentTransaction.commit()
 
         }
 
@@ -47,12 +58,13 @@ class MainActivity : FragmentActivity() {
             setTabBar();
 
             writeIV.setImageResource(R.mipmap.clickplus)
+            fragmentFT.onTabChanged("write")
 
-            val fragmentTransaction = fragmentManager.beginTransaction()
-            fragment = WriteFragment()
-            fragmentTransaction.replace(R.id.fragment, fragment)
-            fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.commit()
+//            val fragmentTransaction = fragmentManager.beginTransaction()
+//            fragment = WriteFragment()
+//            fragmentTransaction.replace(R.id.fragment, fragment)
+//            fragmentTransaction.addToBackStack(null);
+//            fragmentTransaction.commit()
         }
 
         myPageLL.setOnClickListener {
@@ -60,12 +72,12 @@ class MainActivity : FragmentActivity() {
             setTabBar();
 
             myPageIV.setImageResource(R.mipmap.clickmy)
-
-            val fragmentTransaction = fragmentManager.beginTransaction()
-            fragment = MyPageFragment()
-            fragmentTransaction.replace(R.id.fragment, fragment)
-            fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.commit()
+            fragmentFT.onTabChanged("myPage")
+//            val fragmentTransaction = fragmentManager.beginTransaction()
+//            fragment = MyPageFragment()
+//            fragmentTransaction.replace(R.id.fragment, fragment)
+//            fragmentTransaction.addToBackStack(null);
+//            fragmentTransaction.commit()
 
         }
 
