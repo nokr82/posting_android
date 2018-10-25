@@ -24,6 +24,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import posting.devstories.com.posting_android.base.PrefUtils
 import posting.devstories.com.posting_android.base.Utils
 
 open class WriteFragment : Fragment() {
@@ -34,8 +35,12 @@ open class WriteFragment : Fragment() {
     private val photoList = ArrayList<ImageAdapter.PhotoData>()
     private val selected = LinkedList<String>()
     private val REQUEST_CAMERA = 0
-    var mee = arrayOf("Free","Info","Study","Class","Meeting")
-    var  most =arrayOf("1","2","3","4","5","6","7","8","9","10")
+    var mee = arrayOf("자유","정보","스터디","동아리","미팅")
+    var  most =arrayOf("수량","1","2","3","4","5","6","7","8","9","10")
+
+    var day = arrayOf("기간","10월2일","10월3일","10월4일","10월5일")
+
+    var member_type = ""
 
     var imgid: String = ""
 
@@ -149,13 +154,29 @@ open class WriteFragment : Fragment() {
 
         }
 
-        adpater = ArrayAdapter<String>(mainActivity.context, android.R.layout.simple_spinner_item, mee)
-        meetingSP2.adapter = adpater
+        member_type = PrefUtils.getStringPreference(context, "member_type")
+        if (member_type.equals("2")) {
+            adpater = ArrayAdapter<String>(mainActivity.context, android.R.layout.simple_spinner_item, mee)
+            meetingSP2.adapter = adpater
 
-        adpater = ArrayAdapter<String>(mainActivity.context, android.R.layout.simple_spinner_item, most)
-        mostSP2.adapter = adpater
+            adpater = ArrayAdapter<String>(mainActivity.context, android.R.layout.simple_spinner_item, most)
+            mostSP2.adapter = adpater
 
+        }else if (member_type.equals("3")){
+            adpater = ArrayAdapter<String>(mainActivity.context, android.R.layout.simple_spinner_item, most)
+            meetingSP2.adapter = adpater
 
+            adpater = ArrayAdapter<String>(mainActivity.context, android.R.layout.simple_spinner_item, day)
+            mostSP2.adapter = adpater
+
+        }else{
+            adpater = ArrayAdapter<String>(mainActivity.context, android.R.layout.simple_spinner_item, mee)
+            meetingSP2.adapter = adpater
+
+            adpater = ArrayAdapter<String>(mainActivity.context, android.R.layout.simple_spinner_item, most)
+            mostSP2.adapter = adpater
+
+        }
 
 
         finishLL.setOnClickListener {

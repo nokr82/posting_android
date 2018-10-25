@@ -10,6 +10,7 @@ import android.view.View
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import posting.devstories.com.posting_android.R
+import posting.devstories.com.posting_android.base.PrefUtils
 import java.util.zip.Inflater
 
 class MainActivity : FragmentActivity() {
@@ -22,6 +23,10 @@ class MainActivity : FragmentActivity() {
     var type = ""
 
     var member_id = -1
+    var member_type = ""
+
+// var member_type = PrefUtils.getStringPreference(context,"member_type")
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,9 +37,25 @@ class MainActivity : FragmentActivity() {
 
         fragmentFT.setup(context, supportFragmentManager, R.id.fragmentFL)
 
-        fragmentFT.addTab(fragmentFT.newTabSpec("post").setIndicator("post"), PostFragment::class.java, null)
-        fragmentFT.addTab(fragmentFT.newTabSpec("write").setIndicator("write"), WriteFragment::class.java, null)
-        fragmentFT.addTab(fragmentFT.newTabSpec("myPage").setIndicator("myPage"), MyPageFragment::class.java, null)
+
+        member_type = PrefUtils.getStringPreference(context, "member_type")
+
+
+        if (member_type.equals("2")){
+            fragmentFT.addTab(fragmentFT.newTabSpec("post").setIndicator("post"), PostFragment::class.java, null)
+            fragmentFT.addTab(fragmentFT.newTabSpec("write").setIndicator("write"), WriteFragment::class.java, null)
+            fragmentFT.addTab(fragmentFT.newTabSpec("myPage").setIndicator("myPage"), MyPageFragment::class.java, null)
+        }else if(member_type.equals("3")){
+            fragmentFT.addTab(fragmentFT.newTabSpec("post").setIndicator("post"), PostFragment::class.java, null)
+            fragmentFT.addTab(fragmentFT.newTabSpec("write").setIndicator("write"), WriteFragment::class.java, null)
+            fragmentFT.addTab(fragmentFT.newTabSpec("myPage").setIndicator("myPage"), OrderPageFragment::class.java, null)
+        }else{
+            fragmentFT.addTab(fragmentFT.newTabSpec("post").setIndicator("post"), PostFragment::class.java, null)
+            fragmentFT.addTab(fragmentFT.newTabSpec("write").setIndicator("write"), WriteFragment::class.java, null)
+            fragmentFT.addTab(fragmentFT.newTabSpec("myPage").setIndicator("myPage"), MyPageFragment::class.java, null)
+
+        }
+
 //        val fragmentManager = supportFragmentManager
 //        var fragment: Fragment = PostFragment()
 

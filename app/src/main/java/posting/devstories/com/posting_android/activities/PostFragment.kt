@@ -85,6 +85,7 @@ open class PostFragment : Fragment() {
 
     lateinit var mainActivity:MainActivity
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -96,6 +97,8 @@ open class PostFragment : Fragment() {
         }
 
         mainActivity = activity as MainActivity
+
+
         return inflater.inflate(R.layout.fra_post, container, false)
     }
     fun doSomethingWithContext(context: Context) {
