@@ -23,10 +23,7 @@
             android:layout_height="wrap_content"
             android:padding="16dp">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/x" />
+
 
         </LinearLayout>
 
@@ -66,6 +63,16 @@
                     android:background="@null">
 
                 </Spinner>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/dateTX"
+                    android:text="기간"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="까지"
+                    android:id="@+id/limitTX"/>
 
                 <ImageView
                     android:layout_width="wrap_content"

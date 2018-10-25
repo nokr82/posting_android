@@ -30,7 +30,7 @@ class MyPostingWriteActivity : RootActivity() {
     private var progressDialog: ProgressDialog? = null
 
     var imgid:String? = null
-    var mee2 = arrayOf("Free","Info","Study","Class","Metting","Coupon")
+    var mee2 = arrayOf("자유","정보","스터디","동아리","미팅","쿠폰")
     var mount2=arrayOf("1","2","3","4","5","6","7","8","9","10")
     var capture: Bitmap?= null
 
@@ -115,17 +115,17 @@ class MyPostingWriteActivity : RootActivity() {
             count = mostSP.selectedItem.toString()
 //            "Free","Info","Study","Class","Metting","Coupon"
 
-            if (type.equals("Free")){
+            if (type.equals("자유")){
                 type = "1"
-            }else if (type.equals("Info")){
+            }else if (type.equals("정보")){
                 type = "2"
-            }else if (type.equals("Study")){
+            }else if (type.equals("스터디")){
                 type = "3"
-            }else if (type.equals("Class")){
+            }else if (type.equals("동아리")){
                 type = "4"
-            }else if (type.equals("Metting")){
+            }else if (type.equals("미팅")){
                 type = "5"
-            }else if (type.equals("Coupon")){
+            }else if (type.equals("쿠폰")){
                 type = "6"
             }
 

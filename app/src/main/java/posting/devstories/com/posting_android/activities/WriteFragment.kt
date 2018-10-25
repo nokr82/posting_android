@@ -1,6 +1,7 @@
 package posting.devstories.com.posting_android.activities
 
 import android.app.Activity
+import android.app.DatePickerDialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
@@ -24,8 +25,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import kotlinx.android.synthetic.main.fra_write.*
+import posting.devstories.com.posting_android.R.id.imgIV
 import posting.devstories.com.posting_android.base.PrefUtils
 import posting.devstories.com.posting_android.base.Utils
+import java.text.SimpleDateFormat
 
 open class WriteFragment : Fragment() {
 
@@ -60,6 +64,7 @@ open class WriteFragment : Fragment() {
     lateinit var listGV: GridView
     lateinit var cameraRL: RelativeLayout
     lateinit var textRL: RelativeLayout
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -155,19 +160,52 @@ open class WriteFragment : Fragment() {
         }
 
         member_type = PrefUtils.getStringPreference(context, "member_type")
-        if (member_type.equals("2")) {
-            adpater = ArrayAdapter<String>(mainActivity.context, android.R.layout.simple_spinner_item, mee)
-            meetingSP2.adapter = adpater
+      if (member_type.equals("3")){
 
-            adpater = ArrayAdapter<String>(mainActivity.context, android.R.layout.simple_spinner_item, most)
-            mostSP2.adapter = adpater
+          mostSP2.visibility = View.GONE
 
-        }else if (member_type.equals("3")){
             adpater = ArrayAdapter<String>(mainActivity.context, android.R.layout.simple_spinner_item, most)
             meetingSP2.adapter = adpater
 
             adpater = ArrayAdapter<String>(mainActivity.context, android.R.layout.simple_spinner_item, day)
             mostSP2.adapter = adpater
+
+
+
+          dateTX.text = SimpleDateFormat("dd.MM.yyyy").format(System.currentTimeMillis())
+
+          var cal = Calendar.getInstance()
+
+          val dateSetListener = DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+              cal.set(Calendar.YEAR, year)
+              cal.set(Calendar.MONTH, monthOfYear)
+              cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+
+              val myFormat = "dd.MM.yyyy" // mention the format you need
+              val sdf = SimpleDateFormat(myFormat, Locale.US)
+              dateTX.text = sdf.format(cal.time)
+
+          }
+
+          val dateSetListener2 = DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+              cal.set(Calendar.YEAR, year)
+              cal.set(Calendar.MONTH, monthOfYear)
+              cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+
+              val myFormat = "dd.MM.yyyy" // mention the format you need
+              val sdf = SimpleDateFormat(myFormat, Locale.US)
+              dateTX.text = sdf.format(cal.time)
+
+          }
+
+          dateTX.setOnClickListener {
+              DatePickerDialog(context, dateSetListener,
+                      cal.get(Calendar.YEAR),
+                      cal.get(Calendar.MONTH),
+                      cal.get(Calendar.DAY_OF_MONTH)).show()
+          }
+
+
 
         }else{
             adpater = ArrayAdapter<String>(mainActivity.context, android.R.layout.simple_spinner_item, mee)
@@ -278,6 +316,12 @@ open class WriteFragment : Fragment() {
 
 
     }
+
+
+
+
+
+
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

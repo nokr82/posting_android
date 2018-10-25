@@ -8,8 +8,6 @@ import posting.devstories.com.posting_android.adapter.PostAdapter
 
 class FreeFragment : MainFragment() {
 
-    lateinit var adapterFree: PostAdapter
-    lateinit var adapterPost: PostAdapter
     var getid = ""
     var getImage=""
     var getmember = ""

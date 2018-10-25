@@ -31,9 +31,7 @@ class MainActivity : FragmentActivity() {
 
         this.context = this
 
-        // sliding_tabs.addTab(tabLayout.newTab().setText("Tab 1"));
-        // tabLayout.addTab(tabLayout.newTab().setText("Tab 2"));
-        // tabLayout.addTab(tabLayout.newTab().setText("Tab 3"));
+
 
         fragmentFT.setup(context, supportFragmentManager, R.id.fragmentFL)
 
@@ -41,41 +39,28 @@ class MainActivity : FragmentActivity() {
         val tabWriteV = View.inflate(context, R.layout.tab_write_view, null)
         val tabMypageV = View.inflate(context, R.layout.tab_mypage_view, null)
 
-        fragmentFT.addTab(fragmentFT.newTabSpec("post").setIndicator(tabHomeV), PostFragment::class.java, null)
-        fragmentFT.addTab(fragmentFT.newTabSpec("write").setIndicator(tabWriteV), WriteFragment::class.java, null)
-        fragmentFT.addTab(fragmentFT.newTabSpec("myPage").setIndicator(tabMypageV), MyPageFragment::class.java, null)
 
         fragmentFT.tabWidget.dividerDrawable = null
 
         member_type = PrefUtils.getStringPreference(context, "member_type")
 
-        if(member_type.equals("3")){
-            fragmentFT.addTab(fragmentFT.newTabSpec("post").setIndicator("post"), PostFragment::class.java, null)
-            fragmentFT.addTab(fragmentFT.newTabSpec("write").setIndicator("write"), WriteFragment::class.java, null)
-            fragmentFT.addTab(fragmentFT.newTabSpec("myPage").setIndicator("myPage"), OrderPageFragment::class.java, null)
-        }else{
-            fragmentFT.addTab(fragmentFT.newTabSpec("post").setIndicator("post"), PostFragment::class.java, null)
-            fragmentFT.addTab(fragmentFT.newTabSpec("write").setIndicator("write"), WriteFragment::class.java, null)
-            fragmentFT.addTab(fragmentFT.newTabSpec("myPage").setIndicator("myPage"), MyPageFragment::class.java, null)
-        }
+        fragmentFT.addTab(fragmentFT.newTabSpec("post").setIndicator(tabHomeV), PostFragment::class.java, null)
+        fragmentFT.addTab(fragmentFT.newTabSpec("write").setIndicator(tabWriteV), WriteFragment::class.java, null)
 
-//        val fragmentManager = supportFragmentManager
-//        var fragment: Fragment = PostFragment()
+        if(member_type.equals("3")){
+            fragmentFT.addTab(fragmentFT.newTabSpec("myPage").setIndicator(tabMypageV), OrderPageFragment::class.java, null)
+        }else{
+            fragmentFT.addTab(fragmentFT.newTabSpec("myPage").setIndicator(tabMypageV), MyPageFragment::class.java, null)
+        }
 
         homeLL.setOnClickListener {
 
             setTabBar()
 
-
             homeIV.setImageResource(R.mipmap.home)
 
             fragmentFT.onTabChanged("post")
 
-//            val fragmentTransaction = fragmentManager.beginTransaction()
-//            fragment = PostFragment()
-//            fragmentTransaction.replace(R.id.fragment, fragment)
-//            fragmentTransaction.addToBackStack(null);
-//            fragmentTransaction.commit()
 
         }
 
@@ -86,11 +71,6 @@ class MainActivity : FragmentActivity() {
             writeIV.setImageResource(R.mipmap.clickplus)
             fragmentFT.onTabChanged("write")
 
-//            val fragmentTransaction = fragmentManager.beginTransaction()
-//            fragment = WriteFragment()
-//            fragmentTransaction.replace(R.id.fragment, fragment)
-//            fragmentTransaction.addToBackStack(null);
-//            fragmentTransaction.commit()
         }
 
         myPageLL.setOnClickListener {
@@ -99,11 +79,6 @@ class MainActivity : FragmentActivity() {
 
             myPageIV.setImageResource(R.mipmap.clickmy)
             fragmentFT.onTabChanged("myPage")
-//            val fragmentTransaction = fragmentManager.beginTransaction()
-//            fragment = MyPageFragment()
-//            fragmentTransaction.replace(R.id.fragment, fragment)
-//            fragmentTransaction.addToBackStack(null);
-//            fragmentTransaction.commit()
 
         }
 
