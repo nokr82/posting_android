@@ -3,11 +3,12 @@ package posting.devstories.com.posting_android.activities
 import android.app.ProgressDialog
 import android.content.Context
 import android.os.Bundle
+import android.support.v4.app.FragmentActivity
 import kotlinx.android.synthetic.main.activity_mypage.*
 import posting.devstories.com.posting_android.R
 import posting.devstories.com.posting_android.base.RootActivity
 
-class MyPageActivity : RootActivity() {
+class MyPageActivity : FragmentActivity() {
 
     lateinit var context:Context
     private var progressDialog: ProgressDialog? = null

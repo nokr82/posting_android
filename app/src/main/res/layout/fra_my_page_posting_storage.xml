@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:orientation="horizontal">
+
+        <RelativeLayout
+                android:id="@+id/freeRL"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:text="자유"
+                    android:id="@+id/freeTX"
+                    android:textColor="#99a0a0"
+                    android:textSize="12.95dp" />
+
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="#01b4ec"
+                    android:id="@+id/freeV"
+                    android:visibility="invisible"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+                android:id="@+id/infoRL"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:text="정보"
+                    android:id="@+id/infoTX"
+                    android:textColor="#99a0a0"
+                    android:textSize="12.95dp" />
+
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:id="@+id/infoV"
+                    android:background="#01b4ec"
+                    android:visibility="invisible" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+                android:id="@+id/studyRL"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:text="스터디"
+                    android:id="@+id/StudyTX"
+                    android:textColor="#99a0a0"
+                    android:textSize="12.95dp" />
+
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:id="@+id/StudyV"
+                    android:background="#01b4ec"
+                    android:visibility="invisible" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+                android:id="@+id/classRL"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:text="동아리"
+                    android:id="@+id/classTX"
+                    android:textColor="#99a0a0"
+                    android:textSize="12.95dp" />
+
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:id="@+id/classV"
+                    android:background="#01b4ec"
+                    android:visibility="invisible" />
+
+        </RelativeLayout>
+        <RelativeLayout
+                android:id="@+id/meetingRL"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:text="미팅"
+                    android:id="@+id/MitingTX"
+                    android:textColor="#99a0a0"
+                    android:textSize="12.95dp" />
+
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:id="@+id/mitingV"
+                    android:background="#01b4ec"
+                    android:visibility="invisible" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+                android:id="@+id/couponRL"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:text="쿠폰"
+                    android:id="@+id/CouponTX"
+                    android:textColor="#99a0a0"
+                    android:textSize="12.95dp" />
+
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:id="@+id/couponV"
+                    android:background="#01b4ec"
+                    android:visibility="invisible" />
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>
