@@ -14,5 +14,8 @@ object MemberAction {
     fun my_page_index(params: RequestParams, handler: JsonHttpResponseHandler) {
         HttpClient.post("/member/my_page_index.json", params, handler)
     }
-
+    //사업자 쿠폰목록
+    fun company_page(params: RequestParams, handler: JsonHttpResponseHandler) {
+        HttpClient.post("/member/company_page.json", params, handler)
+    }
 }

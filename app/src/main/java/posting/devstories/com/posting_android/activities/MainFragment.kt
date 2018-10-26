@@ -70,7 +70,7 @@ open class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        gideGV = view.findViewById<GridView>(R.id.gideGV)
+        gideGV = view.findViewById(R.id.gideGV)
 
     }
 
