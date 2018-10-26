@@ -186,4 +186,21 @@ open class MainFragment : Fragment() {
             }
         })
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        if (progressDialog != null) {
+            progressDialog!!.dismiss()
+        }
+
+        try {
+            if (savePostingReceiver != null) {
+                context!!.unregisterReceiver(savePostingReceiver)
+            }
+        } catch (e: IllegalArgumentException) {
+        }
+
+    }
+
 }
