@@ -6,7 +6,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,74 +16,93 @@
             android:id="@+id/backLL"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="16dp">
-
+            android:padding="10dp">
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@mipmap/back" />
 
+
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:padding="16dp"
             android:layout_weight="1"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="16dp">
+
             <Spinner
-                android:id="@+id/meetingSP"
+                android:id="@+id/meetingSP2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:gravity="center"
-                android:background="@null"
-                >
+                android:background="@null">
 
             </Spinner>
-
-
 
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/semo"
-                android:layout_gravity="center_vertical"/>
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="48dp"
+                android:src="@mipmap/semo" />
+
             <LinearLayout
+                    android:id="@+id/date2LL"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
                 android:orientation="horizontal">
+
                 <Spinner
-                    android:id="@+id/mostSP"
+
+                    android:id="@+id/mostSP2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
                     android:background="@null">
 
                 </Spinner>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/date2TX"
+                    android:text=""/>
+                <TextView
+                    android:layout_marginRight="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:id="@+id/limit2TX"/>
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/semo"
-                    android:layout_gravity="center_vertical"/>
+                    android:layout_gravity="center_vertical"
+                    android:src="@mipmap/semo" />
             </LinearLayout>
         </LinearLayout>
+<LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+android:id="@+id/nextLL2">
 
         <TextView
-            android:id="@+id/registTX"
+            android:id="@+id/next2TX"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:text="등록"
-            android:textSize="11.5dp"
-            android:textColor="#063588"
             android:layout_marginRight="15.3dp"
+            android:text="다음"
+            android:textColor="#063588"
+            android:textSize="11.5dp"
 
             />
 
+</LinearLayout>
+
 
     </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="0.3dp"
