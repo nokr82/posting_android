@@ -59,8 +59,6 @@ class IntroActivity : RootActivity() {
         val autoLogin = PrefUtils.getBooleanPreference(context, "autoLogin")
 //        val first = PrefUtils.getBooleanPreference(context, "first")
 
-
-
         if (!autoLogin) {
             PrefUtils.clear(context)
             val intent = Intent(context, LoginActivity::class.java)
