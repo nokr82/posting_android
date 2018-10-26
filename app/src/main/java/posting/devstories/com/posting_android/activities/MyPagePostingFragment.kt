@@ -15,10 +15,12 @@ class MyPagePostingFragment : MyPagePostingStorageFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var view = super.onCreateView(inflater, container, savedInstanceState)
+        adapterData.clear()
+        taptype=1
 
-        loadData(1,1)
 
         return view
     }

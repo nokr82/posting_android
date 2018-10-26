@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="150dp"
+    android:layout_height="150dp"
+    android:orientation="vertical"
+    android:gravity="center">
 
-    
-    
     <RelativeLayout
-        android:layout_width="151.05dp"
-        android:layout_height="154.56dp"
-        android:background="@mipmap/storage_bg">
+        android:id="@+id/postRL"
+        android:layout_width="139dp"
+        android:layout_height="140dp">
 
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@mipmap/bg"
+            android:scaleType="fitXY"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -21,43 +26,56 @@
             android:layout_alignParentTop="true"
             >
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="32"
-            android:textSize="10dp"
-            android:textColor="#FFFFFF"
-            android:layout_marginLeft="50dp"
-            android:background="@drawable/circle_red"
-            android:layout_marginBottom="1dp"
-            android:gravity="center"
-            android:paddingLeft="2.5dp"
-            android:paddingRight="2.5dp"
-            />
+            <TextView
+                android:id="@+id/leftCnt2TV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="32"
+                android:textSize="10dp"
+                android:background="@drawable/circle_red"
+                android:textColor="#FFFFFF"
+                android:gravity="center"
+                android:paddingLeft="2.5dp"
+                android:paddingRight="2.5dp"
+                />
+
+
         </LinearLayout>
-        
-        <ImageView
-            android:id="@+id/storageIV"
-            android:layout_width="133.34dp"
-            android:layout_height="137.85dp"
-            android:layout_centerInParent="true"
-            android:src="@mipmap/storage_img"
-            android:padding="2dp"/>
 
 
 
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="7dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="9dp"
+            android:layout_marginBottom="9dp">
+
+            <ImageView
+                android:id="@+id/storageIV"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:gravity="center"
+                android:visibility="gone">
+
+            </ImageView>
+
+            <TextView
+                android:id="@+id/contentsTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="3"
+                android:textSize="13dp"
+                android:textColor="#3E3A39"
+                android:visibility="gone"/>
+
+
+
+        </RelativeLayout>
 
     </RelativeLayout>
-    
-
-
-
-
-
-
-
-
-
-
 
 </LinearLayout>
