@@ -17,7 +17,9 @@ class MyPageStorageFragment : MyPagePostingStorageFragment() {
         var view = super.onCreateView(inflater, container, savedInstanceState)
 
         adapterData.clear()
-        loadData(1, 2)
+        taptype =2
+
+
 
         return view
     }

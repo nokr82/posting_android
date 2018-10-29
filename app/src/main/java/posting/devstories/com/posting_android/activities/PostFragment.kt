@@ -115,6 +115,13 @@ open class PostFragment : Fragment() {
             }
         }
     }
+    internal var delPostingReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent?) {
+
+            mainData()
+            mainAdapter.notifyDataSetChanged()
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -127,7 +134,8 @@ open class PostFragment : Fragment() {
         }
 
         mainActivity = activity as MainActivity
-
+        val filter2 = IntentFilter("DEL_POSTING")
+        mainActivity.registerReceiver(delPostingReceiver, filter2)
         val filter1 = IntentFilter("SAVE_POSTING")
         mainActivity.registerReceiver(savePostingReceiver, filter1)
 

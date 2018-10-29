@@ -48,7 +48,7 @@
             android:name=".activities.DetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/NoTitleDialog"
-            android:windowSoftInputMode="adjustResize|stateHidden"/>
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
         <activity
             android:name=".activities.OrderJoinActivity"
 

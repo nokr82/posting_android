@@ -90,7 +90,7 @@ class SchoolActivity : RootActivity() {
         SchoolLV.adapter = adapter
         adapter.notifyDataSetChanged()
 
-        SchoolLV.setOnItemClickListener { adapterView, view, i, l ->
+                  SchoolLV.setOnItemClickListener { adapterView, view, i, l ->
 
 
             println(adapterData.get(i))
