@@ -60,9 +60,6 @@ class DetailActivity : RootActivity() {
         commentsLV.adapter = adapterRe
         adapterRe.notifyDataSetChanged()
 
-
-
-
         commentsLV.setOnItemClickListener { adapterView, view, i, l ->
 
             var data = adapterData.get(i)
@@ -78,10 +75,6 @@ class DetailActivity : RootActivity() {
         menuIV.setOnClickListener {
             dlgView()
         }
-
-
-
-
 
         commentsET.setOnEditorActionListener { textView, i, keyEvent ->
             commentsET.hint = "댓글쓰기"
@@ -109,6 +102,10 @@ class DetailActivity : RootActivity() {
 
             savePosting();
 
+        }
+
+        backLL.setOnClickListener {
+            finish()
         }
 
         detaildata()
