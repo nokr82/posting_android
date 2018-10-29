@@ -42,6 +42,7 @@ class DetailActivity : RootActivity() {
     var adapterData: ArrayList<JSONObject> = ArrayList<JSONObject>()
     var count = 0
     var del_yn = ""
+    var type = 1
     lateinit var adapterRe: ReAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -268,7 +269,7 @@ class DetailActivity : RootActivity() {
                         var member_id2 =   Utils.getInt(posting, "member_id")
                         var del = Utils.getString(posting,"del_yn")
                         var Image = Utils.getString(posting, "Image")
-                        var type = Utils.getString(posting,"type")
+                        type = Utils.getInt(posting,"type")
                         var image_uri = Utils.getString(posting, "image_uri")
                         count = Utils.getInt(posting, "leftCount")
 //                        var created =   Utils.getString(posting, "created")
@@ -389,6 +390,7 @@ class DetailActivity : RootActivity() {
 
 
     }
+
     fun del_posting(){
         val params = RequestParams()
         params.put("posting_id", posting_id)
@@ -403,11 +405,15 @@ class DetailActivity : RootActivity() {
                 try {
                     val result = response!!.getString("result")
                     if ("ok" == result) {
+
                         intent = Intent()
                         intent.putExtra("posting_id", posting_id)
+                        intent.putExtra("type", type)
                         intent.action = "DEL_POSTING"
                         sendBroadcast(intent)
+
                         finish()
+
                     }
 
                 } catch (e: JSONException) {
