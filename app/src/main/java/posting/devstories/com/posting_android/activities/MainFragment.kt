@@ -35,6 +35,10 @@ open class MainFragment : Fragment() {
 
     lateinit var gideGV: GridView
 
+
+
+
+
     internal var savePostingReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent?) {
             if (intent != null) {
@@ -80,6 +84,7 @@ open class MainFragment : Fragment() {
 
         activity = getActivity() as MainActivity
         tabType = activity.tabType
+
 
         val filter1 = IntentFilter("SAVE_POSTING")
         activity.registerReceiver(savePostingReceiver, filter1)

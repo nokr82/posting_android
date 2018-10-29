@@ -5,6 +5,13 @@
               android:orientation="vertical"
 >
 
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="47.5dp"
@@ -20,15 +27,17 @@
             android:layout_marginRight="7dp"/>
 
         <TextView
+            android:id="@+id/mynameTV"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="post_0904"
             android:gravity="center_vertical"
-            android:textSize="13dp"/>
+            android:textSize="14dp"/>
 
 
         <ImageView
+            android:visibility="gone"
             android:id="@+id/menuIV"
             android:padding="16dp"
             android:layout_width="wrap_content"
@@ -45,7 +54,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1.5"
         android:layout_marginTop="14.5dp"
         android:layout_marginBottom="5dp"
         android:orientation="vertical"
@@ -53,21 +63,22 @@
 
         <posting.devstories.com.posting_android.base.RationalRelativeLayout
             android:id="@+id/postingLL"
-            android:layout_width="246.5dp"
-            android:layout_height="0dp"
-            app:ratio="1.1:1"
+            android:layout_width="286.02dp"
+            android:layout_height="292.67dp"
+            app:ratio="1:1"
+            android:layout_gravity="center"
             android:background="@mipmap/wtite_bg">
 
 
             <posting.devstories.com.posting_android.base.RationalRelativeLayout
-                android:layout_width="215.5dp"
-                android:layout_height="0dp"
+                android:layout_width="247.23dp"
+                android:layout_height="261.21dp"
                 android:layout_centerInParent="true"
-                app:ratio="1.1:1">
+                app:ratio="1:1">
 
                 <ImageView
                     android:id="@+id/imgIV"
-                    android:layout_width="215.5dp"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
                     android:visibility="gone" />
@@ -110,7 +121,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="9dp"
-            android:textSize="12.5dp"
+            android:textSize="13.5dp"
             android:text="lala_girl"
             android:id="@+id/wnameTX"/>
 
@@ -121,7 +132,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="20dp"
-            android:textSize="8.5dp"
+            android:textSize="9.5dp"
             android:text="8월31일"/>
 
         <LinearLayout
@@ -137,6 +148,17 @@
                 android:text="신고"
                 android:gravity="center"
                 android:background="@drawable/circle_background_yellow"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/myLL"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/myimg_w"/>
 
         </LinearLayout>
 
@@ -175,6 +197,7 @@
 
             <com.github.paolorotolo.expandableheightlistview.ExpandableHeightListView
                 android:id="@+id/commentsLV"
+                android:divider="@null"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="25.5dp"
@@ -239,5 +262,6 @@
             android:layout_height="match_parent"/>
 
     </LinearLayout>
+        </LinearLayout>
 
 </LinearLayout>
