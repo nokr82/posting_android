@@ -61,6 +61,16 @@ open class MainFragment : Fragment() {
         }
     }
 
+
+    internal var delPostingReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent?) {
+            if (intent != null) {
+                var type:Int = intent.getIntExtra("type", 1)
+                loadData(type)
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -88,6 +98,10 @@ open class MainFragment : Fragment() {
 
         val filter1 = IntentFilter("SAVE_POSTING")
         activity.registerReceiver(savePostingReceiver, filter1)
+
+
+        val filter2 = IntentFilter("DEL_POSTING")
+        activity.registerReceiver(delPostingReceiver, filter2)
 
         adapterMain = PostAdapter(activity, R.layout.item_post, adapterData)
         gideGV.adapter = adapterMain
@@ -123,6 +137,9 @@ open class MainFragment : Fragment() {
 
                 try {
                     val result = response!!.getString("result")
+
+                    adapterData.clear()
+                    adapterMain.notifyDataSetChanged()
 
                     if ("ok" == result) {
                         val data = response.getJSONArray("list")
@@ -202,6 +219,9 @@ open class MainFragment : Fragment() {
         try {
             if (savePostingReceiver != null) {
                 context!!.unregisterReceiver(savePostingReceiver)
+            }
+            if (delPostingReceiver != null) {
+                context!!.unregisterReceiver(delPostingReceiver)
             }
         } catch (e: IllegalArgumentException) {
         }
