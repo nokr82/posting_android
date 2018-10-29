@@ -1,6 +1,8 @@
 package posting.devstories.com.posting_android.activities
 
 import android.app.ProgressDialog
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.Color
@@ -57,6 +59,14 @@ open class MyPagePostingStorageFragment : Fragment() {
     lateinit var meeting2RL: RelativeLayout
     lateinit var coupon2RL: RelativeLayout
 
+    internal var delPostingReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent?) {
+            if (intent != null) {
+                var type:Int = intent.getIntExtra("type", 1)
+                loadData(type)
+            }
+        }
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -105,11 +115,13 @@ open class MyPagePostingStorageFragment : Fragment() {
 
         activity = getActivity() as MainActivity
 
+        val filter2 = IntentFilter("DEL_POSTING")
+        activity.registerReceiver(delPostingReceiver, filter2)
 
         free2RL.setOnClickListener {
             adapterData.clear()
             tabType = 1;
-            loadData(taptype)
+            loadData(tabType)
             setMenuTabView()
 
         }
@@ -117,7 +129,7 @@ open class MyPagePostingStorageFragment : Fragment() {
         info2RL.setOnClickListener {
             adapterData.clear()
             tabType = 2;
-            loadData(taptype)
+            loadData(tabType)
             setMenuTabView()
 
         }
@@ -125,7 +137,7 @@ open class MyPagePostingStorageFragment : Fragment() {
         study2RL.setOnClickListener {
             adapterData.clear()
             tabType = 3;
-            loadData(taptype)
+            loadData(tabType)
             setMenuTabView()
 
 
@@ -135,7 +147,7 @@ open class MyPagePostingStorageFragment : Fragment() {
         class2RL.setOnClickListener {
             adapterData.clear()
             tabType = 4;
-            loadData(taptype)
+            loadData(tabType)
             setMenuTabView()
 
         }
@@ -143,7 +155,7 @@ open class MyPagePostingStorageFragment : Fragment() {
         meeting2RL.setOnClickListener {
             adapterData.clear()
             tabType = 5;
-            loadData(1)
+            loadData(tabType)
             setMenuTabView()
 
         }
@@ -151,7 +163,7 @@ open class MyPagePostingStorageFragment : Fragment() {
         coupon2RL.setOnClickListener {
             adapterData.clear()
             tabType = 6;
-            loadData(taptype)
+            loadData(tabType)
             setMenuTabView()
         }
 
@@ -181,11 +193,11 @@ open class MyPagePostingStorageFragment : Fragment() {
 
     }
 
-    fun loadData(tab: Int) {
+    fun loadData(type: Int) {
         val params = RequestParams()
         member_id = PrefUtils.getIntPreference(context, "member_id")
         params.put("member_id", member_id)
-        params.put("tab", tab)
+        params.put("tab", taptype)
         params.put("type", tabType)
 
         MemberAction.my_page_index(params, object : JsonHttpResponseHandler() {
@@ -198,6 +210,7 @@ open class MyPagePostingStorageFragment : Fragment() {
                 try {
                     val result = response!!.getString("result")
 
+                    adapterData.clear()
                     if ("ok" == result) {
                         val data = response.getJSONArray("list")
                         for (i in 0..data.length() - 1) {
