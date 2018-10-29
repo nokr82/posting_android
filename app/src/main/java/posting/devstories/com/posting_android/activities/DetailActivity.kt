@@ -204,6 +204,9 @@ class DetailActivity : RootActivity() {
                         intent.action = "SAVE_POSTING"
                         sendBroadcast(intent)
 
+                    }else if ("empty"==result){
+                        Toast.makeText(context,"남은 수량이 없습니다.",Toast.LENGTH_SHORT).show()
+
                     }
 
                 } catch (e: JSONException) {
