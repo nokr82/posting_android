@@ -31,8 +31,6 @@ class MainActivity : FragmentActivity() {
 
         this.context = this
 
-
-
         fragmentFT.setup(context, supportFragmentManager, R.id.fragmentFL)
 
         val tabHomeV = View.inflate(context, R.layout.tab_home_view, null)

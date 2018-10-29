@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:text="아직이에요...^^"
             android:textColor="#050000"
-            android:textSize="15.3dp"/>
+            android:textSize="14dp"/>
 
 
         <TextView
@@ -40,6 +40,7 @@
             android:layout_marginLeft="15.47dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="#B5B5B6"
             android:text="댓글"
             android:textSize="12.67dp"/>
 

@@ -57,7 +57,7 @@ open class ReAdapter(context:Context, view:Int, data:ArrayList<JSONObject>) : Ar
             }
 
             item.reTX.text = comments
-            item.writerTX.text = id + "|" + created + "|"
+            item.writerTX.text = id + " | " + created + " | "
         }
 
 //            item.writerTX.text = id+"|"+created+"|"
