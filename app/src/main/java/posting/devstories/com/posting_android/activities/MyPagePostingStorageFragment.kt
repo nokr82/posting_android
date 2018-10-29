@@ -212,6 +212,11 @@ open class MyPagePostingStorageFragment : Fragment() {
 
                     adapterData.clear()
                     if ("ok" == result) {
+
+                        var member = response.getJSONObject("member");
+
+
+
                         val data = response.getJSONArray("list")
                         for (i in 0..data.length() - 1) {
 

@@ -22,6 +22,7 @@
                 android:src="@mipmap/myimg"/>
 
             <TextView
+                android:id="@+id/nickNameTV"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
