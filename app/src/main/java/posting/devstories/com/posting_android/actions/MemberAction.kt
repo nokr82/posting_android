@@ -11,9 +11,15 @@ import posting.devstories.com.posting_android.base.HttpClient
 object MemberAction {
 
     // 회원 페이지
+    fun my_info(params: RequestParams, handler: JsonHttpResponseHandler) {
+        HttpClient.post("/member/my_info.json", params, handler)
+    }
+
+    // 회원 페이지
     fun my_page_index(params: RequestParams, handler: JsonHttpResponseHandler) {
         HttpClient.post("/member/my_page_index.json", params, handler)
     }
+
     //사업자 쿠폰목록
     fun company_page(params: RequestParams, handler: JsonHttpResponseHandler) {
         HttpClient.post("/member/company_page.json", params, handler)
