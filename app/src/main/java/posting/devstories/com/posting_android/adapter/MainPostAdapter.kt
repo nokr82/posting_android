@@ -22,6 +22,7 @@ open class MainPostAdapter(context: Context?, view: Int, data: ArrayList<JSONObj
     var data: ArrayList<JSONObject> = data
 
 
+
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
 
         lateinit var retView: View
@@ -74,6 +75,7 @@ open class MainPostAdapter(context: Context?, view: Int, data: ArrayList<JSONObj
             color = "#EC4095"
 
         } else if (type == "coupon") {
+
 
             title = "쿠폰 NEW"
             color = "#ED2123"

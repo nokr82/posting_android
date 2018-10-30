@@ -33,7 +33,7 @@
             android:padding="16dp">
 
             <Spinner
-                android:id="@+id/meetingSP2"
+                android:id="@+id/meetingSP3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@null">
@@ -155,7 +155,8 @@ android:id="@+id/nextLL2">
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:id="@+id/captureIV"/>
+                    android:id="@+id/captureIV"
+                    android:scaleType="centerCrop"/>
 
 
 

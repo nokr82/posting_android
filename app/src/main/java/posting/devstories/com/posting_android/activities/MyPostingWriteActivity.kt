@@ -24,8 +24,10 @@ import posting.devstories.com.posting_android.base.RootActivity
 import posting.devstories.com.posting_android.base.Utils
 import android.widget.*
 import kotlinx.android.synthetic.main.activity_posttextwrite.view.*
+import kotlinx.android.synthetic.main.activity_postwrite.*
 import kotlinx.android.synthetic.main.fra_write.*
 import posting.devstories.com.posting_android.R.id.*
+import posting.devstories.com.posting_android.base.Config
 import java.io.ByteArrayInputStream
 import java.text.SimpleDateFormat
 import java.util.*
@@ -42,13 +44,15 @@ class MyPostingWriteActivity : RootActivity() {
 
     var capture: Bitmap?= null
     var member_type = ""
-
+    var image_uri :String?=null
     var str:String? = null
-
+    var posting_id :String?=null
+    var image = ""
     var text:String? = null
     var member_id = -1
     var type:String?=null
     var contents = ""
+    var contents2:String?=null
     var count:String?=null
     var geterror = ""
     var startd:String?=null
@@ -72,10 +76,27 @@ class MyPostingWriteActivity : RootActivity() {
         intent = getIntent()
         text = intent.getStringExtra("text")
         imgid = intent.getStringExtra("imgid")
+        contents2 = intent.getStringExtra("contents")
         capture = intent.getParcelableExtra("capture")
         startd = intent.getStringExtra("startd")
         last = intent.getStringExtra("last")
+        image_uri = intent.getStringExtra("image_uri")
+        posting_id = intent.getStringExtra("posting_id")
         mount = intent.getIntExtra("mount",0)
+
+
+        if (!image_uri.equals("")){
+            image = Config.url + image_uri
+            com.nostra13.universalimageloader.core.ImageLoader.getInstance().displayImage(image, captureIV, Utils.UILoptionsUserProfile)
+            captureIV.visibility = View.VISIBLE
+
+        }
+
+
+
+        if (!contents2.equals("")){
+            contentET.setText(contents2)
+        }
 
         if (text.equals("1")){
             popupRL.visibility = View.GONE
@@ -96,13 +117,15 @@ class MyPostingWriteActivity : RootActivity() {
         member_id =  PrefUtils.getIntPreference(context,"member_id")
 
 
-        //이미지
-        img2RL.background = Drawable.createFromPath(imgid)
-        captureIV.setImageBitmap(capture)
+
 
 
         if (imgid != null && "" != imgid && imgid!!.length> 1&&capture != null){
+            img2RL.background = Drawable.createFromPath(imgid)
             popupRL.visibility = View.VISIBLE
+        }else{
+            captureIV.setImageBitmap(capture)
+
         }
 
 
@@ -114,7 +137,7 @@ class MyPostingWriteActivity : RootActivity() {
             mostSP2.visibility = View.GONE
 
             adpater = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, most)
-            meetingSP2.adapter = adpater
+            meetingSP3.adapter = adpater
 
            date2TX.text = startd
             limit2TX.text = last
@@ -123,7 +146,7 @@ class MyPostingWriteActivity : RootActivity() {
                 date2TX.text = SimpleDateFormat("yy.MM.dd").format(System.currentTimeMillis())+"~"
             }
 
-           meetingSP2.setSelection(mount!!)
+           meetingSP3.setSelection(mount!!)
 
 
             var cal = Calendar.getInstance()
@@ -165,7 +188,7 @@ class MyPostingWriteActivity : RootActivity() {
            // dateTX.visibility = View.GONE
 
             adpater = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, mee)
-            meetingSP2.adapter = adpater
+            meetingSP3.adapter = adpater
 
             adpater = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, most)
             mostSP2.adapter = adpater
@@ -188,7 +211,7 @@ class MyPostingWriteActivity : RootActivity() {
 
             if (member_type.equals("3")){
                 type = "6"
-                count = meetingSP2.selectedItem.toString()
+                count = meetingSP3.selectedItem.toString()
                 startd = Utils.getString(date2TX)
                 last = Utils.getString(limit2TX)
 
@@ -201,13 +224,15 @@ class MyPostingWriteActivity : RootActivity() {
 
                     Toast.makeText(context,"수량을 선택해주세요",Toast.LENGTH_SHORT).show()
                     }
-                else{
-                    write()
+                else if (posting_id.equals("")||posting_id ==null){
 
+                    write()
+                }else{
+                    edit_posting()
                 }
 
             }else {
-                type = meetingSP2.selectedItem.toString()
+                type = meetingSP3.selectedItem.toString()
                 count = mostSP2.selectedItem.toString()
                 if (type.equals("자유")) {
                     type = "1"
@@ -231,9 +256,11 @@ class MyPostingWriteActivity : RootActivity() {
                     geterror = "내용을 입력해주세요"
 
                     Toast.makeText(context, geterror, Toast.LENGTH_SHORT).show()
-                } else {
-                    write()
+                } else if (posting_id.equals("")||posting_id ==null){
 
+                    write()
+                }else{
+                    edit_posting()
                 }
             }
 
@@ -267,8 +294,6 @@ class MyPostingWriteActivity : RootActivity() {
 
 //            params.put("upload",capture)
         }
-
-
 
         if (imgid.equals("")||imgid==null){
 
@@ -371,8 +396,129 @@ class MyPostingWriteActivity : RootActivity() {
             }
         })
     }
+    fun edit_posting(){
 
 
+        val params = RequestParams()
+
+        params.put("posting_id", posting_id)
+        params.put("member_id", member_id)
+        params.put("type", type)
+        params.put("contents", contents)
+        params.put("count", count)
+
+
+        if (capture==null){
+
+        }else{
+            params.put("upload",ByteArrayInputStream(Utils.getByteArray(capture)))
+
+
+//            params.put("upload",capture)
+        }
+
+
+        if (imgid.equals("")||imgid==null){
+
+        }else{
+
+
+            val add_file = Utils.getImage(context.contentResolver, imgid)
+            params.put("upload",ByteArrayInputStream(Utils.getByteArray(add_file)))
+
+        }
+
+
+
+
+        PostingAction.edit_posting(params, object : JsonHttpResponseHandler() {
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+
+                try {
+                    val result = response!!.getString("result")
+
+                    if ("ok" == result) {
+
+
+                        val intent = Intent(context,MainActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        startActivity(intent)
+
+                        Toast.makeText(context, "수정이 완료되었습니다", Toast.LENGTH_SHORT).show()
+
+
+
+                    } else {
+                        geterror = "작성실패"
+
+                        Toast.makeText(context, geterror, Toast.LENGTH_SHORT).show()
+                    }
+
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+
+            }
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONArray?) {
+                super.onSuccess(statusCode, headers, response)
+            }
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, responseString: String?) {
+
+                // System.out.println(responseString);
+            }
+
+            private fun error() {
+                Utils.alert(context, "올리는중 장애가 발생하였습니다.")
+            }
+
+            override fun onFailure(statusCode: Int, headers: Array<Header>?, responseString: String?, throwable: Throwable) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+
+                // System.out.println(responseString);
+
+                throwable.printStackTrace()
+                error()
+            }
+
+            override fun onFailure(statusCode: Int, headers: Array<Header>?, throwable: Throwable, errorResponse: JSONObject?) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+                throwable.printStackTrace()
+                error()
+            }
+
+            override fun onFailure(statusCode: Int, headers: Array<Header>?, throwable: Throwable, errorResponse: JSONArray?) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+                throwable.printStackTrace()
+                error()
+            }
+
+            override fun onStart() {
+                // show dialog
+                if (progressDialog != null) {
+
+                    progressDialog!!.show()
+                }
+            }
+
+            override fun onFinish() {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+            }
+        })
+    }
 
 
 

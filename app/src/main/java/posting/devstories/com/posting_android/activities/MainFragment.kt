@@ -71,6 +71,7 @@ open class MainFragment : Fragment() {
         }
     }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -102,6 +103,8 @@ open class MainFragment : Fragment() {
 
         val filter2 = IntentFilter("DEL_POSTING")
         activity.registerReceiver(delPostingReceiver, filter2)
+
+
 
         adapterMain = PostAdapter(activity, R.layout.item_post, adapterData)
         gideGV.adapter = adapterMain

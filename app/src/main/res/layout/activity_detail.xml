@@ -230,6 +230,7 @@
 
 
     <LinearLayout
+        android:id="@+id/commentsLL"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_marginBottom="4.5dp"

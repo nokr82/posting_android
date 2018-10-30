@@ -1,7 +1,10 @@
 package posting.devstories.com.posting_android.activities
 
 import android.app.ProgressDialog
+import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.support.v4.app.FragmentActivity
 import android.view.View
@@ -21,9 +24,20 @@ class MainActivity : FragmentActivity() {
 
     var tabType = 1
     var type = ""
-
+    var tabWriteV: View? = null
     var member_id = -1
     var member_type = ""
+
+
+    internal var editPostingReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent?) {
+            if (intent != null) {
+                var posting_id:Int = intent.getIntExtra("posting_id", -1)
+
+            }
+        }
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,12 +45,14 @@ class MainActivity : FragmentActivity() {
 
         this.context = this
 
+        val filter3 = IntentFilter("EDIT_POSTING")
+        context.registerReceiver(editPostingReceiver, filter3)
+
         fragmentFT.setup(context, supportFragmentManager, R.id.fragmentFL)
 
         val tabHomeV = View.inflate(context, R.layout.tab_home_view, null)
-        val tabWriteV = View.inflate(context, R.layout.tab_write_view, null)
         val tabMypageV = View.inflate(context, R.layout.tab_mypage_view, null)
-
+        tabWriteV = View.inflate(context, R.layout.tab_write_view, null)
 
         fragmentFT.tabWidget.dividerDrawable = null
 

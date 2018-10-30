@@ -42,7 +42,10 @@ class DetailActivity : RootActivity() {
     var adapterData: ArrayList<JSONObject> = ArrayList<JSONObject>()
     var count = 0
     var del_yn = ""
+    var image_uri = ""
     var type = 1
+    var contents = ""
+    var coupon = -1
     lateinit var adapterRe: ReAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,7 +56,9 @@ class DetailActivity : RootActivity() {
 
         intent = getIntent()
 
+
         posting_id = intent.getStringExtra("id")
+
 
         member_id = PrefUtils.getIntPreference(context, "member_id")
         commentsLV.isExpanded = true
@@ -267,10 +272,18 @@ class DetailActivity : RootActivity() {
 
                         var id = Utils.getString(posting, "id")
                         var member_id2 =   Utils.getInt(posting, "member_id")
+
                         var del = Utils.getString(posting,"del_yn")
                         var Image = Utils.getString(posting, "Image")
                         type = Utils.getInt(posting,"type")
-                        var image_uri = Utils.getString(posting, "image_uri")
+
+                        if (type == 6){
+                            commentsLV.visibility = View.GONE
+                            commentsLL.visibility = View.GONE
+
+                        }
+
+                       image_uri = Utils.getString(posting, "image_uri")
                         count = Utils.getInt(posting, "leftCount")
 //                        var created =   Utils.getString(posting, "created")
                         if (member_id==member_id2){
@@ -280,7 +293,7 @@ class DetailActivity : RootActivity() {
 
                         val member  = data.getJSONObject("Member")
 
-                        var contents =   Utils.getString(posting, "contents")
+                        contents =   Utils.getString(posting, "contents")
                         var nick_name = Utils.getString(member, "nick_name")
 
 
@@ -359,6 +372,9 @@ class DetailActivity : RootActivity() {
             }
         })
     }
+
+
+
     fun dlgView(){
         var mPopupDlg: DialogInterface? = null
 
@@ -371,9 +387,20 @@ class DetailActivity : RootActivity() {
 
         delTV.setOnClickListener {
             del_posting()
+            mPopupDlg!!.cancel()
         }
 
         modiTV.setOnClickListener {
+
+            val intent = Intent(context, PostWriteActivity::class.java)
+            intent.putExtra("posting_id", posting_id)
+            intent.putExtra("image_uri",image_uri)
+            intent.putExtra("contents",contents)
+
+            context.startActivity(intent)
+            finish()
+
+            mPopupDlg!!.cancel()
 
         }
 
@@ -387,7 +414,6 @@ class DetailActivity : RootActivity() {
 
 
         mPopupDlg =  builder.setView(dialogView).show()
-
 
     }
 
