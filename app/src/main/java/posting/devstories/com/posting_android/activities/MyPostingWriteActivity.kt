@@ -24,10 +24,8 @@ import posting.devstories.com.posting_android.base.RootActivity
 import posting.devstories.com.posting_android.base.Utils
 import android.widget.*
 import kotlinx.android.synthetic.main.activity_posttextwrite.view.*
-import kotlinx.android.synthetic.main.activity_postwrite.*
 import kotlinx.android.synthetic.main.fra_write.*
 import posting.devstories.com.posting_android.R.id.*
-import posting.devstories.com.posting_android.base.Config
 import java.io.ByteArrayInputStream
 import java.text.SimpleDateFormat
 import java.util.*
@@ -44,10 +42,10 @@ class MyPostingWriteActivity : RootActivity() {
 
     var capture: Bitmap?= null
     var member_type = ""
-    var image_uri :String?=null
+    var image_uri:String? = null
+    var image:String? = null
     var str:String? = null
     var posting_id :String?=null
-    var image = ""
     var text:String? = null
     var member_id = -1
     var type:String?=null
@@ -76,27 +74,16 @@ class MyPostingWriteActivity : RootActivity() {
         intent = getIntent()
         text = intent.getStringExtra("text")
         imgid = intent.getStringExtra("imgid")
-        contents2 = intent.getStringExtra("contents")
         capture = intent.getParcelableExtra("capture")
+        contents2 = intent.getStringExtra("contents")
         startd = intent.getStringExtra("startd")
         last = intent.getStringExtra("last")
-        image_uri = intent.getStringExtra("image_uri")
         posting_id = intent.getStringExtra("posting_id")
+        image = intent.getStringExtra("image")
         mount = intent.getIntExtra("mount",0)
 
 
-        if (!image_uri.equals("")){
-            image = Config.url + image_uri
-            com.nostra13.universalimageloader.core.ImageLoader.getInstance().displayImage(image, captureIV, Utils.UILoptionsUserProfile)
-            captureIV.visibility = View.VISIBLE
-
-        }
-
-
-
-        if (!contents2.equals("")){
-            contentET.setText(contents2)
-        }
+        contentET.setText(contents2)
 
         if (text.equals("1")){
             popupRL.visibility = View.GONE
@@ -108,6 +95,8 @@ class MyPostingWriteActivity : RootActivity() {
         options.inJustDecodeBounds = false
 
 
+
+
         backLL.setOnClickListener {
             finish()
         }
@@ -117,15 +106,13 @@ class MyPostingWriteActivity : RootActivity() {
         member_id =  PrefUtils.getIntPreference(context,"member_id")
 
 
+        //이미지
+        img2RL.background = Drawable.createFromPath(imgid)
+        captureIV.setImageBitmap(capture)
+        com.nostra13.universalimageloader.core.ImageLoader.getInstance().displayImage(image, captureIV, Utils.UILoptionsUserProfile)
 
-
-
-        if (imgid != null && "" != imgid && imgid!!.length> 1&&capture != null){
-            img2RL.background = Drawable.createFromPath(imgid)
+        if (imgid != null && "" != imgid && imgid!!.length> 1&&capture != null&&image != null){
             popupRL.visibility = View.VISIBLE
-        }else{
-            captureIV.setImageBitmap(capture)
-
         }
 
 
@@ -139,14 +126,14 @@ class MyPostingWriteActivity : RootActivity() {
             adpater = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, most)
             meetingSP3.adapter = adpater
 
-           date2TX.text = startd
+            date2TX.text = startd
             limit2TX.text = last
 
             if (startd==null||startd.equals("")){
                 date2TX.text = SimpleDateFormat("yy.MM.dd").format(System.currentTimeMillis())+"~"
             }
 
-           meetingSP3.setSelection(mount!!)
+            meetingSP3.setSelection(mount!!)
 
 
             var cal = Calendar.getInstance()
@@ -175,17 +162,17 @@ class MyPostingWriteActivity : RootActivity() {
 
             date2LL.setOnClickListener {
                 DatePickerDialog(context, dateSetListener2,
-                        cal.get(Calendar.YEAR),
-                        cal.get(Calendar.MONTH),
-                        cal.get(Calendar.DAY_OF_MONTH)).show()
+                    cal.get(Calendar.YEAR),
+                    cal.get(Calendar.MONTH),
+                    cal.get(Calendar.DAY_OF_MONTH)).show()
                 DatePickerDialog(context, dateSetListener,
-                        cal.get(Calendar.YEAR),
-                        cal.get(Calendar.MONTH),
-                        cal.get(Calendar.DAY_OF_MONTH)).show()
+                    cal.get(Calendar.YEAR),
+                    cal.get(Calendar.MONTH),
+                    cal.get(Calendar.DAY_OF_MONTH)).show()
             }
 
         }else{
-           // dateTX.visibility = View.GONE
+            // dateTX.visibility = View.GONE
 
             adpater = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, mee)
             meetingSP3.adapter = adpater
@@ -223,12 +210,15 @@ class MyPostingWriteActivity : RootActivity() {
                 if(count.equals("수량")){
 
                     Toast.makeText(context,"수량을 선택해주세요",Toast.LENGTH_SHORT).show()
-                    }
-                else if (posting_id.equals("")||posting_id ==null){
+                }
+                else{
+                    if (posting_id == null||posting_id == ""){
+                        write()
+                    }else{
 
-                    write()
-                }else{
-                    edit_posting()
+                        edit_posting()
+                    }
+
                 }
 
             }else {
@@ -256,11 +246,13 @@ class MyPostingWriteActivity : RootActivity() {
                     geterror = "내용을 입력해주세요"
 
                     Toast.makeText(context, geterror, Toast.LENGTH_SHORT).show()
-                } else if (posting_id.equals("")||posting_id ==null){
+                } else {
+                    if (posting_id == null||posting_id == ""){
+                        write()
+                    }else{
 
-                    write()
-                }else{
-                    edit_posting()
+                        edit_posting()
+                    }
                 }
             }
 
@@ -295,6 +287,8 @@ class MyPostingWriteActivity : RootActivity() {
 //            params.put("upload",capture)
         }
 
+
+
         if (imgid.equals("")||imgid==null){
 
         }else{
@@ -317,6 +311,10 @@ class MyPostingWriteActivity : RootActivity() {
 
                 try {
                     val result = response!!.getString("result")
+
+
+
+
 
                     if ("ok" == result) {
 
@@ -394,8 +392,20 @@ class MyPostingWriteActivity : RootActivity() {
                     progressDialog!!.dismiss()
                 }
             }
+
         })
+
+
+
+
+
+
     }
+
+
+
+
+
     fun edit_posting(){
 
 
@@ -416,7 +426,15 @@ class MyPostingWriteActivity : RootActivity() {
 
 //            params.put("upload",capture)
         }
-
+//        if (image.equals("")||image==null){
+//
+//        }else{
+//
+//
+//            val add_file = Utils.getImage(context.contentResolver, image_uri)
+//            params.put("upload",ByteArrayInputStream(Utils.getByteArray(add_file)))
+//
+//        }
 
         if (imgid.equals("")||imgid==null){
 
@@ -519,8 +537,6 @@ class MyPostingWriteActivity : RootActivity() {
             }
         })
     }
-
-
 
 
 

@@ -35,7 +35,7 @@ class PostWriteActivity : RootActivity() {
     private val REQUEST_CAMERA = 0
     var mee = arrayOf("자유","정보","스터디","동아리","미팅")
     var  most =arrayOf("수량","1","2","3","4","5","6","7","8","9","10")
-
+    val text = "1"
     var day = arrayOf("기간","10월2일","10월3일","10월4일","10월5일")
 
     var imgid: String = ""
@@ -137,13 +137,15 @@ class PostWriteActivity : RootActivity() {
 
         textRL.setOnClickListener {
             var intent = Intent(context, MyPostingWriteActivity::class.java)
+            intent.putExtra("text", text)
             startActivity(intent)
-            finish()
+
         }
 
         nextTX.setOnClickListener {
 
             var intent = Intent(context, MyPostingWriteActivity::class.java)
+            intent.putExtra("image", image)
             intent.putExtra("imgid", imgid)
             intent.putExtra("capture", capture)
             intent.putExtra("contents", contents)
@@ -172,11 +174,15 @@ class PostWriteActivity : RootActivity() {
         listGV.adapter = adapter
         listGV.setOnItemClickListener { parent, view, position, id ->
 
+
+            image = ""
+
             val photo = photoList[position]
-            imgIV2.visibility = View.GONE
-            imgRL.background = Drawable.createFromPath(photo.photoPath)
+
+//            imgRL.background = Drawable.createFromPath(photo.photoPath)
             //이미지가져오기
             imgid = photo.photoPath!!
+            imgIV2.setImageBitmap(Utils.getImage(context.contentResolver, imgid))
 
 
         }
@@ -213,11 +219,11 @@ class PostWriteActivity : RootActivity() {
         when(requestCode){
             REQUEST_CAMERA ->{
                 if(resultCode== Activity.RESULT_OK && data !=null){
-                 imgIV2.setImageBitmap(data.extras.get("data") as Bitmap)
+                    imgid = ""
+                    image = ""
 
-
-
-                   capture = data.extras.get("data") as Bitmap
+                    capture = data.extras.get("data") as Bitmap
+                    imgIV2.setImageBitmap(capture)
 
 
                 }
