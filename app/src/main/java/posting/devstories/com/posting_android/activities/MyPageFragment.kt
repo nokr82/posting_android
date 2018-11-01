@@ -2,6 +2,7 @@ package posting.devstories.com.posting_android.activities
 
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentTabHost
@@ -27,6 +28,7 @@ import posting.devstories.com.posting_android.base.Utils
 open class MyPageFragment : Fragment() {
 
     var ctx: Context? = null
+
     private var progressDialog: ProgressDialog? = null
 
     lateinit var mainActivity:MainActivity
@@ -76,11 +78,19 @@ open class MyPageFragment : Fragment() {
         fragmentFT.addTab(fragmentFT.newTabSpec("storage").setIndicator(tabStorageV), MyPageStorageFragment::class.java, null)
         fragmentFT.addTab(fragmentFT.newTabSpec("notify").setIndicator(tabNotiV), MyPageNotifyFragment::class.java, null)
 
+
+        menuIV.setOnClickListener {
+            val intent = Intent(context, MyPageActivity::class.java)
+            startActivity(intent)
+        }
+
+
         postingRL.setOnClickListener {
 
             setTabView()
             postingV.visibility = View.VISIBLE
 
+            loadData()
             fragmentFT.onTabChanged("posting")
         }
 

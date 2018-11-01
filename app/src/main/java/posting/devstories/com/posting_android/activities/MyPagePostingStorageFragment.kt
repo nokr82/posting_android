@@ -113,9 +113,14 @@ open class MyPagePostingStorageFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         activity = getActivity() as MainActivity
-
         val filter2 = IntentFilter("DEL_POSTING")
         activity.registerReceiver(delPostingReceiver, filter2)
+
+        //기본화면설정
+        tabType= 1
+        setMenuTabView()
+        loadData(tabType)
+
 
         free2RL.setOnClickListener {
             adapterData.clear()

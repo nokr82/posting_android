@@ -23,7 +23,6 @@ import posting.devstories.com.posting_android.Actions.PostingAction.detail
 import posting.devstories.com.posting_android.Actions.PostingAction.save_posting
 import posting.devstories.com.posting_android.Actions.PostingAction.write_comments
 import posting.devstories.com.posting_android.R
-import posting.devstories.com.posting_android.adapter.PostAdapter
 import posting.devstories.com.posting_android.adapter.ReAdapter
 import posting.devstories.com.posting_android.base.Config
 import posting.devstories.com.posting_android.base.PrefUtils
@@ -492,7 +491,6 @@ class DetailActivity : RootActivity() {
         val dialogView = layoutInflater.inflate(R.layout.myposting_dlg, null)
         val delTV = dialogView.findViewById<TextView>(R.id.delTV)
         val modiTV = dialogView.findViewById<TextView>(R.id.modiTV)
-        val secretTV = dialogView.findViewById<TextView>(R.id.secretTV)
         val recyTV = dialogView.findViewById<TextView>(R.id.recyTV)
 
         delTV.setOnClickListener {
@@ -514,10 +512,6 @@ class DetailActivity : RootActivity() {
 
         }
 
-        secretTV.setOnClickListener {
-
-        }
-
         recyTV.setOnClickListener {
 
         }
@@ -526,6 +520,10 @@ class DetailActivity : RootActivity() {
         mPopupDlg =  builder.setView(dialogView).show()
 
     }
+
+
+
+
 
     fun del_posting(){
         val params = RequestParams()
