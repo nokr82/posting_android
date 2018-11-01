@@ -14,6 +14,10 @@ object MemberAction {
     fun my_info(params: RequestParams, handler: JsonHttpResponseHandler) {
         HttpClient.post("/member/my_info.json", params, handler)
     }
+    //닉네임변경
+    fun edit_nick(params: RequestParams, handler: JsonHttpResponseHandler) {
+        HttpClient.post("/member/edit_nick.json", params, handler)
+    }
 
     // 회원 페이지
     fun my_page_index(params: RequestParams, handler: JsonHttpResponseHandler) {
