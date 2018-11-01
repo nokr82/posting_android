@@ -32,7 +32,7 @@ open class MyPagePostingStorageFragment : Fragment() {
     var adapterData: ArrayList<JSONObject> = ArrayList<JSONObject>()
     lateinit var adapterMy: MyPostingAdapter
     var tabType = 1
-
+    var coupon = 1
     var taptype = 1
 
     lateinit var free2TV:TextView
@@ -181,6 +181,9 @@ open class MyPagePostingStorageFragment : Fragment() {
 
                 //                    Intent intent = new Intent(context, _StoreDetailActivity.class);
                 val intent = Intent(context, DetailActivity::class.java)
+                if (taptype ==2&&tabType==6){
+                    intent.putExtra("coupon",coupon)
+                }
                 intent.putExtra("id", Utils.getString(Posting, "id"))
                 startActivity(intent)
 

@@ -52,6 +52,9 @@ open class MyPostingAdapter(context:Context, view:Int, data:ArrayList<JSONObject
             ImageLoader.getInstance().displayImage(image, item.storageIV, Utils.UILoptionsPosting)
             item.storageIV.visibility = View.VISIBLE
         } else {
+            item.storageTV.text = contents
+            item.storageTV.visibility = View.VISIBLE
+            item.storageIV.visibility = View.GONE
 
         }
 
@@ -84,9 +87,10 @@ open class MyPostingAdapter(context:Context, view:Int, data:ArrayList<JSONObject
     class ViewHolder(v: View) {
         var storageIV :ImageView
         var leftCntTV :TextView
-
+        var storageTV: TextView
         init {
             storageIV = v.findViewById(R.id.storageIV) as ImageView
+            storageTV = v.findViewById(R.id.storageTV) as TextView
             leftCntTV = v.findViewById(R.id.leftCnt2TV) as TextView
         }
     }
