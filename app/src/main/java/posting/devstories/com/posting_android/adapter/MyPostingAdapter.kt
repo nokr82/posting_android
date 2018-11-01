@@ -1,6 +1,7 @@
 package posting.devstories.com.posting_android.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
@@ -43,6 +44,11 @@ open class MyPostingAdapter(context:Context, view:Int, data:ArrayList<JSONObject
         var contents =   Utils.getString(posting, "contents")
         var image_uri = Utils.getString(posting, "image_uri")
         var leftCount = Utils.getString(posting, "leftCount")
+
+
+
+
+
 
         item.storageIV.visibility = View.GONE
 

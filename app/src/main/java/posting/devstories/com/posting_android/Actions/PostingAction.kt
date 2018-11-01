@@ -45,5 +45,10 @@ object PostingAction {
     fun edit_posting(params: RequestParams, handler: JsonHttpResponseHandler) {
         HttpClient.post("/posting/edit_posting.json", params, handler)
     }
+    //쿠폰사용
+    fun use_posting(params: RequestParams, handler: JsonHttpResponseHandler) {
+        HttpClient.post("/posting/use_posting.json", params, handler)
+    }
+
 
 }

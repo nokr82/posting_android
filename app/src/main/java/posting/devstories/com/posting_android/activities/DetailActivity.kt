@@ -37,11 +37,13 @@ class DetailActivity : RootActivity() {
     lateinit var context:Context
     private var progressDialog: ProgressDialog? = null
     var member_id = -1
+    var posting_save_id = ""
     var posting_id  = ""
     var p_comments_id = -1
     var adapterData: ArrayList<JSONObject> = ArrayList<JSONObject>()
     var count = 0
     var del_yn = ""
+    var use_yn:String?= null
     var image_uri = ""
     var type = 1
     var contents = ""
@@ -58,6 +60,9 @@ class DetailActivity : RootActivity() {
 
 
         coupon = intent.getIntExtra("coupon",-1)
+        use_yn = intent.getStringExtra("use_yn")
+        println("=============쿠폰사용"+use_yn)
+
         posting_id = intent.getStringExtra("id")
 
 
@@ -186,6 +191,63 @@ class DetailActivity : RootActivity() {
         })
     }
 
+    fun use_posting(){
+        val params = RequestParams()
+        params.put("posting_save_id", posting_save_id)
+
+        PostingAction.use_posting(params, object : JsonHttpResponseHandler() {
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+
+                try {
+                    val result = response!!.getString("result")
+                    if ("ok" == result) {
+
+
+                        finish()
+
+                    }
+
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+
+            }
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONArray?) {
+                super.onSuccess(statusCode, headers, response)
+            }
+
+            private fun error() {
+                Utils.alert(context, "조회중 장애가 발생하였습니다.")
+            }
+
+            override fun onFailure(statusCode: Int, headers: Array<Header>?, throwable: Throwable, errorResponse: JSONArray?) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+                throwable.printStackTrace()
+                error()
+            }
+
+            override fun onStart() {
+                // show dialog
+                if (progressDialog != null) {
+
+                    progressDialog!!.show()
+                }
+            }
+
+            override fun onFinish() {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+            }
+        })
+    }
     fun savePosting() {
         val params = RequestParams()
         params.put("member_id",member_id)
@@ -274,7 +336,14 @@ class DetailActivity : RootActivity() {
                     if ("ok" == result) {
                         val data = response.getJSONObject("posting")
 
+
                         val posting = data.getJSONObject("Posting")
+
+                        posting_save_id  = Utils.getString(posting,"posting_save_id")
+                        println("posting============"+posting)
+                        val save_yn = Utils.getString(posting,"save_yn")
+                        val use_yn = Utils.getString(posting,"use_yn")
+
 
                         var uses_start_date = Utils.getString(posting, "uses_start_date")
                         var uses_end_date =   Utils.getString(posting, "uses_end_date")
@@ -289,14 +358,17 @@ class DetailActivity : RootActivity() {
                         var Image = Utils.getString(posting, "Image")
                         type = Utils.getInt(posting,"type")
 
-                        if (type ==6){
+
+                        if (type ==6&&use_yn.equals("Y")){
+                            couponLL.visibility = View.GONE
+                            usesTV.visibility = View.VISIBLE
+                            usesTV.text = "사용기간:"+uses_start_date+" ~ "+uses_end_date+" 까지"
+                        }else if(type ==6&&save_yn.equals("Y")&&use_yn.equals("N")){
+                            couponLL.visibility = View.VISIBLE
                             usesTV.visibility = View.VISIBLE
                             usesTV.text = "사용기간:"+uses_start_date+" ~ "+uses_end_date+" 까지"
                         }
 
-                        if (coupon == 1){
-                            couponLL.visibility = View.VISIBLE
-                        }
 
                        image_uri = Utils.getString(posting, "image_uri")
                         count = Utils.getInt(posting, "leftCount")
@@ -399,20 +471,12 @@ class DetailActivity : RootActivity() {
 
 
         couponnoTX.setOnClickListener {
-            del_posting()
             mPopupDlg!!.cancel()
         }
 
         couponyTX.setOnClickListener {
 
-            val intent = Intent(context, PostWriteActivity::class.java)
-            intent.putExtra("posting_id", posting_id)
-            intent.putExtra("image_uri",image_uri)
-            intent.putExtra("contents",contents)
-
-            context.startActivity(intent)
-            finish()
-
+            use_posting()
             mPopupDlg!!.cancel()
 
         }

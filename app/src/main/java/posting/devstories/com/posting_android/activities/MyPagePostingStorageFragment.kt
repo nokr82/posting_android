@@ -12,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import com.google.gson.JsonObject
 import com.loopj.android.http.JsonHttpResponseHandler
 import com.loopj.android.http.RequestParams
 import cz.msebera.android.httpclient.Header
@@ -32,9 +33,7 @@ open class MyPagePostingStorageFragment : Fragment() {
     var adapterData: ArrayList<JSONObject> = ArrayList<JSONObject>()
     lateinit var adapterMy: MyPostingAdapter
     var tabType = 1
-    var coupon = 1
     var taptype = 1
-
     lateinit var free2TV:TextView
     lateinit var info2TV:TextView
     lateinit var study2TV:TextView
@@ -181,9 +180,6 @@ open class MyPagePostingStorageFragment : Fragment() {
 
                 //                    Intent intent = new Intent(context, _StoreDetailActivity.class);
                 val intent = Intent(context, DetailActivity::class.java)
-                if (taptype ==2&&tabType==6){
-                    intent.putExtra("coupon",coupon)
-                }
                 intent.putExtra("id", Utils.getString(Posting, "id"))
                 startActivity(intent)
 
@@ -221,9 +217,8 @@ open class MyPagePostingStorageFragment : Fragment() {
 
 
                         val data = response.getJSONArray("list")
-                        for (i in 0..data.length() - 1) {
 
-                            println("data[i] : " + data[i])
+                        for (i in 0..data.length() - 1) {
 
                             adapterData.add(data[i] as JSONObject)
 
