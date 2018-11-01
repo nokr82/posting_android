@@ -57,6 +57,7 @@ class DetailActivity : RootActivity() {
         intent = getIntent()
 
 
+        coupon = intent.getIntExtra("coupon",-1)
         posting_id = intent.getStringExtra("id")
 
 
@@ -77,6 +78,11 @@ class DetailActivity : RootActivity() {
                 commentsET.hint = "답글쓰기"
             }
         }
+
+        couponTV.setOnClickListener {
+            coupondlgView()
+        }
+
 
         menuIV.setOnClickListener {
             dlgView()
@@ -270,6 +276,12 @@ class DetailActivity : RootActivity() {
 
                         val posting = data.getJSONObject("Posting")
 
+                        var uses_start_date = Utils.getString(posting, "uses_start_date")
+                        var uses_end_date =   Utils.getString(posting, "uses_end_date")
+
+
+
+
                         var id = Utils.getString(posting, "id")
                         var member_id2 =   Utils.getInt(posting, "member_id")
 
@@ -277,10 +289,13 @@ class DetailActivity : RootActivity() {
                         var Image = Utils.getString(posting, "Image")
                         type = Utils.getInt(posting,"type")
 
-                        if (type == 6){
-                            commentsLV.visibility = View.GONE
-                            commentsLL.visibility = View.GONE
+                        if (type ==6){
+                            usesTV.visibility = View.VISIBLE
+                            usesTV.text = "사용기간:"+uses_start_date+" ~ "+uses_end_date+" 까지"
+                        }
 
+                        if (coupon == 1){
+                            couponLL.visibility = View.VISIBLE
                         }
 
                        image_uri = Utils.getString(posting, "image_uri")
@@ -374,6 +389,37 @@ class DetailActivity : RootActivity() {
     }
 
 
+    fun coupondlgView(){
+        var mPopupDlg: DialogInterface? = null
+
+        val builder = AlertDialog.Builder(this)
+        val dialogView = layoutInflater.inflate(R.layout.coupon_dlg, null)
+        val couponnoTX = dialogView.findViewById<TextView>(R.id.couponnoTX)
+        val couponyTX = dialogView.findViewById<TextView>(R.id.couponyTX)
+
+
+        couponnoTX.setOnClickListener {
+            del_posting()
+            mPopupDlg!!.cancel()
+        }
+
+        couponyTX.setOnClickListener {
+
+            val intent = Intent(context, PostWriteActivity::class.java)
+            intent.putExtra("posting_id", posting_id)
+            intent.putExtra("image_uri",image_uri)
+            intent.putExtra("contents",contents)
+
+            context.startActivity(intent)
+            finish()
+
+            mPopupDlg!!.cancel()
+
+        }
+
+        mPopupDlg =  builder.setView(dialogView).show()
+
+    }
 
     fun dlgView(){
         var mPopupDlg: DialogInterface? = null
