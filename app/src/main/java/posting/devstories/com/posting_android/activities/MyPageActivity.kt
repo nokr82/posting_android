@@ -28,6 +28,8 @@ class MyPageActivity : FragmentActivity() {
 
 
     var nick = ""
+    var name  = ""
+    var birth = ""
     lateinit var context:Context
     private var progressDialog: ProgressDialog? = null
     var autoLogin = false
@@ -55,12 +57,11 @@ class MyPageActivity : FragmentActivity() {
         }
         outTV.setOnClickListener {
             dlgView()
-
-
             }
 
 
         joinoutTV.setOnClickListener {
+            PrefUtils.setPreference(context, "autoLogin", autoLogin)
             val intent = Intent(this, LoginActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
@@ -101,6 +102,7 @@ class MyPageActivity : FragmentActivity() {
         builder.setMessage("정말 탈퇴하시겠습니까?")
 
         builder.setPositiveButton("확인") { _, _ ->
+            PrefUtils.setPreference(context, "autoLogin", autoLogin)
             redout()
         }
         builder.setNegativeButton("취소") { _, _ ->
@@ -204,9 +206,11 @@ class MyPageActivity : FragmentActivity() {
 
                         var member = response.getJSONObject("member")
                         nick =  Utils.getString(member, "nick_name")
+                        name = Utils.getString(member,"name")
+                        birth =  Utils.getString(member,"birth")
+
+                        infonameTV.text = name+"/"+birth
                         nameTV.text =nick
-
-
 
                     } else {
                         Toast.makeText(context, "일치하는 회원이 존재하지 않습니다.", Toast.LENGTH_LONG).show()
