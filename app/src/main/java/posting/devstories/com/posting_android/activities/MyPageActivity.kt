@@ -97,18 +97,95 @@ class MyPageActivity : FragmentActivity() {
     }
     fun dlgView(){
         val builder = AlertDialog.Builder(ContextThemeWrapper(this, R.style.Theme_AppCompat_Light_Dialog))
-        builder.setTitle("제목(kotlin)")
-        builder.setMessage("내용(Kotlin)")
+        builder.setTitle("회원탈퇴")
+        builder.setMessage("정말 탈퇴하시겠습니까?")
 
         builder.setPositiveButton("확인") { _, _ ->
-
+            redout()
         }
         builder.setNegativeButton("취소") { _, _ ->
+
+
 
         }
 
         builder.show()
     }
+
+    fun redout() {
+        val params = RequestParams()
+        params.put("member_id", PrefUtils.getIntPreference(context, "member_id"))
+
+        MemberAction.secession(params, object : JsonHttpResponseHandler() {
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+
+                try {
+                    val result = response!!.getString("result")
+
+                    if ("ok" == result) {
+                        Toast.makeText(context, "탈퇴가 성공적으로 이루어졌습니다.", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(context, LoginActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        startActivity(intent)
+
+                    } else {
+                        Toast.makeText(context, "일치하는 회원이 존재하지 않습니다.", Toast.LENGTH_LONG).show()
+                    }
+
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+
+            }
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, responseString: String?) {
+
+                // System.out.println(responseString);
+            }
+
+            private fun error() {
+                Utils.alert(context, "조회중 장애가 발생하였습니다.")
+            }
+
+            override fun onFailure(
+                    statusCode: Int,
+                    headers: Array<Header>?,
+                    responseString: String?,
+                    throwable: Throwable
+            ) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+
+                // System.out.println(responseString);
+
+                throwable.printStackTrace()
+                error()
+            }
+
+
+            override fun onStart() {
+                // show dialog
+                if (progressDialog != null) {
+
+                    progressDialog!!.show()
+                }
+            }
+
+            override fun onFinish() {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+            }
+        })
+    }
+
+
+
     fun loadInfo() {
         val params = RequestParams()
         params.put("member_id", PrefUtils.getIntPreference(context, "member_id"))

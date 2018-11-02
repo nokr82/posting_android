@@ -28,4 +28,8 @@ object MemberAction {
     fun company_page(params: RequestParams, handler: JsonHttpResponseHandler) {
         HttpClient.post("/member/company_page.json", params, handler)
     }
+    //회원탈퇴
+    fun secession(params: RequestParams, handler: JsonHttpResponseHandler) {
+        HttpClient.post("/member/secession.json", params, handler)
+    }
 }
