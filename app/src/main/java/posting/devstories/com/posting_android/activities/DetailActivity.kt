@@ -71,6 +71,12 @@ class DetailActivity : RootActivity() {
         commentsLV.adapter = adapterRe
         adapterRe.notifyDataSetChanged()
 
+        policeTV.setOnClickListener {
+            policedlgView()
+        }
+
+
+
         commentsLV.setOnItemClickListener { adapterView, view, i, l ->
 
             var data = adapterData.get(i)
@@ -459,6 +465,43 @@ class DetailActivity : RootActivity() {
         })
     }
 
+    fun policedlgView(){
+        var mPopupDlg: DialogInterface? = null
+
+        val builder = AlertDialog.Builder(this)
+        val dialogView = layoutInflater.inflate(R.layout.myposting_dlg, null)
+        val titleTV = dialogView.findViewById<TextView>(R.id.titleTV)
+        val delTV = dialogView.findViewById<TextView>(R.id.delTV)
+        val modiTV = dialogView.findViewById<TextView>(R.id.modiTV)
+        val recyTV = dialogView.findViewById<TextView>(R.id.recyTV)
+        titleTV.text = "이 포스트를 신고하는 이유를 선택하세요"
+        delTV.text = "불건전합니다"
+        modiTV.text = "부적절합니다"
+        recyTV.text = "스팸입니다"
+
+        delTV.setOnClickListener {
+
+
+            var intent = Intent(context, DlgPoliceActivity::class.java)
+            startActivity(intent)
+
+        }
+        modiTV.setOnClickListener {
+            var intent = Intent(context, DlgPoliceActivity::class.java)
+            finish()
+            startActivity(intent)
+        }
+        recyTV.setOnClickListener {
+            var intent = Intent(context, DlgPoliceActivity::class.java)
+            finish()
+            startActivity(intent)
+        }
+
+
+
+        mPopupDlg =  builder.setView(dialogView).show()
+
+    }
 
     fun coupondlgView(){
         var mPopupDlg: DialogInterface? = null
