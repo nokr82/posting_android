@@ -82,8 +82,10 @@ open class OrderPageFragment : Fragment() {
         member_id = PrefUtils.getIntPreference(context, "member_id")
 
 
-        couponLL.callOnClick()
-
+       menuLL.setOnClickListener {
+           val intent = Intent(context, MyPageActivity::class.java)
+           startActivity(intent)
+       }
 
 
         reviewLL.setOnClickListener {
