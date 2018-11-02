@@ -16,6 +16,7 @@ import com.github.paolorotolo.expandableheightlistview.ExpandableHeightGridView
 import com.loopj.android.http.JsonHttpResponseHandler
 import com.loopj.android.http.RequestParams
 import cz.msebera.android.httpclient.Header
+import kotlinx.android.synthetic.main.fra_orderpg.*
 import org.json.JSONException
 import org.json.JSONObject
 import posting.devstories.com.posting_android.Actions.MemberAction
@@ -80,7 +81,14 @@ open class OrderPageFragment : Fragment() {
         activity = getActivity() as MainActivity
         member_id = PrefUtils.getIntPreference(context, "member_id")
 
+
+        couponLL.callOnClick()
+
+
+
         reviewLL.setOnClickListener {
+
+            review2LL.visibility = View.VISIBLE
             adapterData.clear()
             reviewV.visibility = View.VISIBLE
             couponV.visibility = View.INVISIBLE
@@ -89,14 +97,13 @@ open class OrderPageFragment : Fragment() {
             clicktype = 2
             loadData()
 
-
-
-
         }
+
 
 
         couponGV.isExpanded = true
         couponLL.setOnClickListener {
+            review2LL.visibility = View.GONE
             adapterData.clear()
             couponV.visibility = View.VISIBLE
             reviewV.visibility = View.INVISIBLE

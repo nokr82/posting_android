@@ -83,7 +83,8 @@ class MyPageActivity : FragmentActivity() {
 
         }
         warringTV.setOnClickListener {
-
+            val intent = Intent(this, NoticeActivity::class.java)
+            startActivity(intent)
         }
         postingTV.setOnClickListener {
 
