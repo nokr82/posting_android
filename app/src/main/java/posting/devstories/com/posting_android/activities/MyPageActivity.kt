@@ -1,10 +1,15 @@
 package posting.devstories.com.posting_android.activities
 
+import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.FragmentActivity
+import android.util.Log.d
+import android.view.ContextThemeWrapper
+import android.widget.TextView
 import android.widget.Toast
 import com.loopj.android.http.JsonHttpResponseHandler
 import com.loopj.android.http.RequestParams
@@ -14,6 +19,7 @@ import org.json.JSONException
 import org.json.JSONObject
 import posting.devstories.com.posting_android.Actions.MemberAction
 import posting.devstories.com.posting_android.R
+import posting.devstories.com.posting_android.R.id.nameTV
 import posting.devstories.com.posting_android.base.PrefUtils
 import posting.devstories.com.posting_android.base.RootActivity
 import posting.devstories.com.posting_android.base.Utils
@@ -48,8 +54,12 @@ class MyPageActivity : FragmentActivity() {
             startActivity(intent)
         }
         outTV.setOnClickListener {
+            dlgView()
 
-        }
+
+            }
+
+
         joinoutTV.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -85,7 +95,20 @@ class MyPageActivity : FragmentActivity() {
         }
 
     }
+    fun dlgView(){
+        val builder = AlertDialog.Builder(ContextThemeWrapper(this, R.style.Theme_AppCompat_Light_Dialog))
+        builder.setTitle("제목(kotlin)")
+        builder.setMessage("내용(Kotlin)")
 
+        builder.setPositiveButton("확인") { _, _ ->
+
+        }
+        builder.setNegativeButton("취소") { _, _ ->
+
+        }
+
+        builder.show()
+    }
     fun loadInfo() {
         val params = RequestParams()
         params.put("member_id", PrefUtils.getIntPreference(context, "member_id"))
