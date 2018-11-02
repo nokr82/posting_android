@@ -78,7 +78,7 @@ class MyPageActivity : FragmentActivity() {
         myproIV.setOnClickListener {
             showPictureDialog()
         }
-
+        //알람스위치
         alramTV.setOnClickListener {
             alramSW.isChecked
 
