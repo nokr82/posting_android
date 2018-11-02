@@ -75,9 +75,7 @@ class MyPageActivity : FragmentActivity() {
         alramTV.setOnClickListener {
 
         }
-        chatTV.setOnClickListener {
 
-        }
         appTV.setOnClickListener {
 
         }

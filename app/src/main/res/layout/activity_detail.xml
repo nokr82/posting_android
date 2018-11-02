@@ -33,6 +33,7 @@
         </LinearLayout>
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/myIV"
+            android:visibility="gone"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:src="@mipmap/myimg"
@@ -41,6 +42,7 @@
             />
 
         <TextView
+            android:visibility="gone"
             android:id="@+id/mynameTV"
             android:layout_width="0dp"
             android:layout_height="match_parent"

@@ -210,24 +210,30 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
                 <TextView
                     android:id="@+id/alramTV"
                     android:layout_marginTop="15.13dp"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:textSize="14.67dp"
                     android:text="알림 설정"
                     android:textColor="#8F8E8A"/>
-                <TextView
-                    android:id="@+id/chatTV"
-                    android:layout_marginTop="15.13dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="14.67dp"
-                    android:text="채팅 설정"
-                    android:textColor="#8F8E8A"/>
-
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:id="@+id/alramIV"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="15.13dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/alrambar"/>
+                </LinearLayout>
+</LinearLayout>
             </LinearLayout>
             <TextView
                 android:id="@+id/appTV"
@@ -259,8 +265,8 @@
 
                 <TextView
                     android:layout_marginTop="15.13dp"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_marginRight="20dp"
                     android:layout_height="wrap_content"
                     android:textSize="14.67dp"
                     android:text="앱 버전"
@@ -268,10 +274,21 @@
     <TextView
         android:layout_marginTop="15.13dp"
         android:layout_width="0dp"
-        android:layout_weight="0.2"
+        android:layout_weight="1"
         android:layout_height="wrap_content"
         android:textSize="14.67dp"
         android:text="1.0.0"
+        android:textColor="#8F8E8A"/>
+    <TextView
+        android:layout_marginTop="15.13dp"
+        android:layout_width="0dp"
+        android:layout_marginRight="10dp"
+        android:gravity="center"
+        android:layout_weight="0.5"
+        android:layout_height="wrap_content"
+        android:textSize="14.67dp"
+        android:text="앱 업데이트"
+        android:background="@drawable/background_round_ffe330"
         android:textColor="#8F8E8A"/>
 
 
@@ -286,7 +303,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="14.67dp"
-                    android:text="문의하기"
+                    android:text="Q＆A"
                     android:textColor="#8F8E8A"/>
                 <TextView
                     android:id="@+id/warringTV"
