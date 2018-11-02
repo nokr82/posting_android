@@ -136,4 +136,18 @@ public class RootActivity extends Activity {
         return height;
     }
 
+    @Override
+    public void setRequestedOrientation(int requestedOrientation) {
+   /*
+    if (Build.VERSION.SDK_INT == Build.VERSION_CODES.O) {
+        // no-op
+    }else{
+        super.setRequestedOrientation(requestedOrientation);
+    }
+    */
+        if (Build.VERSION.SDK_INT != Build.VERSION_CODES.O) {
+            super.setRequestedOrientation(requestedOrientation);
+        }
+    }
+
 }

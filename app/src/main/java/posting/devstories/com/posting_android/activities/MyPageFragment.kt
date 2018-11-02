@@ -13,7 +13,9 @@ import android.widget.FrameLayout
 import android.widget.Toast
 import com.loopj.android.http.JsonHttpResponseHandler
 import com.loopj.android.http.RequestParams
+import com.nostra13.universalimageloader.core.ImageLoader
 import cz.msebera.android.httpclient.Header
+import kotlinx.android.synthetic.main.activity_mypage.*
 import kotlinx.android.synthetic.main.fra_my_page.*
 import kotlinx.android.synthetic.main.tab_my_page_noti_view.*
 import kotlinx.android.synthetic.main.tab_my_page_posting_view.*
@@ -22,6 +24,7 @@ import org.json.JSONException
 import org.json.JSONObject
 import posting.devstories.com.posting_android.Actions.MemberAction
 import posting.devstories.com.posting_android.R
+import posting.devstories.com.posting_android.base.Config
 import posting.devstories.com.posting_android.base.PrefUtils
 import posting.devstories.com.posting_android.base.Utils
 
@@ -137,7 +140,11 @@ open class MyPageFragment : Fragment() {
                     if ("ok" == result) {
 
                         var member = response.getJSONObject("member")
-
+                        var image_uri = Utils.getString(member, "image_uri")
+                        if (!image_uri.isEmpty() && image_uri != "") {
+                            var image = Config.url + image_uri
+                            ImageLoader.getInstance().displayImage(image,myIV, Utils.UILoptionsPosting)
+                        }
                         nickNameTV.text = Utils.getString(member, "nick_name")
 
                     } else {

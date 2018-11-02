@@ -21,6 +21,7 @@
             android:gravity="center">
 
             <TextView
+                android:id="@+id/couponTV"
                 android:textSize="15.07dp"
                 android:text="쿠폰 사용확인 체크를 하시면\n재사용이 불가합니다.\n사용확인 체크 하시겠습니까?"
                 android:textColor="#6D6E71"

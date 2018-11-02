@@ -9,7 +9,7 @@ android {
     defaultConfig {
         applicationId "posting.devstories.com.posting_android"
         minSdkVersion 21
-        targetSdkVersion 28
+        targetSdkVersion 26
         versionCode 1
         versionName "1.0.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"

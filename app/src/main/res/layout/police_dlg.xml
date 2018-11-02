@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <posting.devstories.com.posting_android.base.RationalRelativeLayout
+        android:id="@+id/popup"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:ratio="960:609"
+        android:background="@drawable/background_round_ffffff">
+
+        <LinearLayout
+            android:layout_marginLeft="44.43dp"
+            android:layout_marginRight="44.43dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <TextView
+                android:textSize="15.07dp"
+                android:text="신고가 접수 되었습니다.
+더욱 좋은 포스팅이 되도록
+항상 노력 하겠습니다."
+                android:gravity="center"
+                android:textColor="#6D6E71"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/campus"/>
+
+            <TextView
+                android:id="@+id/PostingStartTX"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="기타문의 wepostkorea@gmail.com"
+                android:textSize="13.33dp"
+                android:textColor="#20408C"
+
+                android:layout_marginTop="30dp"
+                />
+
+        </LinearLayout>
+
+    </posting.devstories.com.posting_android.base.RationalRelativeLayout>
+
+
+
+</LinearLayout>

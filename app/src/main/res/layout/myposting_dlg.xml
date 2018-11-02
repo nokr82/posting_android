@@ -19,7 +19,7 @@
 
 
           <TextView
-
+              android:id="@+id/titleTV"
               android:padding="10dp"
               android:textColor="#20408C"
               android:layout_width="wrap_content"

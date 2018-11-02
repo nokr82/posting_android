@@ -65,7 +65,7 @@ class nickchangeActivity : RootActivity() {
         params.put("member_id", PrefUtils.getIntPreference(context, "member_id"))
         params.put("nick_name", nick_name)
 
-        MemberAction.edit_nick(params, object : JsonHttpResponseHandler() {
+        MemberAction.edit_info(params, object : JsonHttpResponseHandler() {
 
             override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
                 if (progressDialog != null) {
@@ -80,7 +80,7 @@ class nickchangeActivity : RootActivity() {
 
                     if ("ok" == result) {
 
-
+                        Toast.makeText(context, "닉네임이 변경되었습니다.", Toast.LENGTH_SHORT).show()
 
 
                     } else {
