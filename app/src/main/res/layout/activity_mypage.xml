@@ -145,30 +145,24 @@
                         <TableLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-
-                            android:layout_margin="5dp"
+                            android:layout_margin="8dp"
                             android:background="@drawable/background_round_ffffff"
                             android:gravity="center">
 
                             <TableRow
-
-                                android:layout_width="match_parent"
                                 android:layout_height="0dp"
-
                                 android:layout_weight="1"
                                 android:gravity="center">
 
                                 <TextView
-                                        android:layout_width="55dp"
-                                        android:layout_height="match_parent"
+                                        android:padding="5dp"
                                         android:gravity="center"
                                         android:text="   11/1 THU"
                                         android:textColor="#063588"
                                         android:textSize="10dp"/>
 
                                 <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
+                                        android:padding="5dp"
                                     android:layout_gravity="center"
                                     android:gravity="center"
                                     android:text="스터디"
@@ -176,8 +170,7 @@
                                     android:textSize="10dp" />
 
                                 <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
+                                        android:padding="5dp"
                                     android:layout_gravity="center"
                                     android:gravity="center"
                                     android:text="동아리"
@@ -185,8 +178,7 @@
                                     android:textSize="10dp" />
 
                                 <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
+                                        android:padding="5dp"
                                     android:layout_gravity="center"
                                     android:gravity="center"
                                     android:text="미팅"
@@ -197,33 +189,33 @@
                             </TableRow>
 
                             <TableRow
-                                android:layout_width="match_parent"
                                 android:layout_height="0dp"
                                 android:layout_weight="1"
                                 android:gravity="center">
 
                                 <TextView
+
                                     android:gravity="center"
                                     android:text="붙이기"
                                     android:textColor="#8F8E8A"
                                     android:textSize="10dp" />
 
                                 <TextView
-                                    android:layout_width="50dp"
+
                                     android:gravity="center"
                                     android:text="1"
                                     android:textColor="#8F8E8A"
                                     android:textSize="18dp" />
 
                                 <TextView
-                                    android:layout_width="47dp"
+
                                     android:gravity="center"
                                     android:text="1"
                                     android:textColor="#8F8E8A"
                                     android:textSize="18dp" />
 
                                 <TextView
-                                    android:layout_width="47dp"
+
                                     android:gravity="center"
                                     android:text="1"
                                     android:textColor="#8F8E8A"
@@ -245,7 +237,6 @@
                                     android:textSize="10dp" />
 
                                 <TextView
-                                    android:layout_width="41dp"
                                     android:gravity="center"
                                     android:text="3"
                                     android:textColor="#8F8E8A"
@@ -390,9 +381,10 @@
                     android:gravity="center_vertical">
 
                         <Switch
+                                android:layout_marginTop="15dp"
                                 android:id="@+id/alramSW"
                                 android:layout_width="95.84dp"
-                                android:layout_height="23dp"
+                                android:layout_height="13dp"
                                 android:checked="true"
                         android:background="@drawable/background_round_ffe330"/>
 
