@@ -249,10 +249,11 @@ open class WriteFragment : Fragment() {
 
 
         textRL.setOnClickListener {
-            var intent = Intent(context, MyPostingWriteActivity::class.java)
-            intent.putExtra("text", text)
-            startActivity(intent)
-
+//            var intent = Intent(context, MyPostingWriteActivity::class.java)
+//            intent.putExtra("text", text)
+//            startActivity(intent)
+            var intent = Intent(context, CouponTextActivity::class.java)
+               startActivity(intent)
         }
 
 

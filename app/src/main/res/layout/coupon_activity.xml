@@ -117,9 +117,9 @@
             <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="73dp"
+                    android:layout_marginRight="60dp"
                     android:visibility="visible"
-                    android:layout_marginLeft="73dp"
+                    android:layout_marginLeft="60dp"
                     android:orientation="vertical">
 
 
@@ -261,8 +261,8 @@
             <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="73dp"
-                    android:layout_marginLeft="73dp"
+                    android:layout_marginRight="60dp"
+                    android:layout_marginLeft="60dp"
                     android:orientation="vertical">
 
 
@@ -326,7 +326,8 @@
                             android:paddingLeft="7dp"
                     />
                     <EditText android:layout_width="wrap_content" android:layout_height="40dp"
-                              android:hint="ex_1인 1매한정/아메리카노구입시"
+                              android:hint="ex_1인 1매한정/
+아메리카노구입시"
                               android:textSize="14dp"
                               android:background="@null"
                     />
@@ -371,8 +372,8 @@
             <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="73dp"
-                    android:layout_marginLeft="73dp"
+                    android:layout_marginRight="60dp"
+                    android:layout_marginLeft="60dp"
                     android:orientation="vertical">
 
 
@@ -473,7 +474,8 @@
                             android:paddingLeft="7dp"
                     />
                     <EditText android:layout_width="wrap_content" android:layout_height="40dp"
-                              android:hint="ex_에스프레소 전품목/중복할인 불가"
+                              android:hint="ex_에스프레소 전품목/
+중복할인 불가"
                               android:textSize="14dp"
                               android:background="@null"
                     />
