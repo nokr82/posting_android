@@ -92,6 +92,13 @@
                         android:orientation="vertical"
                         android:gravity="center">
 
+                    <!--<com.yuyakaido.android.cardstackview.CardStackView-->
+                            <!--android:id="@+id/cardSV"-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content">-->
+
+                    <!--</com.yuyakaido.android.cardstackview.CardStackView>-->
+
                     <posting.devstories.com.posting_android.base.RationalRelativeLayout
                             android:id="@+id/postingLL"
                             android:layout_width="286.02dp"

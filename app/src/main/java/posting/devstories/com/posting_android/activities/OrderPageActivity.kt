@@ -236,4 +236,13 @@ open class OrderPageActivity : RootActivity() {
 
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+
+        if(null != delReviewReceiver) {
+            unregisterReceiver(delReviewReceiver)
+        }
+
+    }
+
 }
