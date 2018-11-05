@@ -23,6 +23,8 @@ import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 import posting.devstories.com.posting_android.Actions.MemberAction
+import posting.devstories.com.posting_android.Actions.VersionAction
+import posting.devstories.com.posting_android.BuildConfig
 import posting.devstories.com.posting_android.R
 import posting.devstories.com.posting_android.base.Config
 import posting.devstories.com.posting_android.base.PrefUtils
@@ -35,10 +37,12 @@ class MyPageActivity : FragmentActivity() {
     var thumbnail:Bitmap? = null
     var gallery:Bitmap? = null
     var nick = ""
-    var name  = ""
+     var name  = ""
+    var push_yn  = ""
     var birth = ""
     private val GALLERY = 1
     private val CAMERA = 2
+    private val VERSION_UPDATE = 3
     lateinit var context:Context
     private var progressDialog: ProgressDialog? = null
     var autoLogin = false
@@ -51,7 +55,7 @@ class MyPageActivity : FragmentActivity() {
         progressDialog = ProgressDialog(context)
         loadInfo()
 
-
+        versionCheck()
 
         schoolTV.setOnClickListener {
             val intent = Intent(this, SchoolagreeActivity::class.java)
@@ -82,14 +86,21 @@ class MyPageActivity : FragmentActivity() {
             showPictureDialog()
         }
         //알람스위치
-        alramTV.setOnClickListener {
-            alramSW.isChecked
+        alramIV.setOnClickListener {
+
+            if (push_yn.equals("Y")){
+                push_yn = "N"
+                edit_profile()
+            }else{
+                push_yn = "Y"
+                edit_profile()
+            }
+
+
+
 
         }
 
-        appTV.setOnClickListener {
-
-        }
         questTV.setOnClickListener {
             sendEmail("1")
         }
@@ -99,8 +110,14 @@ class MyPageActivity : FragmentActivity() {
         }
         postingTV.setOnClickListener {
 
+            val intent = Intent(this, ServiceActivity::class.java)
+            startActivity(intent)
         }
 
+        privacyTV.setOnClickListener {
+            val intent = Intent(this, PrivacyActivity::class.java)
+            startActivity(intent)
+        }
 
 
         finish3LL.setOnClickListener {
@@ -109,6 +126,93 @@ class MyPageActivity : FragmentActivity() {
 
 
     }
+
+   fun versionCheck() {
+
+        val my_version = BuildConfig.VERSION_NAME
+        val params = RequestParams()
+        params.put("my_version", my_version)
+        params.put("device", "A")
+       versionTV.text = my_version
+
+        VersionAction.versionCheck(params, object : JsonHttpResponseHandler() {
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+                try {
+                    val result = response!!.getString("result")
+
+                    if ("ok" == result) {
+
+                        upTV.visibility = View.GONE
+
+                    } else if ("fail" == result) {
+
+                        val version = response.getJSONObject("version")
+                        var android =   Utils.getString(version, "android_version")
+                         upTV.visibility = View.VISIBLE
+                        upTV.setOnClickListener {
+//                            val intent = Intent(Intent.ACTION_VIEW)
+//                            intent.data = Uri.parse("market://details?id=$packageName")
+//                            startActivity(intent)
+//
+//                            finish()
+                        }
+
+                    } else {
+                        Toast.makeText(context, "오류가 발생하였습니다.", Toast.LENGTH_LONG).show()
+                    }
+
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+
+            }
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, responseString: String?) {
+
+                // System.out.println(responseString);
+            }
+
+            private fun error() {
+                Utils.alert(context, "조회중 장애가 발생하였습니다.")
+            }
+
+            override fun onFailure(
+                    statusCode: Int,
+                    headers: Array<Header>?,
+                    responseString: String?,
+                    throwable: Throwable
+            ) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+
+                // System.out.println(responseString);
+
+                throwable.printStackTrace()
+                error()
+            }
+
+
+            override fun onStart() {
+                // show dialog
+                if (progressDialog != null) {
+
+                    progressDialog!!.show()
+                }
+            }
+
+            override fun onFinish() {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+            }
+        })
+    }
+
     fun dlgView(){
         val builder = AlertDialog.Builder(ContextThemeWrapper(this, R.style.Theme_AppCompat_Light_Dialog))
         builder.setTitle("회원탈퇴")
@@ -243,15 +347,11 @@ class MyPageActivity : FragmentActivity() {
         startActivity(intent)
     }
 
-
-
-
     fun edit_profile(){
         val params = RequestParams()
         params.put("member_id", PrefUtils.getIntPreference(context, "member_id"))
         if (gallery==null){
         }else{
-            print("===캡쳐"+gallery)
             params.put("upload", ByteArrayInputStream(Utils.getByteArray(gallery)))
         }
         if (thumbnail==null){
@@ -259,7 +359,8 @@ class MyPageActivity : FragmentActivity() {
             print(thumbnail)
             params.put("upload", ByteArrayInputStream(Utils.getByteArray(thumbnail)))
         }
-
+        params.put("push_yn", push_yn)
+        print("=============push_yn"+push_yn)
         MemberAction.edit_info(params, object : JsonHttpResponseHandler() {
 
             override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
@@ -275,8 +376,8 @@ class MyPageActivity : FragmentActivity() {
 
                     if ("ok" == result) {
 
-                        Toast.makeText(context, "프로필이 변경되었습니다.", Toast.LENGTH_SHORT).show()
-
+                        Toast.makeText(context, "변경되었습니다.", Toast.LENGTH_SHORT).show()
+                        loadInfo()
 
                     } else {
 
@@ -365,6 +466,15 @@ class MyPageActivity : FragmentActivity() {
                         nick =  Utils.getString(member, "nick_name")
                         name = Utils.getString(member,"name")
                         birth =  Utils.getString(member,"birth")
+                        push_yn = Utils.getString(member,"push_yn")
+
+                        if (push_yn.equals("Y")){
+                            alramIV.setImageResource(R.mipmap.alrambar)
+                        }else{
+                            alramIV.setImageResource(R.mipmap.alramoff)
+                        }
+
+
                         var image_uri = Utils.getString(member, "image_uri")
                         if (!image_uri.isEmpty() && image_uri != "") {
                             var image = Config.url + image_uri
@@ -481,6 +591,10 @@ class MyPageActivity : FragmentActivity() {
             thumbnail = data!!.extras!!.get("data") as Bitmap
             edit_profile()
             myproIV!!.setImageBitmap(thumbnail)
+        }
+        else if (requestCode == VERSION_UPDATE)
+        {
+
         }
     }
 

@@ -61,6 +61,16 @@
             android:theme="@style/NoTitleDialog"
             android:windowSoftInputMode="stateHidden|adjustResize"/>
         <activity
+            android:name=".activities.ServiceActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleDialog"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
+        <activity
+            android:name=".activities.PrivacyActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleDialog"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
+        <activity
             android:name=".activities.NoticeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/NoTitleDialog"
