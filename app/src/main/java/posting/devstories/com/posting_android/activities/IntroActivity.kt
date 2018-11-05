@@ -28,12 +28,26 @@ class IntroActivity : RootActivity() {
 
     private var context: Context? = null
 
+    private var posting_id:String = ""
+    private var is_push:Boolean = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_intro)
 
         this.context = this
         progressDialog = ProgressDialog(context)
+
+        val buldle = intent.extras
+        if (buldle != null) {
+            try {
+                posting_id = buldle.getString("posting_id")
+                is_push = buldle.getBoolean("FROM_PUSH")
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+
+        }
 
         splashThread = object : Thread() {
             override fun run() {
@@ -84,7 +98,7 @@ class IntroActivity : RootActivity() {
         params.put("email", PrefUtils.getStringPreference(context,"loginID"))
         params.put("passwd", PrefUtils.getStringPreference(context,"passwd"))
         val member_type = PrefUtils.getStringPreference(context,"member_type")
-        println("====================="+member_type)
+
         LoginAction.login(params, object : JsonHttpResponseHandler() {
 
             override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
@@ -107,12 +121,10 @@ class IntroActivity : RootActivity() {
                         PrefUtils.setPreference(context, "autoLogin", true)
 
                             val intent = Intent(context, MainActivity::class.java)
+                            intent.putExtra("is_push", is_push)
+                            intent.putExtra("posting_id", posting_id)
                             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                             startActivity(intent)
-
-
-
-
 
                     } else {
 

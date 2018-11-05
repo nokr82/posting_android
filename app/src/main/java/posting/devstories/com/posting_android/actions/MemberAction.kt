@@ -32,4 +32,9 @@ object MemberAction {
     fun secession(params: RequestParams, handler: JsonHttpResponseHandler) {
         HttpClient.post("/member/secession.json", params, handler)
     }
+
+    // 업데이트 토큰
+    fun regist_token(params: RequestParams, handler: JsonHttpResponseHandler) {
+        HttpClient.post("/member/regist_token.json", params, handler)
+    }
 }
