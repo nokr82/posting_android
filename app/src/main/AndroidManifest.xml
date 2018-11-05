@@ -148,6 +148,13 @@
             </intent-filter -->
         </activity>
 
+
+        <activity
+            android:name=".activities.MatchInfoActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleDialog"
+            android:windowSoftInputMode="adjustResize|stateHidden"/>
+
         <activity
             android:name=".activities.DlgStorageActivity"
             android:screenOrientation="portrait"

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -11,7 +10,7 @@
         android:orientation="horizontal">
 
         <LinearLayout
-            android:id="@+id/finish3LL"
+            android:id="@+id/finishLL"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="16dp">
@@ -37,10 +36,10 @@
             android:orientation="horizontal">
 
             <RelativeLayout
-                android:layout_marginTop="9.78dp"
-                android:layout_marginLeft="54.75dp"
                 android:layout_width="88.43dp"
                 android:layout_height="90.48dp"
+                android:layout_marginLeft="54.75dp"
+                android:layout_marginTop="9.78dp"
                 android:background="@mipmap/mybg">
 
                 <RelativeLayout
@@ -49,9 +48,11 @@
                     android:layout_centerInParent="true">
 
                     <ImageView
+                        android:id="@+id/imageIV"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@mipmap/mybgpost"
+                        android:src="@mipmap/mybgpost"
+                        android:scaleType="centerCrop"
                         android:gravity="center">
 
                     </ImageView>
@@ -62,14 +63,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:src="@mipmap/green"/>
+                    android:src="@mipmap/green" />
 
             </RelativeLayout>
 
             <LinearLayout
-                android:layout_marginTop="9.78dp"
                 android:layout_width="match_parent"
                 android:layout_height="90.48dp"
+                android:layout_marginTop="9.78dp"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="vertical">
@@ -77,42 +78,40 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:text="Posting"
-                    android:textColor="#8F8E8A"
-                    android:gravity="center"/>
+                    android:textColor="#8F8E8A" />
 
                 <TextView
+                    android:id="@+id/postingCntTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="7/16"
-                    android:gravity="center"/>
+                    android:gravity="center"
+                    android:text="7/16" />
 
             </LinearLayout>
 
             <LinearLayout
-                    android:layout_marginTop="9.78dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="90.48dp"
-                    android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="90.48dp"
+                android:layout_marginTop="9.78dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:text="Match"
+                    android:textColor="#8F8E8A" />
 
                 <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Match"
-                        android:textColor="#8F8E8A"
-                        android:gravity="center"/>
-
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="6"
-                        android:gravity="center"/>
-
-
-
-
+                    android:id="@+id/matchCntTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="6" />
 
             </LinearLayout>
 
@@ -120,78 +119,67 @@
         </LinearLayout>
 
         <HorizontalScrollView
-                android:layout_marginTop="20.95dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-        >
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20.95dp">
+
             <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12.15dp">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/myCV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="12.15dp"
-            >
-                <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/myCV"
+                    android:src="@mipmap/mypostimg"
+                    android:scaleType="centerCrop"/>
 
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@mipmap/mypostimg"
-
-                />
                 <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center"
-                        android:layout_centerInParent="true"
-                        android:layout_alignParentTop="true">
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:orientation="horizontal">
 
                     <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="32"
-                            android:textSize="10dp"
-                            android:textColor="#FFFFFF"
-                            android:layout_marginLeft="50dp"
-                            android:background="@drawable/circle_red"
-                            android:layout_marginBottom="1dp"
-                            android:gravity="center"
-                            android:paddingLeft="2.5dp"
-                            android:paddingRight="2.5dp"
-                    />
-
+                        android:id="@+id/alarmCntTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="1dp"
+                        android:layout_marginLeft="50dp"
+                        android:background="@drawable/circle_red"
+                        android:gravity="center"
+                        android:paddingLeft="2.5dp"
+                        android:paddingRight="2.5dp"
+                        android:text="32"
+                        android:textColor="#FFFFFF"
+                        android:textSize="10dp" />
 
                 </LinearLayout>
 
-
-
             </RelativeLayout>
-
-
 
         </HorizontalScrollView>
 
 
         <LinearLayout
-                android:layout_gravity="center_horizontal"
-
-                android:layout_marginTop="50dp"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1">
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="50dp"
+            android:layout_weight="1">
 
             <TextView
-                    android:gravity="center"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="메시지를 보내려면 위에있는\n Match 상대를 누르세요"
-                    android:textColor="#8F8E8A"/>
-
-
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="메시지를 보내려면 위에있는\n Match 상대를 누르세요"
+                android:textColor="#8F8E8A" />
 
 
         </LinearLayout>
-
-
 
 
     </LinearLayout>

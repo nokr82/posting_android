@@ -140,6 +140,9 @@ open class MainFragment : Fragment(), AbsListView.OnScrollListener {
 
                 if("3" == type || "4" == type || "5" == type) {
                     // 채팅 화면
+                    val intent = Intent(context, MatchInfoActivity::class.java)
+                    intent.putExtra("posting_id", Utils.getString(Posting, "id"))
+                    startActivity(intent)
 
                 } else {
                     val intent = Intent(context, DetailActivity::class.java)
