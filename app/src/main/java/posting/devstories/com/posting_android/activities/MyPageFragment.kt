@@ -2,6 +2,7 @@ package posting.devstories.com.posting_android.activities
 
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentTabHost
@@ -12,7 +13,9 @@ import android.widget.FrameLayout
 import android.widget.Toast
 import com.loopj.android.http.JsonHttpResponseHandler
 import com.loopj.android.http.RequestParams
+import com.nostra13.universalimageloader.core.ImageLoader
 import cz.msebera.android.httpclient.Header
+import kotlinx.android.synthetic.main.activity_mypage.*
 import kotlinx.android.synthetic.main.fra_my_page.*
 import kotlinx.android.synthetic.main.tab_my_page_noti_view.*
 import kotlinx.android.synthetic.main.tab_my_page_posting_view.*
@@ -21,12 +24,14 @@ import org.json.JSONException
 import org.json.JSONObject
 import posting.devstories.com.posting_android.Actions.MemberAction
 import posting.devstories.com.posting_android.R
+import posting.devstories.com.posting_android.base.Config
 import posting.devstories.com.posting_android.base.PrefUtils
 import posting.devstories.com.posting_android.base.Utils
 
 open class MyPageFragment : Fragment() {
 
     var ctx: Context? = null
+
     private var progressDialog: ProgressDialog? = null
 
     lateinit var mainActivity:MainActivity
@@ -76,11 +81,19 @@ open class MyPageFragment : Fragment() {
         fragmentFT.addTab(fragmentFT.newTabSpec("storage").setIndicator(tabStorageV), MyPageStorageFragment::class.java, null)
         fragmentFT.addTab(fragmentFT.newTabSpec("notify").setIndicator(tabNotiV), MyPageNotifyFragment::class.java, null)
 
+
+        menuIV.setOnClickListener {
+            val intent = Intent(context, MyPageActivity::class.java)
+            startActivity(intent)
+        }
+
+
         postingRL.setOnClickListener {
 
             setTabView()
             postingV.visibility = View.VISIBLE
 
+            loadData()
             fragmentFT.onTabChanged("posting")
         }
 
@@ -127,7 +140,11 @@ open class MyPageFragment : Fragment() {
                     if ("ok" == result) {
 
                         var member = response.getJSONObject("member")
-
+                        var image_uri = Utils.getString(member, "image_uri")
+                        if (!image_uri.isEmpty() && image_uri != "") {
+                            var image = Config.url + image_uri
+                            ImageLoader.getInstance().displayImage(image,myIV, Utils.UILoptionsPosting)
+                        }
                         nickNameTV.text = Utils.getString(member, "nick_name")
 
                     } else {

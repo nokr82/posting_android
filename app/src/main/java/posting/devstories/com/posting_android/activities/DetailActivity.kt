@@ -23,7 +23,6 @@ import posting.devstories.com.posting_android.Actions.PostingAction.detail
 import posting.devstories.com.posting_android.Actions.PostingAction.save_posting
 import posting.devstories.com.posting_android.Actions.PostingAction.write_comments
 import posting.devstories.com.posting_android.R
-import posting.devstories.com.posting_android.adapter.PostAdapter
 import posting.devstories.com.posting_android.adapter.ReAdapter
 import posting.devstories.com.posting_android.base.Config
 import posting.devstories.com.posting_android.base.PrefUtils
@@ -37,12 +36,17 @@ class DetailActivity : RootActivity() {
     lateinit var context:Context
     private var progressDialog: ProgressDialog? = null
     var member_id = -1
+    var posting_save_id = ""
     var posting_id  = ""
     var p_comments_id = -1
     var adapterData: ArrayList<JSONObject> = ArrayList<JSONObject>()
     var count = 0
     var del_yn = ""
+    var use_yn:String?= null
+    var image_uri = ""
     var type = 1
+    var contents = ""
+    var coupon = -1
     lateinit var adapterRe: ReAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,13 +57,25 @@ class DetailActivity : RootActivity() {
 
         intent = getIntent()
 
+
+        coupon = intent.getIntExtra("coupon",-1)
+        use_yn = intent.getStringExtra("use_yn")
+        println("=============쿠폰사용"+use_yn)
+
         posting_id = intent.getStringExtra("id")
+
 
         member_id = PrefUtils.getIntPreference(context, "member_id")
         commentsLV.isExpanded = true
         adapterRe = ReAdapter(context,R.layout.item_re, adapterData)
         commentsLV.adapter = adapterRe
         adapterRe.notifyDataSetChanged()
+
+        policeTV.setOnClickListener {
+            policedlgView()
+        }
+
+
 
         commentsLV.setOnItemClickListener { adapterView, view, i, l ->
 
@@ -72,6 +88,11 @@ class DetailActivity : RootActivity() {
                 commentsET.hint = "답글쓰기"
             }
         }
+
+        couponTV.setOnClickListener {
+            coupondlgView()
+        }
+
 
         menuIV.setOnClickListener {
             dlgView()
@@ -175,7 +196,64 @@ class DetailActivity : RootActivity() {
         })
     }
 
+    fun use_posting(){
+        val params = RequestParams()
+        params.put("posting_save_id", posting_save_id)
 
+        PostingAction.use_posting(params, object : JsonHttpResponseHandler() {
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+
+                try {
+                    val result = response!!.getString("result")
+                    if ("ok" == result) {
+
+
+                        finish()
+
+                    }
+
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+
+            }
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONArray?) {
+                super.onSuccess(statusCode, headers, response)
+            }
+
+            private fun error() {
+                Utils.alert(context, "조회중 장애가 발생하였습니다.")
+            }
+
+            override fun onFailure(statusCode: Int, headers: Array<Header>?, throwable: Throwable, errorResponse: JSONArray?) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+                throwable.printStackTrace()
+                error()
+            }
+
+            override fun onStart() {
+                // show dialog
+                if (progressDialog != null) {
+
+                    progressDialog!!.show()
+                }
+            }
+
+
+            override fun onFinish() {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+            }
+        })
+    }
     fun savePosting() {
         val params = RequestParams()
         params.put("member_id",member_id)
@@ -264,14 +342,41 @@ class DetailActivity : RootActivity() {
                     if ("ok" == result) {
                         val data = response.getJSONObject("posting")
 
+
                         val posting = data.getJSONObject("Posting")
+
+                        posting_save_id  = Utils.getString(posting,"posting_save_id")
+                        println("posting============"+posting)
+                        val save_yn = Utils.getString(posting,"save_yn")
+                        val use_yn = Utils.getString(posting,"use_yn")
+
+
+                        var uses_start_date = Utils.getString(posting, "uses_start_date")
+                        var uses_end_date =   Utils.getString(posting, "uses_end_date")
+
+
+
 
                         var id = Utils.getString(posting, "id")
                         var member_id2 =   Utils.getInt(posting, "member_id")
+
                         var del = Utils.getString(posting,"del_yn")
                         var Image = Utils.getString(posting, "Image")
                         type = Utils.getInt(posting,"type")
-                        var image_uri = Utils.getString(posting, "image_uri")
+
+
+                        if (type ==6&&use_yn.equals("Y")){
+                            couponLL.visibility = View.GONE
+                            usesTV.visibility = View.VISIBLE
+                            usesTV.text = "사용기간:"+uses_start_date+" ~ "+uses_end_date+" 까지"
+                        }else if(type ==6&&save_yn.equals("Y")&&use_yn.equals("N")){
+                            couponLL.visibility = View.VISIBLE
+                            usesTV.visibility = View.VISIBLE
+                            usesTV.text = "사용기간:"+uses_start_date+" ~ "+uses_end_date+" 까지"
+                        }
+
+
+                       image_uri = Utils.getString(posting, "image_uri")
                         count = Utils.getInt(posting, "leftCount")
 //                        var created =   Utils.getString(posting, "created")
                         if (member_id==member_id2){
@@ -281,7 +386,7 @@ class DetailActivity : RootActivity() {
 
                         val member  = data.getJSONObject("Member")
 
-                        var contents =   Utils.getString(posting, "contents")
+                        contents =   Utils.getString(posting, "contents")
                         var nick_name = Utils.getString(member, "nick_name")
 
 
@@ -360,6 +465,69 @@ class DetailActivity : RootActivity() {
             }
         })
     }
+
+    fun policedlgView(){
+        var mPopupDlg: DialogInterface? = null
+
+        val builder = AlertDialog.Builder(this)
+        val dialogView = layoutInflater.inflate(R.layout.myposting_dlg, null)
+        val titleTV = dialogView.findViewById<TextView>(R.id.titleTV)
+        val delTV = dialogView.findViewById<TextView>(R.id.delTV)
+        val modiTV = dialogView.findViewById<TextView>(R.id.modiTV)
+        val recyTV = dialogView.findViewById<TextView>(R.id.recyTV)
+        titleTV.text = "이 포스트를 신고하는 이유를 선택하세요"
+        delTV.text = "불건전합니다"
+        modiTV.text = "부적절합니다"
+        recyTV.text = "스팸입니다"
+
+        delTV.setOnClickListener {
+
+
+            var intent = Intent(context, DlgPoliceActivity::class.java)
+            startActivity(intent)
+
+        }
+        modiTV.setOnClickListener {
+            var intent = Intent(context, DlgPoliceActivity::class.java)
+            finish()
+            startActivity(intent)
+        }
+        recyTV.setOnClickListener {
+            var intent = Intent(context, DlgPoliceActivity::class.java)
+            finish()
+            startActivity(intent)
+        }
+
+
+
+        mPopupDlg =  builder.setView(dialogView).show()
+
+    }
+
+    fun coupondlgView(){
+        var mPopupDlg: DialogInterface? = null
+
+        val builder = AlertDialog.Builder(this)
+        val dialogView = layoutInflater.inflate(R.layout.coupon_dlg, null)
+        val couponnoTX = dialogView.findViewById<TextView>(R.id.couponnoTX)
+        val couponyTX = dialogView.findViewById<TextView>(R.id.couponyTX)
+
+
+        couponnoTX.setOnClickListener {
+            mPopupDlg!!.cancel()
+        }
+
+        couponyTX.setOnClickListener {
+
+            use_posting()
+            mPopupDlg!!.cancel()
+
+        }
+
+        mPopupDlg =  builder.setView(dialogView).show()
+
+    }
+
     fun dlgView(){
         var mPopupDlg: DialogInterface? = null
 
@@ -367,18 +535,24 @@ class DetailActivity : RootActivity() {
         val dialogView = layoutInflater.inflate(R.layout.myposting_dlg, null)
         val delTV = dialogView.findViewById<TextView>(R.id.delTV)
         val modiTV = dialogView.findViewById<TextView>(R.id.modiTV)
-        val secretTV = dialogView.findViewById<TextView>(R.id.secretTV)
         val recyTV = dialogView.findViewById<TextView>(R.id.recyTV)
 
         delTV.setOnClickListener {
             del_posting()
+            mPopupDlg!!.cancel()
         }
 
         modiTV.setOnClickListener {
 
-        }
+            val intent = Intent(context, PostWriteActivity::class.java)
+            intent.putExtra("posting_id", posting_id)
+            intent.putExtra("image_uri",image_uri)
+            intent.putExtra("contents",contents)
 
-        secretTV.setOnClickListener {
+            context.startActivity(intent)
+            finish()
+
+            mPopupDlg!!.cancel()
 
         }
 
@@ -389,8 +563,11 @@ class DetailActivity : RootActivity() {
 
         mPopupDlg =  builder.setView(dialogView).show()
 
-
     }
+
+
+
+
 
     fun del_posting(){
         val params = RequestParams()

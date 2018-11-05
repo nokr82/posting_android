@@ -9,7 +9,7 @@
         android:id="@+id/popup"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:ratio="960:610"
+        app:ratio="960:500"
         android:background="@drawable/background_round_ffffff">
 
       <LinearLayout
@@ -19,7 +19,7 @@
 
 
           <TextView
-
+              android:id="@+id/titleTV"
               android:padding="10dp"
               android:textColor="#20408C"
               android:layout_width="wrap_content"
@@ -59,13 +59,7 @@
               android:layout_height="wrap_content"
               android:text="재사용"
               android:textColor="#888888"/>
-          <TextView
-              android:id="@+id/secretTV"
-              android:layout_marginTop="15.8dp"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:text="숨기기"
-              android:textColor="#888888"/>
+
         </LinearLayout>
 
       </LinearLayout>

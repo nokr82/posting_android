@@ -37,8 +37,18 @@ object PostingAction {
     fun write_comments(params: RequestParams, handler: JsonHttpResponseHandler) {
         HttpClient.post("/posting/write_comments.json", params, handler)
     }
+    //삭제
     fun del_posting(params: RequestParams, handler: JsonHttpResponseHandler) {
         HttpClient.post("/posting/del_posting.json", params, handler)
     }
+    //수정
+    fun edit_posting(params: RequestParams, handler: JsonHttpResponseHandler) {
+        HttpClient.post("/posting/edit_posting.json", params, handler)
+    }
+    //쿠폰사용
+    fun use_posting(params: RequestParams, handler: JsonHttpResponseHandler) {
+        HttpClient.post("/posting/use_posting.json", params, handler)
+    }
+
 
 }

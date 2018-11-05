@@ -14,6 +14,10 @@ object MemberAction {
     fun my_info(params: RequestParams, handler: JsonHttpResponseHandler) {
         HttpClient.post("/member/my_info.json", params, handler)
     }
+    //닉네임변경
+    fun edit_info(params: RequestParams, handler: JsonHttpResponseHandler) {
+        HttpClient.post("/member/edit_info.json", params, handler)
+    }
 
     // 회원 페이지
     fun my_page_index(params: RequestParams, handler: JsonHttpResponseHandler) {
@@ -23,5 +27,9 @@ object MemberAction {
     //사업자 쿠폰목록
     fun company_page(params: RequestParams, handler: JsonHttpResponseHandler) {
         HttpClient.post("/member/company_page.json", params, handler)
+    }
+    //회원탈퇴
+    fun secession(params: RequestParams, handler: JsonHttpResponseHandler) {
+        HttpClient.post("/member/secession.json", params, handler)
     }
 }

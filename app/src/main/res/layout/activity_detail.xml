@@ -18,24 +18,6 @@
         android:orientation="horizontal"
         android:gravity="center_vertical">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/myIV"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@mipmap/myimg"
-            android:layout_marginRight="7dp"
-            android:layout_marginLeft="15.5dp"
-            android:visibility="gone"/>
-
-        <TextView
-            android:id="@+id/mynameTV"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="post_0904"
-            android:gravity="center_vertical"
-            android:textSize="14dp"
-            android:visibility="gone"/>
 
         <LinearLayout
             android:id="@+id/backLL"
@@ -49,6 +31,26 @@
                 android:src="@mipmap/back"/>
 
         </LinearLayout>
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/myIV"
+            android:visibility="gone"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@mipmap/myimg"
+            android:layout_marginRight="7dp"
+            android:layout_marginLeft="10.5dp"
+            />
+
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/mynameTV"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="post_0904"
+            android:gravity="center_vertical"
+            android:textSize="14dp"
+            />
 
         <View
             android:layout_width="0dp"
@@ -70,6 +72,17 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#A19F9B"/>
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -129,8 +142,8 @@
         android:gravity="center_vertical">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="39dp"
+            android:layout_height="39dp"
             android:layout_marginLeft="20dp"
             android:id="@+id/writerIV"
             android:src="@mipmap/myimg"/>
@@ -144,31 +157,53 @@
             android:text="lala_girl"
             android:id="@+id/wnameTX"/>
 
+
+
+<LinearLayout
+    android:layout_width="0dp"
+    android:layout_weight="1"
+    android:layout_height="wrap_content">
+    <TextView
+        android:visibility="visible"
+        android:id="@+id/upTX"
+     android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="20dp"
+        android:textSize="9.5dp"
+        android:text="8월31일"/>
+    <TextView
+        android:id="@+id/policeTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" | 신고"
+        android:textSize="9.5dp"
+        android:textColor="#BDBBB8"/>
+
+
+
+</LinearLayout>
+
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:visibility="gone"
+    android:id="@+id/couponLL">
         <TextView
-            android:id="@+id/upTX"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="20dp"
-            android:textSize="9.5dp"
-            android:text="8월31일"/>
 
-        <LinearLayout
-            android:layout_width="36dp"
-            android:layout_height="match_parent"
-            android:gravity="center">
+            android:id="@id/couponTV"
+            android:layout_marginRight="19dp"
+            android:layout_marginBottom="8.5dp"
+            android:layout_width="130.89dp"
+            android:layout_height="37dp"
+            android:background="#FEDF2F"
+            android:text="쿠폰 사용확인"
+            android:textColor="#063588"
+            android:textSize="15dp"
+            android:gravity="center"/>
 
-            <TextView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:textSize="10dp"
-                android:textColor="#514F4E"
-                android:text="신고"
-                android:gravity="center"
-                android:background="@drawable/circle_background_yellow"/>
-
-        </LinearLayout>
+</LinearLayout>
         <LinearLayout
             android:id="@+id/myLL"
             android:visibility="gone"
@@ -188,10 +223,6 @@
         android:layout_height="0.3dp"
         android:background="#A19F9B"/>
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.55">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -207,6 +238,26 @@
                 android:text=""
                 android:textSize="10dp"
                 android:layout_marginTop="14dp"/>
+
+            <TextView
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25.5dp"
+                android:layout_marginRight="25.5dp"
+                android:text="사용기간:"
+                android:textSize="10dp"
+                android:id="@+id/usesTV"/>
+            <TextView
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25.5dp"
+                android:layout_marginRight="25.5dp"
+                android:text="#피자헛"
+                android:textColor="#063588"
+                android:textSize="10dp"
+                android:id="@+id/hashTV"/>
 
             <View
                 android:layout_width="match_parent"
@@ -225,11 +276,12 @@
             </com.github.paolorotolo.expandableheightlistview.ExpandableHeightListView>
 
         </LinearLayout>
-
+            </LinearLayout>
     </ScrollView>
 
 
     <LinearLayout
+        android:id="@+id/commentsLL"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_marginBottom="4.5dp"
@@ -240,10 +292,6 @@
             android:layout_height="match_parent"
             android:gravity="center">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/chat_plus"/>
 
         </LinearLayout>
 

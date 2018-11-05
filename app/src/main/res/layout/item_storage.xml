@@ -53,6 +53,15 @@
             android:layout_marginRight="9dp"
             android:layout_marginBottom="9dp">
 
+            <TextView
+                android:id="@+id/storageTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text=""
+                android:visibility="gone"/>
+
+
             <ImageView
                 android:id="@+id/storageIV"
                 android:layout_width="match_parent"

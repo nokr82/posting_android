@@ -103,6 +103,7 @@ class IntroActivity : RootActivity() {
                         PrefUtils.setPreference(context, "email", Utils.getString(data, "email"))
                         PrefUtils.setPreference(context, "passwd", Utils.getString(data, "passwd"))
                         PrefUtils.setPreference(context, "member_type", Utils.getString(data, "member_type"))
+                        PrefUtils.setPreference(context, "school_id", Utils.getInt(data, "school_id"))
                         PrefUtils.setPreference(context, "autoLogin", true)
 
                             val intent = Intent(context, MainActivity::class.java)

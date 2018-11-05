@@ -107,6 +107,7 @@ class LoginActivity : RootActivity() {
                         PrefUtils.setPreference(context, "email", Utils.getString(data, "email"))
                         PrefUtils.setPreference(context, "passwd", Utils.getString(data, "passwd"))
                         PrefUtils.setPreference(context, "member_type", Utils.getString(data, "member_type"))
+                        PrefUtils.setPreference(context, "school_id", Utils.getInt(data, "school_id"))
                         PrefUtils.setPreference(context, "autoLogin", autoLogin)
                         val member_type = PrefUtils.getStringPreference(context,"member_type")
                         println("====================="+member_type)

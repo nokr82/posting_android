@@ -37,8 +37,12 @@
         </activity>
 
         <activity
-            android:name=".activities.LoginActivity"
-
+        android:name=".activities.LoginActivity"
+            android:screenOrientation="portrait"
+        android:theme="@style/NoTitleDialog"
+        android:windowSoftInputMode="adjustResize|stateHidden"/>
+        <activity
+            android:name=".activities.nickchangeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/NoTitleDialog"
             android:windowSoftInputMode="adjustResize|stateHidden"/>
@@ -104,12 +108,11 @@
         </activity>
 
         <activity
-            android:name=".activities.DlgActivity"
+            android:name=".activities.DlgStorageActivity"
             android:screenOrientation="portrait"
             android:theme="@style/full_screen_dialog1"/>
-
         <activity
-            android:name=".activities.DlgStorageActivity"
+            android:name=".activities.DlgPoliceActivity"
             android:screenOrientation="portrait"
             android:theme="@style/full_screen_dialog1"/>
 

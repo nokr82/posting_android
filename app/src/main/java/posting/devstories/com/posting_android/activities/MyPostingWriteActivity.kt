@@ -42,13 +42,15 @@ class MyPostingWriteActivity : RootActivity() {
 
     var capture: Bitmap?= null
     var member_type = ""
-
+    var image_uri:String? = null
+    var image:String? = null
     var str:String? = null
-
+    var posting_id :String?=null
     var text:String? = null
     var member_id = -1
     var type:String?=null
     var contents = ""
+    var contents2:String?=null
     var count:String?=null
     var geterror = ""
     var startd:String?=null
@@ -73,9 +75,15 @@ class MyPostingWriteActivity : RootActivity() {
         text = intent.getStringExtra("text")
         imgid = intent.getStringExtra("imgid")
         capture = intent.getParcelableExtra("capture")
+        contents2 = intent.getStringExtra("contents")
         startd = intent.getStringExtra("startd")
         last = intent.getStringExtra("last")
+        posting_id = intent.getStringExtra("posting_id")
+        image = intent.getStringExtra("image")
         mount = intent.getIntExtra("mount",0)
+
+
+        contentET.setText(contents2)
 
         if (text.equals("1")){
             popupRL.visibility = View.GONE
@@ -85,6 +93,8 @@ class MyPostingWriteActivity : RootActivity() {
         options.inJustDecodeBounds = true
         BitmapFactory.decodeFile(str, options)
         options.inJustDecodeBounds = false
+
+
 
 
         backLL.setOnClickListener {
@@ -99,9 +109,9 @@ class MyPostingWriteActivity : RootActivity() {
         //이미지
         img2RL.background = Drawable.createFromPath(imgid)
         captureIV.setImageBitmap(capture)
+        com.nostra13.universalimageloader.core.ImageLoader.getInstance().displayImage(image, captureIV, Utils.UILoptionsUserProfile)
 
-
-        if (imgid != null && "" != imgid && imgid!!.length> 1&&capture != null){
+        if (imgid != null && "" != imgid && imgid!!.length> 1&&capture != null&&image != null){
             popupRL.visibility = View.VISIBLE
         }
 
@@ -114,16 +124,16 @@ class MyPostingWriteActivity : RootActivity() {
             mostSP2.visibility = View.GONE
 
             adpater = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, most)
-            meetingSP2.adapter = adpater
+            meetingSP3.adapter = adpater
 
-           date2TX.text = startd
+            date2TX.text = startd
             limit2TX.text = last
 
             if (startd==null||startd.equals("")){
                 date2TX.text = SimpleDateFormat("yy.MM.dd").format(System.currentTimeMillis())+"~"
             }
 
-           meetingSP2.setSelection(mount!!)
+            meetingSP3.setSelection(mount!!)
 
 
             var cal = Calendar.getInstance()
@@ -152,20 +162,20 @@ class MyPostingWriteActivity : RootActivity() {
 
             date2LL.setOnClickListener {
                 DatePickerDialog(context, dateSetListener2,
-                        cal.get(Calendar.YEAR),
-                        cal.get(Calendar.MONTH),
-                        cal.get(Calendar.DAY_OF_MONTH)).show()
+                    cal.get(Calendar.YEAR),
+                    cal.get(Calendar.MONTH),
+                    cal.get(Calendar.DAY_OF_MONTH)).show()
                 DatePickerDialog(context, dateSetListener,
-                        cal.get(Calendar.YEAR),
-                        cal.get(Calendar.MONTH),
-                        cal.get(Calendar.DAY_OF_MONTH)).show()
+                    cal.get(Calendar.YEAR),
+                    cal.get(Calendar.MONTH),
+                    cal.get(Calendar.DAY_OF_MONTH)).show()
             }
 
         }else{
-           // dateTX.visibility = View.GONE
+            // dateTX.visibility = View.GONE
 
             adpater = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, mee)
-            meetingSP2.adapter = adpater
+            meetingSP3.adapter = adpater
 
             adpater = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, most)
             mostSP2.adapter = adpater
@@ -188,7 +198,7 @@ class MyPostingWriteActivity : RootActivity() {
 
             if (member_type.equals("3")){
                 type = "6"
-                count = meetingSP2.selectedItem.toString()
+                count = meetingSP3.selectedItem.toString()
                 startd = Utils.getString(date2TX)
                 last = Utils.getString(limit2TX)
 
@@ -200,14 +210,19 @@ class MyPostingWriteActivity : RootActivity() {
                 if(count.equals("수량")){
 
                     Toast.makeText(context,"수량을 선택해주세요",Toast.LENGTH_SHORT).show()
-                    }
+                }
                 else{
-                    write()
+                    if (posting_id == null||posting_id == ""){
+                        write()
+                    }else{
+
+                        edit_posting()
+                    }
 
                 }
 
             }else {
-                type = meetingSP2.selectedItem.toString()
+                type = meetingSP3.selectedItem.toString()
                 count = mostSP2.selectedItem.toString()
                 if (type.equals("자유")) {
                     type = "1"
@@ -232,8 +247,12 @@ class MyPostingWriteActivity : RootActivity() {
 
                     Toast.makeText(context, geterror, Toast.LENGTH_SHORT).show()
                 } else {
-                    write()
+                    if (posting_id == null||posting_id == ""){
+                        write()
+                    }else{
 
+                        edit_posting()
+                    }
                 }
             }
 
@@ -292,6 +311,10 @@ class MyPostingWriteActivity : RootActivity() {
 
                 try {
                     val result = response!!.getString("result")
+
+
+
+
 
                     if ("ok" == result) {
 
@@ -369,12 +392,151 @@ class MyPostingWriteActivity : RootActivity() {
                     progressDialog!!.dismiss()
                 }
             }
+
         })
+
+
+
+
+
+
     }
 
 
 
 
+
+    fun edit_posting(){
+
+
+        val params = RequestParams()
+
+        params.put("posting_id", posting_id)
+        params.put("member_id", member_id)
+        params.put("type", type)
+        params.put("contents", contents)
+        params.put("count", count)
+
+
+        if (capture==null){
+
+        }else{
+            params.put("upload",ByteArrayInputStream(Utils.getByteArray(capture)))
+
+
+//            params.put("upload",capture)
+        }
+//        if (image.equals("")||image==null){
+//
+//        }else{
+//
+//
+//            val add_file = Utils.getImage(context.contentResolver, image_uri)
+//            params.put("upload",ByteArrayInputStream(Utils.getByteArray(add_file)))
+//
+//        }
+
+        if (imgid.equals("")||imgid==null){
+
+        }else{
+
+
+            val add_file = Utils.getImage(context.contentResolver, imgid)
+            params.put("upload",ByteArrayInputStream(Utils.getByteArray(add_file)))
+
+        }
+
+
+
+
+        PostingAction.edit_posting(params, object : JsonHttpResponseHandler() {
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+
+                try {
+                    val result = response!!.getString("result")
+
+                    if ("ok" == result) {
+
+
+                        val intent = Intent(context,MainActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        startActivity(intent)
+
+                        Toast.makeText(context, "수정이 완료되었습니다", Toast.LENGTH_SHORT).show()
+
+
+
+                    } else {
+                        geterror = "작성실패"
+
+                        Toast.makeText(context, geterror, Toast.LENGTH_SHORT).show()
+                    }
+
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+
+            }
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONArray?) {
+                super.onSuccess(statusCode, headers, response)
+            }
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, responseString: String?) {
+
+                // System.out.println(responseString);
+            }
+
+            private fun error() {
+                Utils.alert(context, "올리는중 장애가 발생하였습니다.")
+            }
+
+            override fun onFailure(statusCode: Int, headers: Array<Header>?, responseString: String?, throwable: Throwable) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+
+                // System.out.println(responseString);
+
+                throwable.printStackTrace()
+                error()
+            }
+
+            override fun onFailure(statusCode: Int, headers: Array<Header>?, throwable: Throwable, errorResponse: JSONObject?) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+                throwable.printStackTrace()
+                error()
+            }
+
+            override fun onFailure(statusCode: Int, headers: Array<Header>?, throwable: Throwable, errorResponse: JSONArray?) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+                throwable.printStackTrace()
+                error()
+            }
+
+            override fun onStart() {
+                // show dialog
+                if (progressDialog != null) {
+
+                    progressDialog!!.show()
+                }
+            }
+
+            override fun onFinish() {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+            }
+        })
+    }
 
 
 
