@@ -36,6 +36,7 @@
             android:orientation="horizontal">
 
             <RelativeLayout
+                android:id="@+id/postingRL"
                 android:layout_width="88.43dp"
                 android:layout_height="90.48dp"
                 android:layout_marginLeft="54.75dp"

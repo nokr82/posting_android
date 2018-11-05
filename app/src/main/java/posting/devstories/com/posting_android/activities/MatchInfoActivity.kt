@@ -2,6 +2,7 @@ package posting.devstories.com.posting_android.activities
 
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
@@ -45,6 +46,12 @@ class MatchInfoActivity : RootActivity() {
 
         finishLL.setOnClickListener {
             finish()
+        }
+
+        postingRL.setOnClickListener {
+            var intent = Intent(context, DetailActivity::class.java);
+            intent.putExtra("id", posting_id)
+            startActivity(intent)
         }
 
         loadData()
