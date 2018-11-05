@@ -154,8 +154,6 @@ open class OrderPageFragment : Fragment() {
 
                         for (i in 0..data.length() - 1) {
 
-                            println("data[i] : " + data[i])
-
                             adapterData.add(data[i] as JSONObject)
 
                         }
@@ -163,9 +161,6 @@ open class OrderPageFragment : Fragment() {
                         }else{
                             val data = response.getJSONArray("reviewList")
                             for (i in 0..data.length() - 1) {
-
-                                println("data[i] : " + data[i])
-
                                 adapterData.add(data[i] as JSONObject)
 
                             }

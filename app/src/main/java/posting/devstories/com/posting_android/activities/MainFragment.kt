@@ -115,9 +115,16 @@ open class MainFragment : Fragment() {
                 val Posting = adapterData[position].getJSONObject("Posting")
 
                 //                    Intent intent = new Intent(context, _StoreDetailActivity.class);
-                val intent = Intent(context, DetailActivity::class.java)
-                intent.putExtra("id", Utils.getString(Posting, "id"))
-                startActivity(intent)
+
+                val type = Utils.getString(Posting, "type")
+                if("3" == type || "4" == type || "5" == type) {
+                    // 채팅 화면
+
+                } else {
+                    val intent = Intent(context, DetailActivity::class.java)
+                    intent.putExtra("id", Utils.getString(Posting, "id"))
+                    startActivity(intent)
+                }
 
             } catch (e: JSONException) {
                 e.printStackTrace()
@@ -160,7 +167,7 @@ open class MainFragment : Fragment() {
 
 
                     } else {
-                        Toast.makeText(context, "일치하는 회원이 존재하지 않습니다.", Toast.LENGTH_LONG).show()
+
                     }
 
                 } catch (e: JSONException) {

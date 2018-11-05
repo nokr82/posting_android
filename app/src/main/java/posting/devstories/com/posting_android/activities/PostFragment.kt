@@ -21,6 +21,7 @@ import com.github.paolorotolo.expandableheightlistview.ExpandableHeightListView
 import com.loopj.android.http.JsonHttpResponseHandler
 import com.loopj.android.http.RequestParams
 import cz.msebera.android.httpclient.Header
+import kotlinx.android.synthetic.main.tab_mypage_view.*
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
@@ -547,6 +548,16 @@ open class PostFragment : Fragment() {
                     val result = response!!.getString("result")
 
                     if ("ok" == result) {
+
+                        var alarm_count = Utils.getInt(response, "alarm_count")
+
+                        if(alarm_count < 1) {
+                            mainActivity.alarmCntTV.visibility = View.GONE
+                        } else {
+                            mainActivity.alarmCntTV.visibility = View.VISIBLE
+                            mainActivity.alarmCntTV.text = alarm_count.toString()
+                        }
+
                         val list = response.getJSONArray("list")
 
                         for (i in 0..(list.length()-1)){

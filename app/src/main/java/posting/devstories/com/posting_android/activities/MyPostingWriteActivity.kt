@@ -38,7 +38,9 @@ class MyPostingWriteActivity : RootActivity() {
 
     var imgid:String? = null
     var mee = arrayOf("자유","정보","스터디","동아리","미팅")
-    var  most =arrayOf("수량","1","2","3","4","5","6","7","8","9","10")
+    var  most =arrayOf("수량","1","3","5","10","20","∞")
+
+    var day = arrayOf("기간","1일","5일","7일","10일","30일","60일")
 
     var capture: Bitmap?= null
     var member_type = ""
@@ -120,65 +122,71 @@ class MyPostingWriteActivity : RootActivity() {
 
 
         if (member_type.equals("3")){
+            meetingSP3.visibility = View.GONE
 
-            mostSP2.visibility = View.GONE
+
+            adpater = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, day)
+            daySP3.adapter = adpater
+
 
             adpater = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, most)
-            meetingSP3.adapter = adpater
+            mostSP3.adapter = adpater
+//
+//            date2TX.text = startd
+//            limit2TX.text = last
+//
+//            if (startd==null||startd.equals("")){
+//                date2TX.text = SimpleDateFormat("yy.MM.dd").format(System.currentTimeMillis())+"~"
+//            }
 
-            date2TX.text = startd
-            limit2TX.text = last
-
-            if (startd==null||startd.equals("")){
-                date2TX.text = SimpleDateFormat("yy.MM.dd").format(System.currentTimeMillis())+"~"
-            }
-
-            meetingSP3.setSelection(mount!!)
+            mostSP3.setSelection(mount!!)
 
 
             var cal = Calendar.getInstance()
 
-            val dateSetListener = DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-                cal.set(Calendar.YEAR, year)
-                cal.set(Calendar.MONTH, monthOfYear)
-                cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+//            val dateSetListener = DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+//                cal.set(Calendar.YEAR, year)
+//                cal.set(Calendar.MONTH, monthOfYear)
+//                cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+//
+//                val myFormat = "yy.MM.dd" // mention the format you need
+//                val sdf = SimpleDateFormat(myFormat, Locale.KOREA)
+//                date2TX.text = sdf.format(cal.time)+"~"
+//
+//            }
+//
+//            val dateSetListener2 = DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+//                cal.set(Calendar.YEAR, year)
+//                cal.set(Calendar.MONTH, monthOfYear)
+//                cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+//
+//                val myFormat = "yy.MM.dd" // mention the format you need
+//                val sdf = SimpleDateFormat(myFormat, Locale.KOREA)
+//                limit2TX.text = sdf.format(cal.time)
+//
+//            }
 
-                val myFormat = "yy.MM.dd" // mention the format you need
-                val sdf = SimpleDateFormat(myFormat, Locale.KOREA)
-                date2TX.text = sdf.format(cal.time)+"~"
-
-            }
-
-            val dateSetListener2 = DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-                cal.set(Calendar.YEAR, year)
-                cal.set(Calendar.MONTH, monthOfYear)
-                cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-
-                val myFormat = "yy.MM.dd" // mention the format you need
-                val sdf = SimpleDateFormat(myFormat, Locale.KOREA)
-                limit2TX.text = sdf.format(cal.time)
-
-            }
-
-            date2LL.setOnClickListener {
-                DatePickerDialog(context, dateSetListener2,
-                    cal.get(Calendar.YEAR),
-                    cal.get(Calendar.MONTH),
-                    cal.get(Calendar.DAY_OF_MONTH)).show()
-                DatePickerDialog(context, dateSetListener,
-                    cal.get(Calendar.YEAR),
-                    cal.get(Calendar.MONTH),
-                    cal.get(Calendar.DAY_OF_MONTH)).show()
-            }
+//            date2LL.setOnClickListener {
+//                DatePickerDialog(context, dateSetListener2,
+//                    cal.get(Calendar.YEAR),
+//                    cal.get(Calendar.MONTH),
+//                    cal.get(Calendar.DAY_OF_MONTH)).show()
+//                DatePickerDialog(context, dateSetListener,
+//                    cal.get(Calendar.YEAR),
+//                    cal.get(Calendar.MONTH),
+//                    cal.get(Calendar.DAY_OF_MONTH)).show()
+//            }
 
         }else{
             // dateTX.visibility = View.GONE
+            adpater = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, day)
+            daySP3.adapter = adpater
 
             adpater = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, mee)
             meetingSP3.adapter = adpater
 
             adpater = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, most)
-            mostSP2.adapter = adpater
+            mostSP3.adapter = adpater
 
         }
 
@@ -199,8 +207,8 @@ class MyPostingWriteActivity : RootActivity() {
             if (member_type.equals("3")){
                 type = "6"
                 count = meetingSP3.selectedItem.toString()
-                startd = Utils.getString(date2TX)
-                last = Utils.getString(limit2TX)
+//                startd = Utils.getString(date2TX)
+//                last = Utils.getString(limit2TX)
 
                 if(contents==""||contents==null|| contents.isEmpty()){
                     geterror = "내용을 입력해주세요"
@@ -223,7 +231,7 @@ class MyPostingWriteActivity : RootActivity() {
 
             }else {
                 type = meetingSP3.selectedItem.toString()
-                count = mostSP2.selectedItem.toString()
+                count = mostSP3.selectedItem.toString()
                 if (type.equals("자유")) {
                     type = "1"
                 } else if (type.equals("정보")) {

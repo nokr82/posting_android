@@ -7,79 +7,80 @@
     
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="63.61dp"
-        android:orientation="horizontal">
-        
+        android:layout_height="52dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingLeft="13dp"
+        android:paddingRight="13dp">
         
         <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="43.89dp"
-            android:layout_height="43.89dp"
+            android:id="@+id/senderIV"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
             android:src="@mipmap/alram_my"/>
+
         <LinearLayout
-            android:layout_marginLeft="10.63dp"
+            android:layout_marginLeft="8dp"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
-            android:orientation="vertical">
-
+            android:orientation="vertical"
+            android:gravity="center_vertical">
 
             <TextView
-                android:layout_width="match_parent"
+                android:id="@+id/createdTV"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="8월31일"
-                android:textSize="11.33dp"
+                android:textSize="8.5dp"
                 android:textColor="#595757"/>
+
             <TextView
+                android:id="@+id/messageTV"
+                android:layout_marginTop="2dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="lala_girl 회원님의 포스팅을 떼었습니다"
-                android:textSize="16.33dp"
+                android:textSize="12.5dp"
                 android:textColor="#050000"/>
+
         </LinearLayout>
+
         <RelativeLayout
-            android:layout_width="66.37dp"
-            android:layout_height="wrap_content"
+            android:layout_width="50.5dp"
+            android:layout_height="48dp"
             android:background="@mipmap/alram_bg">
 
+            <ImageView
+                android:id="@+id/postingIV"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="2.5dp"
+                android:layout_marginLeft="4dp"
+                android:src="@mipmap/storage_img"
+                android:scaleType="centerCrop"
+                android:visibility="gone"/>
 
-
-            <RelativeLayout
-                android:layout_width="52.41dp"
-                android:layout_height="52.20dp"
+            <TextView
+                android:id="@+id/contentsTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:text="123456479847546554645"
+                android:textSize="9dp"
                 android:layout_centerInParent="true"
-                android:background="@mipmap/storage_img">
+                android:layout_margin="6dp"/>
 
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="6.39dp"
-                android:layout_height="6.61dp"
+            <ImageView
+                android:layout_width="5dp"
+                android:layout_height="5dp"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-
-                android:background="@mipmap/green"
-                >
-
-            </RelativeLayout>
-            
-            
-
+                android:src="@mipmap/green"/>
 
         </RelativeLayout>
-        
-        
-        
-        
-        
-        
+
     </LinearLayout>
-    
-    
-    
-    
-    
-    
-    
-    
 
 </LinearLayout>

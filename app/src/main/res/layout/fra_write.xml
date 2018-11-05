@@ -32,9 +32,12 @@
             android:layout_weight="1"
             android:orientation="horizontal"
             android:padding="16dp">
-
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/meetingLL">
             <Spinner
-                android:id="@+id/meetingSP"
+                android:id="@+id/meetingSP2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@null">
@@ -46,44 +49,42 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginRight="48dp"
+                android:layout_marginRight="20dp"
                 android:src="@mipmap/semo" />
 
-            <LinearLayout
-                    android:id="@+id/dateLL"
-                android:layout_width="match_parent"
+</LinearLayout>
+            <Spinner
+
+                android:id="@+id/mostSP"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:background="@null">
 
-                <Spinner
+            </Spinner>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="20dp"
+                android:src="@mipmap/semo" />
+            <Spinner
 
-                    android:id="@+id/mostSP"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@null">
+                android:id="@+id/day2SP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null">
 
-                </Spinner>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/dateTX"
-                    android:text="기간"/>
-                <TextView
-                    android:layout_marginRight="20dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+            </Spinner>
 
-                    android:id="@+id/limitTX"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:src="@mipmap/semo" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:src="@mipmap/semo" />
-            </LinearLayout>
         </LinearLayout>
 
-<LinearLayout android:layout_width="wrap_content" android:layout_height="match_parent"
+        <LinearLayout android:layout_width="wrap_content" android:layout_height="match_parent"
 android:id="@+id/nextLL">
 
 

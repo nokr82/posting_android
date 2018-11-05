@@ -7,6 +7,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.view.animation.AccelerateInterpolator
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import android.widget.Toast
@@ -23,6 +24,7 @@ import posting.devstories.com.posting_android.Actions.PostingAction.detail
 import posting.devstories.com.posting_android.Actions.PostingAction.save_posting
 import posting.devstories.com.posting_android.Actions.PostingAction.write_comments
 import posting.devstories.com.posting_android.R
+import posting.devstories.com.posting_android.adapter.DetailAdapter
 import posting.devstories.com.posting_android.adapter.ReAdapter
 import posting.devstories.com.posting_android.base.Config
 import posting.devstories.com.posting_android.base.PrefUtils
@@ -43,11 +45,15 @@ class DetailActivity : RootActivity() {
     var count = 0
     var del_yn = ""
     var use_yn:String?= null
+    var member_type:String? = null
     var image_uri = ""
     var type = 1
     var contents = ""
     var coupon = -1
     lateinit var adapterRe: ReAdapter
+
+    var postingData:JSONObject = JSONObject();
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
@@ -57,14 +63,12 @@ class DetailActivity : RootActivity() {
 
         intent = getIntent()
 
-
         coupon = intent.getIntExtra("coupon",-1)
         use_yn = intent.getStringExtra("use_yn")
-        println("=============쿠폰사용"+use_yn)
 
         posting_id = intent.getStringExtra("id")
 
-
+        member_type= PrefUtils.getStringPreference(context,"member_type")
         member_id = PrefUtils.getIntPreference(context, "member_id")
         commentsLV.isExpanded = true
         adapterRe = ReAdapter(context,R.layout.item_re, adapterData)
@@ -74,8 +78,6 @@ class DetailActivity : RootActivity() {
         policeTV.setOnClickListener {
             policedlgView()
         }
-
-
 
         commentsLV.setOnItemClickListener { adapterView, view, i, l ->
 
@@ -246,6 +248,7 @@ class DetailActivity : RootActivity() {
                 }
             }
 
+
             override fun onFinish() {
                 if (progressDialog != null) {
                     progressDialog!!.dismiss()
@@ -344,8 +347,26 @@ class DetailActivity : RootActivity() {
 
                         val posting = data.getJSONObject("Posting")
 
+
+
+
+
+                        postingData = posting
+
+//                        var manager = CardStackLayoutManager(context)
+//                        var setting:SwipeAnimationSetting  = SwipeAnimationSetting.Builder()
+//                            .setDirection(Direction.Right)
+//                            .setDuration(200)
+//                            .setInterpolator(AccelerateInterpolator())
+//                            .build();
+//                        manager.setSwipeAnimationSetting(setting)
+//                        cardSV.adapter = DetailAdapter(context, postingData)
+//                        cardSV.layoutManager = manager
+//                        cardSV.swipe()
+
+
                         posting_save_id  = Utils.getString(posting,"posting_save_id")
-                        println("posting============"+posting)
+
                         val save_yn = Utils.getString(posting,"save_yn")
                         val use_yn = Utils.getString(posting,"use_yn")
 
@@ -388,23 +409,26 @@ class DetailActivity : RootActivity() {
                         contents =   Utils.getString(posting, "contents")
                         var nick_name = Utils.getString(member, "nick_name")
 
+                        var profile = Config.url + Utils.getString(member,"image_uri")
+                        ImageLoader.getInstance().displayImage(profile, writerIV, Utils.UILoptionsUserProfile)
 
-                        val data2 = response.getJSONObject("posting")
-                        println("===================="+data)
-                        val comments = data2.getJSONArray("PostingComment")
+                        if("3" == Utils.getString(member, "member_type")) {
+                            writerIV.setOnClickListener {
+                                var intent = Intent(context, OrderPageActivity::class.java)
+                                intent.putExtra("company_id", Utils.getInt(member, "id"))
+                                startActivity(intent)
+                            }
+                        }
+
+                        val comments = data.getJSONArray("PostingComment")
                         p_comments_id = -1
                         adapterData.clear()
                         for (i in 0..comments.length() - 1) {
-
-                            println("data[i] : " + comments[i])
-
                             adapterData.add(comments[i] as JSONObject)
 
                         }
 
-
                         adapterRe.notifyDataSetChanged()
-
 
                         contentTV.text = contents
                         wnameTX.text = nick_name
@@ -546,6 +570,7 @@ class DetailActivity : RootActivity() {
             val intent = Intent(context, PostWriteActivity::class.java)
             intent.putExtra("posting_id", posting_id)
             intent.putExtra("image_uri",image_uri)
+            intent.putExtra("member_type",member_type)
             intent.putExtra("contents",contents)
 
             context.startActivity(intent)

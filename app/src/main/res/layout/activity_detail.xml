@@ -1,334 +1,337 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent" xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent" android:layout_height="match_parent"
               android:orientation="vertical"
 >
 
 
-        <LinearLayout
+    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="47.5dp"
-        android:orientation="horizontal"
-        android:gravity="center_vertical">
-
-
         <LinearLayout
-            android:id="@+id/backLL"
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:gravity="center">
+                android:layout_width="match_parent"
+                android:layout_height="47.5dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+
+            <LinearLayout
+                    android:id="@+id/backLL"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center">
+
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/back"/>
+
+            </LinearLayout>
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/myIV"
+                    android:visibility="gone"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@mipmap/myimg"
+                    android:layout_marginRight="7dp"
+                    android:layout_marginLeft="10.5dp" />
+
+            <TextView
+                    android:visibility="gone"
+                    android:id="@+id/mynameTV"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="post_0904"
+                    android:gravity="center_vertical"
+                    android:textSize="14dp" />
+
+            <View
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/back"/>
+                    android:visibility="gone"
+                    android:id="@+id/menuIV"
+                    android:padding="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/menu"
+            />
 
         </LinearLayout>
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/myIV"
-            android:visibility="gone"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@mipmap/myimg"
-            android:layout_marginRight="7dp"
-            android:layout_marginLeft="10.5dp"
-            />
-
-        <TextView
-            android:visibility="gone"
-            android:id="@+id/mynameTV"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="post_0904"
-            android:gravity="center_vertical"
-            android:textSize="14dp"
-            />
 
         <View
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"/>
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#A19F9B"/>
 
-        <ImageView
-            android:visibility="gone"
-            android:id="@+id/menuIV"
-            android:padding="16dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/menu"
-            />
-
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#A19F9B"/>
-
-            <ScrollView
+        <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1">
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1.5"
-        android:layout_marginTop="14.5dp"
-        android:layout_marginBottom="5dp"
-        android:orientation="vertical"
-        android:gravity="center">
-
-        <posting.devstories.com.posting_android.base.RationalRelativeLayout
-            android:id="@+id/postingLL"
-            android:layout_width="286.02dp"
-            android:layout_height="292.67dp"
-            app:ratio="1:1"
-            android:layout_gravity="center"
-            android:background="@mipmap/wtite_bg">
-
-
-            <posting.devstories.com.posting_android.base.RationalRelativeLayout
-                android:layout_width="247.23dp"
-                android:layout_height="261.21dp"
-                android:layout_centerInParent="true"
-                app:ratio="1:1">
-
-                <ImageView
-                    android:id="@+id/imgIV"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    android:visibility="gone" />
-
-                <TextView
-                    android:id="@+id/contentsTV"
-                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:text=""
-                    android:visibility="gone"/>
+                    android:orientation="vertical">
 
-            </posting.devstories.com.posting_android.base.RationalRelativeLayout>
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1.5"
+                        android:layout_marginTop="14.5dp"
+                        android:layout_marginBottom="5dp"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                    <!--<com.yuyakaido.android.cardstackview.CardStackView-->
+                            <!--android:id="@+id/cardSV"-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content">-->
+
+                    <!--</com.yuyakaido.android.cardstackview.CardStackView>-->
+
+                    <posting.devstories.com.posting_android.base.RationalRelativeLayout
+                            android:id="@+id/postingLL"
+                            android:layout_width="286.02dp"
+                            android:layout_height="292.67dp"
+                            app:ratio="1:1"
+                            android:layout_gravity="center"
+                            android:background="@mipmap/wtite_bg">
+
+
+                        <posting.devstories.com.posting_android.base.RationalRelativeLayout
+                                android:layout_width="247.23dp"
+                                android:layout_height="261.21dp"
+                                android:layout_centerInParent="true"
+                                app:ratio="1:1">
+
+                            <ImageView
+                                    android:id="@+id/imgIV"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:scaleType="centerCrop"
+                                    android:visibility="gone"/>
+
+                            <TextView
+                                    android:id="@+id/contentsTV"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerInParent="true"
+                                    android:text=""
+                                    android:visibility="gone"/>
+
+                        </posting.devstories.com.posting_android.base.RationalRelativeLayout>
+
+                        <ImageView
+                                android:layout_width="40.2dp"
+                                android:layout_height="40.2dp"
+                                android:src="@mipmap/blue"
+                                android:layout_alignParentTop="true"
+                                android:layout_centerInParent="true"/>
+
+                    </posting.devstories.com.posting_android.base.RationalRelativeLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:gravity="center_vertical">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                            android:layout_width="39dp"
+                            android:layout_height="39dp"
+                            android:layout_marginLeft="20dp"
+                            android:id="@+id/writerIV"
+                            android:src="@mipmap/myimg"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="9dp"
+                            android:textSize="13.5dp"
+                            android:text="lala_girl"
+                            android:id="@+id/wnameTX"/>
+
+                    <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content">
+                        <TextView
+                                android:visibility="visible"
+                                android:id="@+id/upTX"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="20dp"
+                                android:textSize="9.5dp"
+                                android:text="8월31일"/>
+                        <TextView
+                                android:id="@+id/policeTV"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=" | 신고"
+                                android:textSize="9.5dp"
+                                android:textColor="#BDBBB8"/>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:visibility="gone"
+                            android:id="@+id/couponLL">
+                        <TextView
+
+                                android:id="@id/couponTV"
+                                android:layout_marginRight="19dp"
+                                android:layout_marginBottom="8.5dp"
+                                android:layout_width="130.89dp"
+                                android:layout_height="37dp"
+                                android:background="#FEDF2F"
+                                android:text="쿠폰 사용확인"
+                                android:textColor="#063588"
+                                android:textSize="15dp"
+                                android:gravity="center"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                            android:id="@+id/myLL"
+                            android:visibility="gone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                        <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@mipmap/myimg_w"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.3dp"
+                        android:background="#A19F9B"/>
+
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                    <TextView
+                            android:id="@+id/contentTV"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="25.5dp"
+                            android:layout_marginRight="25.5dp"
+                            android:text=""
+                            android:textSize="10dp"
+                            android:layout_marginTop="14dp"/>
+
+                    <TextView
+                            android:visibility="gone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="25.5dp"
+                            android:layout_marginRight="25.5dp"
+                            android:text="사용기간:"
+                            android:textSize="10dp"
+                            android:id="@+id/usesTV"/>
+                    <TextView
+                            android:visibility="gone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="25.5dp"
+                            android:layout_marginRight="25.5dp"
+                            android:text="#피자헛"
+                            android:textColor="#063588"
+                            android:textSize="10dp"
+                            android:id="@+id/hashTV"/>
+
+                    <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.3dp"
+                            android:background="#A19F9B"
+                            android:layout_marginTop="14dp"/>
+
+                    <com.github.paolorotolo.expandableheightlistview.ExpandableHeightListView
+                            android:id="@+id/commentsLV"
+                            android:divider="@null"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="25.5dp"
+                            android:layout_marginRight="25.5dp">
+
+                    </com.github.paolorotolo.expandableheightlistview.ExpandableHeightListView>
+
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+
+
+        <LinearLayout
+                android:id="@+id/commentsLL"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginBottom="4.5dp"
+                android:gravity="center_vertical">
+
+            <LinearLayout
+                    android:layout_width="48dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center">
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="30dp"
+                    android:background="@mipmap/chat_bg">
+
+                <EditText
+                        android:id="@+id/commentsET"
+                        android:layout_marginLeft="17.23dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:layout_height="match_parent"
+                        android:hint="메시지를 입력하세요..."
+                        android:textSize="10.5dp"
+                        android:singleLine="true"
+                        android:imeOptions="actionDone"/>
+
 
                 <ImageView
-                    android:layout_width="40.2dp"
-                    android:layout_height="40.2dp"
-                    android:src="@mipmap/blue"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerInParent="true"/>
+                        android:layout_gravity="center_vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:src="@mipmap/smile"/>
 
-        </posting.devstories.com.posting_android.base.RationalRelativeLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:gravity="center_vertical">
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="39dp"
-            android:layout_height="39dp"
-            android:layout_marginLeft="20dp"
-            android:id="@+id/writerIV"
-            android:src="@mipmap/myimg"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="9dp"
-            android:textSize="13.5dp"
-            android:text="lala_girl"
-            android:id="@+id/wnameTX"/>
-
-
-
-<LinearLayout
-    android:layout_width="0dp"
-    android:layout_weight="1"
-    android:layout_height="wrap_content">
-    <TextView
-        android:visibility="visible"
-        android:id="@+id/upTX"
-     android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginLeft="20dp"
-        android:textSize="9.5dp"
-        android:text="8월31일"/>
-    <TextView
-        android:id="@+id/policeTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=" | 신고"
-        android:textSize="9.5dp"
-        android:textColor="#BDBBB8"/>
-
-
-
-</LinearLayout>
-
-<LinearLayout
-    android:layout_width="wrap_content"
-    android:layout_height="match_parent"
-    android:gravity="center"
-    android:visibility="gone"
-    android:id="@+id/couponLL">
-        <TextView
-
-            android:id="@id/couponTV"
-            android:layout_marginRight="19dp"
-            android:layout_marginBottom="8.5dp"
-            android:layout_width="130.89dp"
-            android:layout_height="37dp"
-            android:background="#FEDF2F"
-            android:text="쿠폰 사용확인"
-            android:textColor="#063588"
-            android:textSize="15dp"
-            android:gravity="center"/>
-
-</LinearLayout>
-        <LinearLayout
-            android:id="@+id/myLL"
-            android:visibility="gone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/myimg_w"/>
-
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.3dp"
-        android:background="#A19F9B"/>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/contentTV"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="25.5dp"
-                android:layout_marginRight="25.5dp"
-                android:text=""
-                android:textSize="10dp"
-                android:layout_marginTop="14dp"/>
-
-            <TextView
-                android:visibility="gone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="25.5dp"
-                android:layout_marginRight="25.5dp"
-                android:text="사용기간:"
-                android:textSize="10dp"
-                android:id="@+id/usesTV"/>
-            <TextView
-                android:visibility="gone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="25.5dp"
-                android:layout_marginRight="25.5dp"
-                android:text="#피자헛"
-                android:textColor="#063588"
-                android:textSize="10dp"
-                android:id="@+id/hashTV"/>
+            </LinearLayout>
 
             <View
-                android:layout_width="match_parent"
-                android:layout_height="0.3dp"
-                android:background="#A19F9B"
-                android:layout_marginTop="14dp"/>
-
-            <com.github.paolorotolo.expandableheightlistview.ExpandableHeightListView
-                android:id="@+id/commentsLV"
-                android:divider="@null"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="25.5dp"
-                android:layout_marginRight="25.5dp">
-
-            </com.github.paolorotolo.expandableheightlistview.ExpandableHeightListView>
+                    android:layout_width="48dp"
+                    android:layout_height="match_parent"/>
 
         </LinearLayout>
-            </LinearLayout>
-    </ScrollView>
-
-
-    <LinearLayout
-        android:id="@+id/commentsLL"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_marginBottom="4.5dp"
-        android:gravity="center_vertical">
-
-        <LinearLayout
-            android:layout_width="48dp"
-            android:layout_height="match_parent"
-            android:gravity="center">
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="30dp"
-            android:background="@mipmap/chat_bg">
-
-            <EditText
-                android:id="@+id/commentsET"
-                android:layout_marginLeft="17.23dp"
-                android:layout_gravity="center_vertical"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:background="@null"
-                android:layout_height="match_parent"
-                android:hint="메시지를 입력하세요..."
-                android:textSize="10.5dp"
-                android:singleLine="true"
-                android:imeOptions="actionDone"/>
-
-
-            <ImageView
-                android:layout_gravity="center_vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:src="@mipmap/smile"/>
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="48dp"
-            android:layout_height="match_parent"/>
-
     </LinearLayout>
-        </LinearLayout>
 
 </LinearLayout>
