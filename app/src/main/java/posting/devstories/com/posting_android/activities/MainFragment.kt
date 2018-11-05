@@ -116,15 +116,15 @@ open class MainFragment : Fragment() {
 
                 //                    Intent intent = new Intent(context, _StoreDetailActivity.class);
 
-                val type = Utils.getString(Posting, "type")
-                if("3" == type || "4" == type || "5" == type) {
-                    // 채팅 화면
-
-                } else {
+//                val type = Utils.getString(Posting, "type")
+//                if("3" == type || "4" == type || "5" == type) {
+//                    // 채팅 화면
+//
+//                } else {
                     val intent = Intent(context, DetailActivity::class.java)
                     intent.putExtra("id", Utils.getString(Posting, "id"))
                     startActivity(intent)
-                }
+//                }
 
             } catch (e: JSONException) {
                 e.printStackTrace()
