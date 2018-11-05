@@ -70,11 +70,12 @@ class MainActivity : FragmentActivity() {
         setContentView(R.layout.activity_main)
 
         this.context = this
-
-        posting_id = intent.getStringExtra("posting_id")
         is_push = intent.getBooleanExtra("is_push", false)
 
         if(is_push) {
+
+            posting_id = intent.getStringExtra("posting_id")
+
             var intent = Intent(context, DetailActivity::class.java)
             intent.putExtra("id", posting_id)
             startActivity(intent)

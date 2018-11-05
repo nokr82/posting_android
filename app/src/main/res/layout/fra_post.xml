@@ -39,14 +39,16 @@
                 android:src="@mipmap/glass" />
 
             <EditText
-                android:id="@+id/SearchET"
+                android:id="@+id/searchET"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
                 android:hint="검색"
                 android:textColor="#A19F9B"
                 android:textSize="14sp"
-                android:background="@null"/>
+                android:background="@null"
+                android:imeOptions="actionSearch"
+                android:singleLine="true"/>
 
         </LinearLayout>
 
