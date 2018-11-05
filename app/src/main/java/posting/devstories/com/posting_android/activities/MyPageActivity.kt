@@ -53,6 +53,8 @@ class MyPageActivity : FragmentActivity() {
 
 
         schoolTV.setOnClickListener {
+            val intent = Intent(this, SchoolagreeActivity::class.java)
+            startActivity(intent)
 
         }
         profileTV.setOnClickListener {
