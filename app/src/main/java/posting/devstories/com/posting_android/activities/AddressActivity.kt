@@ -148,12 +148,6 @@ class AddressActivity : RootActivity(), AbsListView.OnScrollListener {
         back()
     }
 
-    fun onClickHome(view: View) {
-        val intent = Intent(context, MainActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        startActivity(intent)
-    }
-
     override fun onDestroy() {
 
         progressDialog = null

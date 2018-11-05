@@ -100,8 +100,6 @@ class LoginActivity : RootActivity() {
                         val loginID = response.getString("loginID")
                         val data = response.getJSONObject("member")
 
-
-
                         PrefUtils.setPreference(context, "loginID", loginID)
                         PrefUtils.setPreference(context, "member_id", Utils.getInt(data, "id"))
                         PrefUtils.setPreference(context, "email", Utils.getString(data, "email"))
@@ -109,16 +107,12 @@ class LoginActivity : RootActivity() {
                         PrefUtils.setPreference(context, "member_type", Utils.getString(data, "member_type"))
                         PrefUtils.setPreference(context, "school_id", Utils.getInt(data, "school_id"))
                         PrefUtils.setPreference(context, "autoLogin", autoLogin)
+
                         val member_type = PrefUtils.getStringPreference(context,"member_type")
-                        println("====================="+member_type)
 
-                            val intent = Intent(context, MainActivity::class.java)
-                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                            startActivity(intent)
-
-
-
-
+                        val intent = Intent(context, MainActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        startActivity(intent)
 
                     } else {
                         Toast.makeText(context, "일치하는 회원이 존재하지 않습니다.", Toast.LENGTH_LONG).show()

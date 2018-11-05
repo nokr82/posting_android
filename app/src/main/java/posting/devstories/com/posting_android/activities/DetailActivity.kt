@@ -61,7 +61,6 @@ class DetailActivity : RootActivity() {
 
         coupon = intent.getIntExtra("coupon",-1)
         use_yn = intent.getStringExtra("use_yn")
-        println("=============쿠폰사용"+use_yn)
 
         posting_id = intent.getStringExtra("id")
 
