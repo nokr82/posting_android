@@ -60,6 +60,13 @@
             android:screenOrientation="portrait"
             android:theme="@style/NoTitleDialog"
             android:windowSoftInputMode="stateHidden|adjustResize"/>
+
+        <activity
+            android:name=".activities.OrderPageActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleDialog"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
+
         <activity
             android:name=".activities.OrderJoinActivity"
 
@@ -155,6 +162,24 @@
 
         <activity
             android:name=".activities.PostWriteActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleDialog"
+            android:windowSoftInputMode="adjustResize|stateHidden"/>
+
+        <activity
+            android:name=".activities.ReviewWriteActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleDialog"
+            android:windowSoftInputMode="adjustResize|stateHidden"/>
+
+        <activity
+            android:name=".activities.ReviewWriteContentsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleDialog"
+            android:windowSoftInputMode="adjustResize|stateHidden"/>
+
+        <activity
+            android:name=".activities.ReviewDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/NoTitleDialog"
             android:windowSoftInputMode="adjustResize|stateHidden"/>

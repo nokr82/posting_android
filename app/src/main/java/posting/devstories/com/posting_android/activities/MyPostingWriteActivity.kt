@@ -38,7 +38,7 @@ class MyPostingWriteActivity : RootActivity() {
 
     var imgid:String? = null
     var mee = arrayOf("자유","정보","스터디","동아리","미팅")
-    var  most =arrayOf("수량","1","2","3","4","5","6","7","8","9","10")
+    var most =arrayOf("수량","1","2","3","4","5","6","7","8","9","10")
 
     var capture: Bitmap?= null
     var member_type = ""
