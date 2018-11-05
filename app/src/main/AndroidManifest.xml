@@ -84,6 +84,16 @@
             android:theme="@style/NoTitleDialog"
             android:windowSoftInputMode="adjustResize|stateHidden"/>
         <activity
+            android:name=".activities.NoticeActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleDialog"
+            android:windowSoftInputMode="adjustResize|stateHidden"/>
+        <activity
+            android:name=".activities.SchoolagreeActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleDialog"
+            android:windowSoftInputMode="adjustResize|stateHidden"/>
+        <activity
             android:name=".activities.StudentJoinActivity"
 
             android:screenOrientation="portrait"

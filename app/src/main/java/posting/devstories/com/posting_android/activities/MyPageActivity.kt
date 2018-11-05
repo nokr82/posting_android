@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.support.v4.app.FragmentActivity
@@ -53,6 +54,8 @@ class MyPageActivity : FragmentActivity() {
 
 
         schoolTV.setOnClickListener {
+            val intent = Intent(this, SchoolagreeActivity::class.java)
+            startActivity(intent)
 
         }
 
@@ -88,7 +91,7 @@ class MyPageActivity : FragmentActivity() {
 
         }
         questTV.setOnClickListener {
-
+            sendEmail("1")
         }
         warringTV.setOnClickListener {
             val intent = Intent(this, NoticeActivity::class.java)
@@ -97,10 +100,6 @@ class MyPageActivity : FragmentActivity() {
         postingTV.setOnClickListener {
 
         }
-
-
-
-
 
 
 
@@ -229,6 +228,22 @@ class MyPageActivity : FragmentActivity() {
             }
         })
     }
+
+    //이메일문의
+    fun sendEmail(type: String) {
+        val intent = Intent(Intent.ACTION_SENDTO)
+        intent.type = "text/plain"
+        intent.data = Uri.parse("mailto:contact.wepostkorea@gmail.com")
+        intent.putExtra(Intent.EXTRA_EMAIL, arrayOf("contact.wepostkorea@gmail.com"))
+        if ("1" == type) {
+            intent.putExtra(Intent.EXTRA_SUBJECT, "Posting 문의하기")
+        } else if ("2" == type) {
+            intent.putExtra(Intent.EXTRA_SUBJECT, "Groomee 제휴신청하기")
+        }
+        startActivity(intent)
+    }
+
+
 
 
     fun edit_profile(){
