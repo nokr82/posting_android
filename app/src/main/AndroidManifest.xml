@@ -146,12 +146,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/NoTitleDialog"
             android:windowSoftInputMode="adjustResize|stateHidden"/>
-        <activity
-            android:name=".activities.NoticeActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/NoTitleDialog"
-            android:windowSoftInputMode="adjustResize|stateHidden"/>
-
 
 
 

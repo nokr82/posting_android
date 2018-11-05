@@ -57,6 +57,8 @@ class MyPageActivity : FragmentActivity() {
             startActivity(intent)
 
         }
+
+
         profileTV.setOnClickListener {
             showPictureDialog()
 
@@ -74,7 +76,13 @@ class MyPageActivity : FragmentActivity() {
         joinoutTV.setOnClickListener {
             joinoutdlgView()
         }
+
+        myproIV.setOnClickListener {
+            showPictureDialog()
+        }
+        //알람스위치
         alramTV.setOnClickListener {
+            alramSW.isChecked
 
         }
 
@@ -151,7 +159,7 @@ class MyPageActivity : FragmentActivity() {
         mPopupDlg =  builder.setView(dialogView).show()
 
     }
-
+    //회원탈퇴
     fun redout() {
         val params = RequestParams()
         params.put("member_id", PrefUtils.getIntPreference(context, "member_id"))
@@ -323,7 +331,7 @@ class MyPageActivity : FragmentActivity() {
             }
         })
     }
-
+    //회원정보
     fun loadInfo() {
         val params = RequestParams()
         params.put("member_id", PrefUtils.getIntPreference(context, "member_id"))
@@ -403,6 +411,7 @@ class MyPageActivity : FragmentActivity() {
             }
         })
     }
+
     fun showPictureDialog() {
         val pictureDialog = AlertDialog.Builder(this)
         pictureDialog.setTitle("프로필 이미지 변경")

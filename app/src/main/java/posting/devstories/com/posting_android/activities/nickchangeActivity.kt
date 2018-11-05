@@ -59,6 +59,7 @@ class nickchangeActivity : RootActivity() {
         }
 
     }
+    //닉네임바꾸기
     fun edit_nick(nick_name:String){
         val params = RequestParams()
         params.put("member_id", PrefUtils.getIntPreference(context, "member_id"))
@@ -149,6 +150,8 @@ class nickchangeActivity : RootActivity() {
             }
         })
     }
+
+    //닉네임중복체크
     fun Nick(nick_name:String){
         val params = RequestParams()
         params.put("nick_name", nick_name)

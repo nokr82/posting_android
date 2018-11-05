@@ -246,6 +246,7 @@ class DetailActivity : RootActivity() {
                 }
             }
 
+
             override fun onFinish() {
                 if (progressDialog != null) {
                     progressDialog!!.dismiss()

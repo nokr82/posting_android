@@ -159,12 +159,12 @@
                                 android:gravity="center">
 
                                 <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:gravity="center"
-                                    android:text="11/1 THU"
-                                    android:textColor="#063588"
-                                    android:textSize="10dp" />
+                                        android:layout_width="55dp"
+                                        android:layout_height="match_parent"
+                                        android:gravity="center"
+                                        android:text="   11/1 THU"
+                                        android:textColor="#063588"
+                                        android:textSize="10dp"/>
 
                                 <TextView
                                     android:layout_width="match_parent"
@@ -386,15 +386,18 @@
 
                     <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent">
+                        android:layout_height="match_parent"
+                    android:gravity="center_vertical">
 
-                        <ImageView
-                            android:id="@+id/alramIV"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="10dp"
-                            android:layout_marginTop="15.13dp"
-                            android:src="@mipmap/alrambar" />
+                        <Switch
+                                android:id="@+id/alramSW"
+                                android:layout_width="95.84dp"
+                                android:layout_height="23dp"
+                                android:checked="true"
+                        android:background="@drawable/background_round_ffe330"/>
+
+
+
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -503,103 +506,6 @@
     </ScrollView>
 
 
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.3dp"
-        android:background="#D0D0D0"/>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="51dp"
-        android:orientation="horizontal"
-        >
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="23.37dp"
-                android:layout_height="22.42dp"
-                android:src="@mipmap/noclickhome"
-                android:contentDescription="TODO" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="23.37dp"
-                android:layout_height="22.42dp"
-                android:src="@mipmap/plus"
-                android:contentDescription="TODO" />
-
-
-        </LinearLayout>
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-
-            android:orientation="vertical">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center">
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center"
-                    android:layout_centerInParent="true"
-                    android:layout_alignParentTop="true">
-                    <ImageView
-                        android:layout_width="22.37dp"
-                        android:layout_height="22.42dp"
-                        android:src="@mipmap/clickmy" />
-                </RelativeLayout>
-            </LinearLayout>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_centerInParent="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="45dp"
-                android:text="32"
-                android:textSize="10dp"
-                android:textColor="#FFFFFF"
-                android:background="@drawable/circle_red"
-                android:gravity="center"
-                android:paddingLeft="2.5dp"
-                android:paddingRight="2.5dp"
-                />
-
-
-
-
-
-
-        </RelativeLayout>
-
-
-
-
-
-
-
-    </LinearLayout>
 
 
 
