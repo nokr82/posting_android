@@ -249,10 +249,14 @@ open class WriteFragment : Fragment() {
 
 
         textRL.setOnClickListener {
+            if (member_type.equals("3")){
+                var intent = Intent(context, CouponTextActivity::class.java)
+                startActivity(intent)
+            }else{
             var intent = Intent(context, MyPostingWriteActivity::class.java)
             intent.putExtra("text", text)
             startActivity(intent)
-
+            }
         }
 
 

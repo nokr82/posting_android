@@ -182,12 +182,23 @@ open class MyPagePostingStorageFragment : Fragment() {
         storageGV.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             try {
                 val Posting = adapterData[position].getJSONObject("Posting")
-
-                //                    Intent intent = new Intent(context, _StoreDetailActivity.class);
-                val intent = Intent(context, DetailActivity::class.java)
-                intent.putExtra("id", Utils.getString(Posting, "id"))
-                startActivity(intent)
-
+                val type = Utils.getInt(Posting,"type")
+                if (taptype ==1) {
+                    if (type == 3 || type == 4 || type == 5) {
+                        val intent = Intent(context, MyPostingActivity::class.java)
+                        intent.putExtra("id", Utils.getString(Posting, "id"))
+                        intent.putExtra("image_uri", Utils.getString(Posting, "image_uri"))
+                        startActivity(intent)
+                    }else {
+                        val intent = Intent(context, DetailActivity::class.java)
+                        intent.putExtra("id", Utils.getString(Posting, "id"))
+                        startActivity(intent)
+                    }
+                }else {
+                    val intent = Intent(context, DetailActivity::class.java)
+                    intent.putExtra("id", Utils.getString(Posting, "id"))
+                    startActivity(intent)
+                }
             } catch (e: JSONException) {
                 e.printStackTrace()
             }

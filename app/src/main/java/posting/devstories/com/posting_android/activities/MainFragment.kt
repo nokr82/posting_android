@@ -27,7 +27,6 @@ import posting.devstories.com.posting_android.base.Utils
 open class MainFragment : Fragment(), AbsListView.OnScrollListener {
 
     private var progressDialog: ProgressDialog? = null
-    lateinit var mContext:Context
 
     lateinit var activity: MainActivity
     var tabType = 1;

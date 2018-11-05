@@ -1,0 +1,579 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+        <LinearLayout
+                android:id="@+id/finishLL"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="16dp">
+
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/x" />
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+            <Spinner
+
+                    android:id="@+id/most4SP"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@null">
+
+            </Spinner>
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="20dp"
+                    android:src="@mipmap/semo" />
+            <Spinner
+
+                    android:id="@+id/day4SP"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@null">
+
+            </Spinner>
+
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:src="@mipmap/semo" />
+
+        </LinearLayout>
+        <TextView
+                android:id="@+id/nextTX"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="15.3dp"
+                android:text="다음"
+                android:textColor="#063588"
+                android:textSize="11.5dp"
+
+        />
+
+
+    </LinearLayout>
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:fillViewport="true">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                android:orientation="vertical">
+
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+
+            <TextView
+                    android:layout_marginTop="41.87dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="활인율 적용"
+                    android:textSize="11.6dp"
+                    android:layout_margin="12dp"
+                    android:textColor="#063588"/>
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="20dp"
+                        android:src="@mipmap/semo" />
+
+
+            </LinearLayout>
+
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="#888888"
+            />
+
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="60dp"
+                    android:visibility="visible"
+                    android:layout_marginLeft="60dp"
+                    android:orientation="vertical">
+
+
+
+                <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:id="@+id/idET"
+                        android:hint="상품명(10자 이내)"
+                        android:inputType="textEmailAddress"
+                        android:textSize="14dp"
+                        android:background="@null"
+                        android:paddingLeft="7dp"/>
+                <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="#888888"
+                />
+
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+
+                    <TextView
+                            android:gravity="center_vertical"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="40dp"
+                            android:text="활인율"
+                            android:textSize="14dp"
+                            android:textColor="#8F8E8A"
+                            android:background="@null"
+                            android:paddingLeft="7dp"
+                    />
+                    <EditText android:layout_width="wrap_content" android:layout_height="40dp"
+                              android:background="@null"
+                              android:hint="            "
+                    />
+
+                    <TextView
+                            android:id="@+id/pwET"
+                            android:layout_width="wrap_content"
+                            android:gravity="center_vertical"
+                            android:layout_height="40dp"
+                            android:textColor="#8F8E8A"
+                            android:text="%"
+                            android:textSize="14dp"
+                            android:background="@null"
+                            android:paddingLeft="7dp"
+                    />
+                </LinearLayout>
+
+                <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="#888888"
+                />
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+
+                    <TextView
+                            android:gravity="center_vertical"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="40dp"
+                            android:text="기간"
+                            android:textColor="#8F8E8A"
+                            android:textSize="14dp"
+                            android:background="@null"
+                            android:paddingLeft="7dp"
+                    />
+                    <EditText android:layout_width="wrap_content" android:layout_height="40dp"
+                              android:hint="YY/MM/DD ~ YY/MM/DD"
+                              android:textSize="14dp"
+                              android:background="@null"
+                    />
+                </LinearLayout>
+
+                <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="#888888"
+                />
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+
+                    <TextView
+                            android:gravity="center_vertical"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="40dp"
+                            android:text="내용"
+                            android:textSize="14dp"
+                            android:textColor="#8F8E8A"
+                            android:background="@null"
+                            android:paddingLeft="7dp"
+                    />
+                    <EditText android:layout_width="wrap_content" android:layout_height="40dp"
+                              android:hint="ex_일부품목제외"
+                              android:textSize="14dp"
+                              android:background="@null"
+                    />
+                </LinearLayout>
+
+                <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="#888888"
+                />
+
+            </LinearLayout>
+
+
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+
+                <TextView
+                        android:layout_marginTop="41.87dp"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="무료쿠폰"
+                        android:textSize="11.6dp"
+                        android:layout_margin="12dp"
+                        android:textColor="#063588"/>
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="20dp"
+                        android:src="@mipmap/semo" />
+
+
+            </LinearLayout>
+
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="#888888"
+            />
+
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="60dp"
+                    android:layout_marginLeft="60dp"
+                    android:orientation="vertical">
+
+
+
+                <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:hint="상품명(10자 이내)"
+                        android:inputType="textEmailAddress"
+                        android:textSize="14dp"
+                        android:background="@null"
+                        android:paddingLeft="7dp"/>
+                <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="#888888"
+                />
+
+
+                <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="#888888"
+                />
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+
+                    <TextView
+                            android:gravity="center_vertical"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="40dp"
+                            android:text="기간"
+                            android:textColor="#8F8E8A"
+                            android:textSize="14dp"
+                            android:background="@null"
+                            android:paddingLeft="7dp"
+                    />
+                    <EditText android:layout_width="wrap_content" android:layout_height="40dp"
+                              android:hint="YY/MM/DD ~ YY/MM/DD"
+                              android:textSize="14dp"
+                              android:background="@null"
+                    />
+                </LinearLayout>
+
+                <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="#888888"
+                />
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+
+                    <TextView
+                            android:gravity="center_vertical"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="40dp"
+                            android:text="내용"
+                            android:textSize="14dp"
+                            android:textColor="#8F8E8A"
+                            android:background="@null"
+                            android:paddingLeft="7dp"
+                    />
+                    <EditText android:layout_width="wrap_content" android:layout_height="40dp"
+                              android:hint="ex_1인 1매한정/
+아메리카노구입시"
+                              android:textSize="14dp"
+                              android:background="@null"
+                    />
+                </LinearLayout>
+
+                <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="#888888"
+                />
+
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+
+                <TextView
+                        android:layout_marginTop="41.87dp"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="가격할인 적용"
+                        android:textSize="11.6dp"
+                        android:layout_margin="12dp"
+                        android:textColor="#063588"/>
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="20dp"
+                        android:src="@mipmap/semo" />
+
+
+            </LinearLayout>
+
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="#888888"
+            />
+
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="60dp"
+                    android:layout_marginLeft="60dp"
+                    android:orientation="vertical">
+
+
+
+                <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:hint="상품명(10자 이내)"
+                        android:inputType="textEmailAddress"
+                        android:textSize="14dp"
+                        android:background="@null"
+                        android:paddingLeft="7dp"/>
+                <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="#888888"
+                />
+
+
+                <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="#888888"
+                />
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+
+                    <TextView
+                            android:gravity="center_vertical"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="40dp"
+                            android:text="할인금액"
+                            android:textColor="#8F8E8A"
+                            android:textSize="14dp"
+                            android:background="@null"
+                            android:paddingLeft="7dp"
+                    />
+                    <EditText android:layout_width="wrap_content" android:layout_height="40dp"
+                              android:hint="    "
+                              android:textSize="14dp"
+                              android:background="@null"
+                    />
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:gravity="center_vertical"
+                            android:layout_height="40dp"
+                            android:textColor="#8F8E8A"
+                            android:text="%"
+                            android:textSize="14dp"
+                            android:background="@null"
+                            android:paddingLeft="7dp"
+                    />
+                </LinearLayout>
+
+                <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="#888888"
+                />
+
+
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+
+                    <TextView
+                            android:gravity="center_vertical"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="40dp"
+                            android:text="기간"
+                            android:textColor="#8F8E8A"
+                            android:textSize="14dp"
+                            android:background="@null"
+                            android:paddingLeft="7dp"
+                    />
+                    <EditText android:layout_width="wrap_content" android:layout_height="40dp"
+                              android:hint="YY/MM/DD ~ YY/MM/DD"
+                              android:textSize="14dp"
+                              android:background="@null"
+                    />
+                </LinearLayout>
+
+                <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="#888888"
+                />
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+
+                    <TextView
+                            android:gravity="center_vertical"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="40dp"
+                            android:text="내용"
+                            android:textSize="14dp"
+                            android:textColor="#8F8E8A"
+                            android:background="@null"
+                            android:paddingLeft="7dp"
+                    />
+                    <EditText android:layout_width="wrap_content" android:layout_height="40dp"
+                              android:hint="ex_에스프레소 전품목/
+중복할인 불가"
+                              android:textSize="14dp"
+                              android:background="@null"
+                    />
+                </LinearLayout>
+
+                <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="#888888"
+                />
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="43.7dp"
+
+            android:orientation="horizontal">
+
+        <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textSize="11.75dp"
+                    android:gravity="center"
+                    android:text="갤러리"
+            />
+
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="#D0D0D0"
+            />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+        >
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="카메라"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textSize="11.75dp"/>
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="#D0D0D0"
+                    android:visibility="invisible"
+            />
+        </RelativeLayout>
+        <RelativeLayout
+                android:layout_width="0dp"
+                android:gravity="center"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="TEXT"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textSize="11.75dp"/>
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:layout_alignParentBottom="true"
+                    android:visibility="invisible"
+                    android:background="#D0D0D0"
+            />
+        </RelativeLayout>
+
+
+
+
+
+
+    </LinearLayout>
+
+</LinearLayout>

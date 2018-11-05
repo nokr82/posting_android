@@ -60,6 +60,7 @@ open class PostFragment : Fragment() {
     lateinit var pagerAdapter: PagerAdapter
 
     lateinit var circleLL: LinearLayout
+    lateinit var menuLL: LinearLayout
 
     lateinit var mainLV: ExpandableHeightListView
     lateinit var pagerVP: NonSwipeableViewPager
@@ -159,6 +160,8 @@ open class PostFragment : Fragment() {
         adverVP = view.findViewById(R.id.adverVP)
         circleLL = view.findViewById(R.id.circleLL)
 
+        menuLL = view.findViewById(R.id.menuLL)
+
         pagerVP = view.findViewById(R.id.pagerVP)
 
         freeTV = view.findViewById(R.id.freeTV)
@@ -183,6 +186,7 @@ open class PostFragment : Fragment() {
         classRL = view.findViewById(R.id.classRL)
         meetingRL = view.findViewById(R.id.meetingRL)
         couponRL = view.findViewById(R.id.couponRL)
+
 
         mainLL = view.findViewById(R.id.mainLL)
 
@@ -272,6 +276,13 @@ open class PostFragment : Fragment() {
             override fun onPageScrollStateChanged(state: Int) {
             }
         })
+
+
+        menuLL.setOnClickListener {
+            val intent = Intent(context, MyPageActivity::class.java)
+            startActivity(intent)
+        }
+
 
         univIV.setOnClickListener {
             setMainView()
