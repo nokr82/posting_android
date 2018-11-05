@@ -279,6 +279,7 @@ open class MainFragment : Fragment(), AbsListView.OnScrollListener {
         }
     }
 
+
     override fun onDestroy() {
         super.onDestroy()
 
