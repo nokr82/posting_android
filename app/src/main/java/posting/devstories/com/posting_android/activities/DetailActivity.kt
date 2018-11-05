@@ -175,6 +175,7 @@ class DetailActivity : RootActivity() {
         })
     }
 
+
     fun savePosting() {
         val params = RequestParams()
         params.put("member_id",member_id)
