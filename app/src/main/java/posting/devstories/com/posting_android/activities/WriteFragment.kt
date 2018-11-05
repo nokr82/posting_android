@@ -27,8 +27,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import kotlinx.android.synthetic.main.activity_posttextwrite.*
+import kotlinx.android.synthetic.main.activity_postwrite.*
 import kotlinx.android.synthetic.main.fra_write.*
-import posting.devstories.com.posting_android.R.id.imgIV
+import posting.devstories.com.posting_android.R.id.*
 import posting.devstories.com.posting_android.base.PrefUtils
 import posting.devstories.com.posting_android.base.Utils
 import java.text.SimpleDateFormat
@@ -42,9 +43,9 @@ open class WriteFragment : Fragment() {
     private val selected = LinkedList<String>()
     private val REQUEST_CAMERA = 0
     var mee = arrayOf("자유","정보","스터디","동아리","미팅")
-    var  most =arrayOf("수량","1","2","3","4","5","6","7","8","9","10")
+    var  most =arrayOf("수량","1","3","5","10","20","∞")
 
-    var day = arrayOf("기간","10월2일","10월3일","10월4일","10월5일")
+    var day = arrayOf("기간","1일","5일","7일","10일","30일","60일")
 
     var member_type = ""
 
@@ -96,7 +97,7 @@ open class WriteFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         imgIV = view.findViewById(R.id.imgIV)
         imgRL = view.findViewById(R.id.imgRL)
-        meetingSP = view.findViewById(R.id.meetingSP)
+        meetingSP = view.findViewById(R.id.meetingSP2)
         mostSP = view.findViewById(R.id.mostSP)
         nextTX = view.findViewById(R.id.nextTX)
         listGV = view.findViewById(R.id.listGV)
@@ -167,11 +168,16 @@ open class WriteFragment : Fragment() {
         member_type = PrefUtils.getStringPreference(context, "member_type")
       if (member_type.equals("3")){
 
-          mostSP.visibility = View.GONE
+          meetingLL.visibility = View.GONE
+
+
+
 
             adpater = ArrayAdapter<String>(mainActivity.context, android.R.layout.simple_spinner_item, most)
-            meetingSP.adapter = adpater
+            day2SP.adapter = adpater
 
+          adpater = ArrayAdapter<String>(mainActivity.context, android.R.layout.simple_spinner_item, day)
+          mostSP.adapter = adpater
 
           meetingSP.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
               override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
@@ -188,53 +194,54 @@ open class WriteFragment : Fragment() {
             adpater = ArrayAdapter<String>(mainActivity.context, android.R.layout.simple_spinner_item, day)
             mostSP.adapter = adpater
 
-          dateTX.text = SimpleDateFormat("yy.MM.dd").format(System.currentTimeMillis())+"~"
+
 
           var cal = Calendar.getInstance()
 
-          val dateSetListener = DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-              cal.set(Calendar.YEAR, year)
-              cal.set(Calendar.MONTH, monthOfYear)
-              cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-
-              val myFormat = "yy.MM.dd" // mention the format you need
-              val sdf = SimpleDateFormat(myFormat, Locale.KOREA)
-              dateTX.text = sdf.format(cal.time)+"~"
-
-          }
-
-          val dateSetListener2 = DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-              cal.set(Calendar.YEAR, year)
-              cal.set(Calendar.MONTH, monthOfYear)
-              cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-
-              val myFormat = "yy.MM.dd" // mention the format you need
-              val sdf = SimpleDateFormat(myFormat, Locale.KOREA)
-              limitTX.text = sdf.format(cal.time)
-
-          }
-
-          dateLL.setOnClickListener {
-              DatePickerDialog(context, dateSetListener2,
-              cal.get(Calendar.YEAR),
-              cal.get(Calendar.MONTH),
-              cal.get(Calendar.DAY_OF_MONTH)).show()
-              DatePickerDialog(context, dateSetListener,
-                      cal.get(Calendar.YEAR),
-                      cal.get(Calendar.MONTH),
-                      cal.get(Calendar.DAY_OF_MONTH)).show()
-          }
-
+//          val dateSetListener = DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+//              cal.set(Calendar.YEAR, year)
+//              cal.set(Calendar.MONTH, monthOfYear)
+//              cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+//
+//              val myFormat = "yy.MM.dd" // mention the format you need
+//              val sdf = SimpleDateFormat(myFormat, Locale.KOREA)
+//              dateTX.text = sdf.format(cal.time)+"~"
+//
+//          }
+//
+//          val dateSetListener2 = DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+//              cal.set(Calendar.YEAR, year)
+//              cal.set(Calendar.MONTH, monthOfYear)
+//              cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+//
+//              val myFormat = "yy.MM.dd" // mention the format you need
+//              val sdf = SimpleDateFormat(myFormat, Locale.KOREA)
+//              limitTX.text = sdf.format(cal.time)
+//
+//          }
+//
+//          dateLL.setOnClickListener {
+//              DatePickerDialog(context, dateSetListener2,
+//              cal.get(Calendar.YEAR),
+//              cal.get(Calendar.MONTH),
+//              cal.get(Calendar.DAY_OF_MONTH)).show()
+//              DatePickerDialog(context, dateSetListener,
+//                      cal.get(Calendar.YEAR),
+//                      cal.get(Calendar.MONTH),
+//                      cal.get(Calendar.DAY_OF_MONTH)).show()
+//          }
+//
 
 
         }else{
-          dateTX.visibility = View.GONE
             adpater = ArrayAdapter<String>(mainActivity.context, android.R.layout.simple_spinner_item, mee)
             meetingSP.adapter = adpater
 
             adpater = ArrayAdapter<String>(mainActivity.context, android.R.layout.simple_spinner_item, most)
             mostSP.adapter = adpater
 
+          adpater = ArrayAdapter<String>(mainActivity.context, android.R.layout.simple_spinner_item, day)
+          day2SP.adapter = adpater
         }
 
 
@@ -254,8 +261,7 @@ open class WriteFragment : Fragment() {
 
 
         nextLL.setOnClickListener {
-            startd = dateTX.text.toString()
-            last = limitTX.text.toString()
+
             var intent = Intent(context, MyPostingWriteActivity::class.java)
             intent.putExtra("imgid", imgid)
             intent.putExtra("capture", capture)

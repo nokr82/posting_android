@@ -36,21 +36,15 @@
 
 
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+
 
         <LinearLayout
-
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
             android:layout_marginLeft="15.33dp">
 
-
             <TextView
-
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="공지사항"
@@ -58,116 +52,15 @@
                 android:textColor="#063588"
                 android:gravity="center"/>
 
-
-
-            <LinearLayout
+            <ListView
+                android:id="@+id/noticeLV"
+                android:layout_marginTop="39dp"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="match_parent">
 
-                <TextView
-                    android:layout_marginTop="40dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="8월31일"
-                    android:textSize="11.33dp"
-                    android:textColor="#595757"/>
-                <TextView
-                    android:id="@+id/schoolTV"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="16dp"
-                    android:text="포스팅 1차 업데이트 안내"
-                    android:textColor="#063588"/>
-
-                <TextView
-                    android:layout_marginTop="25dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="8월31일"
-                    android:textSize="11.33dp"
-                    android:textColor="#595757"/>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="16dp"
-                    android:text="포스팅 2차 업데이트 안내"
-                    android:textColor="#063588"/>
-
-                <TextView
-                    android:layout_marginTop="25dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="9월31일"
-                    android:textSize="11.33dp"
-                    android:textColor="#595757"/>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="16dp"
-                    android:text="데이터 오류로 인한 문제 해결방안"
-                    android:textColor="#063588"/>
-                <TextView
-                    android:layout_marginTop="25dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="8월31일"
-                    android:textSize="11.33dp"
-                    android:textColor="#595757"/>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="16dp"
-                    android:text="포스팅 1차 업데이트 안내"
-                    android:textColor="#063588"/>
-                <TextView
-                    android:layout_marginTop="25dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="8월31일"
-                    android:textSize="11.33dp"
-                    android:textColor="#595757"/>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="16dp"
-                    android:text="포스팅 2차 업데이트 안내"
-                    android:textColor="#063588"/>
-                <TextView
-                    android:layout_marginTop="25dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="8월31일"
-                    android:textSize="11.33dp"
-                    android:textColor="#595757"/>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="16dp"
-                    android:text="데이터 오류로 인한 문제 해결방안"
-                    android:textColor="#063588"/>
-
-
-
-
-            </LinearLayout>
-
-
-
-
-
-
-
-
-
+            </ListView>
 
         </LinearLayout>
-
-    </ScrollView>
-
-
-
-
 
 
 </LinearLayout>

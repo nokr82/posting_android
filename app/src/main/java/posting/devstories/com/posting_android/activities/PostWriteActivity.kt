@@ -21,6 +21,7 @@ import android.graphics.Bitmap
 import android.view.View
 import kotlinx.android.synthetic.main.activity_detail.*
 import kotlinx.android.synthetic.main.activity_postwrite.*
+import posting.devstories.com.posting_android.R.id.meeting2LL
 import posting.devstories.com.posting_android.base.Config
 import posting.devstories.com.posting_android.base.Utils
 
@@ -34,10 +35,13 @@ class PostWriteActivity : RootActivity() {
     private val selected = LinkedList<String>()
     private val REQUEST_CAMERA = 0
     var mee = arrayOf("자유","정보","스터디","동아리","미팅")
-    var  most =arrayOf("수량","1","2","3","4","5","6","7","8","9","10")
+    var  most =arrayOf("수량","1","3","5","10","20","∞")
+    var day = arrayOf("기간","1일","5일","7일","10일","30일","60일")
     val text = "1"
-    var day = arrayOf("기간","10월2일","10월3일","10월4일","10월5일")
 
+
+
+    var member_type = ""
     var imgid: String = ""
     var posting_id = ""
     var contents = ""
@@ -54,6 +58,7 @@ class PostWriteActivity : RootActivity() {
 
 
         intent = getIntent()
+        member_type = intent.getStringExtra("member_type")
         posting_id = intent.getStringExtra("posting_id")
         contents = intent.getStringExtra("contents")
         image_uri = intent.getStringExtra("image_uri")
@@ -120,12 +125,19 @@ class PostWriteActivity : RootActivity() {
             }
 
         }
+        if (member_type.equals("3")){
+            meeting2LL.visibility = View.GONE
+        }
 
         adpater = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, mee)
         meetingSP2.adapter = adpater
+        adpater = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, day)
+        daySP.adapter = adpater
 
         adpater = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, most)
         mostSP.adapter = adpater
+
+
 
 
 

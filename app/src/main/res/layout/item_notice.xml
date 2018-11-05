@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+
+            android:id="@+id/createTV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="8월31일"
+        android:textSize="11.33dp"
+        android:textColor="#595757"/>
+        <TextView
+        android:id="@+id/noticeTV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16dp"
+        android:text="포스팅 1차 업데이트 안내"
+        android:textColor="#063588"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.25dp"
+            android:background="#d6d9d9"/>
+        <WebView
+            android:visibility="visible"
+            android:id="@+id/webWV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </WebView>
+
+    </LinearLayout>
+
+
+
+
+
+
+
+
+
+
+</LinearLayout>
