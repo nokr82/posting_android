@@ -24,7 +24,6 @@
 
 
         </LinearLayout>
-
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -33,7 +32,6 @@
             android:padding="16dp">
 
             <Spinner
-                android:spinnerMode="dropdown"
                 android:id="@+id/meetingSP3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -46,41 +44,39 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginRight="48dp"
+                android:layout_marginRight="20dp"
                 android:src="@mipmap/semo" />
 
-            <LinearLayout
-                    android:id="@+id/date2LL"
-                android:layout_width="match_parent"
+
+            <Spinner
+
+                android:id="@+id/mostSP3"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:background="@null">
 
-                <Spinner
+            </Spinner>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="20dp"
+                android:src="@mipmap/semo" />
+            <Spinner
 
-                    android:id="@+id/mostSP2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@null">
+                android:id="@+id/daySP3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null">
 
-                </Spinner>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/date2TX"
-                    android:text=""/>
-                <TextView
-                    android:layout_marginRight="20dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+            </Spinner>
 
-                    android:id="@+id/limit2TX"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:src="@mipmap/semo" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:src="@mipmap/semo" />
-            </LinearLayout>
         </LinearLayout>
 <LinearLayout
         android:layout_width="wrap_content"

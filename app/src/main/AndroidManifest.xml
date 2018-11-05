@@ -68,6 +68,22 @@
             android:windowSoftInputMode="stateHidden|adjustResize"/>
 
         <activity
+            android:name=".activities.ServiceActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleDialog"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
+        <activity
+            android:name=".activities.PrivacyActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleDialog"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
+        <activity
+            android:name=".activities.NoticeActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleDialog"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
+
+        <activity
             android:name=".activities.OrderJoinActivity"
 
             android:screenOrientation="portrait"
@@ -90,11 +106,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/NoTitleDialog"
             android:windowSoftInputMode="adjustResize|stateHidden"/>
-        <activity
-            android:name=".activities.NoticeActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/NoTitleDialog"
-            android:windowSoftInputMode="adjustResize|stateHidden"/>
+
         <activity
             android:name=".activities.SchoolagreeActivity"
             android:screenOrientation="portrait"

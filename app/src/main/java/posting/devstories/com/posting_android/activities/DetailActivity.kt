@@ -43,6 +43,7 @@ class DetailActivity : RootActivity() {
     var count = 0
     var del_yn = ""
     var use_yn:String?= null
+    var member_type:String? = null
     var image_uri = ""
     var type = 1
     var contents = ""
@@ -64,7 +65,7 @@ class DetailActivity : RootActivity() {
 
         posting_id = intent.getStringExtra("id")
 
-
+        member_type= PrefUtils.getStringPreference(context,"member_type")
         member_id = PrefUtils.getIntPreference(context, "member_id")
         commentsLV.isExpanded = true
         adapterRe = ReAdapter(context,R.layout.item_re, adapterData)
@@ -548,6 +549,7 @@ class DetailActivity : RootActivity() {
             val intent = Intent(context, PostWriteActivity::class.java)
             intent.putExtra("posting_id", posting_id)
             intent.putExtra("image_uri",image_uri)
+            intent.putExtra("member_type",member_type)
             intent.putExtra("contents",contents)
 
             context.startActivity(intent)

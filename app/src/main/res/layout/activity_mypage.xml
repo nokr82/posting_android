@@ -145,7 +145,6 @@
                         <TableLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-
                             android:layout_margin="5dp"
                             android:background="@drawable/background_round_ffffff"
                             android:gravity="center">
@@ -385,16 +384,21 @@
                         android:textSize="14.67dp" />
 
                     <LinearLayout
+                        android:layout_marginTop="15.13dp"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:layout_marginRight="20dp"
                     android:gravity="center_vertical">
 
-                        <Switch
-                                android:id="@+id/alramSW"
-                                android:layout_width="95.84dp"
-                                android:layout_height="23dp"
-                                android:checked="true"
-                        android:background="@drawable/background_round_ffe330"/>
+                        <ImageView
+
+                            android:id="@+id/alramIV"
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/alrambar"/>
+
+
 
 
 
@@ -441,6 +445,7 @@
                         android:textSize="14.67dp" />
 
                     <TextView
+                        android:id="@+id/versionTV"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="15.13dp"
@@ -450,6 +455,7 @@
                         android:textSize="14.67dp" />
 
                     <TextView
+                        android:id="@+id/upTV"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="10dp"
@@ -492,12 +498,16 @@
                     android:textSize="14.67dp" />
 
                 <TextView
+                    android:id="@+id/privacyTV"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15.13dp"
                     android:text="개인정보 처리방침"
                     android:textColor="#8F8E8A"
-                    android:textSize="14.67dp" />
+                    android:textSize="14.67dp"
+                    android:layout_marginBottom="30dp"/>
+
+
 
             </LinearLayout>
 
