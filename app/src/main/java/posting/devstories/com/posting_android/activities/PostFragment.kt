@@ -139,9 +139,12 @@ open class PostFragment : Fragment() {
     internal var setViewReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent?) {
 
-            tabType = intent.getIntExtra("tabType", 1)
+            if(intent != null) {
+                tabType = intent!!.getIntExtra("tabType", 1)
 
-            pagerVP.currentItem = tabType - 1
+                pagerVP.currentItem = tabType - 1
+
+            }
 
         }
     }
