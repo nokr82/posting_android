@@ -6,6 +6,8 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
@@ -24,11 +26,16 @@ import posting.devstories.com.posting_android.Actions.PostingAction.save_posting
 import posting.devstories.com.posting_android.Actions.PostingAction.write_comments
 import posting.devstories.com.posting_android.Actions.ReviewAction
 import posting.devstories.com.posting_android.R
+import posting.devstories.com.posting_android.adapter.DetailAnimationRecyclerAdapter
 import posting.devstories.com.posting_android.adapter.ReAdapter
 import posting.devstories.com.posting_android.base.Config
 import posting.devstories.com.posting_android.base.PrefUtils
 import posting.devstories.com.posting_android.base.RootActivity
 import posting.devstories.com.posting_android.base.Utils
+import swipeable.com.layoutmanager.OnItemSwiped
+import swipeable.com.layoutmanager.SwipeableLayoutManager
+import swipeable.com.layoutmanager.SwipeableTouchHelperCallback
+import swipeable.com.layoutmanager.touchelper.ItemTouchHelper
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -53,6 +60,10 @@ class DetailActivity : RootActivity() {
 
     var postingData:JSONObject = JSONObject();
 
+    private lateinit var detailAnimationRecyclerAdapter: DetailAnimationRecyclerAdapter
+
+    private lateinit var detailAnimationRecyclerAdapterData: ArrayList<JSONObject>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
@@ -73,6 +84,55 @@ class DetailActivity : RootActivity() {
         adapterRe = ReAdapter(context,R.layout.item_re, adapterData)
         commentsLV.adapter = adapterRe
         adapterRe.notifyDataSetChanged()
+
+        ///////////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////
+        // animation like tinder
+        detailAnimationRecyclerAdapterData = ArrayList<JSONObject>()
+        detailAnimationRecyclerAdapter = DetailAnimationRecyclerAdapter(detailAnimationRecyclerAdapterData)
+        val swipeableTouchHelperCallback = object : SwipeableTouchHelperCallback(object : OnItemSwiped {
+            override fun onItemSwiped() {
+                detailAnimationRecyclerAdapter.removeTopItem()
+
+                savePosting();
+            }
+
+            override fun onItemSwipedLeft() {
+                Log.e("SWIPE", "LEFT")
+            }
+
+            override fun onItemSwipedRight() {
+                Log.e("SWIPE", "RIGHT")
+            }
+
+            override fun onItemSwipedUp() {
+                Log.e("SWIPE", "UP")
+            }
+
+            override fun onItemSwipedDown() {
+                Log.e("SWIPE", "DOWN")
+            }
+        }) {
+            override fun getAllowedSwipeDirectionsMovementFlags(viewHolder: RecyclerView.ViewHolder): Int {
+                return ItemTouchHelper.RIGHT or ItemTouchHelper.LEFT or ItemTouchHelper.UP or ItemTouchHelper.DOWN
+            }
+        }
+        val itemTouchHelper = ItemTouchHelper(swipeableTouchHelperCallback)
+        itemTouchHelper.attachToRecyclerView(recycler_view)
+
+        recycler_view.setLayoutManager(
+            SwipeableLayoutManager().setAngle(10)
+                .setAnimationDuratuion(450)
+                .setMaxShowCount(3)
+                .setScaleGap(0.1f)
+                .setTransYGap(0)
+        )
+        recycler_view.setAdapter(detailAnimationRecyclerAdapter)
+
+        ///////////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////
+
+
 
         policeTV.setOnClickListener {
             policedlgView()
@@ -311,8 +371,7 @@ class DetailActivity : RootActivity() {
             override fun onStart() {
                 // show dialog
                 if (progressDialog != null) {
-
-                    progressDialog!!.show()
+                    // progressDialog!!.show()
                 }
             }
 
@@ -395,8 +454,10 @@ class DetailActivity : RootActivity() {
                         }
 
 
-                       image_uri = Utils.getString(posting, "image_uri")
+                        image_uri = Utils.getString(posting, "image_uri")
                         count = Utils.getInt(posting, "leftCount")
+
+
 //                        var created =   Utils.getString(posting, "created")
                         if (member_id==member_id2){
                             myLL.visibility = View.VISIBLE
@@ -438,15 +499,22 @@ class DetailActivity : RootActivity() {
 
                         upTX.text = create_date
 
+                        /*
                         //uri를 이미지로 변환시켜준다
                         if (!image_uri.isEmpty() && image_uri != "") {
                             var image = Config.url + image_uri
-                            ImageLoader.getInstance().displayImage(image, imgIV, Utils.UILoptionsUserProfile)
-                            imgIV.visibility = View.VISIBLE
+                            // ImageLoader.getInstance().displayImage(image, imgIV, Utils.UILoptionsUserProfile)
+                            // imgIV.visibility = View.VISIBLE
                         } else {
                             contentsTV.text = contents
                             contentsTV.visibility = View.VISIBLE
                         }
+                        */
+
+                        for(idx in 0..count) {
+                            detailAnimationRecyclerAdapterData.add(posting)
+                        }
+                        detailAnimationRecyclerAdapter.notifyDataSetChanged()
 
                     }
 
@@ -719,5 +787,4 @@ class DetailActivity : RootActivity() {
         progressDialog = null
 
     }
-
 }

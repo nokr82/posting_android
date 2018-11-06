@@ -300,7 +300,8 @@
                     android:layout_marginTop="15.13dp"
                     android:text="학교인증"
                     android:textColor="#8F8E8A"
-                    android:textSize="14.67dp" />
+                    android:textSize="14.67dp"
+                    android:visibility="gone"/>
 
                 <TextView
                     android:id="@+id/profileTV"
