@@ -59,6 +59,9 @@ class MyPostingWriteActivity : RootActivity() {
     var last:String?=null
     var mount:Int? = 0
 
+    var getmee:String?= null
+    var getmost = ""
+    var getday=""
 
 
     lateinit var adpater: ArrayAdapter<String>
@@ -71,16 +74,26 @@ class MyPostingWriteActivity : RootActivity() {
         this.context = this
         progressDialog = ProgressDialog(context)
 
-
         member_type = PrefUtils.getStringPreference(context, "member_type")
         intent = getIntent()
+
+
+        getmee = intent.getStringExtra("getmee")
+        getmost = intent.getStringExtra("getmost")
+        getday = intent.getStringExtra("getday")
+
+        println("===============종류"+getmee)
+        println("===============수량"+getmost)
+        println("===============기간"+getday)
+
+
         text = intent.getStringExtra("text")
         imgid = intent.getStringExtra("imgid")
         capture = intent.getParcelableExtra("capture")
         contents2 = intent.getStringExtra("contents")
         startd = intent.getStringExtra("startd")
         last = intent.getStringExtra("last")
-        posting_id = intent.getStringExtra("posting_id")
+        posting_id = intent!!.getStringExtra("posting_id")
         image = intent.getStringExtra("image")
         mount = intent.getIntExtra("mount",0)
 
@@ -122,24 +135,24 @@ class MyPostingWriteActivity : RootActivity() {
 
 
         if (member_type.equals("3")){
-            meetingSP3.visibility = View.GONE
-
-
-            adpater = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, day)
-            daySP3.adapter = adpater
-
-
-            adpater = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, most)
-            mostSP3.adapter = adpater
+//            meetingSP3.visibility = View.GONE
+//
+//
+//            adpater = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, day)
+//            daySP3.adapter = adpater
+//
+//
+//            adpater = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, most)
+//            mostSP3.adapter = adpater
 //
 //            date2TX.text = startd
 //            limit2TX.text = last
 //
 //            if (startd==null||startd.equals("")){
 //                date2TX.text = SimpleDateFormat("yy.MM.dd").format(System.currentTimeMillis())+"~"
-//            }
+          }
 
-            mostSP3.setSelection(mount!!)
+//            mostSP3.setSelection(mount!!)
 
 
             var cal = Calendar.getInstance()
@@ -177,18 +190,18 @@ class MyPostingWriteActivity : RootActivity() {
 //                    cal.get(Calendar.DAY_OF_MONTH)).show()
 //            }
 
-        }else{
-            // dateTX.visibility = View.GONE
-            adpater = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, day)
-            daySP3.adapter = adpater
-
-            adpater = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, mee)
-            meetingSP3.adapter = adpater
-
-            adpater = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, most)
-            mostSP3.adapter = adpater
-
-        }
+//        }else{
+//            // dateTX.visibility = View.GONE
+////            adpater = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, day)
+////            daySP3.adapter = adpater
+////
+////            adpater = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, mee)
+////            meetingSP3.adapter = adpater
+////
+////            adpater = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, most)
+////            mostSP3.adapter = adpater
+//
+//        }
 
 
 
@@ -206,7 +219,7 @@ class MyPostingWriteActivity : RootActivity() {
 
             if (member_type.equals("3")){
                 type = "6"
-                count = meetingSP3.selectedItem.toString()
+//                count = meetingSP3.selectedItem.toString()
 //                startd = Utils.getString(date2TX)
 //                last = Utils.getString(limit2TX)
 
@@ -214,12 +227,7 @@ class MyPostingWriteActivity : RootActivity() {
                     geterror = "내용을 입력해주세요"
 
                     Toast.makeText(context,geterror,Toast.LENGTH_SHORT).show()
-                }
-                if(count.equals("수량")){
-
-                    Toast.makeText(context,"수량을 선택해주세요",Toast.LENGTH_SHORT).show()
-                }
-                else{
+                }else{
                     if (posting_id == null||posting_id == ""){
                         write()
                     }else{
@@ -230,19 +238,19 @@ class MyPostingWriteActivity : RootActivity() {
                 }
 
             }else {
-                type = meetingSP3.selectedItem.toString()
-                count = mostSP3.selectedItem.toString()
-                if (type.equals("자유")) {
+//                type = meetingSP3.selectedItem.toString()
+//                count = mostSP3.selectedItem.toString()
+                if (getmee.equals("자유")) {
                     type = "1"
-                } else if (type.equals("정보")) {
+                } else if (getmee.equals("정보")) {
                     type = "2"
-                } else if (type.equals("스터디")) {
+                } else if (getmee.equals("스터디")) {
                     type = "3"
-                } else if (type.equals("동아리")) {
+                } else if (getmee.equals("동아리")) {
                     type = "4"
-                } else if (type.equals("미팅")) {
+                } else if (getmee.equals("미팅")) {
                     type = "5"
-                } else if (type.equals("쿠폰")) {
+                } else if (getmee.equals("쿠폰")) {
                     type = "6"
                 }
                 if(count.equals("수량")){
@@ -281,7 +289,7 @@ class MyPostingWriteActivity : RootActivity() {
         params.put("member_id", member_id)
         params.put("type", type)
         params.put("contents", contents)
-        params.put("count", count)
+        params.put("count", getmost)
         params.put("uses_start_date",startd)
         params.put("uses_end_date",last)
 

@@ -37,16 +37,22 @@ class PostWriteActivity : RootActivity() {
     var mee = arrayOf("자유","정보","스터디","동아리","미팅")
     var  most =arrayOf("수량","1","3","5","10","20","∞")
     var day = arrayOf("기간","1일","5일","7일","10일","30일","60일")
+    var getmee:String?= null
+    var getmost = ""
+    var getday=""
+
+
+
     val text = "1"
 
 
 
-    var member_type = ""
-    var imgid: String = ""
-    var posting_id = ""
-    var contents = ""
-    var image_uri = ""
-    var image = ""
+    var member_type :String?= null
+    var imgid:String?= null
+    var posting_id:String?= null
+    var contents :String?= null
+    var image_uri :String?= null
+    var image:String?= null
     var capture: Bitmap? = null
 
 
@@ -55,6 +61,8 @@ class PostWriteActivity : RootActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_postwrite)
+
+
 
 
         intent = getIntent()
@@ -142,6 +150,7 @@ class PostWriteActivity : RootActivity() {
 
 
 
+
         finishLL.setOnClickListener {
             finish()
         }
@@ -155,6 +164,15 @@ class PostWriteActivity : RootActivity() {
         }
 
         nextTX.setOnClickListener {
+            getmee = meetingSP2.selectedItem.toString()
+            getmost = mostSP.selectedItem.toString()
+            getday = daySP.selectedItem.toString()
+            if (getmost.equals("수량")){
+                Toast.makeText(context,"수량을 선택해주세요",Toast.LENGTH_SHORT).show()
+            }else if (getday.equals("기간")){
+                Toast.makeText(context,"기간을 선택해주세요",Toast.LENGTH_SHORT).show()
+            }
+            else{
 
             var intent = Intent(context, MyPostingWriteActivity::class.java)
             intent.putExtra("image", image)
@@ -163,8 +181,14 @@ class PostWriteActivity : RootActivity() {
             intent.putExtra("contents", contents)
             intent.putExtra("posting_id",posting_id)
             intent.putExtra("image_uri",image_uri)
+            intent.putExtra("getmee",getmee)
+            intent.putExtra("getmost",getmost)
+            intent.putExtra("getday",getday)
+
 
             startActivity(intent)
+            }
+
         }
         cameraRL.setOnClickListener {
             val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)

@@ -38,7 +38,7 @@ class MainActivity : FragmentActivity() {
     var member_id = -1
     var member_type = ""
     var is_push = false
-    lateinit var posting_id:String
+    var posting_id:String? = null
 
     internal var editPostingReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent?) {
@@ -118,10 +118,14 @@ class MainActivity : FragmentActivity() {
 
         writeLL.setOnClickListener {
 
-            setTabBar()
+            val intent = Intent(this, PostWriteActivity::class.java)
+            startActivity(intent)
 
-            writeIV.setImageResource(R.mipmap.clickplus)
-            fragmentFT.onTabChanged("write")
+
+//            setTabBar()
+//
+//            writeIV.setImageResource(R.mipmap.clickplus)
+//            fragmentFT.onTabChanged("write")
 
         }
 
