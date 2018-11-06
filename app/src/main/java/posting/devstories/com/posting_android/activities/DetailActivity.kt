@@ -5,6 +5,7 @@ import android.app.ProgressDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.widget.RecyclerView
 import android.util.Log
@@ -529,13 +530,57 @@ class DetailActivity : RootActivity() {
 
 
 
-
+                        var coupon_type:String =  Utils.getString(posting, "coupon_type")
                         var id = Utils.getString(posting, "id")
                         var member_id2 =   Utils.getInt(posting, "member_id")
 
                         var del = Utils.getString(posting,"del_yn")
                         var Image = Utils.getString(posting, "Image")
                         type = Utils.getInt(posting,"type")
+                        var menu_name:String =  Utils.getString(posting, "menu_name")
+                        var sale_per:String =  Utils.getString(posting, "sale_per")
+                        var sale_price:String =  Utils.getString(posting, "sale_price")
+                        var contents =   Utils.getString(posting, "contents")
+                        var image_uri = Utils.getString(posting, "image_uri")
+                        var leftCount = Utils.getString(posting, "leftCount")
+
+
+
+                        if (coupon_type.equals("1")){
+                            coupon3RL.visibility = View.VISIBLE
+                            coupon_titleTV.text = menu_name
+                            coupon_saleTV.text = sale_per
+                            coupon_sale2TV.text = "할인"
+                            coupon_startdateTV.text = uses_start_date
+                            coupon_contentTV.text = contents
+                            coupon_enddateTV.text = uses_end_date
+                            usesTV.visibility = View.VISIBLE
+                            usesTV.text = "사용기간:"+uses_start_date+" ~ "+uses_end_date+" 까지"
+                        }else if (coupon_type.equals("2")){
+                            coupon3RL.visibility = View.VISIBLE
+                            coupon3LL.setBackgroundColor(Color.parseColor("#FB2B70"))
+                            coupon_titleTV.text = menu_name
+                            coupon_saleTV.text = "FREE"
+                            coupon_TV.visibility = View.GONE
+                            coupon_sale2TV.visibility = View.GONE
+                            coupon_startdateTV.text = uses_start_date
+                            coupon_contentTV.text = contents
+                            coupon_enddateTV.text = uses_end_date
+                            usesTV.visibility = View.VISIBLE
+                            usesTV.text = "사용기간:"+uses_start_date+" ~ "+uses_end_date+" 까지"
+                        }else if (coupon_type.equals("3")){
+                            coupon3RL.visibility = View.VISIBLE
+                            coupon3LL.setBackgroundColor(Color.parseColor("#A12BFB"))
+                            coupon_titleTV.text = menu_name
+                            coupon_saleTV.text = sale_price
+                            coupon_sale2TV.text = "할인"
+                            coupon_TV.text = "원"
+                            coupon_startdateTV.text = uses_start_date
+                            coupon_contentTV.text = contents
+                            coupon_enddateTV.text = uses_end_date
+                            usesTV.visibility = View.VISIBLE
+                            usesTV.text = "사용기간:"+uses_start_date+" ~ "+uses_end_date+" 까지"
+                        }
 
 
                         if (type ==6&&use_yn.equals("Y")){

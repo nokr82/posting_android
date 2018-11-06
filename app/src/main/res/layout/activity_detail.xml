@@ -120,6 +120,7 @@
                             android:layout_width="247.23dp"
                             android:layout_height="261.21dp"
                             android:layout_centerInParent="true"
+                            android:id="@+id/coupon3RL"
                             android:visibility="gone">
                             <LinearLayout
                                 android:id="@+id/coupon3LL"
@@ -321,22 +322,20 @@
                         android:id="@+id/couponLL"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:gravity="center"
                         android:visibility="gone">
-
+<LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
+android:gravity="center_vertical">
                         <TextView
-
                             android:id="@id/couponTV"
                             android:layout_width="130.89dp"
-                            android:layout_height="37dp"
+                            android:layout_height="35dp"
                             android:layout_marginRight="19dp"
-                            android:layout_marginBottom="8.5dp"
-                            android:background="#FEDF2F"
+                            android:background="@drawable/background_round_ffe330"
                             android:gravity="center"
                             android:text="쿠폰 사용확인"
                             android:textColor="#063588"
                             android:textSize="15dp" />
-
+</LinearLayout>
                     </LinearLayout>
 
                     <LinearLayout
