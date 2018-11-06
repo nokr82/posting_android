@@ -1,6 +1,5 @@
 package posting.devstories.com.posting_android.activities
 
-import android.app.DatePickerDialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
@@ -8,10 +7,12 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.util.Log
 import android.view.View
+import android.widget.ArrayAdapter
+import android.widget.Toast
 import com.loopj.android.http.JsonHttpResponseHandler
 import com.loopj.android.http.RequestParams
+import com.nostra13.universalimageloader.core.ImageLoader
 import cz.msebera.android.httpclient.Header
 import kotlinx.android.synthetic.main.activity_posttextwrite.*
 import org.json.JSONArray
@@ -22,13 +23,7 @@ import posting.devstories.com.posting_android.R
 import posting.devstories.com.posting_android.base.PrefUtils
 import posting.devstories.com.posting_android.base.RootActivity
 import posting.devstories.com.posting_android.base.Utils
-import android.widget.*
-import com.nostra13.universalimageloader.core.ImageLoader
-import kotlinx.android.synthetic.main.activity_posttextwrite.view.*
-import kotlinx.android.synthetic.main.fra_write.*
-import posting.devstories.com.posting_android.R.id.*
 import java.io.ByteArrayInputStream
-import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -288,6 +283,7 @@ class MyPostingWriteActivity : RootActivity() {
         params.put("count", getmost)
         params.put("uses_start_date",startd)
         params.put("uses_end_date",last)
+        params.put("current_school_id", PrefUtils.getIntPreference(context, "current_school_id"))
 
 
         if (capture==null){
