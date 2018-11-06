@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
 import com.loopj.android.http.JsonHttpResponseHandler
 import com.loopj.android.http.RequestParams
 import com.nostra13.universalimageloader.core.ImageLoader
@@ -34,6 +35,7 @@ class MatchInfoActivity : RootActivity() {
     private val backPressCloseHandler: BackPressCloseHandler? = null
 
     var posting_id = ""
+    var member_id = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +45,8 @@ class MatchInfoActivity : RootActivity() {
         progressDialog = ProgressDialog(context)
 
         posting_id = intent.getStringExtra("posting_id")
+
+        member_id = PrefUtils.getIntPreference(context, "member_id")
 
         finishLL.setOnClickListener {
             finish()
@@ -60,7 +64,7 @@ class MatchInfoActivity : RootActivity() {
 
     fun loadData() {
         val params = RequestParams()
-        params.put("member_id", PrefUtils.getIntPreference(context, "member_id"))
+        params.put("member_id", member_id)
         params.put("posting_id", posting_id)
 
         PostingAction.save_members(params, object : JsonHttpResponseHandler() {
@@ -80,6 +84,7 @@ class MatchInfoActivity : RootActivity() {
 
                         val posting = response.getJSONObject("posting")
                         val member = response.getJSONObject("member")
+                        val match_count = Utils.getString(response, "match_count")
 
                         for (i in 0..(postingSaves.length() - 1)) {
 
@@ -88,9 +93,29 @@ class MatchInfoActivity : RootActivity() {
 
                             val profileView = View.inflate(context, R.layout.item_match_user_profile, null)
                             var profileIV:CircleImageView = profileView.findViewById(R.id.profileIV)
+                            var alarmCntTV:TextView = profileView.findViewById(R.id.alarmCntTV)
 
                             var profile_uri = Config.url + Utils.getString(member,"image_uri")
                             ImageLoader.getInstance().displayImage(profile_uri, profileIV, Utils.UILoptionsProfile)
+
+                            profileIV.setOnClickListener {
+
+                                if(Utils.getInt(member, "id") != member_id) {
+                                    var intent = Intent(context, ChattingActivity::class.java)
+                                    intent.putExtra("attend_member_id", Utils.getInt(member, "id"))
+                                    startActivity(intent)
+                                }
+
+                            }
+
+                            val new_message_count = Utils.getInt(response, "new_message_count")
+
+                            if(new_message_count < 1) {
+                                alarmCntTV.visibility = View.GONE
+                            } else {
+                                alarmCntTV.visibility = View.VISIBLE
+                                alarmCntTV.text = new_message_count.toString()
+                            }
 
                             addProfileLL.addView(profileView)
                         }
@@ -100,7 +125,8 @@ class MatchInfoActivity : RootActivity() {
                         ImageLoader.getInstance().displayImage(posting_uri, imageIV, Utils.UILoptionsPosting)
 
                         postingCntTV.text = postingSaves.length().toString() + "/" + Utils.getString(posting, "count")
-                        matchCntTV.text = "0"
+
+                        matchCntTV.text = match_count
 
                     } else {
 

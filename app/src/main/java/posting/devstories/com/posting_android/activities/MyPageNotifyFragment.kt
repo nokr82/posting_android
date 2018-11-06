@@ -60,7 +60,6 @@ class MyPageNotifyFragment : Fragment() {
             var data = adapterData.get(position)
             var posting= data.getJSONObject("Posting")
 
-
             var intent = Intent(mContext, DetailActivity::class.java)
             intent.putExtra("id", Utils.getString(posting, "id"))
             startActivity(intent)
