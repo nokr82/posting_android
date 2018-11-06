@@ -35,6 +35,7 @@ class PrivacyActivity : RootActivity() {
         progressDialog = ProgressDialog(context)
 
 
+        //웹뷰
         val url = Config.url + "/agree/agree2"
         privacyWV.loadUrl(url)
 

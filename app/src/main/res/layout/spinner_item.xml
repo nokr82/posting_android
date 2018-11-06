@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     android:textSize="14dp"
     android:textColor="#888888"
-    android:background="#00ff0000"
+    android:background="@null"
     style="?android:attr/spinnerItemStyle"
     android:paddingTop="4dp"
     android:paddingBottom="4dp"

@@ -640,6 +640,7 @@ class DetailActivity : RootActivity() {
                         contentTV.text = contents
                         wnameTX.text = nick_name
 
+                        //날짜받기
                         val sdf = SimpleDateFormat("MM월dd일", Locale.KOREA)
                         val created = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(Utils.getString(posting, "created"))
                         val create_date = sdf.format(created)
