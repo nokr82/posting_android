@@ -48,7 +48,7 @@ class CouponTextActivity : RootActivity() {
         this.context = this
         progressDialog = ProgressDialog(context)
 
-        adpater = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, most)
+        adpater = ArrayAdapter<String>(this, R.layout.spinner_item, most)
         most4SP.adapter = adpater
 
 
