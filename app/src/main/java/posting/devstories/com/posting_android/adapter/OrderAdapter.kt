@@ -60,7 +60,7 @@ open class OrderAdapter(context:Context, view:Int, data:ArrayList<JSONObject>) :
             item.couponLL.visibility = View.VISIBLE
             item.coupon_titleTV.text = menu_name
             item.coupon_saleTV.text = sale_per
-            item.coupon_sale2TV.text = "활인"
+            item.coupon_sale2TV.text = "할인"
             item.coupon_startdateTV.text = uses_start_date
             item.coupon_contentTV.text = contents
             item.coupon_enddateTV.text = uses_end_date
@@ -83,7 +83,7 @@ open class OrderAdapter(context:Context, view:Int, data:ArrayList<JSONObject>) :
             item.coupon_saleTV.text = sale_price
             item.coupon_contentTV.text = contents
             item.coupon_TV.text = "원"
-            item.coupon_sale2TV.text = "활인"
+            item.coupon_sale2TV.text = "할인"
             item.coupon_startdateTV.text = uses_start_date
             item.coupon_enddateTV.text = uses_end_date
         }else {
