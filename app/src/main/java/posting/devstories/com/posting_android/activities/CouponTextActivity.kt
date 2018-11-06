@@ -32,6 +32,12 @@ class CouponTextActivity : RootActivity() {
     var getmost = ""
     var getday=""
     var geterror = ""
+    var coupon_type = ""
+    var uses_srart_date = ""
+    var uses_end_date  = ""
+    var menu_name = ""
+    var sale_per = ""
+    var sale_price = ""
 
     lateinit var adpater: ArrayAdapter<String>
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,9 +53,13 @@ class CouponTextActivity : RootActivity() {
         member_id =  PrefUtils.getIntPreference(context,"member_id")
 
 
+
+
         store2LL.setOnClickListener {
             viewcoupon()
             storeLL.visibility = View.VISIBLE
+
+
         }
         coupon2LL.setOnClickListener {
             viewcoupon()
@@ -58,6 +68,11 @@ class CouponTextActivity : RootActivity() {
         sale2LL.setOnClickListener {
             viewcoupon()
             saleLL.visibility = View.VISIBLE
+
+
+        }
+        nextTX.setOnClickListener {
+            write()
         }
 
 
@@ -77,16 +92,25 @@ class CouponTextActivity : RootActivity() {
 
 
     fun write(){
-
-
         val params = RequestParams()
         params.put("member_id", member_id)
         params.put("current_school_id", PrefUtils.getIntPreference(context, "current_school_id"))
         params.put("type", type)
         params.put("contents", contents)
         params.put("count", getmost)
+        params.put("coupon_type", coupon_type)
+        params.put("uses_srart_date", uses_srart_date)
+        params.put("uses_end_date", uses_end_date)
+        params.put("menu_name", menu_name)
+        params.put("sale_per", sale_per)
+        params.put("sale_price", sale_price)
+        params.put("count", getmost)
 
-
+        menu_name = Utils.getString(titleET)
+        sale_per = Utils.getString(saleET)
+        uses_srart_date = Utils.getString(startdateTV)
+        uses_end_date = Utils.getString(enddateTV)
+        contents = Utils.getString(content2ET)
         PostingAction.write(params, object : JsonHttpResponseHandler() {
 
             override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
