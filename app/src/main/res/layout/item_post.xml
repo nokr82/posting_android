@@ -139,24 +139,24 @@ android:orientation="horizontal"
                 android:visibility="gone"/>
 
             <LinearLayout
-                android:id="@+id/countLL"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@mipmap/postbg_logo"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="3.25dp"
-                android:layout_marginLeft="4.25dp"
-                android:gravity="center_vertical">
-
-                <TextView
-                    android:id="@+id/leftCntTV"
-                    android:layout_marginLeft="4.9dp"
+                    android:id="@+id/countLL"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0"
-                    android:textSize="17.67dp"
-                    android:textColor="#575759"/>
+                    android:orientation="horizontal"
+                    android:background="@mipmap/postbg_logo"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="3.25dp"
+                    android:layout_marginLeft="4.25dp"
+                    android:gravity="center_vertical">
+
+                <TextView
+                        android:id="@+id/leftCntTV"
+                        android:layout_marginLeft="4.9dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textSize="17.67dp"
+                        android:textColor="#575759"/>
 
             </LinearLayout>
 

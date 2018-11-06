@@ -68,7 +68,7 @@
             android:layout_weight="1"
             android:divider="@null"
             android:visibility="gone"
-            android:listSelector="@null"/>
+            android:listSelector="#00000000"/>
 
         <LinearLayout
             android:id="@+id/emptyLL"
