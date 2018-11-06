@@ -104,11 +104,14 @@ class MatchInfoActivity : RootActivity() {
                                     var intent = Intent(context, ChattingActivity::class.java)
                                     intent.putExtra("attend_member_id", Utils.getInt(member, "id"))
                                     startActivity(intent)
+
+                                    alarmCntTV.visibility = View.GONE
+
                                 }
 
                             }
 
-                            val new_message_count = Utils.getInt(response, "new_message_count")
+                            val new_message_count = Utils.getInt(data, "new_message_count")
 
                             if(new_message_count < 1) {
                                 alarmCntTV.visibility = View.GONE

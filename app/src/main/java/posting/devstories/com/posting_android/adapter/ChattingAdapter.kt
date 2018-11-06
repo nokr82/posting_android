@@ -47,10 +47,6 @@ open class ChattingAdapter(context: Context, view: Int, data: ArrayList<JSONObje
             val contents = Utils.getString(chatting, "contents")
             val created = Utils.getString(chatting, "created")
 
-
-            println("send_member_id : " + send_member_id)
-            println("myId : " + myId)
-
             if (send_member_id == myId) {
                 item.myLL.visibility = View.VISIBLE
                 item.otherLL.visibility = View.GONE

@@ -108,6 +108,7 @@ class ReviewWriteActivity : RootActivity() {
 
         textRL.setOnClickListener {
             var intent = Intent(context, ReviewWriteContentsActivity::class.java)
+//            intent.putExtra("review_id", review_id)
             intent.putExtra("text", text)
             intent.putExtra("company_member_id", company_member_id)
             startActivityForResult(intent, WRITE_RIVEW)

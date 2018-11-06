@@ -1,20 +1,27 @@
 package posting.devstories.com.posting_android.activities
 
+import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.BaseAdapter
+import android.widget.TextView
+import android.widget.Toast
 import com.loopj.android.http.JsonHttpResponseHandler
 import com.loopj.android.http.RequestParams
 import com.nostra13.universalimageloader.core.ImageLoader
 import cz.msebera.android.httpclient.Header
 import kotlinx.android.synthetic.main.activity_chatting.*
+import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 import posting.devstories.com.posting_android.Actions.ChattingAction
+import posting.devstories.com.posting_android.Actions.ReviewAction
 import posting.devstories.com.posting_android.R
 import posting.devstories.com.posting_android.adapter.ChattingAdapter
 import posting.devstories.com.posting_android.base.BackPressCloseHandler
@@ -51,12 +58,16 @@ class ChattingActivity : RootActivity() {
 
     private var timer: Timer? = null
 
+    var member_id = -1
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chatting)
 
         this.context = this
         progressDialog = ProgressDialog(context)
+
+        member_id = PrefUtils.getIntPreference(context, "member_id")
 
         attend_member_id = intent.getIntExtra("attend_member_id", -1)
 
@@ -90,9 +101,106 @@ class ChattingActivity : RootActivity() {
             return@setOnEditorActionListener true
         }
 
+        reportLL.setOnClickListener {
+            policedlgView()
+        }
 
         chattingCheck()
 
+    }
+
+    fun policedlgView(){
+        var mPopupDlg: DialogInterface? = null
+
+        val builder = AlertDialog.Builder(this)
+        val dialogView = layoutInflater.inflate(R.layout.myposting_dlg, null)
+        val titleTV = dialogView.findViewById<TextView>(R.id.titleTV)
+        val delTV = dialogView.findViewById<TextView>(R.id.delTV)
+        val modiTV = dialogView.findViewById<TextView>(R.id.modiTV)
+        val recyTV = dialogView.findViewById<TextView>(R.id.recyTV)
+        titleTV.text = "이 사용자를 신고하는 이유를 선택하세요"
+        delTV.text = "불건전합니다"
+        modiTV.text = "부적절합니다"
+        recyTV.text = "스팸입니다"
+
+        mPopupDlg =  builder.setView(dialogView).show()
+
+        delTV.setOnClickListener {
+            report("1")
+            mPopupDlg.dismiss()
+
+        }
+        modiTV.setOnClickListener {
+            report("2")
+            mPopupDlg.dismiss()
+        }
+        recyTV.setOnClickListener {
+            report("3")
+            mPopupDlg.dismiss()
+        }
+
+    }
+
+    fun report(type:String){
+        val params = RequestParams()
+        params.put("member_id", member_id)
+        params.put("report_member_id", attend_member_id)
+        params.put("type", type)
+
+        ReviewAction.report(params, object : JsonHttpResponseHandler() {
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+
+                try {
+                    val result = response!!.getString("result")
+                    if ("ok" == result) {
+
+                        var intent = Intent(context, DlgPoliceActivity::class.java)
+                        startActivity(intent)
+
+                    } else if("already" == result) {
+                        Toast.makeText(context, "신고한 회원입니다.", Toast.LENGTH_LONG).show()
+                    }
+
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+
+            }
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONArray?) {
+                super.onSuccess(statusCode, headers, response)
+            }
+
+            private fun error() {
+                Utils.alert(context, "조회중 장애가 발생하였습니다.")
+            }
+
+            override fun onFailure(statusCode: Int, headers: Array<Header>?, throwable: Throwable, errorResponse: JSONArray?) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+                throwable.printStackTrace()
+                error()
+            }
+
+            override fun onStart() {
+                // show dialog
+                if (progressDialog != null) {
+
+                    progressDialog!!.show()
+                }
+            }
+
+            override fun onFinish() {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+            }
+        })
     }
 
     fun chattingCheck() {

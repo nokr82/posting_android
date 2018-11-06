@@ -202,7 +202,12 @@ open class MyPagePostingStorageFragment : Fragment() {
                             startActivity(intent)
                         }
                 }else {
-                    val PostingSave = adapterData[position].getJSONObject("PostingSave")
+                    if (type == 3 || type == 4 || type == 5) {
+                        val intent = Intent(context, MatchInfoActivity::class.java)
+                        intent.putExtra("posting_id", Utils.getString(Posting, "id"))
+                        startActivity(intent)
+                    }else{
+                        val PostingSave = adapterData[position].getJSONObject("PostingSave")
 
                         val intent = Intent(context, DetailActivity::class.java)
                         intent.putExtra("id", Utils.getString(Posting, "id"))
@@ -210,6 +215,7 @@ open class MyPagePostingStorageFragment : Fragment() {
                         intent.putExtra("taptype",taptype)
                         println("tap============="+taptype)
                         startActivity(intent)
+                    }
 
                 }
             } catch (e: JSONException) {
