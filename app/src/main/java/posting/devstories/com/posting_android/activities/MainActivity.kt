@@ -115,9 +115,12 @@ class MainActivity : FragmentActivity() {
 
             homeIV.setImageResource(R.mipmap.home)
 
+            if(fragmentFT.currentTab == 0) {
+                val postFragment = supportFragmentManager.findFragmentByTag("post") as PostFragment
+                postFragment.setMainView()
+            }
+
             fragmentFT.onTabChanged("post")
-
-
         }
 
         writeLL.setOnClickListener {
