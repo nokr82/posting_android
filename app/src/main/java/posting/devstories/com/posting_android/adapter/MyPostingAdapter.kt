@@ -41,6 +41,7 @@ open class MyPostingAdapter(context:Context, view:Int, data:ArrayList<JSONObject
         var contents =   Utils.getString(posting, "contents")
         var image_uri = Utils.getString(posting, "image_uri")
         var leftCount = Utils.getString(posting, "leftCount")
+        var type = Utils.getString(posting, "type")
 
         item.storageIV.visibility = View.GONE
 
@@ -61,7 +62,7 @@ open class MyPostingAdapter(context:Context, view:Int, data:ArrayList<JSONObject
 
         item.chatAlarmCntTV.visibility = View.GONE
 
-        if(chattingCnt > 0) {
+        if(chattingCnt > 0 && type == "3" || type == "4" || type == "5") {
             item.chatAlarmCntTV.visibility = View.VISIBLE
             item.chatAlarmCntTV.text = chattingCnt.toString()
         }
