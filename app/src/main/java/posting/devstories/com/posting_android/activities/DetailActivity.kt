@@ -434,6 +434,8 @@ class DetailActivity : RootActivity() {
                     }else if ("empty"==result){
                         Toast.makeText(context,"남은 수량이 없습니다.",Toast.LENGTH_SHORT).show()
 
+                    }else if ("already"==result){
+                        Toast.makeText(context,"이미 떼어간 포스트입니다.",Toast.LENGTH_SHORT).show()
                     }
 
                 } catch (e: JSONException) {
