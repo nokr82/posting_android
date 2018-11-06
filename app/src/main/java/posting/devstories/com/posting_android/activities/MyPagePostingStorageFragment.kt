@@ -20,6 +20,7 @@ import org.json.JSONException
 import org.json.JSONObject
 import posting.devstories.com.posting_android.Actions.MemberAction
 import posting.devstories.com.posting_android.R
+import posting.devstories.com.posting_android.R.id.*
 import posting.devstories.com.posting_android.adapter.MyPostingAdapter
 import posting.devstories.com.posting_android.adapter.PostAdapter
 import posting.devstories.com.posting_android.base.PrefUtils
@@ -183,6 +184,9 @@ open class MyPagePostingStorageFragment : Fragment() {
             try {
                 val Posting = adapterData[position].getJSONObject("Posting")
                 val type = Utils.getInt(Posting,"type")
+
+
+
                 if (taptype ==1) {
                     if (type == 3 || type == 4 || type == 5) {
 //                        val intent = Intent(context, MyPostingActivity::class.java)
@@ -192,15 +196,21 @@ open class MyPagePostingStorageFragment : Fragment() {
                         val intent = Intent(context, MatchInfoActivity::class.java)
                         intent.putExtra("posting_id", Utils.getString(Posting, "id"))
                         startActivity(intent)
-                    }else {
+                    }else{
+                            val intent = Intent(context, DetailActivity::class.java)
+                            intent.putExtra("id", Utils.getString(Posting, "id"))
+                            startActivity(intent)
+                        }
+                }else {
+                    val PostingSave = adapterData[position].getJSONObject("PostingSave")
+
                         val intent = Intent(context, DetailActivity::class.java)
                         intent.putExtra("id", Utils.getString(Posting, "id"))
+                        intent.putExtra("save_id", Utils.getString(PostingSave, "id"))
+                        intent.putExtra("taptype",taptype)
+                        println("tap============="+taptype)
                         startActivity(intent)
-                    }
-                }else {
-                    val intent = Intent(context, DetailActivity::class.java)
-                    intent.putExtra("id", Utils.getString(Posting, "id"))
-                    startActivity(intent)
+
                 }
             } catch (e: JSONException) {
                 e.printStackTrace()
