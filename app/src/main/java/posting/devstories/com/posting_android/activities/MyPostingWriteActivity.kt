@@ -83,6 +83,7 @@ class MyPostingWriteActivity : RootActivity() {
 
         text = intent.getStringExtra("text")
         imgid = intent.getStringExtra("imgid")
+        println("dddddddddddddd"+imgid)
         capture = intent.getParcelableExtra("capture")
         contents2 = intent.getStringExtra("contents")
         startd = intent.getStringExtra("startd")
