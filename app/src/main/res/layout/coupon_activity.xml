@@ -169,24 +169,30 @@
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
 
                     <TextView
-                            android:gravity="center_vertical"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="40dp"
-                            android:text="기간"
-                            android:textColor="#8F8E8A"
-                            android:textSize="14dp"
-                            android:background="@null"
-                            android:paddingLeft="7dp"
-                    />
+                        android:gravity="center_vertical"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="40dp"
+                        android:text="기간"
+                        android:textColor="#8F8E8A"
+                        android:textSize="14dp"
+                        android:background="@null"
+                        android:paddingLeft="7dp"
+                        />
                     <TextView android:layout_width="wrap_content" android:layout_height="40dp"
-                              android:hint="YY/MM/DD"
-                              android:textSize="14dp"
+                        android:hint="YY/MM/DD"
+                        android:textSize="14dp"
                         android:id="@+id/startdateTV"
 
-                    />
+                        />
                     <TextView android:layout_width="wrap_content" android:layout_height="40dp"
-                        android:hint="~YY/MM/DD"
+                        android:hint="~"
+                        android:textSize="14dp"
+
+                        />
+
+                    <TextView android:layout_width="wrap_content" android:layout_height="40dp"
+                        android:hint="YY/MM/DD"
                         android:textSize="14dp"
                         android:id="@+id/enddateTV"
 
@@ -293,22 +299,34 @@
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
 
                     <TextView
-                            android:gravity="center_vertical"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="40dp"
-                            android:text="기간"
-                            android:textColor="#8F8E8A"
-                            android:textSize="14dp"
-                            android:background="@null"
-                            android:paddingLeft="7dp"
-                    />
-                    <EditText android:layout_width="wrap_content" android:layout_height="40dp"
-                              android:hint="YY/MM/DD ~ YY/MM/DD"
-                              android:textSize="14dp"
-                        android:id="@+id/date2ET"
-                              android:background="@null"
-                    />
+                        android:gravity="center_vertical"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="40dp"
+                        android:text="기간"
+                        android:textColor="#8F8E8A"
+                        android:textSize="14dp"
+                        android:background="@null"
+                        android:paddingLeft="7dp"
+                        />
+                    <TextView android:layout_width="wrap_content" android:layout_height="40dp"
+                        android:hint="YY/MM/DD"
+                        android:textSize="14dp"
+                        android:id="@+id/startdate2TV"
+
+                        />
+                    <TextView android:layout_width="wrap_content" android:layout_height="40dp"
+                        android:hint="~"
+                        android:textSize="14dp"
+
+                        />
+
+                    <TextView android:layout_width="wrap_content" android:layout_height="40dp"
+                        android:hint="YY/MM/DD"
+                        android:textSize="14dp"
+                        android:id="@+id/enddate2TV"
+
+                        />
                 </LinearLayout>
 
                 <View
@@ -409,16 +427,15 @@
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
 
                     <TextView
-                            android:gravity="center_vertical"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="40dp"
-                            android:text="할인금액"
-                            android:textColor="#8F8E8A"
-                            android:textSize="14dp"
-                            android:background="@null"
-                            android:paddingLeft="7dp"
-                    />
+                        android:layout_width="253dp"
+                        android:layout_height="40dp"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="7dp"
+                        android:text="할인금액"
+                        android:textColor="#8F8E8A"
+                        android:textSize="14dp" />
                     <EditText android:layout_width="wrap_content" android:layout_height="40dp"
                               android:hint="    "
                               android:textSize="14dp"
@@ -447,22 +464,34 @@
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
 
                     <TextView
-                            android:gravity="center_vertical"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="40dp"
-                            android:text="기간"
-                            android:textColor="#8F8E8A"
-                            android:textSize="14dp"
-                            android:background="@null"
-                            android:paddingLeft="7dp"
-                    />
-                    <EditText android:layout_width="wrap_content" android:layout_height="40dp"
-                              android:hint="YY/MM/DD ~ YY/MM/DD"
-                              android:textSize="14dp"
-                        android:id="@+id/dateET"
-                              android:background="@null"
-                    />
+                        android:gravity="center_vertical"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="40dp"
+                        android:text="기간"
+                        android:textColor="#8F8E8A"
+                        android:textSize="14dp"
+                        android:background="@null"
+                        android:paddingLeft="7dp"
+                        />
+                    <TextView android:layout_width="wrap_content" android:layout_height="40dp"
+                        android:hint="YY/MM/DD"
+                        android:textSize="14dp"
+                        android:id="@+id/startdate3TV"
+
+                        />
+                    <TextView android:layout_width="wrap_content" android:layout_height="40dp"
+                        android:hint="~"
+                        android:textSize="14dp"
+
+                        />
+
+                    <TextView android:layout_width="wrap_content" android:layout_height="40dp"
+                        android:hint="YY/MM/DD"
+                        android:textSize="14dp"
+                        android:id="@+id/enddate3TV"
+
+                        />
                 </LinearLayout>
 
                 <View

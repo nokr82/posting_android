@@ -1,5 +1,6 @@
 package posting.devstories.com.posting_android.activities
 
+import android.app.DatePickerDialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
@@ -145,9 +146,9 @@ class MyPostingWriteActivity : RootActivity() {
 
 //            mostSP3.setSelection(mount!!)
 
-
-            var cal = Calendar.getInstance()
-
+//
+//            var cal = Calendar.getInstance()
+//
 //            val dateSetListener = DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
 //                cal.set(Calendar.YEAR, year)
 //                cal.set(Calendar.MONTH, monthOfYear)

@@ -1,6 +1,7 @@
 package posting.devstories.com.posting_android.activities
 
 
+import android.app.DatePickerDialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
@@ -17,9 +18,12 @@ import org.json.JSONException
 import org.json.JSONObject
 import posting.devstories.com.posting_android.Actions.PostingAction
 import posting.devstories.com.posting_android.R
+import posting.devstories.com.posting_android.R.id.*
 import posting.devstories.com.posting_android.base.PrefUtils
 import posting.devstories.com.posting_android.base.RootActivity
 import posting.devstories.com.posting_android.base.Utils
+import java.text.SimpleDateFormat
+import java.util.*
 
 class CouponTextActivity : RootActivity() {
     lateinit var context: Context
@@ -38,6 +42,7 @@ class CouponTextActivity : RootActivity() {
     var menu_name = ""
     var sale_per = ""
     var sale_price = ""
+    var cal = Calendar.getInstance()
 
     lateinit var adpater: ArrayAdapter<String>
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,6 +51,11 @@ class CouponTextActivity : RootActivity() {
         this.context = this
         progressDialog = ProgressDialog(context)
         viewcoupon()
+        intent = getIntent()
+        getmost = intent.getStringExtra("getmost")
+        print("----------getmost"+getmost)
+
+
         adpater = ArrayAdapter<String>(this, R.layout.spinner_item, most)
         most4SP.adapter = adpater
 
@@ -55,23 +65,132 @@ class CouponTextActivity : RootActivity() {
 
 
 
+
+
+
         store2LL.setOnClickListener {
             viewcoupon()
             storeLL.visibility = View.VISIBLE
-
+            coupon_type = "3"
+            startdate3TV.setOnClickListener {
+                val dateSetListener = DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                    cal.set(Calendar.YEAR, year)
+                    cal.set(Calendar.MONTH, monthOfYear)
+                    cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                    val myFormat = "yy.MM.dd" // mention the format you need
+                    val sdf = SimpleDateFormat(myFormat, Locale.KOREA)
+                    startdate3TV.text = sdf.format(cal.time)
+                }
+                DatePickerDialog(context, dateSetListener,
+                        cal.get(Calendar.YEAR),
+                        cal.get(Calendar.MONTH),
+                        cal.get(Calendar.DAY_OF_MONTH)).show()
+            }
+            enddate3TV.setOnClickListener {
+                val dateSetListener2 = DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                    cal.set(Calendar.YEAR, year)
+                    cal.set(Calendar.MONTH, monthOfYear)
+                    cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                    val myFormat = "yy.MM.dd" // mention the format you need
+                    val sdf = SimpleDateFormat(myFormat, Locale.KOREA)
+                    enddate3TV.text = sdf.format(cal.time)
+                }
+                DatePickerDialog(context, dateSetListener2,
+                        cal.get(Calendar.YEAR),
+                        cal.get(Calendar.MONTH),
+                        cal.get(Calendar.DAY_OF_MONTH)).show()
+            }
 
         }
         coupon2LL.setOnClickListener {
             viewcoupon()
             couponLL.visibility = View.VISIBLE
+            coupon_type = "2"
+            startdate2TV.setOnClickListener {
+                val dateSetListener = DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                    cal.set(Calendar.YEAR, year)
+                    cal.set(Calendar.MONTH, monthOfYear)
+                    cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                    val myFormat = "yy.MM.dd" // mention the format you need
+                    val sdf = SimpleDateFormat(myFormat, Locale.KOREA)
+                    startdate2TV.text = sdf.format(cal.time)
+                }
+                DatePickerDialog(context, dateSetListener,
+                        cal.get(Calendar.YEAR),
+                        cal.get(Calendar.MONTH),
+                        cal.get(Calendar.DAY_OF_MONTH)).show()
+            }
+            enddate2TV.setOnClickListener {
+                val dateSetListener2 = DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                    cal.set(Calendar.YEAR, year)
+                    cal.set(Calendar.MONTH, monthOfYear)
+                    cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                    val myFormat = "yy.MM.dd" // mention the format you need
+                    val sdf = SimpleDateFormat(myFormat, Locale.KOREA)
+                    enddate2TV.text = sdf.format(cal.time)
+                }
+                DatePickerDialog(context, dateSetListener2,
+                        cal.get(Calendar.YEAR),
+                        cal.get(Calendar.MONTH),
+                        cal.get(Calendar.DAY_OF_MONTH)).show()
+            }
         }
         sale2LL.setOnClickListener {
             viewcoupon()
             saleLL.visibility = View.VISIBLE
+            coupon_type = "1"
+            startdateTV.setOnClickListener {
+                val dateSetListener = DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                    cal.set(Calendar.YEAR, year)
+                    cal.set(Calendar.MONTH, monthOfYear)
+                    cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                    val myFormat = "yy.MM.dd" // mention the format you need
+                    val sdf = SimpleDateFormat(myFormat, Locale.KOREA)
+                    startdateTV.text = sdf.format(cal.time)
+                }
+                DatePickerDialog(context, dateSetListener,
+                        cal.get(Calendar.YEAR),
+                        cal.get(Calendar.MONTH),
+                        cal.get(Calendar.DAY_OF_MONTH)).show()
+            }
+            enddateTV.setOnClickListener {
+                val dateSetListener2 = DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                    cal.set(Calendar.YEAR, year)
+                    cal.set(Calendar.MONTH, monthOfYear)
+                    cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                    val myFormat = "yy.MM.dd" // mention the format you need
+                    val sdf = SimpleDateFormat(myFormat, Locale.KOREA)
+                    enddateTV.text = sdf.format(cal.time)
+                }
+                DatePickerDialog(context, dateSetListener2,
+                        cal.get(Calendar.YEAR),
+                        cal.get(Calendar.MONTH),
+                        cal.get(Calendar.DAY_OF_MONTH)).show()
+            }
+
 
 
         }
         nextTX.setOnClickListener {
+            if (coupon_type.equals("1")) {
+                menu_name = Utils.getString(titleET)
+                sale_per = Utils.getString(saleET)
+                uses_srart_date = Utils.getString(startdateTV)
+                uses_end_date = Utils.getString(enddateTV)
+                contents = Utils.getString(content2ET)
+            }else if (coupon_type.equals("2")){
+                menu_name = Utils.getString(title2ET)
+                sale_per = Utils.getString(saleET)
+                uses_srart_date = Utils.getString(startdate2TV)
+                uses_end_date = Utils.getString(enddate2TV)
+                contents = Utils.getString(content3ET)
+            }else if (coupon_type.equals("3")){
+                menu_name = Utils.getString(title3ET)
+                sale_price = Utils.getString(moneyET)
+                uses_srart_date = Utils.getString(startdate3TV)
+                uses_end_date = Utils.getString(enddate3TV)
+                contents = Utils.getString(content4ET)
+            }
             write()
         }
 
@@ -91,6 +210,7 @@ class CouponTextActivity : RootActivity() {
 
 
 
+
     fun write(){
         val params = RequestParams()
         params.put("member_id", member_id)
@@ -104,13 +224,8 @@ class CouponTextActivity : RootActivity() {
         params.put("menu_name", menu_name)
         params.put("sale_per", sale_per)
         params.put("sale_price", sale_price)
-        params.put("count", getmost)
 
-        menu_name = Utils.getString(titleET)
-        sale_per = Utils.getString(saleET)
-        uses_srart_date = Utils.getString(startdateTV)
-        uses_end_date = Utils.getString(enddateTV)
-        contents = Utils.getString(content2ET)
+
         PostingAction.write(params, object : JsonHttpResponseHandler() {
 
             override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
@@ -120,21 +235,11 @@ class CouponTextActivity : RootActivity() {
 
                 try {
                     val result = response!!.getString("result")
-
-
-
-
-
                     if ("ok" == result) {
-
-
                         val intent = Intent(context,MainActivity::class.java)
                         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                         startActivity(intent)
-
                         Toast.makeText(context, "글작성이 완료되었습니다", Toast.LENGTH_SHORT).show()
-
-
 
                     } else {
                         geterror = "작성실패"
