@@ -60,10 +60,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:background="@null"
-                    android:hint="사업자등록번호"
+                    android:hint="이메일"
                     android:paddingLeft="7dp"
                     android:textSize="11.33sp"
-                    android:inputType="number"
+                    android:inputType="textEmailAddress"
                     android:textColorHint="#BCBEC0" />
 
                 <View
@@ -108,8 +108,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:background="@null"
-                    android:hint="상호명(6자이하)"
-                    android:maxLength="6"
+                    android:hint="상호명(8자이하)"
+                    android:maxLength="8"
                     android:paddingLeft="7dp"
                     android:textSize="11.33sp"
                     android:textColorHint="#BCBEC0" />
@@ -150,27 +150,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
                     android:background="#888888" />
-
-                <TextView
-                    android:id="@+id/addressTV"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:paddingLeft="7dp"
-                    android:hint="사업장 주소"
-                    android:textSize="11.33sp"
-                    android:textColorHint="#BCBEC0"
-                    android:gravity="center_vertical"/>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:background="#888888" />
-
                 <EditText
-                    android:id="@+id/addressDetailET"
+                    android:id="@+id/companynumET"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:hint="사업장 상세 주소"
+                    android:hint="사업자번호"
+                    android:inputType="number"
                     android:paddingLeft="7dp"
                     android:textSize="11.33sp"
                     android:textColorHint="#BCBEC0"
@@ -182,16 +167,60 @@
                     android:layout_height="0.5dp"
                     android:background="#888888" />
 
+                <LinearLayout
+                    android:id="@+id/addressLL"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/addressTV"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="40dp"
+                    android:paddingLeft="7dp"
+                    android:hint="사업장 주소"
+                    android:textSize="11.33sp"
+                    android:textColorHint="#BCBEC0"
+                    android:gravity="center_vertical"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/semo"
+                        android:padding="10dp"
+                        android:layout_gravity="center_vertical"/>
+
+
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="#888888" />
+
+                <LinearLayout
+                    android:id="@+id/schoolLL"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
                 <TextView
                     android:id="@+id/schoolTV"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="40dp"
                     android:gravity="center_vertical"
                     android:paddingLeft="7dp"
                     android:hint="상권내 학교 검색(1개 선택)"
                     android:textColorHint="#BCBEC0"
                     android:textSize="11.33sp" />
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/semo"
+                        android:padding="10dp"
+                        android:layout_gravity="center_vertical"/>
 
+
+                </LinearLayout>
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
@@ -302,7 +331,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="전체 약관에 동의합니다"
+                    android:text="포스팅 통합약관에 모두 동의합니다"
                     android:textColor="#20408C"
                     android:textSize="9.33dp" />
                 </LinearLayout>

@@ -211,7 +211,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="전체 약관에 동의합니다"
+                        android:text="포스팅 통합약관에 모두 동의합니다"
                         android:textColor="#20408C"
                         android:textSize="9.33dp" />
                 </LinearLayout>
