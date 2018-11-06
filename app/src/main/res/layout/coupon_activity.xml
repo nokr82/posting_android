@@ -52,7 +52,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginRight="15.3dp"
-                android:text="다음"
+                android:text="등록"
                 android:textColor="#063588"
                 android:textSize="11.5dp"
 

@@ -99,6 +99,10 @@ class LoginActivity : RootActivity() {
                     if ("ok" == result) {
                         val loginID = response.getString("loginID")
                         val data = response.getJSONObject("member")
+                        val school = response.getJSONObject("school")
+
+                        val school_id = Utils.getInt(school, "id")
+                        PrefUtils.setPreference(context, "current_school_id", school_id)
 
                         PrefUtils.setPreference(context, "loginID", loginID)
                         PrefUtils.setPreference(context, "member_id", Utils.getInt(data, "id"))

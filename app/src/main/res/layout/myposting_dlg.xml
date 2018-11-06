@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/background_border_707070"
     android:orientation="vertical">
 
     <posting.devstories.com.posting_android.base.RationalRelativeLayout
@@ -10,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:ratio="960:500"
-        android:background="@drawable/background_round_ffffff">
+       >
 
       <LinearLayout
           android:layout_width="match_parent"
