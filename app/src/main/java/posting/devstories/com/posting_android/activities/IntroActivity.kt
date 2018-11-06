@@ -109,9 +109,15 @@ class IntroActivity : RootActivity() {
                 try {
                     val result = response!!.getString("result")
 
+                    print(response)
+
                     if ("ok" == result) {
 
                         val data = response.getJSONObject("member")
+                        val school = response.getJSONObject("school")
+
+                        val school_id = Utils.getInt(school, "id")
+                        PrefUtils.setPreference(context, "current_school_id", school_id)
 
                         PrefUtils.setPreference(context, "member_id", Utils.getInt(data, "id"))
                         PrefUtils.setPreference(context, "email", Utils.getString(data, "email"))
@@ -168,6 +174,9 @@ class IntroActivity : RootActivity() {
                 if (progressDialog != null) {
                     progressDialog!!.dismiss()
                 }
+
+                // print(errorResponse)
+
                 throwable.printStackTrace()
                 error()
             }
@@ -176,6 +185,9 @@ class IntroActivity : RootActivity() {
                 if (progressDialog != null) {
                     progressDialog!!.dismiss()
                 }
+
+                // print(errorResponse)
+
                 throwable.printStackTrace()
                 error()
             }

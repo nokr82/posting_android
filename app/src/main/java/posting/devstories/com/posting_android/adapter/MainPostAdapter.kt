@@ -48,42 +48,59 @@ open class MainPostAdapter(context: Context?, view: Int, data: ArrayList<JSONObj
 
         var title = "자유 NEW"
         var color = "#1D9AD7"
+        var tabType = 1
 
         if (type == "free") {
 
             title = "자유 NEW"
             color = "#1D9AD7"
+            tabType = 1
 
         } else if (type == "info") {
 
             title = "정보 NEW"
             color = "#2A3890"
+            tabType = 2
 
         } else if (type == "study") {
 
             title = "스터디 NEW"
             color = "#FAA71A"
+            tabType = 3
 
         } else if (type == "class") {
 
             title = "동아리 NEW"
             color = "#00A99D"
+            tabType = 4
 
         } else if (type == "meeting") {
 
             title = "미팅 NEW"
             color = "#EC4095"
+            tabType = 5
 
         } else if (type == "coupon") {
 
-
             title = "쿠폰 NEW"
             color = "#ED2123"
+            tabType = 6
 
         }
 
         item.titleTV.text = title
         item.titleTV.setTextColor(Color.parseColor(color))
+
+        item.titleLL.setOnClickListener {
+
+            println("tabType : " + tabType)
+
+            var intent = Intent()
+            intent.putExtra("type", tabType)
+            intent.action = "SET_VIEW"
+            context.sendBroadcast(intent)
+
+        }
 
         item.postingLL.removeAllViews()
 
@@ -156,10 +173,12 @@ open class MainPostAdapter(context: Context?, view: Int, data: ArrayList<JSONObj
 
         var titleTV: TextView
         var postingLL: LinearLayout
+        var titleLL: LinearLayout
 
         init {
             titleTV = v.findViewById(R.id.titleTV) as TextView
             postingLL = v.findViewById(R.id.postingLL) as LinearLayout
+            titleLL = v.findViewById(R.id.titleLL) as LinearLayout
         }
     }
 }

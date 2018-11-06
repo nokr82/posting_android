@@ -159,6 +159,7 @@ open class MainFragment : Fragment(), AbsListView.OnScrollListener {
     fun loadData(type: Int) {
         val params = RequestParams()
         params.put("member_id", PrefUtils.getIntPreference(context, "member_id"))
+        params.put("current_school_id", PrefUtils.getIntPreference(context, "current_school_id"))
         params.put("type", type)
         params.put("keyword", keyword)
 
