@@ -26,12 +26,6 @@ class MyPostingActivity : RootActivity() {
             val intent = Intent(this, MyPageActivity::class.java)
             startActivity(intent)
         }
-        myCV.setOnClickListener {
-            val intent = Intent(this, PostChatActivity::class.java)
-            startActivity(intent)
-        }
-
-
 
     }
 
