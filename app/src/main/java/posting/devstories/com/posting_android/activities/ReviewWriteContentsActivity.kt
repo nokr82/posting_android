@@ -34,7 +34,6 @@ class ReviewWriteContentsActivity : RootActivity() {
     var member_type = ""
     var image_uri:String? = null
     var image:String? = null
-    var posting_id :String?=null
     var text:String? = null
     var member_id = -1
     var type:String?=null
@@ -42,6 +41,7 @@ class ReviewWriteContentsActivity : RootActivity() {
     var count:String?=null
     var geterror = ""
     var company_member_id = -1
+    var review_id = -1
 
     lateinit var adpater: ArrayAdapter<String>
 
@@ -55,11 +55,16 @@ class ReviewWriteContentsActivity : RootActivity() {
         member_id =  PrefUtils.getIntPreference(context,"member_id")
 
         intent = getIntent()
+        review_id = intent.getIntExtra("review_id", -1)
         company_member_id = intent.getIntExtra("company_member_id", -1)
-        text = intent.getStringExtra("text")
+        contents = intent.getStringExtra("contents")
         imgid = intent.getStringExtra("imgid")
         capture = intent.getParcelableExtra("capture")
         image = intent.getStringExtra("image")
+
+        if(review_id > 0) {
+            contentET.setText(contents)
+        }
 
         backLL.setOnClickListener {
             finish()
@@ -83,7 +88,7 @@ class ReviewWriteContentsActivity : RootActivity() {
 
                 Toast.makeText(context,geterror,Toast.LENGTH_SHORT).show()
             } else {
-                if (posting_id == null||posting_id == ""){
+                if (review_id < 1){
                     write()
                 }else{
                     edit_review()
@@ -200,6 +205,107 @@ class ReviewWriteContentsActivity : RootActivity() {
     }
 
     fun edit_review() {
+
+        val params = RequestParams()
+        params.put("company_member_id", company_member_id)
+        params.put("member_id", member_id)
+        params.put("contents", contents)
+
+        if (capture==null){
+
+        }else{
+            params.put("upload", ByteArrayInputStream(Utils.getByteArray(capture)))
+        }
+
+        if (imgid.equals("")||imgid==null){
+
+        }else{
+            val add_file = Utils.getImage(context.contentResolver, imgid)
+            params.put("upload", ByteArrayInputStream(Utils.getByteArray(add_file)))
+
+        }
+
+        ReviewAction.edit_review(params, object : JsonHttpResponseHandler() {
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+
+                try {
+                    val result = response!!.getString("result")
+
+                    if ("ok" == result) {
+
+                        val intent = Intent();
+                        setResult(Activity.RESULT_OK, intent)
+                        finish()
+
+                    } else {
+
+                    }
+
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+
+            }
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONArray?) {
+                super.onSuccess(statusCode, headers, response)
+            }
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, responseString: String?) {
+
+                // System.out.println(responseString);
+            }
+
+            private fun error() {
+                Utils.alert(context, "올리는중 장애가 발생하였습니다.")
+            }
+
+            override fun onFailure(statusCode: Int, headers: Array<Header>?, responseString: String?, throwable: Throwable) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+
+                // System.out.println(responseString);
+
+                throwable.printStackTrace()
+                error()
+            }
+
+            override fun onFailure(statusCode: Int, headers: Array<Header>?, throwable: Throwable, errorResponse: JSONObject?) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+                throwable.printStackTrace()
+                error()
+            }
+
+            override fun onFailure(statusCode: Int, headers: Array<Header>?, throwable: Throwable, errorResponse: JSONArray?) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+                throwable.printStackTrace()
+                error()
+            }
+
+            override fun onStart() {
+                // show dialog
+                if (progressDialog != null) {
+
+                    progressDialog!!.show()
+                }
+            }
+
+            override fun onFinish() {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+            }
+
+        })
 
     }
 

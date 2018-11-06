@@ -1,5 +1,6 @@
 package posting.devstories.com.posting_android.activities
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
@@ -30,6 +31,7 @@ class ReviewDetailActivity : RootActivity() {
 
     lateinit var context:Context
     private var progressDialog: ProgressDialog? = null
+    val EDIT_REIVEW = 101
     var member_id = -1
     var review_id  = -1
     var image_uri  = ""
@@ -204,6 +206,8 @@ class ReviewDetailActivity : RootActivity() {
         val modiTV = dialogView.findViewById<TextView>(R.id.modiTV)
         val recyTV = dialogView.findViewById<TextView>(R.id.recyTV)
 
+        recyTV.visibility = View.GONE
+
         delTV.setOnClickListener {
             del_posting()
             mPopupDlg!!.cancel()
@@ -216,7 +220,7 @@ class ReviewDetailActivity : RootActivity() {
             intent.putExtra("image_uri",image_uri)
             intent.putExtra("contents",contents)
 
-            context.startActivity(intent)
+            startActivityForResult(intent, EDIT_REIVEW)
             finish()
 
             mPopupDlg!!.cancel()
@@ -361,6 +365,19 @@ class ReviewDetailActivity : RootActivity() {
         super.onDestroy()
 
         progressDialog = null
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if(resultCode == Activity.RESULT_OK) {
+            when(requestCode) {
+                EDIT_REIVEW -> {
+                    loadData()
+                }
+            }
+        }
 
     }
 
