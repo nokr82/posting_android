@@ -43,7 +43,8 @@
 
             <Spinner
                 android:id="@+id/meetingSP2"
-                android:popupBackground="@drawable/background_round_ffe330"
+                android:popupBackground="@drawable/background_border_707070"
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@null">
@@ -60,7 +61,7 @@
 
             </LinearLayout>
             <Spinner
-
+                android:popupBackground="@drawable/background_border_707070"
                 android:id="@+id/mostSP"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -74,7 +75,7 @@
                 android:layout_marginRight="20dp"
                 android:src="@mipmap/semo" />
             <Spinner
-
+                android:popupBackground="@drawable/background_border_707070"
                 android:id="@+id/daySP"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

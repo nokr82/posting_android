@@ -18,12 +18,15 @@ import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
 import android.app.Activity
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.view.View
 import kotlinx.android.synthetic.main.activity_detail.*
 import kotlinx.android.synthetic.main.activity_postwrite.*
 import posting.devstories.com.posting_android.R.id.meeting2LL
 import posting.devstories.com.posting_android.base.Config
 import posting.devstories.com.posting_android.base.Utils
+import android.R.array
+import android.widget.TextView
 
 
 class PostWriteActivity : RootActivity() {
@@ -55,14 +58,20 @@ class PostWriteActivity : RootActivity() {
     var image:String?= null
     var capture: Bitmap? = null
 
+//
+//    final ArrayAdapter<String> adapter= new ArrayAdapter<String>(getContext(),R.layout.spinner_item,str);
+//
+//    adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+//
+//    spinner_field.setAdapter(adapter);
 
-    lateinit var adpater: ArrayAdapter<String>
+    lateinit var adapter: ArrayAdapter<String>
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_postwrite)
-
-
 
 
         intent = getIntent()
@@ -71,7 +80,6 @@ class PostWriteActivity : RootActivity() {
         posting_id = intent.getStringExtra("posting_id")
         contents = intent.getStringExtra("contents")
         image_uri = intent.getStringExtra("image_uri")
-
 
 
         if (!posting_id.equals("")){
@@ -139,13 +147,16 @@ class PostWriteActivity : RootActivity() {
             meeting2LL.visibility = View.GONE
         }
 
-        adpater = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, mee)
-        meetingSP2.adapter = adpater
-        adpater = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, day)
-        daySP.adapter = adpater
+        adapter = ArrayAdapter<String>(this, R.layout.spinner_item, mee)
+        meetingSP2.adapter = adapter
 
-        adpater = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, most)
-        mostSP.adapter = adpater
+
+
+        adapter = ArrayAdapter<String>(this, R.layout.spinner_item, day)
+        daySP.adapter = adapter
+
+        adapter = ArrayAdapter<String>(this, R.layout.spinner_item, most)
+        mostSP.adapter = adapter
 
 
 
@@ -180,7 +191,6 @@ class PostWriteActivity : RootActivity() {
             var intent = Intent(context, MyPostingWriteActivity::class.java)
                 intent.putExtra("getmee",getmee)
                 intent.putExtra("getmost",getmost)
-                print("tettoejotjotnkf"+getmost)
                 intent.putExtra("getday",getday)
             intent.putExtra("text", text)
             startActivity(intent)
@@ -242,6 +252,7 @@ class PostWriteActivity : RootActivity() {
 //            imgRL.background = Drawable.createFromPath(photo.photoPath)
             //이미지가져오기
             imgid = photo.photoPath!!
+
             imgIV2.setImageBitmap(Utils.getImage(context.contentResolver, imgid))
 
 

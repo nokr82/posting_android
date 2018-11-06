@@ -54,5 +54,7 @@ object PostingAction {
         HttpClient.post("/posting/save_members.json", params, handler)
     }
 
-
+    fun savedel_posting(params: RequestParams, handler: JsonHttpResponseHandler) {
+        HttpClient.post("/posting/savedel_posting.json", params, handler)
+    }
 }

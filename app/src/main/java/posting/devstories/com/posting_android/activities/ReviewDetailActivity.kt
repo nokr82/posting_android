@@ -181,7 +181,6 @@ class ReviewDetailActivity : RootActivity() {
 
         mPopupDlg =  builder.setView(dialogView).show()
 
-
         delTV.setOnClickListener {
             report("1")
             mPopupDlg.dismiss()

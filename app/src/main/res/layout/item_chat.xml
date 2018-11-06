@@ -9,60 +9,84 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
         <LinearLayout
+            android:id="@+id/myLL"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/background_round_ffe330"
             android:gravity="center"
             android:layout_gravity="right"
-            >
-                <TextView
-                    android:id="@+id/textView"
-                    android:padding="5dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="안녕하세요"/>
+            android:layout_margin="9.5dp">
 
+            <TextView
+                android:id="@+id/myTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="안녕하세요"
+                android:visibility="visible"
+                android:textSize="10.5dp"
+                android:textColor="#050000"
+                android:background="@drawable/background_round_ffe330"
+                android:paddingTop="7dp"
+                android:paddingBottom="7dp"
+                android:paddingLeft="11dp"
+                android:paddingRight="11dp"/>
+
+            <ImageView
+                android:id="@+id/myImageIV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxWidth="150dp"
+                android:visibility="gone"/>
 
         </LinearLayout>
+
         <LinearLayout
+            android:id="@+id/otherLL"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            >
+            android:layout_margin="9.5dp">
 
             <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/otherIV"
                 android:layout_width="43.89dp"
                 android:layout_height="43.89dp"
                 android:layout_gravity="center"
                 android:src="@mipmap/myimg"
-                android:layout_margin="10dp"/>
+                android:layout_marginRight="9.5dp"/>
 
-
-            <TextView
-                android:gravity="center"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/chat"
+                android:gravity="center_vertical">
 
-                android:text="안녕하세요"/>
+                <TextView
+                    android:id="@+id/otherTV"
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="안녕하세요"
+                    android:visibility="gone"
+                    android:textSize="10.5dp"
+                    android:textColor="#050000"
+                    android:background="@drawable/chat"
+                    android:paddingTop="7dp"
+                    android:paddingBottom="7dp"
+                    android:paddingLeft="11dp"
+                    android:paddingRight="11dp"/>
 
+                <ImageView
+                    android:id="@+id/otherImageIV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxWidth="150dp"
+                    android:visibility="gone"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 
-
-
-
-
     </LinearLayout>
-
-
-
-
-
-
-
-
-
 
 </LinearLayout>

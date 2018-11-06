@@ -3,7 +3,6 @@ package posting.devstories.com.posting_android.activities
 import android.app.Activity
 import android.app.AlertDialog
 import android.app.ProgressDialog
-import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
@@ -19,9 +18,8 @@ import org.json.JSONException
 import org.json.JSONObject
 import posting.devstories.com.posting_android.Actions.AddressAction
 import posting.devstories.com.posting_android.Actions.JoinAction
-import posting.devstories.com.posting_android.Actions.LoginAction
 import posting.devstories.com.posting_android.R
-import posting.devstories.com.posting_android.base.PrefUtils
+import posting.devstories.com.posting_android.R.id.*
 import posting.devstories.com.posting_android.base.RootActivity
 import posting.devstories.com.posting_android.base.Utils
 
@@ -36,6 +34,8 @@ class OrderJoinActivity : RootActivity() {
     var school_id = -1
     var sms_code = ""
 
+
+    var email = ""
     var company_num = ""
     var company_name = ""
     var ori_phone = ""
@@ -92,26 +92,26 @@ class OrderJoinActivity : RootActivity() {
             }
         }
 
-        schoolTV.setOnClickListener {
+        schoolLL.setOnClickListener {
             val intent = Intent(this, SchoolActivity::class.java)
             intent.putExtra("member_type", "3")
             startActivityForResult(intent, SELECT_SCHOOL)
         }
 
-        addressTV.setOnClickListener {
+        addressLL.setOnClickListener {
             var intent = Intent(context, AddressActivity::class.java);
             startActivityForResult(intent, ADDRESS)
         }
 
         PostingStartTX.setOnClickListener {
 
-            company_num = Utils.getString(OfficeET)
+             email = Utils.getString(OfficeET)
             val getPW: String = Utils.getString(pwET)
             val getPW2: String = Utils.getString(pw2ET)
             company_name = Utils.getString(StoreET)
             name = Utils.getString(ceoET)
             val getPhone: String = Utils.getString(phoneET)
-            val addressDetail: String = Utils.getString(addressDetailET)
+            company_num = Utils.getString(companynumET)
 
             if (company_num == "" || company_num == null || company_num.isEmpty()) {
                 geterror = "사업자등록번호를 입력해주세요"
@@ -167,17 +167,18 @@ class OrderJoinActivity : RootActivity() {
                 dlgView( geterror)
             }
 
-            else if(getPhone != ori_phone) {
-                geterror = "휴대폰인증을 해주세요"
+//            else if(getPhone != ori_phone) {
+//                geterror = "휴대폰인증을 해주세요"
+//
+//                dlgView( geterror)
+//            }
 
-                dlgView( geterror)
-            }
-
-            else if(sms_code != Utils.getString(smsCodeET)) {
-                geterror = "인증번호를 다시 확인해주세요"
-
-                dlgView( geterror)
-            }else{
+//            else if(sms_code != Utils.getString(smsCodeET)) {
+//                geterror = "인증번호를 다시 확인해주세요"
+//
+//                dlgView( geterror)
+//            }
+ else{
                 passwd = getPW
 
                 join()
@@ -293,14 +294,15 @@ class OrderJoinActivity : RootActivity() {
     fun join() {
         val params = RequestParams()
         params.put("name", name)
-        params.put("company_num", company_num)
+        params.put("email",email )
         params.put("company_name", company_name)
         params.put("address", Utils.getString(addressTV))
         params.put("lat", lat)
         params.put("lng", lng)
-        params.put("address_detail", Utils.getString(addressDetailET))
+        params.put("company_num",company_num)
         params.put("passwd", passwd)
-        params.put("phone", ori_phone)
+//        params.put("phone", ori_phone)
+        params.put("phone", Utils.getString(phoneET))
         params.put("school_id", school_id)
         params.put("member_type", "3")
 
