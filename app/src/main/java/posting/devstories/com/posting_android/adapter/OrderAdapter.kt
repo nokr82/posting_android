@@ -45,7 +45,7 @@ open class OrderAdapter(context:Context, view:Int, data:ArrayList<JSONObject>) :
         var image_uri = Utils.getString(posting, "image_uri")
         var leftCount = Utils.getString(posting, "leftCount")
         var coupon_type:String =  Utils.getString(posting, "coupon_type")
-        var uses_start_date =   Utils.getString(posting, "created")
+        var uses_start_date =   Utils.getString(posting, "uses_start_date")
         var uses_end_date:String =  Utils.getString(posting, "uses_end_date")
         var menu_name:String =  Utils.getString(posting, "menu_name")
         var sale_per:String =  Utils.getString(posting, "sale_per")

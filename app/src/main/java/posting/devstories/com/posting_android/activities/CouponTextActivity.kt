@@ -37,7 +37,7 @@ class CouponTextActivity : RootActivity() {
     var getday=""
     var geterror = ""
     var coupon_type = ""
-    var uses_srart_date = ""
+    var uses_start_date = ""
     var uses_end_date  = ""
     var menu_name = ""
     var sale_per = ""
@@ -175,19 +175,19 @@ class CouponTextActivity : RootActivity() {
             if (coupon_type.equals("1")) {
                 menu_name = Utils.getString(titleET)
                 sale_per = Utils.getString(saleET)
-                uses_srart_date = Utils.getString(startdateTV)
+                uses_start_date = Utils.getString(startdateTV)
                 uses_end_date = Utils.getString(enddateTV)
                 contents = Utils.getString(content2ET)
             }else if (coupon_type.equals("2")){
                 menu_name = Utils.getString(title2ET)
                 sale_per = Utils.getString(saleET)
-                uses_srart_date = Utils.getString(startdate2TV)
+                uses_start_date = Utils.getString(startdate2TV)
                 uses_end_date = Utils.getString(enddate2TV)
                 contents = Utils.getString(content3ET)
             }else if (coupon_type.equals("3")){
                 menu_name = Utils.getString(title3ET)
                 sale_price = Utils.getString(moneyET)
-                uses_srart_date = Utils.getString(startdate3TV)
+                uses_start_date = Utils.getString(startdate3TV)
                 uses_end_date = Utils.getString(enddate3TV)
                 contents = Utils.getString(content4ET)
             }
@@ -219,7 +219,7 @@ class CouponTextActivity : RootActivity() {
         params.put("contents", contents)
         params.put("count", getmost)
         params.put("coupon_type", coupon_type)
-        params.put("uses_srart_date", uses_srart_date)
+        params.put("uses_start_date", uses_start_date)
         params.put("uses_end_date", uses_end_date)
         params.put("menu_name", menu_name)
         params.put("sale_per", sale_per)
