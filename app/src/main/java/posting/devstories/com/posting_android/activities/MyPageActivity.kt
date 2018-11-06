@@ -483,7 +483,6 @@ class MyPageActivity : FragmentActivity() {
                             alramIV.setImageResource(R.mipmap.alramoff)
                         }
 
-
                         var image_uri = Utils.getString(member, "image_uri")
                         if (!image_uri.isEmpty() && image_uri != "") {
                             var image = Config.url + image_uri
@@ -505,8 +504,29 @@ class MyPageActivity : FragmentActivity() {
                             schoolTV.visibility = View.GONE
                         }
 
+                        val writeStudyCnt = Utils.getInt(response, "writeStudyCnt")
+                        writeStudyTV.text = writeStudyCnt.toString()
+
+                        val writeClassCnt = Utils.getInt(response, "writeClassCnt")
+                        writeClassTV.text = writeClassCnt.toString()
+
+                        val writeMeetingCnt = Utils.getInt(response, "writeMeetingCnt")
+                        writeMeetingTV.text = writeMeetingCnt.toString()
+
+                        val saveStudyCnt = Utils.getInt(response, "saveStudyCnt")
+                        saveStudyTV.text = saveStudyCnt.toString()
+
+                        val saveClassCnt = Utils.getInt(response, "saveClassCnt")
+                        saveClassTV.text = saveClassCnt.toString()
+
+                        val saveMeetingCnt = Utils.getInt(response, "saveMeetingCnt")
+                        saveMeetingTV.text = saveMeetingCnt.toString()
+
+                        val today = Utils.getString(response, "today")
+                        todayTV.text = today
+
                     } else {
-                        Toast.makeText(context, "일치하는 회원이 존재하지 않습니다.", Toast.LENGTH_LONG).show()
+//                        Toast.makeText(context, "일치하는 회원이 존재하지 않습니다.", Toast.LENGTH_LONG).show()
                     }
 
                 } catch (e: JSONException) {

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+        xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -145,9 +146,10 @@
                                 android:gravity="center">
 
                                 <TextView
+                                        android:id="@+id/todayTV"
                                         android:padding="5dp"
                                         android:gravity="center"
-                                        android:text="   11/1 THU"
+                                        android:text="11/1 THU"
                                         android:textColor="#063588"
                                         android:textSize="10dp"/>
 
@@ -192,23 +194,23 @@
                                     android:textSize="10dp" />
 
                                 <TextView
-
+                                    android:id="@+id/writeStudyTV"
                                     android:gravity="center"
-                                    android:text="1"
+                                    android:text=""
                                     android:textColor="#8F8E8A"
                                     android:textSize="18dp" />
 
                                 <TextView
-
+                                    android:id="@+id/writeClassTV"
                                     android:gravity="center"
-                                    android:text="1"
+                                    android:text=""
                                     android:textColor="#8F8E8A"
                                     android:textSize="18dp" />
 
                                 <TextView
-
+                                    android:id="@+id/writeMeetingTV"
                                     android:gravity="center"
-                                    android:text="1"
+                                    android:text=""
                                     android:textColor="#8F8E8A"
                                     android:textSize="18dp" />
 
@@ -229,20 +231,23 @@
                                     android:textSize="10dp" />
 
                                 <TextView
+                                    android:id="@+id/saveStudyTV"
                                     android:gravity="center"
-                                    android:text="3"
+                                    android:text=""
                                     android:textColor="#8F8E8A"
                                     android:textSize="18dp" />
 
                                 <TextView
+                                    android:id="@+id/saveClassTV"
                                     android:gravity="center"
-                                    android:text="3"
+                                    android:text=""
                                     android:textColor="#8F8E8A"
                                     android:textSize="18dp" />
 
                                 <TextView
+                                    android:id="@+id/saveMeetingTV"
                                     android:gravity="center"
-                                    android:text="1"
+                                    android:text=""
                                     android:textColor="#8F8E8A"
                                     android:textSize="18dp" />
                             </TableRow>
