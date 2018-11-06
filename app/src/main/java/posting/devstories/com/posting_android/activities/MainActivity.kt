@@ -123,6 +123,8 @@ class MainActivity : FragmentActivity() {
         writeLL.setOnClickListener {
 
             val intent = Intent(this, PostWriteActivity::class.java)
+            intent.putExtra("member_type",member_type)
+
             startActivity(intent)
 
 

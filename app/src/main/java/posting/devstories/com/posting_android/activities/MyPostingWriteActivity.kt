@@ -35,13 +35,7 @@ class MyPostingWriteActivity : RootActivity() {
 
     lateinit var context:Context
     private var progressDialog: ProgressDialog? = null
-
     var imgid:String? = null
-    var mee = arrayOf("자유","정보","스터디","동아리","미팅")
-    var  most =arrayOf("수량","1","3","5","10","20","∞")
-
-    var day = arrayOf("기간","1일","5일","7일","10일","30일","60일")
-
     var capture: Bitmap?= null
     var member_type = ""
     var image_uri:String? = null

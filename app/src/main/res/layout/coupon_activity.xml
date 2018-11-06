@@ -29,23 +29,10 @@
                 android:orientation="horizontal"
                 android:padding="16dp">
 
+
             <Spinner
 
                     android:id="@+id/most4SP"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@null">
-
-            </Spinner>
-            <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginRight="20dp"
-                    android:src="@mipmap/semo" />
-            <Spinner
-
-                    android:id="@+id/day4SP"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@null">
@@ -127,7 +114,7 @@
                 <EditText
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
-                        android:id="@+id/idET"
+                        android:id="@+id/titleET"
                         android:hint="상품명(10자 이내)"
                         android:inputType="textEmailAddress"
                         android:textSize="14dp"
@@ -152,7 +139,9 @@
                             android:background="@null"
                             android:paddingLeft="7dp"
                     />
-                    <EditText android:layout_width="wrap_content" android:layout_height="40dp"
+                    <EditText
+                        android:id="@+id/saleTV"
+                        android:layout_width="wrap_content" android:layout_height="40dp"
                               android:background="@null"
                               android:hint="            "
                     />
@@ -191,6 +180,7 @@
                     <EditText android:layout_width="wrap_content" android:layout_height="40dp"
                               android:hint="YY/MM/DD ~ YY/MM/DD"
                               android:textSize="14dp"
+                        android:id="@+id/dateET"
                               android:background="@null"
                     />
                 </LinearLayout>
@@ -213,7 +203,9 @@
                             android:background="@null"
                             android:paddingLeft="7dp"
                     />
-                    <EditText android:layout_width="wrap_content" android:layout_height="40dp"
+                    <EditText
+                        android:id="@+id/content2ET"
+                        android:layout_width="wrap_content" android:layout_height="40dp"
                               android:hint="ex_일부품목제외"
                               android:textSize="14dp"
                               android:background="@null"
@@ -271,6 +263,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:hint="상품명(10자 이내)"
+                    android:id="@+id/title2ET"
                         android:inputType="textEmailAddress"
                         android:textSize="14dp"
                         android:background="@null"
@@ -303,6 +296,7 @@
                     <EditText android:layout_width="wrap_content" android:layout_height="40dp"
                               android:hint="YY/MM/DD ~ YY/MM/DD"
                               android:textSize="14dp"
+                        android:id="@+id/date2ET"
                               android:background="@null"
                     />
                 </LinearLayout>
@@ -329,6 +323,7 @@
                               android:hint="ex_1인 1매한정/
 아메리카노구입시"
                               android:textSize="14dp"
+                        android:id="content3ET"
                               android:background="@null"
                     />
                 </LinearLayout>
@@ -379,6 +374,7 @@
 
 
                 <EditText
+                    android:id="@+id/title3ET"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:hint="상품명(10자 이내)"
@@ -415,13 +411,14 @@
                               android:hint="    "
                               android:textSize="14dp"
                               android:background="@null"
+                        android:id="@+id/moneyET"
                     />
                     <TextView
                             android:layout_width="wrap_content"
                             android:gravity="center_vertical"
                             android:layout_height="40dp"
                             android:textColor="#8F8E8A"
-                            android:text="%"
+                            android:text="원"
                             android:textSize="14dp"
                             android:background="@null"
                             android:paddingLeft="7dp"
@@ -451,6 +448,7 @@
                     <EditText android:layout_width="wrap_content" android:layout_height="40dp"
                               android:hint="YY/MM/DD ~ YY/MM/DD"
                               android:textSize="14dp"
+                        android:id="@+id/dateET"
                               android:background="@null"
                     />
                 </LinearLayout>
@@ -477,6 +475,7 @@
                               android:hint="ex_에스프레소 전품목/
 중복할인 불가"
                               android:textSize="14dp"
+                        android:id="@+id/content4ET"
                               android:background="@null"
                     />
                 </LinearLayout>

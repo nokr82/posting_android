@@ -67,6 +67,7 @@ class PostWriteActivity : RootActivity() {
 
         intent = getIntent()
         member_type = intent.getStringExtra("member_type")
+
         posting_id = intent.getStringExtra("posting_id")
         contents = intent.getStringExtra("contents")
         image_uri = intent.getStringExtra("image_uri")
@@ -134,6 +135,7 @@ class PostWriteActivity : RootActivity() {
 
         }
         if (member_type.equals("3")){
+
             meeting2LL.visibility = View.GONE
         }
 
@@ -157,10 +159,32 @@ class PostWriteActivity : RootActivity() {
 
 
         textRL.setOnClickListener {
+
+            getmee = meetingSP2.selectedItem.toString()
+            getmost = mostSP.selectedItem.toString()
+            getday = daySP.selectedItem.toString()
+            if (getmost.equals("수량")){
+                Toast.makeText(context,"수량을 선택해주세요",Toast.LENGTH_SHORT).show()
+            }else if (getday.equals("기간")){
+                Toast.makeText(context,"기간을 선택해주세요",Toast.LENGTH_SHORT).show()
+            }else{
+                if(member_type.equals("3")){
+                    var intent = Intent(context, CouponTextActivity::class.java)
+                    intent.putExtra("getmost",getmost)
+                    intent.putExtra("getday",getday)
+                    startActivity(intent)
+                }
+
+
+
             var intent = Intent(context, MyPostingWriteActivity::class.java)
+                intent.putExtra("getmee",getmee)
+                intent.putExtra("getmost",getmost)
+                print("tettoejotjotnkf"+getmost)
+                intent.putExtra("getday",getday)
             intent.putExtra("text", text)
             startActivity(intent)
-
+            }
         }
 
         nextTX.setOnClickListener {
