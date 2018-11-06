@@ -49,6 +49,8 @@ class DetailActivity : RootActivity() {
     var type = 1
     var contents = ""
     var coupon = -1
+    var taptype = -1
+    var save_id :String? = null
     lateinit var adapterRe: ReAdapter
 
     var postingData:JSONObject = JSONObject();
@@ -61,7 +63,11 @@ class DetailActivity : RootActivity() {
         progressDialog = ProgressDialog(context)
 
         intent = getIntent()
+        taptype=intent.getIntExtra("taptype",-1)
+        save_id = intent.getStringExtra("save_id")
+        println("22222222"+save_id)
 
+        println("----------------tap"+taptype)
         coupon = intent.getIntExtra("coupon",-1)
         use_yn = intent.getStringExtra("use_yn")
 
@@ -96,8 +102,12 @@ class DetailActivity : RootActivity() {
 
 
         menuIV.setOnClickListener {
-            dlgView()
-        }
+            if (taptype ==2){
+                storagedlgView()
+            }else{
+                dlgView()
+            }
+            }
 
         commentsET.setOnEditorActionListener { textView, i, keyEvent ->
             commentsET.hint = "댓글쓰기"
@@ -398,6 +408,13 @@ class DetailActivity : RootActivity() {
                        image_uri = Utils.getString(posting, "image_uri")
                         count = Utils.getInt(posting, "leftCount")
 //                        var created =   Utils.getString(posting, "created")
+
+                        if (taptype==2){
+                            menuIV.visibility = View.VISIBLE
+
+                        }
+
+
                         if (member_id==member_id2){
                             myLL.visibility = View.VISIBLE
                             menuIV.visibility = View.VISIBLE
@@ -617,6 +634,7 @@ class DetailActivity : RootActivity() {
         val delTV = dialogView.findViewById<TextView>(R.id.delTV)
         val modiTV = dialogView.findViewById<TextView>(R.id.modiTV)
         val recyTV = dialogView.findViewById<TextView>(R.id.recyTV)
+        recyTV.visibility = View.GONE
 
         delTV.setOnClickListener {
             del_posting()
@@ -638,9 +656,7 @@ class DetailActivity : RootActivity() {
 
         }
 
-        recyTV.setOnClickListener {
 
-        }
 
 
         mPopupDlg =  builder.setView(dialogView).show()
@@ -648,8 +664,93 @@ class DetailActivity : RootActivity() {
     }
 
 
+    fun storagedlgView(){
+        var mPopupDlg: DialogInterface? = null
+
+        val builder = AlertDialog.Builder(this)
+        val dialogView = layoutInflater.inflate(R.layout.myposting_dlg, null)
+        val delTV = dialogView.findViewById<TextView>(R.id.delTV)
+        val modiTV = dialogView.findViewById<TextView>(R.id.modiTV)
+        val recyTV = dialogView.findViewById<TextView>(R.id.recyTV)
+        val titleTV = dialogView.findViewById<TextView>(R.id.titleTV)
+        titleTV.text = "My Storage"
+        recyTV.visibility = View.GONE
+        modiTV.visibility = View.GONE
+
+        delTV.setOnClickListener {
+            savedel_posting()
+            mPopupDlg!!.cancel()
+        }
 
 
+
+        mPopupDlg =  builder.setView(dialogView).show()
+
+    }
+
+
+    fun savedel_posting(){
+        val params = RequestParams()
+        params.put("posting_id", save_id)
+
+        PostingAction.savedel_posting(params, object : JsonHttpResponseHandler() {
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+
+                try {
+                    val result = response!!.getString("result")
+                    if ("ok" == result) {
+
+                        intent = Intent()
+                        intent.putExtra("posting_id", posting_id)
+                        intent.putExtra("type", type)
+                        intent.action = "DEL_POSTING"
+                        sendBroadcast(intent)
+
+                        finish()
+
+                    }
+
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+
+            }
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONArray?) {
+                super.onSuccess(statusCode, headers, response)
+            }
+
+            private fun error() {
+                Utils.alert(context, "조회중 장애가 발생하였습니다.")
+            }
+
+            override fun onFailure(statusCode: Int, headers: Array<Header>?, throwable: Throwable, errorResponse: JSONArray?) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+                throwable.printStackTrace()
+                error()
+            }
+
+            override fun onStart() {
+                // show dialog
+                if (progressDialog != null) {
+
+                    progressDialog!!.show()
+                }
+            }
+
+            override fun onFinish() {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+            }
+        })
+    }
 
     fun del_posting(){
         val params = RequestParams()

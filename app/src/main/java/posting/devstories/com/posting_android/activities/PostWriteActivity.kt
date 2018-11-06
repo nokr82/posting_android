@@ -18,12 +18,16 @@ import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
 import android.app.Activity
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.view.View
 import kotlinx.android.synthetic.main.activity_detail.*
 import kotlinx.android.synthetic.main.activity_postwrite.*
 import posting.devstories.com.posting_android.R.id.meeting2LL
 import posting.devstories.com.posting_android.base.Config
 import posting.devstories.com.posting_android.base.Utils
+import android.R.array
+
+
 
 
 class PostWriteActivity : RootActivity() {
@@ -56,13 +60,11 @@ class PostWriteActivity : RootActivity() {
     var capture: Bitmap? = null
 
 
-    lateinit var adpater: ArrayAdapter<String>
+    lateinit var adapter: ArrayAdapter<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_postwrite)
-
-
 
 
         intent = getIntent()
@@ -139,13 +141,15 @@ class PostWriteActivity : RootActivity() {
             meeting2LL.visibility = View.GONE
         }
 
-        adpater = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, mee)
-        meetingSP2.adapter = adpater
-        adpater = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, day)
-        daySP.adapter = adpater
+        adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, mee)
+        meetingSP2.adapter = adapter
 
-        adpater = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, most)
-        mostSP.adapter = adpater
+
+        adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, day)
+        daySP.adapter = adapter
+
+        adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, most)
+        mostSP.adapter = adapter
 
 
 
