@@ -25,6 +25,11 @@ object ReviewAction {
         HttpClient.post("/review/del.json", params, handler)
     }
 
+    // 수정
+    fun edit_review(params: RequestParams, handler: JsonHttpResponseHandler) {
+        HttpClient.post("/review/edit_review.json", params, handler)
+    }
+
     // 신고
     fun report(params: RequestParams, handler: JsonHttpResponseHandler) {
         HttpClient.post("/review/report.json", params, handler)
