@@ -26,8 +26,7 @@ import posting.devstories.com.posting_android.R.id.meeting2LL
 import posting.devstories.com.posting_android.base.Config
 import posting.devstories.com.posting_android.base.Utils
 import android.R.array
-
-
+import android.widget.TextView
 
 
 class PostWriteActivity : RootActivity() {
@@ -59,8 +58,16 @@ class PostWriteActivity : RootActivity() {
     var image:String?= null
     var capture: Bitmap? = null
 
+//
+//    final ArrayAdapter<String> adapter= new ArrayAdapter<String>(getContext(),R.layout.spinner_item,str);
+//
+//    adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+//
+//    spinner_field.setAdapter(adapter);
 
     lateinit var adapter: ArrayAdapter<String>
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,7 +80,6 @@ class PostWriteActivity : RootActivity() {
         posting_id = intent.getStringExtra("posting_id")
         contents = intent.getStringExtra("contents")
         image_uri = intent.getStringExtra("image_uri")
-
 
 
         if (!posting_id.equals("")){
@@ -145,10 +151,11 @@ class PostWriteActivity : RootActivity() {
         meetingSP2.adapter = adapter
 
 
+
         adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, day)
         daySP.adapter = adapter
 
-        adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, most)
+        adapter = ArrayAdapter<String>(this, R.layout.spinner_item, most)
         mostSP.adapter = adapter
 
 
