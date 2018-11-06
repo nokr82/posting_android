@@ -43,6 +43,7 @@
 
             <Spinner
                 android:id="@+id/meetingSP2"
+                android:popupBackground="@drawable/background_round_ffe330"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@null">

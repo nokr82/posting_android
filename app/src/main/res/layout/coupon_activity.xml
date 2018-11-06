@@ -323,7 +323,7 @@
                               android:hint="ex_1인 1매한정/
 아메리카노구입시"
                               android:textSize="14dp"
-                        android:id="content3ET"
+                        android:id="@+id/content3ET"
                               android:background="@null"
                     />
                 </LinearLayout>
