@@ -99,7 +99,7 @@ open class MyPostingAdapter(context:Context, view:Int, data:ArrayList<JSONObject
             storageIV = v.findViewById(R.id.storageIV) as ImageView
             storageTV = v.findViewById(R.id.storageTV) as TextView
             leftCntTV = v.findViewById(R.id.leftCnt2TV) as TextView
-            chatAlarmCntTV = v.findViewById(R.id.leftCnt2TV) as TextView
+            chatAlarmCntTV = v.findViewById(R.id.chatAlarmCntTV) as TextView
         }
     }
 }
