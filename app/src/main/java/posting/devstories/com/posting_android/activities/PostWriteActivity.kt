@@ -147,12 +147,12 @@ class PostWriteActivity : RootActivity() {
             meeting2LL.visibility = View.GONE
         }
 
-        adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, mee)
+        adapter = ArrayAdapter<String>(this, R.layout.spinner_item, mee)
         meetingSP2.adapter = adapter
 
 
 
-        adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, day)
+        adapter = ArrayAdapter<String>(this, R.layout.spinner_item, day)
         daySP.adapter = adapter
 
         adapter = ArrayAdapter<String>(this, R.layout.spinner_item, most)
