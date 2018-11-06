@@ -37,17 +37,12 @@ open class MyPostingAdapter(context:Context, view:Int, data:ArrayList<JSONObject
 
         var json = data.get(position)
 
-
-
         var posting = json.getJSONObject("Posting")
         var contents =   Utils.getString(posting, "contents")
         var image_uri = Utils.getString(posting, "image_uri")
         var leftCount = Utils.getString(posting, "leftCount")
 
-
-
         item.storageIV.visibility = View.GONE
-
 
         if (!image_uri.isEmpty() && image_uri != "") {
             var image = Config.url + image_uri
