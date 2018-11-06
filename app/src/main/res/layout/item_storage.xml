@@ -17,50 +17,6 @@
             android:src="@mipmap/bg"
             android:scaleType="fitXY"/>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentTop="true">
-
-            <TextView
-                android:id="@+id/chatAlarmCntTV"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="32"
-                android:textSize="10dp"
-                android:background="@drawable/circle_red"
-                android:textColor="#FFFFFF"
-                android:gravity="center"
-                android:paddingLeft="2.5dp"
-                android:paddingRight="2.5dp"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-                android:id="@+id/countLL"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@mipmap/postbg_logo"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="7dp"
-                android:layout_marginLeft="7dp"
-                android:gravity="center_vertical">
-
-            <TextView
-                android:id="@+id/leftCnt2TV"
-                android:layout_marginLeft="4.9dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0"
-                android:textSize="17.67dp"
-                android:textColor="#575759"/>
-
-        </LinearLayout>
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -93,13 +49,57 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxLines="3"
+                android:ellipsize="end"
                 android:textSize="13dp"
                 android:textColor="#3E3A39"
                 android:visibility="gone"/>
 
-
-
         </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true">
+
+            <TextView
+                android:id="@+id/chatAlarmCntTV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="32"
+                android:textSize="10dp"
+                android:background="@drawable/circle_red"
+                android:textColor="#FFFFFF"
+                android:gravity="center"
+                android:paddingLeft="2.5dp"
+                android:paddingRight="2.5dp"
+                android:visibility="gone"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/countLL"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@mipmap/postbg_logo"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="7dp"
+                android:layout_marginLeft="7dp"
+                android:gravity="center_vertical">
+
+            <TextView
+                    android:id="@+id/leftCnt2TV"
+                    android:layout_marginLeft="4.9dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textSize="17.67dp"
+                    android:textColor="#575759"/>
+
+        </LinearLayout>
 
     </RelativeLayout>
 

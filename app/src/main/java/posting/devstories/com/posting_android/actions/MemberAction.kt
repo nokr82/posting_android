@@ -37,4 +37,12 @@ object MemberAction {
     fun regist_token(params: RequestParams, handler: JsonHttpResponseHandler) {
         HttpClient.post("/member/regist_token.json", params, handler)
     }
+
+    fun cirtySchoolEmail(params: RequestParams, handler: JsonHttpResponseHandler) {
+        HttpClient.post("/member/cirty_school_email.json", params, handler)
+    }
+
+    fun uploadSchoolId(params: RequestParams, handler: JsonHttpResponseHandler) {
+        HttpClient.post("/member/upload_school_id.json", params, handler)
+    }
 }

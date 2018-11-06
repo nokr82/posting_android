@@ -29,7 +29,8 @@ import posting.devstories.com.posting_android.R
 import posting.devstories.com.posting_android.base.Config
 import posting.devstories.com.posting_android.base.PrefUtils
 import posting.devstories.com.posting_android.base.Utils
-import java.io.*
+import java.io.ByteArrayInputStream
+import java.io.IOException
 
 class MyPageActivity : FragmentActivity() {
 
@@ -47,18 +48,24 @@ class MyPageActivity : FragmentActivity() {
     private var progressDialog: ProgressDialog? = null
     var autoLogin = false
 
+    private var has_branch_yn = "N"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mypage)
 
         this.context = this
         progressDialog = ProgressDialog(context)
+
         loadInfo()
 
         versionCheck()
 
         schoolTV.setOnClickListener {
             val intent = Intent(this, SchoolagreeActivity::class.java)
+            intent.putExtra("has_branch_yn", has_branch_yn)
+            intent.putExtra("school_email_confirmed", school_email_confirmed)
+            intent.putExtra("school_confirmed", school_confirmed)
             startActivity(intent)
 
         }
@@ -339,11 +346,7 @@ class MyPageActivity : FragmentActivity() {
         intent.type = "text/plain"
         intent.data = Uri.parse("mailto:contact.wepostkorea@gmail.com")
         intent.putExtra(Intent.EXTRA_EMAIL, arrayOf("contact.wepostkorea@gmail.com"))
-        if ("1" == type) {
-            intent.putExtra(Intent.EXTRA_SUBJECT, "Posting 문의하기")
-        } else if ("2" == type) {
-            intent.putExtra(Intent.EXTRA_SUBJECT, "Groomee 제휴신청하기")
-        }
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Posting 문의하기")
         startActivity(intent)
     }
 
@@ -445,6 +448,10 @@ class MyPageActivity : FragmentActivity() {
             }
         })
     }
+
+    private var school_email_confirmed = "N"
+    private var school_confirmed = "N"
+
     //회원정보
     fun loadInfo() {
         val params = RequestParams()
@@ -459,6 +466,8 @@ class MyPageActivity : FragmentActivity() {
 
                 try {
                     val result = response!!.getString("result")
+
+                    print("result : $response")
 
                     if ("ok" == result) {
 
@@ -482,6 +491,19 @@ class MyPageActivity : FragmentActivity() {
                         }
                         infonameTV.text = name+"/"+birth
                         nameTV.text =nick
+
+                        // school
+                        val school = response.getJSONObject("school")
+                        has_branch_yn = Utils.getString(school, "has_branch_yn")
+
+                        school_email_confirmed = Utils.getString(member, "school_email_confirmed")
+                        school_confirmed = Utils.getString(member, "school_confirmed")
+
+                        if(school_confirmed == "N") {
+                            schoolTV.visibility = View.VISIBLE
+                        } else {
+                            schoolTV.visibility = View.GONE
+                        }
 
                     } else {
                         Toast.makeText(context, "일치하는 회원이 존재하지 않습니다.", Toast.LENGTH_LONG).show()
