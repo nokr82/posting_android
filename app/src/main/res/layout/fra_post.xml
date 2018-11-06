@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -53,7 +52,7 @@
         </LinearLayout>
 
         <LinearLayout
-                android:id="@+id/menuLL"
+            android:id="@+id/menuLL"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:paddingLeft="13dp"
@@ -69,272 +68,301 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="42dp"
-        android:orientation="horizontal">
-
-        <RelativeLayout
-            android:id="@+id/freeRL"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-
-            <TextView
-                android:id="@+id/freeTV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:text="자유"
-                android:textColor="#99a0a0"
-                android:textSize="14dp" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="3dp"
-                android:layout_alignParentBottom="true"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:background="#01b4ec"
-                android:id="@+id/freeV"
-                android:visibility="invisible"/>
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/infoRL"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-
-            <TextView
-                android:id="@+id/infoTV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:text="정보"
-                android:textColor="#99a0a0"
-                android:textSize="14dp" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="3dp"
-                android:layout_alignParentBottom="true"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:id="@+id/infoV"
-                android:background="#01b4ec"
-                android:visibility="invisible" />
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/studyRL"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:text="스터디"
-                android:id="@+id/studyTV"
-                android:textColor="#99a0a0"
-                android:textSize="14dp" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="3dp"
-                android:layout_alignParentBottom="true"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:id="@+id/studyV"
-                android:background="#01b4ec"
-                android:visibility="invisible" />
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/classRL"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:text="동아리"
-                android:id="@+id/classTV"
-                android:textColor="#99a0a0"
-                android:textSize="14dp" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="3dp"
-                android:layout_alignParentBottom="true"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:id="@+id/classV"
-                android:background="#01b4ec"
-                android:visibility="invisible" />
-
-        </RelativeLayout>
-        <RelativeLayout
-            android:id="@+id/meetingRL"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:text="미팅"
-                android:id="@+id/meetingTV"
-                android:textColor="#99a0a0"
-                android:textSize="14dp" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="3dp"
-                android:layout_alignParentBottom="true"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:id="@+id/meetingV"
-                android:background="#01b4ec"
-                android:visibility="invisible" />
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/couponRL"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:text="쿠폰"
-                android:id="@+id/couponTV"
-                android:textColor="#99a0a0"
-                android:textSize="14dp" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="3dp"
-                android:layout_alignParentBottom="true"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:id="@+id/couponV"
-                android:background="#01b4ec"
-                android:visibility="invisible" />
-
-        </RelativeLayout>
-
-
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="#f0f0f0"/>
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
-
-        <posting.devstories.com.posting_android.base.NonSwipeableViewPager
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/pagerVP"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone">
-        </posting.devstories.com.posting_android.base.NonSwipeableViewPager>
-
-        <LinearLayout
-            android:id="@+id/mainLL"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
+            android:orientation="vertical">
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
+                android:layout_height="42dp"
+                android:orientation="horizontal">
 
-                <ImageView
-                    android:layout_width="23.37dp"
-                    android:layout_height="22.42dp"
-                    android:src="@mipmap/home" />
+                <RelativeLayout
+                    android:id="@+id/freeRL"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/freeTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:text="자유"
+                        android:textColor="#99a0a0"
+                        android:textSize="14dp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="3dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="#01b4ec"
+                        android:id="@+id/freeV"
+                        android:visibility="invisible"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/infoRL"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/infoTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:text="정보"
+                        android:textColor="#99a0a0"
+                        android:textSize="14dp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="3dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:id="@+id/infoV"
+                        android:background="#01b4ec"
+                        android:visibility="invisible" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/studyRL"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:text="스터디"
+                        android:id="@+id/studyTV"
+                        android:textColor="#99a0a0"
+                        android:textSize="14dp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="3dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:id="@+id/studyV"
+                        android:background="#01b4ec"
+                        android:visibility="invisible" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/classRL"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:text="동아리"
+                        android:id="@+id/classTV"
+                        android:textColor="#99a0a0"
+                        android:textSize="14dp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="3dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:id="@+id/classV"
+                        android:background="#01b4ec"
+                        android:visibility="invisible" />
+
+                </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/meetingRL"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:text="미팅"
+                        android:id="@+id/meetingTV"
+                        android:textColor="#99a0a0"
+                        android:textSize="14dp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="3dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:id="@+id/meetingV"
+                        android:background="#01b4ec"
+                        android:visibility="invisible" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/couponRL"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:text="쿠폰"
+                        android:id="@+id/couponTV"
+                        android:textColor="#99a0a0"
+                        android:textSize="14dp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="3dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:id="@+id/couponV"
+                        android:background="#01b4ec"
+                        android:visibility="invisible" />
+
+                </RelativeLayout>
+
 
             </LinearLayout>
 
-            <ScrollView
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="#f0f0f0"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <posting.devstories.com.posting_android.base.NonSwipeableViewPager
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/pagerVP"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone">
+                </posting.devstories.com.posting_android.base.NonSwipeableViewPager>
+
+                <LinearLayout
+                    android:id="@+id/mainLL"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
-                <LinearLayout
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
                         android:orientation="vertical">
 
-                    <posting.devstories.com.posting_android.base.RationalRelativeLayout
-                            android:id="@+id/adverRL"
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            app:ratio="1440:1040">
+                        <ImageView
+                            android:layout_width="23.37dp"
+                            android:layout_height="22.42dp"
+                            android:src="@mipmap/home" />
 
-                        <android.support.v4.view.ViewPager
-                                android:id="@+id/adverVP"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent">
+                    </LinearLayout>
 
-                        </android.support.v4.view.ViewPager>
+                    <ScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
 
                         <LinearLayout
-                                android:id="@+id/circleLL"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <posting.devstories.com.posting_android.base.RationalRelativeLayout
+                                android:id="@+id/adverRL"
                                 android:layout_width="match_parent"
-                                android:layout_height="7.35dp"
-                                android:layout_alignParentBottom="true"
-                                android:gravity="center"
-                                android:orientation="horizontal"
-                                android:layout_marginBottom="7dp">
+                                android:layout_height="0dp"
+                                app:ratio="360:146">
+
+                                <android.support.v4.view.ViewPager
+                                    android:id="@+id/adverVP"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent">
+
+                                </android.support.v4.view.ViewPager>
+
+                                <LinearLayout
+                                    android:id="@+id/circleLL"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="7.35dp"
+                                    android:layout_alignParentBottom="true"
+                                    android:gravity="center"
+                                    android:orientation="horizontal"
+                                    android:layout_marginBottom="7dp">
+
+                                </LinearLayout>
+
+                            </posting.devstories.com.posting_android.base.RationalRelativeLayout>
+
+                            <com.github.paolorotolo.expandableheightlistview.ExpandableHeightListView
+                                android:id="@+id/mainLV"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:divider="@null"
+                                android:dividerHeight="5dp"
+                                android:listSelector="@null"
+                                android:layout_marginTop="5dp">
+
+                            </com.github.paolorotolo.expandableheightlistview.ExpandableHeightListView>
 
                         </LinearLayout>
 
-                    </posting.devstories.com.posting_android.base.RationalRelativeLayout>
-
-                    <com.github.paolorotolo.expandableheightlistview.ExpandableHeightListView
-                            android:id="@+id/mainLV"
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
-                            android:divider="@null"
-                            android:dividerHeight="5dp"
-                            android:listSelector="@null"
-                            android:layout_marginTop="5dp">
-
-                    </com.github.paolorotolo.expandableheightlistview.ExpandableHeightListView>
+                    </ScrollView>
 
                 </LinearLayout>
 
-            </ScrollView>
-
+            </RelativeLayout>
         </LinearLayout>
 
+
+        <ListView
+            android:id="@+id/schoolLV"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:background="@drawable/background_border_fafafa"
+            android:visibility="gone"
+            android:padding="20dp">
+
+        </ListView>
+
     </RelativeLayout>
+
+
+
+
 
 </LinearLayout>
 
