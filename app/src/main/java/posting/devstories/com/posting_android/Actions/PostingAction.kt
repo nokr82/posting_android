@@ -49,6 +49,10 @@ object PostingAction {
     fun use_posting(params: RequestParams, handler: JsonHttpResponseHandler) {
         HttpClient.post("/posting/use_posting.json", params, handler)
     }
+    // 저장한 회원 목록 (스터디/동아리/미팅)
+    fun save_members(params: RequestParams, handler: JsonHttpResponseHandler) {
+        HttpClient.post("/posting/save_members.json", params, handler)
+    }
 
 
 }

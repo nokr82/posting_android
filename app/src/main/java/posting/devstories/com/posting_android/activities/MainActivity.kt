@@ -38,7 +38,7 @@ class MainActivity : FragmentActivity() {
     var member_id = -1
     var member_type = ""
     var is_push = false
-    lateinit var posting_id:String
+    var posting_id:String?=null
 
     internal var editPostingReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent?) {
@@ -70,11 +70,12 @@ class MainActivity : FragmentActivity() {
         setContentView(R.layout.activity_main)
 
         this.context = this
-
-        posting_id = intent.getStringExtra("posting_id")
         is_push = intent.getBooleanExtra("is_push", false)
 
         if(is_push) {
+
+            posting_id = intent.getStringExtra("posting_id")
+
             var intent = Intent(context, DetailActivity::class.java)
             intent.putExtra("id", posting_id)
             startActivity(intent)
