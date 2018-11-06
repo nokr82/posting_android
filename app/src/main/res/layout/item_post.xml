@@ -4,20 +4,24 @@
     android:layout_width="150dp"
     android:layout_height="150dp"
     android:orientation="vertical"
+    android:adjustViewBounds="true"
     android:gravity="center">
 
     <RelativeLayout
+        android:adjustViewBounds="true"
         android:id="@+id/postRL"
         android:layout_width="139dp"
         android:layout_height="140dp">
 
         <ImageView
+            android:adjustViewBounds="true"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:src="@mipmap/bg"
             android:scaleType="fitXY"/>
 
         <RelativeLayout
+            android:adjustViewBounds="true"
                 android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="7dp"
@@ -115,13 +119,13 @@ android:orientation="horizontal"
 
 
             <ImageView
+                android:adjustViewBounds="true"
                 android:id="@+id/postIV"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
                 android:gravity="center"
                 android:visibility="gone"
-
            >
 
             </ImageView>

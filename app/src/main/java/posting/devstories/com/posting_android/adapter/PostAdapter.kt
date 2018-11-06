@@ -51,14 +51,14 @@ open class PostAdapter(context:Context, view:Int, data:ArrayList<JSONObject>) : 
         item.postIV.visibility = View.GONE
         item.contentsTV.visibility = View.GONE
 
-        if (!image_uri.isEmpty() && image_uri != "") {
-            var image = Config.url + image_uri
-            ImageLoader.getInstance().displayImage(image, item.postIV, Utils.UILoptionsPosting)
-            item.postIV.visibility = View.VISIBLE
-        } else {
-            item.contentsTV.text = contents
-            item.contentsTV.visibility = View.VISIBLE
-        }
+    if (!image_uri.isEmpty() && image_uri != "") {
+        var image = Config.url + image_uri
+        ImageLoader.getInstance().displayImage(image, item.postIV, Utils.UILoptionsPosting)
+        item.postIV.visibility = View.VISIBLE
+    } else {
+        item.contentsTV.text = contents
+        item.contentsTV.visibility = View.VISIBLE
+    }
 
         item.leftCntTV.text = leftCount
 
