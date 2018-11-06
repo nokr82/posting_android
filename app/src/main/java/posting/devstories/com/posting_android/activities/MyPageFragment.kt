@@ -31,8 +31,6 @@ import posting.devstories.com.posting_android.base.Utils
 
 open class MyPageFragment : Fragment() {
 
-    var ctx: Context? = null
-
     private var progressDialog: ProgressDialog? = null
 
     lateinit var mainActivity:MainActivity
@@ -61,21 +59,12 @@ open class MyPageFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val ctx = context
-        if (null != ctx) {
-            doSomethingWithContext(ctx)
-        }
 
         val filter1 = IntentFilter("UPDATE_ALARM_CNT")
         context!!.registerReceiver(updateAlarmCntReceiver, filter1)
 
         mainActivity = activity as MainActivity
         return inflater.inflate(R.layout.fra_my_page, container, false)
-    }
-    fun doSomethingWithContext(context: Context) {
-        // TODO: Actually do something with the context
-        this.ctx = context
-        progressDialog = ProgressDialog(ctx)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

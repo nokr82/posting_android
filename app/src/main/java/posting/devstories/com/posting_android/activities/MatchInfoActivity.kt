@@ -4,13 +4,12 @@ import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.view.View
 import com.loopj.android.http.JsonHttpResponseHandler
 import com.loopj.android.http.RequestParams
 import com.nostra13.universalimageloader.core.ImageLoader
 import cz.msebera.android.httpclient.Header
-import kotlinx.android.synthetic.main.activity_detail.*
+import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_match_info.*
 import org.json.JSONException
 import org.json.JSONObject
@@ -21,6 +20,7 @@ import posting.devstories.com.posting_android.base.PrefUtils
 import posting.devstories.com.posting_android.base.RootActivity
 import posting.devstories.com.posting_android.base.Utils
 import posting.devstories.com.posting_android.base.Config
+import java.util.zip.Inflater
 
 /**
  * Created by dev1 on 2018-02-28.
@@ -73,23 +73,34 @@ class MatchInfoActivity : RootActivity() {
                 try {
                     val result = response!!.getString("result")
 
+                    addProfileLL.removeAllViews()
+
                     if ("ok" == result) {
                         val postingSaves = response.getJSONArray("postingSaves")
 
                         val posting = response.getJSONObject("posting")
                         val member = response.getJSONObject("member")
 
-                        var profile_uri = Config.url + Utils.getString(member,"image_uri")
-                        ImageLoader.getInstance().displayImage(profile_uri, myCV, Utils.UILoptionsProfile)
+                        for (i in 0..(postingSaves.length() - 1)) {
+
+                            val data:JSONObject = postingSaves.get(i) as JSONObject
+                            val member = data.getJSONObject("Member")
+
+                            val profileView = View.inflate(context, R.layout.item_match_user_profile, null)
+                            var profileIV:CircleImageView = profileView.findViewById(R.id.profileIV)
+
+                            var profile_uri = Config.url + Utils.getString(member,"image_uri")
+                            ImageLoader.getInstance().displayImage(profile_uri, profileIV, Utils.UILoptionsProfile)
+
+                            addProfileLL.addView(profileView)
+                        }
+
 
                         var posting_uri = Config.url + Utils.getString(posting,"image_uri")
                         ImageLoader.getInstance().displayImage(posting_uri, imageIV, Utils.UILoptionsPosting)
 
                         postingCntTV.text = postingSaves.length().toString() + "/" + Utils.getString(posting, "count")
                         matchCntTV.text = "0"
-
-                        alarmCntTV.visibility = View.GONE
-                        alarmCntTV.text = "0"
 
                     } else {
 
