@@ -56,9 +56,20 @@
                         android:layout_height="match_parent"
                         android:src="@mipmap/mybgpost"
                         android:scaleType="centerCrop"
-                        android:gravity="center">
+                        android:gravity="center"
+                        android:visibility="gone">
 
                     </ImageView>
+
+                    <TextView
+                        android:id="@+id/contentsTV"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text=""
+                        android:gravity="center"
+                        android:maxLines="3"
+                        android:ellipsize="end"
+                        android:visibility="gone"/>
 
                 </RelativeLayout>
 

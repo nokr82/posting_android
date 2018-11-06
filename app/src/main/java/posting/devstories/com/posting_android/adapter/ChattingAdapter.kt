@@ -45,32 +45,48 @@ open class ChattingAdapter(context: Context, view: Int, data: ArrayList<JSONObje
             val myId = PrefUtils.getIntPreference(context, "member_id")
             val send_member_id = Utils.getInt(chatting, "send_member_id")
             val contents = Utils.getString(chatting, "contents")
+            val type = Utils.getString(chatting, "type")
             val created = Utils.getString(chatting, "created")
+            val chat_image = Utils.getString(chatting, "image_uri")
 
             if (send_member_id == myId) {
                 item.myLL.visibility = View.VISIBLE
                 item.otherLL.visibility = View.GONE
+                item.myImageIV.visibility = View.GONE
+                item.myTV.visibility = View.GONE
 
-                item.myTV.text = contents
+                if("t" == type) {
+                    item.myTV.visibility = View.VISIBLE
+                    item.myTV.text = contents
+                } else {
+                    item.myImageIV.visibility = View.VISIBLE
+                    ImageLoader.getInstance().displayImage(Config.url + chat_image, item.myImageIV, Utils.UILoptionsProfile)
+                }
 
             } else {
                 item.myLL.visibility = View.GONE
                 item.otherLL.visibility = View.VISIBLE
+                item.otherImageIV.visibility = View.GONE
+                item.otherTV.visibility = View.GONE
 
                 // image
                 val image_uri = Utils.getString(member, "image_uri")
                 ImageLoader.getInstance().displayImage(Config.url + image_uri, item.otherIV, Utils.UILoptionsProfile)
 
-                item.otherTV.text = contents
+
+                if("t" == type) {
+                    item.otherTV.visibility = View.VISIBLE
+                    item.otherTV.text = contents
+                } else {
+                    item.otherImageIV.visibility = View.VISIBLE
+                    ImageLoader.getInstance().displayImage(Config.url + chat_image, item.otherImageIV, Utils.UILoptionsProfile)
+                }
 
             }
 
         } catch (e: JSONException) {
             e.printStackTrace()
         }
-
-
-
         return convertView
     }
 
@@ -81,6 +97,8 @@ open class ChattingAdapter(context: Context, view: Int, data: ArrayList<JSONObje
         var otherIV: CircleImageView
         var otherTV:TextView
         var myTV:TextView
+        var myImageIV:ImageView
+        var otherImageIV:ImageView
 
         init {
             myLL = v.findViewById(R.id.myLL) as LinearLayout
@@ -88,6 +106,8 @@ open class ChattingAdapter(context: Context, view: Int, data: ArrayList<JSONObje
             otherIV = v.findViewById(R.id.otherIV) as CircleImageView
             otherTV = v.findViewById(R.id.otherTV) as TextView
             myTV = v.findViewById(R.id.myTV) as TextView
+            myImageIV = v.findViewById(R.id.myImageIV) as ImageView
+            otherImageIV = v.findViewById(R.id.otherImageIV) as ImageView
 
         }
     }

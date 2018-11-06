@@ -5,6 +5,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.LinearLayout
+import android.widget.RelativeLayout
 import android.widget.TextView
 import com.loopj.android.http.JsonHttpResponseHandler
 import com.loopj.android.http.RequestParams
@@ -94,6 +96,7 @@ class MatchInfoActivity : RootActivity() {
                             val profileView = View.inflate(context, R.layout.item_match_user_profile, null)
                             var profileIV:CircleImageView = profileView.findViewById(R.id.profileIV)
                             var alarmCntTV:TextView = profileView.findViewById(R.id.alarmCntTV)
+                            var RL:RelativeLayout = profileView.findViewById(R.id.RL)
 
                             var profile_uri = Config.url + Utils.getString(member,"image_uri")
                             ImageLoader.getInstance().displayImage(profile_uri, profileIV, Utils.UILoptionsProfile)
@@ -120,13 +123,23 @@ class MatchInfoActivity : RootActivity() {
                                 alarmCntTV.text = new_message_count.toString()
                             }
 
+                            val params = RL.layoutParams as LinearLayout.LayoutParams
+                            params.setMargins(0, 0, 6, 0)
+                            RL.layoutParams = params
+
                             addProfileLL.addView(profileView)
                         }
 
+                        var image_uri = Utils.getString(posting,"image_uri")
+                        if(image_uri.isEmpty() || image_uri == "") {
+                            contentsTV.visibility = View.VISIBLE
+                            contentsTV.text = Utils.getString(posting, "contents")
+                        } else {
+                            imageIV.visibility = View.VISIBLE
+                            var posting_uri = Config.url + Utils.getString(posting,"image_uri")
+                            ImageLoader.getInstance().displayImage(posting_uri, imageIV, Utils.UILoptionsPosting)
 
-                        var posting_uri = Config.url + Utils.getString(posting,"image_uri")
-                        ImageLoader.getInstance().displayImage(posting_uri, imageIV, Utils.UILoptionsPosting)
-
+                        }
                         postingCntTV.text = postingSaves.length().toString() + "/" + Utils.getString(posting, "count")
 
                         matchCntTV.text = match_count

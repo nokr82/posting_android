@@ -249,11 +249,9 @@ open class MyPagePostingStorageFragment : Fragment() {
 
                         var member = response.getJSONObject("member");
 
-
-
                         val data = response.getJSONArray("list")
 
-                        for (i in 0..data.length() - 1) {
+                        for (i in 0..(data.length() - 1)) {
 
                             adapterData.add(data[i] as JSONObject)
 
