@@ -9,6 +9,7 @@ import com.nostra13.universalimageloader.core.ImageLoader
 import org.json.JSONObject
 import posting.devstories.com.posting_android.R
 import posting.devstories.com.posting_android.R.id.coupon_TV
+import posting.devstories.com.posting_android.R.id.coupon_contentTV
 import posting.devstories.com.posting_android.base.Utils
 import posting.devstories.com.posting_android.base.Config
 
@@ -66,7 +67,6 @@ open class PostAdapter(context:Context, view:Int, data:ArrayList<JSONObject>) : 
             item.coupon_saleTV.text = sale_per
             item.coupon_sale2TV.text = "활인"
             item.coupon_startdateTV.text = uses_start_date
-            item.coupon_contentTV.text = contents
             item.coupon_enddateTV.text = uses_end_date
         }else if (coupon_type.equals("2")){
             item.contentsTV.visibility = View.GONE
@@ -76,7 +76,6 @@ open class PostAdapter(context:Context, view:Int, data:ArrayList<JSONObject>) : 
             item.coupon_saleTV.text = "FREE"
             item.coupon_TV.visibility = View.GONE
             item.coupon_sale2TV.visibility = View.GONE
-            item.coupon_contentTV.text = contents
             item.coupon_startdateTV.text = uses_start_date
             item.coupon_enddateTV.text = uses_end_date
         }else if (coupon_type.equals("3")){
@@ -85,7 +84,6 @@ open class PostAdapter(context:Context, view:Int, data:ArrayList<JSONObject>) : 
             item.couponLL.setBackgroundColor(Color.parseColor("#A12BFB"))
             item.coupon_titleTV.text = menu_name
             item.coupon_saleTV.text = sale_price
-            item.coupon_contentTV.text = contents
             item.coupon_TV.text = "원"
             item.coupon_sale2TV.text = "활인"
             item.coupon_startdateTV.text = uses_start_date
@@ -93,7 +91,6 @@ open class PostAdapter(context:Context, view:Int, data:ArrayList<JSONObject>) : 
         }
 
         else {
-            item.couponLL.visibility = View.GONE
             if (!image_uri.isEmpty() && image_uri != "") {
                 var image = Config.url + image_uri
                 ImageLoader.getInstance().displayImage(image, item.postIV, Utils.UILoptionsPosting)
@@ -144,7 +141,6 @@ open class PostAdapter(context:Context, view:Int, data:ArrayList<JSONObject>) : 
         var coupon_TV :TextView
         var coupon_startdateTV :TextView
         var coupon_enddateTV :TextView
-        var coupon_contentTV :TextView
 
 
 
@@ -157,7 +153,8 @@ open class PostAdapter(context:Context, view:Int, data:ArrayList<JSONObject>) : 
             couponLL = v.findViewById(R.id.couponLL) as LinearLayout
             coupon_orderTV = v.findViewById(R.id.coupon_orderTV) as TextView
             coupon_titleTV = v.findViewById(R.id.coupon_titleTV) as TextView
-            coupon_contentTV = v.findViewById(R.id.coupon_contentTV) as TextView
+            coupon_contentTV
+            coupon_titleTV = v.findViewById(R.id.coupon_contentTV) as TextView
             coupon_saleTV = v.findViewById(R.id.coupon_saleTV) as TextView
             coupon_sale2TV = v.findViewById(R.id.coupon_sale2TV) as TextView
             coupon_TV = v.findViewById(R.id.coupon_TV) as TextView
