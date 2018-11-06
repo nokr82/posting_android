@@ -57,6 +57,15 @@ open class MyPostingAdapter(context:Context, view:Int, data:ArrayList<JSONObject
 
         item.leftCntTV.text = leftCount
 
+        var chattingCnt = Utils.getInt(posting, "chattingCnt")
+
+        item.chatAlarmCntTV.visibility = View.GONE
+
+        if(chattingCnt > 0) {
+            item.chatAlarmCntTV.visibility = View.VISIBLE
+            item.chatAlarmCntTV.text = chattingCnt.toString()
+        }
+
         return retView
     }
 
@@ -85,10 +94,12 @@ open class MyPostingAdapter(context:Context, view:Int, data:ArrayList<JSONObject
         var storageIV :ImageView
         var leftCntTV :TextView
         var storageTV: TextView
+        var chatAlarmCntTV: TextView
         init {
             storageIV = v.findViewById(R.id.storageIV) as ImageView
             storageTV = v.findViewById(R.id.storageTV) as TextView
             leftCntTV = v.findViewById(R.id.leftCnt2TV) as TextView
+            chatAlarmCntTV = v.findViewById(R.id.leftCnt2TV) as TextView
         }
     }
 }
