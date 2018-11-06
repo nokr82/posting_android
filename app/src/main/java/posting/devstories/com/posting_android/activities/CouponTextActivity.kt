@@ -10,24 +10,15 @@ import android.widget.Toast
 import com.loopj.android.http.JsonHttpResponseHandler
 import com.loopj.android.http.RequestParams
 import cz.msebera.android.httpclient.Header
-import kotlinx.android.synthetic.main.activity_notice.*
-import kotlinx.android.synthetic.main.activity_postwrite.*
-import kotlinx.android.synthetic.main.activity_privacy.*
-import kotlinx.android.synthetic.main.activity_service.*
 import kotlinx.android.synthetic.main.coupon_activity.*
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
-import posting.devstories.com.posting_android.Actions.NoticeAction
 import posting.devstories.com.posting_android.Actions.PostingAction
 import posting.devstories.com.posting_android.R
-import posting.devstories.com.posting_android.adapter.NoticeAdapter
-import posting.devstories.com.posting_android.base.Config
 import posting.devstories.com.posting_android.base.PrefUtils
 import posting.devstories.com.posting_android.base.RootActivity
 import posting.devstories.com.posting_android.base.Utils
-import java.io.ByteArrayInputStream
-import java.util.ArrayList
 
 class CouponTextActivity : RootActivity() {
     lateinit var context: Context
@@ -73,6 +64,7 @@ class CouponTextActivity : RootActivity() {
 
         val params = RequestParams()
         params.put("member_id", member_id)
+        params.put("current_school_id", PrefUtils.getIntPreference(context, "current_school_id"))
         params.put("type", type)
         params.put("contents", contents)
         params.put("count", getmost)
