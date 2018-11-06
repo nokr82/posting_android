@@ -7,6 +7,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.view.animation.AccelerateInterpolator
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import android.widget.Toast
@@ -23,6 +24,7 @@ import posting.devstories.com.posting_android.Actions.PostingAction.detail
 import posting.devstories.com.posting_android.Actions.PostingAction.save_posting
 import posting.devstories.com.posting_android.Actions.PostingAction.write_comments
 import posting.devstories.com.posting_android.R
+import posting.devstories.com.posting_android.adapter.DetailAdapter
 import posting.devstories.com.posting_android.adapter.ReAdapter
 import posting.devstories.com.posting_android.base.Config
 import posting.devstories.com.posting_android.base.PrefUtils
@@ -49,6 +51,9 @@ class DetailActivity : RootActivity() {
     var contents = ""
     var coupon = -1
     lateinit var adapterRe: ReAdapter
+
+    var postingData:JSONObject = JSONObject();
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
@@ -57,7 +62,6 @@ class DetailActivity : RootActivity() {
         progressDialog = ProgressDialog(context)
 
         intent = getIntent()
-
 
         coupon = intent.getIntExtra("coupon",-1)
         use_yn = intent.getStringExtra("use_yn")
@@ -74,8 +78,6 @@ class DetailActivity : RootActivity() {
         policeTV.setOnClickListener {
             policedlgView()
         }
-
-
 
         commentsLV.setOnItemClickListener { adapterView, view, i, l ->
 
@@ -345,8 +347,26 @@ class DetailActivity : RootActivity() {
 
                         val posting = data.getJSONObject("Posting")
 
+
+
+
+
+                        postingData = posting
+
+//                        var manager = CardStackLayoutManager(context)
+//                        var setting:SwipeAnimationSetting  = SwipeAnimationSetting.Builder()
+//                            .setDirection(Direction.Right)
+//                            .setDuration(200)
+//                            .setInterpolator(AccelerateInterpolator())
+//                            .build();
+//                        manager.setSwipeAnimationSetting(setting)
+//                        cardSV.adapter = DetailAdapter(context, postingData)
+//                        cardSV.layoutManager = manager
+//                        cardSV.swipe()
+
+
                         posting_save_id  = Utils.getString(posting,"posting_save_id")
-                        println("posting============"+posting)
+
                         val save_yn = Utils.getString(posting,"save_yn")
                         val use_yn = Utils.getString(posting,"use_yn")
 
@@ -389,23 +409,26 @@ class DetailActivity : RootActivity() {
                         contents =   Utils.getString(posting, "contents")
                         var nick_name = Utils.getString(member, "nick_name")
 
+                        var profile = Config.url + Utils.getString(member,"image_uri")
+                        ImageLoader.getInstance().displayImage(profile, writerIV, Utils.UILoptionsUserProfile)
 
-                        val data2 = response.getJSONObject("posting")
-                        println("===================="+data)
-                        val comments = data2.getJSONArray("PostingComment")
+                        if("3" == Utils.getString(member, "member_type")) {
+                            writerIV.setOnClickListener {
+                                var intent = Intent(context, OrderPageActivity::class.java)
+                                intent.putExtra("company_id", Utils.getInt(member, "id"))
+                                startActivity(intent)
+                            }
+                        }
+
+                        val comments = data.getJSONArray("PostingComment")
                         p_comments_id = -1
                         adapterData.clear()
                         for (i in 0..comments.length() - 1) {
-
-                            println("data[i] : " + comments[i])
-
                             adapterData.add(comments[i] as JSONObject)
 
                         }
 
-
                         adapterRe.notifyDataSetChanged()
-
 
                         contentTV.text = contents
                         wnameTX.text = nick_name

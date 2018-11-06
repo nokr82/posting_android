@@ -10,9 +10,9 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AbsListView
 import android.widget.AdapterView
 import android.widget.GridView
-import android.widget.Toast
 import com.loopj.android.http.JsonHttpResponseHandler
 import com.loopj.android.http.RequestParams
 import cz.msebera.android.httpclient.Header
@@ -24,7 +24,8 @@ import posting.devstories.com.posting_android.adapter.PostAdapter
 import posting.devstories.com.posting_android.base.PrefUtils
 import posting.devstories.com.posting_android.base.Utils
 
-open class MainFragment : Fragment() {
+open class MainFragment : Fragment(), AbsListView.OnScrollListener {
+
     private var progressDialog: ProgressDialog? = null
 
     lateinit var activity: MainActivity
@@ -35,9 +36,15 @@ open class MainFragment : Fragment() {
 
     lateinit var gideGV: GridView
 
+    var keyword = ""
 
-
-
+    private var page = 1
+    private var totalPage = 0
+    private val visibleThreshold = 10
+    private var userScrolled = false
+    private var lastItemVisibleFlag = false
+    private var lastcount = 0
+    private var totalItemCountScroll = 0
 
     internal var savePostingReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent?) {
@@ -61,11 +68,20 @@ open class MainFragment : Fragment() {
         }
     }
 
-
     internal var delPostingReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent?) {
             if (intent != null) {
                 var type:Int = intent.getIntExtra("type", 1)
+                loadData(type)
+            }
+        }
+    }
+
+    internal var searchKeywordReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent?) {
+            if (intent != null) {
+                var type:Int = intent.getIntExtra("type", 1)
+                keyword = intent.getStringExtra("keyword")
                 loadData(type)
             }
         }
@@ -105,19 +121,34 @@ open class MainFragment : Fragment() {
         activity.registerReceiver(delPostingReceiver, filter2)
 
 
+        val filter3 = IntentFilter("SEARCH_KEYWORD")
+        activity.registerReceiver(searchKeywordReceiver, filter3)
+
+
 
         adapterMain = PostAdapter(activity, R.layout.item_post, adapterData)
         gideGV.adapter = adapterMain
         member_id = PrefUtils.getIntPreference(context, "member_id")
-
+        gideGV.setOnScrollListener(this)
         gideGV.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             try {
                 val Posting = adapterData[position].getJSONObject("Posting")
 
                 //                    Intent intent = new Intent(context, _StoreDetailActivity.class);
-                val intent = Intent(context, DetailActivity::class.java)
-                intent.putExtra("id", Utils.getString(Posting, "id"))
-                startActivity(intent)
+
+                val type = Utils.getString(Posting, "type")
+
+                if("3" == type || "4" == type || "5" == type) {
+                    // 채팅 화면
+                    val intent = Intent(context, MatchInfoActivity::class.java)
+                    intent.putExtra("posting_id", Utils.getString(Posting, "id"))
+                    startActivity(intent)
+
+                } else {
+                    val intent = Intent(context, DetailActivity::class.java)
+                    intent.putExtra("id", Utils.getString(Posting, "id"))
+                    startActivity(intent)
+                }
 
             } catch (e: JSONException) {
                 e.printStackTrace()
@@ -128,8 +159,14 @@ open class MainFragment : Fragment() {
 
     fun loadData(type: Int) {
         val params = RequestParams()
-        params.put("member_id", member_id)
+        params.put("member_id", PrefUtils.getIntPreference(context, "member_id"))
         params.put("type", type)
+        params.put("keyword", keyword)
+
+//        var postFragment:PostFragment = PostFragment()
+//
+//        println("keyword : " + postFragment.keyword)
+//        println("type : " + type)
 
         PostingAction.view(params, object : JsonHttpResponseHandler() {
 
@@ -147,20 +184,20 @@ open class MainFragment : Fragment() {
                     if ("ok" == result) {
                         val data = response.getJSONArray("list")
 
-                        for (i in 0..data.length() - 1) {
+                        totalPage = response.getInt("totalPage");
+                        page = response.getInt("page");
 
-                            println("data[i] : " + data[i])
+                        for (i in 0..data.length() - 1) {
 
                             adapterData.add(data[i] as JSONObject)
 
                         }
 
-
                         adapterMain.notifyDataSetChanged()
 
 
                     } else {
-                        Toast.makeText(context, "일치하는 회원이 존재하지 않습니다.", Toast.LENGTH_LONG).show()
+
                     }
 
                 } catch (e: JSONException) {
@@ -212,6 +249,40 @@ open class MainFragment : Fragment() {
         })
     }
 
+    override fun onScroll(p0: AbsListView?, firstVisibleItem: Int, visibleItemCount: Int, totalItemCount: Int) {
+
+        if (userScrolled && totalItemCount - visibleItemCount <= firstVisibleItem + visibleThreshold && page < totalPage && totalPage > 0) {
+            if (totalPage > page) {
+                //page++;
+                //threemeals_store_index1();
+            }
+        }
+
+        //현재 화면에 보이는 첫번째 리스트 아이템의 번호(firstVisibleItem)
+        // + 현재 화면에 보이는 리스트 아이템의갯수(visibleItemCount)가
+        // 리스트 전체의 갯수(totalOtemCount)-1 보다 크거나 같을때
+        lastItemVisibleFlag = totalItemCount > 0 && firstVisibleItem + visibleItemCount >= totalItemCount
+        totalItemCountScroll = totalItemCount
+
+    }
+
+    override fun onScrollStateChanged(p0: AbsListView?, scrollState: Int) {
+        if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
+            userScrolled = true
+        } else if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE && lastItemVisibleFlag) {
+            userScrolled = false
+
+            //화면이 바닥에 닿았을때
+            if (totalPage > page) {
+                page++
+                lastcount = totalItemCountScroll
+
+                loadData(activity.tabType)
+            }
+        }
+    }
+
+
     override fun onDestroy() {
         super.onDestroy()
 
@@ -225,6 +296,9 @@ open class MainFragment : Fragment() {
             }
             if (delPostingReceiver != null) {
                 context!!.unregisterReceiver(delPostingReceiver)
+            }
+            if (searchKeywordReceiver != null) {
+                context!!.unregisterReceiver(searchKeywordReceiver)
             }
         } catch (e: IllegalArgumentException) {
         }

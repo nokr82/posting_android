@@ -1,118 +1,91 @@
 package posting.devstories.com.posting_android.activities
 
+import android.app.Activity
 import android.app.ProgressDialog
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.AdapterView
-import android.widget.GridView
-import android.widget.LinearLayout
 import android.widget.Toast
-import com.github.paolorotolo.expandableheightlistview.ExpandableHeightGridView
 import com.loopj.android.http.JsonHttpResponseHandler
 import com.loopj.android.http.RequestParams
+import com.nostra13.universalimageloader.core.ImageLoader
 import cz.msebera.android.httpclient.Header
-import kotlinx.android.synthetic.main.fra_orderpg.*
+import kotlinx.android.synthetic.main.activity_order_page.*
 import org.json.JSONException
 import org.json.JSONObject
 import posting.devstories.com.posting_android.Actions.MemberAction
-import posting.devstories.com.posting_android.Actions.PostingAction
 import posting.devstories.com.posting_android.R
 import posting.devstories.com.posting_android.adapter.OrderAdapter
-import posting.devstories.com.posting_android.adapter.PostAdapter
 import posting.devstories.com.posting_android.adapter.ReviewAdapter
+import posting.devstories.com.posting_android.base.Config
 import posting.devstories.com.posting_android.base.PrefUtils
+import posting.devstories.com.posting_android.base.RootActivity
 import posting.devstories.com.posting_android.base.Utils
 
-open class OrderPageFragment : Fragment() {
+open class OrderPageActivity : RootActivity() {
 
-    var ctx: Context? = null
+    val WRTIE_REVIEW = 101;
+
+    private lateinit var context:Context
+
     private var progressDialog: ProgressDialog? = null
-    lateinit var activity: MainActivity
     var adapterData: ArrayList<JSONObject> = ArrayList<JSONObject>()
     lateinit var adapterOrder: OrderAdapter
     lateinit var adapterReview: ReviewAdapter
 
-    var member_id = -1
-    lateinit var reviewLL: LinearLayout
-    lateinit var reviewV:View
-    lateinit var couponLL: LinearLayout
-    lateinit var couponV:View
-    lateinit var couponGV:ExpandableHeightGridView
-    var clicktype = -1
+    var clicktype = 1
+    var company_id = -1
+
+    internal var delReviewReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent?) {
+            if (intent != null) {
+                var review_id:Int = intent.getIntExtra("review_id", 1)
+
+                if(clicktype == 2) {
+                    for (i in 0..(adapterData.size - 1)) {
+                        var data = adapterData.get(i)
+                        var review = data.getJSONObject("Review")
+
+                        if(review_id == Utils.getInt(review, "id")) {
+                            adapterData.removeAt(i)
+                        }
+                    }
+                    adapterReview.notifyDataSetChanged()
+                }
+
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-    }
+        setContentView(R.layout.activity_order_page)
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val ctx = context
-        if (null != ctx) {
-            doSomethingWithContext(ctx)
-        }
+        this.context = this
 
+        company_id = intent.getIntExtra("company_id", -1)
 
-        return inflater.inflate(R.layout.fra_orderpg, container, false)
-    }
-    fun doSomethingWithContext(context: Context) {
-        // TODO: Actually do something with the context
-        this.ctx = context
-        progressDialog = ProgressDialog(ctx)
-    }
+        val filter1 = IntentFilter("DEL_REVIEW")
+        registerReceiver(delReviewReceiver, filter1)
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        reviewLL = view.findViewById(R.id.reviewLL)
-        reviewV = view.findViewById(R.id.reviewV)
-        couponLL = view.findViewById(R.id.couponLL)
-        couponV = view.findViewById(R.id.couponV)
-        couponGV = view.findViewById(R.id.couponGV)
+        adapterReview = ReviewAdapter(context, R.layout.item_post,adapterData)
+        adapterOrder = OrderAdapter(context, R.layout.item_post,adapterData)
 
-
-    }
-
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        activity = getActivity() as MainActivity
-        member_id = PrefUtils.getIntPreference(context, "member_id")
-
-
-       menuLL.setOnClickListener {
-           val intent = Intent(context, MyPageActivity::class.java)
-           startActivity(intent)
-       }
-
-
-        reviewLL.setOnClickListener {
-
-            review2LL.visibility = View.VISIBLE
-            adapterData.clear()
-            reviewV.visibility = View.VISIBLE
-            couponV.visibility = View.INVISIBLE
-            adapterReview = ReviewAdapter(activity, R.layout.item_post,adapterData)
-            couponGV.adapter = adapterReview
-            clicktype = 2
-            loadData()
-
-        }
-
-
-
+        couponGV.adapter = adapterOrder
         couponGV.isExpanded = true
+
         couponLL.setOnClickListener {
-            review2LL.visibility = View.GONE
+            reviewWriteLL.visibility = View.GONE
             adapterData.clear()
             couponV.visibility = View.VISIBLE
             reviewV.visibility = View.INVISIBLE
-            adapterOrder = OrderAdapter(activity, R.layout.item_post,adapterData)
             couponGV.adapter = adapterOrder
             clicktype = 1
-          loadData()
+            loadData()
             couponGV.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
                 try {
                     val Posting = adapterData[position].getJSONObject("Posting")
@@ -129,12 +102,32 @@ open class OrderPageFragment : Fragment() {
 
         }
 
+        reviewLL.setOnClickListener {
+            reviewWriteLL.visibility = View.VISIBLE
+            couponV.visibility = View.VISIBLE
+            adapterData.clear()
+            reviewV.visibility = View.VISIBLE
+            couponV.visibility = View.INVISIBLE
+            clicktype = 2
+            couponGV.adapter = adapterReview
+            loadData()
+
+        }
+
+        reviewWriteLL.setOnClickListener {
+            var intent = Intent(context, ReviewWriteActivity::class.java)
+            intent.putExtra("company_member_id", company_id)
+            startActivityForResult(intent, WRTIE_REVIEW)
+        }
+
+        loadData()
     }
+
 
     fun loadData() {
         val params = RequestParams()
-        params.put("company_member_id", member_id)
-        params.put("member_id",member_id)
+        params.put("company_member_id", company_id)
+        params.put("member_id",PrefUtils.getIntPreference(context, "member_id"))
 
         MemberAction.company_page(params, object : JsonHttpResponseHandler() {
 
@@ -148,17 +141,32 @@ open class OrderPageFragment : Fragment() {
 
                     if ("ok" == result) {
 
+                        var reviewCnt = Utils.getString(response, "reviewCnt")
+                        var postCnt = Utils.getString(response, "postCnt")
+
+                        couponCntTV.text = postCnt
+                        reviewCntTV.text = reviewCnt
+
+                        val member = response.getJSONObject("member")
+
+                        companyNameTV.text = Utils.getString(member, "company_name")
+                        infoTV.text = Utils.getString(member, "address") + Utils.getString(member, "address_detail")
+
+                        var profile = Config.url + Utils.getString(member,"image_uri")
+                        ImageLoader.getInstance().displayImage(profile, profileIV, Utils.UILoptionsUserProfile)
+
                         if (clicktype ==1){
 
-                        val data = response.getJSONArray("postList")
+                            val data = response.getJSONArray("postList")
 
-                        for (i in 0..data.length() - 1) {
+                            for (i in 0..data.length() - 1) {
 
-                            adapterData.add(data[i] as JSONObject)
+                                adapterData.add(data[i] as JSONObject)
 
-                        }
-                        adapterOrder.notifyDataSetChanged()
-                        }else{
+                            }
+                            adapterOrder.notifyDataSetChanged()
+
+                        } else {
                             val data = response.getJSONArray("reviewList")
                             for (i in 0..data.length() - 1) {
                                 adapterData.add(data[i] as JSONObject)
@@ -213,6 +221,28 @@ open class OrderPageFragment : Fragment() {
                 }
             }
         })
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if(resultCode == Activity.RESULT_OK) {
+            when(requestCode) {
+                WRTIE_REVIEW -> {
+                    loadData()
+                }
+            }
+        }
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        if(null != delReviewReceiver) {
+            unregisterReceiver(delReviewReceiver)
+        }
+
     }
 
 }

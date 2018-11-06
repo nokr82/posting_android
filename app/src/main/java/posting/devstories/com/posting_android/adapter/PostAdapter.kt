@@ -39,7 +39,6 @@ open class PostAdapter(context:Context, view:Int, data:ArrayList<JSONObject>) : 
 
         var posting = json.getJSONObject("Posting")
 
-
         var id = Utils.getString(posting, "id")
 
         var member_id =   Utils.getString(posting, "member_id")

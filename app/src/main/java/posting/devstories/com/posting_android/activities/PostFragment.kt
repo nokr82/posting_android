@@ -16,6 +16,7 @@ import android.support.v4.view.ViewPager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.*
 import com.github.paolorotolo.expandableheightlistview.ExpandableHeightListView
 import com.loopj.android.http.JsonHttpResponseHandler
@@ -49,6 +50,7 @@ open class PostFragment : Fragment() {
     lateinit var mainAdapter: MainPostAdapter
     var mainAdapterData = ArrayList<JSONObject>();
 
+    var keyword = ""
     var type = ""
     var tabType = 1
 
@@ -58,6 +60,7 @@ open class PostFragment : Fragment() {
     lateinit var pagerAdapter: PagerAdapter
 
     lateinit var circleLL: LinearLayout
+    lateinit var menuLL: LinearLayout
 
     lateinit var mainLV: ExpandableHeightListView
     lateinit var pagerVP: NonSwipeableViewPager
@@ -86,6 +89,8 @@ open class PostFragment : Fragment() {
     lateinit var couponRL:RelativeLayout
 
     lateinit var mainLL:LinearLayout
+
+    lateinit var searchET:EditText
 
     lateinit var mainActivity:MainActivity
 
@@ -155,6 +160,8 @@ open class PostFragment : Fragment() {
         adverVP = view.findViewById(R.id.adverVP)
         circleLL = view.findViewById(R.id.circleLL)
 
+        menuLL = view.findViewById(R.id.menuLL)
+
         pagerVP = view.findViewById(R.id.pagerVP)
 
         freeTV = view.findViewById(R.id.freeTV)
@@ -180,7 +187,10 @@ open class PostFragment : Fragment() {
         meetingRL = view.findViewById(R.id.meetingRL)
         couponRL = view.findViewById(R.id.couponRL)
 
+
         mainLL = view.findViewById(R.id.mainLL)
+
+        searchET = view.findViewById(R.id.searchET)
 
     }
 
@@ -267,6 +277,13 @@ open class PostFragment : Fragment() {
             }
         })
 
+
+        menuLL.setOnClickListener {
+            val intent = Intent(context, MyPageActivity::class.java)
+            startActivity(intent)
+        }
+
+
         univIV.setOnClickListener {
             setMainView()
         }
@@ -323,6 +340,29 @@ open class PostFragment : Fragment() {
                 setMenuTabView()
             }
             pagerVP.currentItem = 5
+        }
+
+        searchET.setOnEditorActionListener { textView, i, keyEvent ->
+
+            when (i) {
+                EditorInfo.IME_ACTION_SEARCH -> {
+
+                    keyword = Utils.getString(searchET)
+
+                    if(mainLL.visibility == View.VISIBLE) {
+                        // 메인 학교 검색
+
+                    } else {
+                        var intent = Intent()
+                        intent.putExtra("keyword", keyword)
+                        intent.putExtra("type", (pagerVP.currentItem + 1))
+                        intent.action = "SEARCH_KEYWORD"
+                        context!!.sendBroadcast(intent)
+                    }
+
+                }
+            }
+            return@setOnEditorActionListener true
         }
 
         timer()
@@ -494,7 +534,6 @@ open class PostFragment : Fragment() {
             couponV.visibility = View.VISIBLE
             couponTV.setTextColor(Color.parseColor("#01b4ec"))
         }
-
     }
 
     fun mainData() {

@@ -1,12 +1,14 @@
 package posting.devstories.com.posting_android.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import com.nostra13.universalimageloader.core.ImageLoader
 import org.json.JSONObject
 import posting.devstories.com.posting_android.R
+import posting.devstories.com.posting_android.activities.ReviewDetailActivity
 import posting.devstories.com.posting_android.base.Utils
 import posting.devstories.com.posting_android.base.Config
 
@@ -36,8 +38,6 @@ open class ReviewAdapter(context:Context, view:Int, data:ArrayList<JSONObject>) 
 
         var json = data.get(position)
 
-
-
         var Review = json.getJSONObject("Review")
         var contents =   Utils.getString(Review, "contents")
         var image_uri = Utils.getString(Review, "image_uri")
@@ -57,7 +57,11 @@ open class ReviewAdapter(context:Context, view:Int, data:ArrayList<JSONObject>) 
         }
         item.countLL.visibility = View.GONE
 
-
+        item.postRL.setOnClickListener {
+            var intent = Intent(context, ReviewDetailActivity::class.java)
+            intent.putExtra("review_id", Utils.getInt(Review,"id"))
+            context.startActivity(intent)
+        }
 
 
         return retView
@@ -89,12 +93,14 @@ open class ReviewAdapter(context:Context, view:Int, data:ArrayList<JSONObject>) 
         var contentsTV :TextView
         var leftCntTV :TextView
         var countLL : LinearLayout
+        var postRL : RelativeLayout
 
         init {
             countLL = v.findViewById(R.id.countLL)as LinearLayout
             postIV = v.findViewById(R.id.postIV) as ImageView
             contentsTV = v.findViewById(R.id.contentsTV) as TextView
             leftCntTV = v.findViewById(R.id.leftCntTV) as TextView
+            postRL = v.findViewById(R.id.postRL) as RelativeLayout
         }
     }
 }
