@@ -7,7 +7,6 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.view.animation.AccelerateInterpolator
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import android.widget.Toast
@@ -23,8 +22,8 @@ import posting.devstories.com.posting_android.Actions.PostingAction
 import posting.devstories.com.posting_android.Actions.PostingAction.detail
 import posting.devstories.com.posting_android.Actions.PostingAction.save_posting
 import posting.devstories.com.posting_android.Actions.PostingAction.write_comments
+import posting.devstories.com.posting_android.Actions.ReviewAction
 import posting.devstories.com.posting_android.R
-import posting.devstories.com.posting_android.adapter.DetailAdapter
 import posting.devstories.com.posting_android.adapter.ReAdapter
 import posting.devstories.com.posting_android.base.Config
 import posting.devstories.com.posting_android.base.PrefUtils
@@ -504,21 +503,17 @@ class DetailActivity : RootActivity() {
         recyTV.text = "스팸입니다"
 
         delTV.setOnClickListener {
-
-
-            var intent = Intent(context, DlgPoliceActivity::class.java)
-            startActivity(intent)
+            report("1")
+            mPopupDlg!!.dismiss()
 
         }
         modiTV.setOnClickListener {
-            var intent = Intent(context, DlgPoliceActivity::class.java)
-            finish()
-            startActivity(intent)
+            report("2")
+            mPopupDlg!!.dismiss()
         }
         recyTV.setOnClickListener {
-            var intent = Intent(context, DlgPoliceActivity::class.java)
-            finish()
-            startActivity(intent)
+            report("3")
+            mPopupDlg!!.dismiss()
         }
 
 
@@ -549,6 +544,69 @@ class DetailActivity : RootActivity() {
 
         mPopupDlg =  builder.setView(dialogView).show()
 
+    }
+
+
+    fun report(type:String){
+        val params = RequestParams()
+        params.put("member_id", member_id)
+        params.put("posting_id", posting_id)
+        params.put("type", type)
+
+        ReviewAction.report(params, object : JsonHttpResponseHandler() {
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+
+                try {
+                    val result = response!!.getString("result")
+                    if ("ok" == result) {
+
+                        var intent = Intent(context, DlgPoliceActivity::class.java)
+                        startActivity(intent)
+
+                    } else if("already" == result) {
+                        Toast.makeText(context, "신고한 게시물입니다.", Toast.LENGTH_LONG).show()
+                    }
+
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+
+            }
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONArray?) {
+                super.onSuccess(statusCode, headers, response)
+            }
+
+            private fun error() {
+                Utils.alert(context, "조회중 장애가 발생하였습니다.")
+            }
+
+            override fun onFailure(statusCode: Int, headers: Array<Header>?, throwable: Throwable, errorResponse: JSONArray?) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+                throwable.printStackTrace()
+                error()
+            }
+
+            override fun onStart() {
+                // show dialog
+                if (progressDialog != null) {
+
+                    progressDialog!!.show()
+                }
+            }
+
+            override fun onFinish() {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+            }
+        })
     }
 
     fun dlgView(){

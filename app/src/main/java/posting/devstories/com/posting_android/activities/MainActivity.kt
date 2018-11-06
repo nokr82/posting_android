@@ -40,6 +40,7 @@ class MainActivity : FragmentActivity() {
     var is_push = false
     var posting_id:String?=null
 
+
     internal var editPostingReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent?) {
             if (intent != null) {
@@ -70,6 +71,8 @@ class MainActivity : FragmentActivity() {
         setContentView(R.layout.activity_main)
 
         this.context = this
+
+        posting_id = intent.getStringExtra("posting_id")
         is_push = intent.getBooleanExtra("is_push", false)
 
         if(is_push) {
@@ -119,10 +122,16 @@ class MainActivity : FragmentActivity() {
 
         writeLL.setOnClickListener {
 
-            setTabBar()
+            val intent = Intent(this, PostWriteActivity::class.java)
+            intent.putExtra("member_type",member_type)
 
-            writeIV.setImageResource(R.mipmap.clickplus)
-            fragmentFT.onTabChanged("write")
+            startActivity(intent)
+
+
+//            setTabBar()
+//
+//            writeIV.setImageResource(R.mipmap.clickplus)
+//            fragmentFT.onTabChanged("write")
 
         }
 
