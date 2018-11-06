@@ -39,7 +39,6 @@
 
         </LinearLayout>
 
-
         <LinearLayout
                 android:id="@+id/countLL"
                 android:layout_width="wrap_content"
