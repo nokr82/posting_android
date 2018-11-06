@@ -18,7 +18,9 @@ import com.gun0912.tedpermission.TedPermission
 import android.app.Activity
 import android.graphics.Bitmap
 import android.os.Build
+import android.view.View
 import kotlinx.android.synthetic.main.activity_review_write.*
+import posting.devstories.com.posting_android.base.Config
 import posting.devstories.com.posting_android.base.Utils
 
 
@@ -41,6 +43,7 @@ class ReviewWriteActivity : RootActivity() {
     var text = ""
     var capture: Bitmap? = null
     var company_member_id = -1
+    var review_id = -1
 
     lateinit var adpater: ArrayAdapter<String>
 
@@ -53,6 +56,17 @@ class ReviewWriteActivity : RootActivity() {
 
         intent = getIntent()
         company_member_id = intent.getIntExtra("company_member_id", -1)
+        review_id = intent.getIntExtra("review_id", -1)
+
+        if (review_id > 0) {
+            image_uri = intent.getStringExtra("image_uri")
+            contents = intent.getStringExtra("contents")
+
+            image = Config.url + image_uri
+            com.nostra13.universalimageloader.core.ImageLoader.getInstance().displayImage(image, imgIV2, Utils.UILoptionsUserProfile)
+            imgIV2.visibility = View.VISIBLE
+
+        }
 
         var cursor: Cursor? = null
         val resolver = contentResolver
@@ -108,17 +122,17 @@ class ReviewWriteActivity : RootActivity() {
 
         textRL.setOnClickListener {
             var intent = Intent(context, ReviewWriteContentsActivity::class.java)
-//            intent.putExtra("review_id", review_id)
-            intent.putExtra("text", text)
+            intent.putExtra("review_id", review_id)
+            intent.putExtra("contents", contents)
             intent.putExtra("company_member_id", company_member_id)
             startActivityForResult(intent, WRITE_RIVEW)
         }
 
         nextTX.setOnClickListener {
-
             var intent = Intent(context, ReviewWriteContentsActivity::class.java)
             intent.putExtra("image", image)
             intent.putExtra("imgid", imgid)
+            intent.putExtra("contents", contents)
             intent.putExtra("capture", capture)
             intent.putExtra("image_uri",image_uri)
             intent.putExtra("company_member_id",company_member_id)
@@ -194,6 +208,9 @@ class ReviewWriteActivity : RootActivity() {
                 .setPermissions(android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.CAMERA, android.Manifest.permission.READ_EXTERNAL_STORAGE)
                 .check();
 
+        if(review_id > 1) {
+
+        }
 
     }
 
