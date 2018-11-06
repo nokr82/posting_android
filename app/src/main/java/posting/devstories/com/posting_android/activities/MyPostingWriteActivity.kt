@@ -23,6 +23,7 @@ import posting.devstories.com.posting_android.base.PrefUtils
 import posting.devstories.com.posting_android.base.RootActivity
 import posting.devstories.com.posting_android.base.Utils
 import android.widget.*
+import com.nostra13.universalimageloader.core.ImageLoader
 import kotlinx.android.synthetic.main.activity_posttextwrite.view.*
 import kotlinx.android.synthetic.main.fra_write.*
 import posting.devstories.com.posting_android.R.id.*
@@ -119,7 +120,7 @@ class MyPostingWriteActivity : RootActivity() {
         //이미지
         img2RL.background = Drawable.createFromPath(imgid)
         captureIV.setImageBitmap(capture)
-        com.nostra13.universalimageloader.core.ImageLoader.getInstance().displayImage(image, captureIV, Utils.UILoptionsUserProfile)
+        ImageLoader.getInstance().displayImage(image, captureIV, Utils.UILoptionsUserProfile)
 
         if (imgid != null && "" != imgid && imgid!!.length> 1&&capture != null&&image != null){
             popupRL.visibility = View.VISIBLE

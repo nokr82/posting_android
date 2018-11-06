@@ -194,8 +194,8 @@ class PostWriteActivity : RootActivity() {
                 intent.putExtra("getday",getday)
             intent.putExtra("text", text)
             startActivity(intent)
-            }
-        }
+          }
+}
 
         nextTX.setOnClickListener {
             getmee = meetingSP2.selectedItem.toString()
@@ -294,6 +294,7 @@ class PostWriteActivity : RootActivity() {
                     image = ""
 
                     capture = data.extras.get("data") as Bitmap
+
                     imgIV2.setImageBitmap(capture)
 
 
