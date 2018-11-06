@@ -184,16 +184,15 @@ class PostWriteActivity : RootActivity() {
                     intent.putExtra("getmost",getmost)
                     intent.putExtra("getday",getday)
                     startActivity(intent)
-                }
-
-
-
+                }else{
             var intent = Intent(context, MyPostingWriteActivity::class.java)
                 intent.putExtra("getmee",getmee)
                 intent.putExtra("getmost",getmost)
                 intent.putExtra("getday",getday)
             intent.putExtra("text", text)
             startActivity(intent)
+
+                }
           }
 }
 

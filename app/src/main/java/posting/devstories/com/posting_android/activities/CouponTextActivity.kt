@@ -5,6 +5,7 @@ import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import com.loopj.android.http.JsonHttpResponseHandler
@@ -38,7 +39,7 @@ class CouponTextActivity : RootActivity() {
         setContentView(R.layout.coupon_activity)
         this.context = this
         progressDialog = ProgressDialog(context)
-
+        viewcoupon()
         adpater = ArrayAdapter<String>(this, R.layout.spinner_item, most)
         most4SP.adapter = adpater
 
@@ -46,15 +47,31 @@ class CouponTextActivity : RootActivity() {
         member_id =  PrefUtils.getIntPreference(context,"member_id")
 
 
-
-
-
+        store2LL.setOnClickListener {
+            viewcoupon()
+            storeLL.visibility = View.VISIBLE
+        }
+        coupon2LL.setOnClickListener {
+            viewcoupon()
+            couponLL.visibility = View.VISIBLE
+        }
+        sale2LL.setOnClickListener {
+            viewcoupon()
+            saleLL.visibility = View.VISIBLE
+        }
 
 
 
 
     }
 
+
+
+    fun viewcoupon(){
+        saleLL.visibility = View.GONE
+        couponLL.visibility = View.GONE
+        storeLL.visibility = View.GONE
+    }
 
 
 

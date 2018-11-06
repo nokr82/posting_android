@@ -73,7 +73,8 @@
                 android:orientation="vertical">
 
 
-            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:id="@+id/sale2LL">
 
             <TextView
                     android:layout_marginTop="41.87dp"
@@ -102,6 +103,7 @@
 
 
             <LinearLayout
+                    android:id="@+id/saleLL"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="60dp"
@@ -222,7 +224,8 @@
 
 
 
-            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:id="@+id/coupon2LL">
 
                 <TextView
                         android:layout_marginTop="41.87dp"
@@ -251,6 +254,7 @@
 
 
             <LinearLayout
+                android:id="@+id/couponLL"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="60dp"
@@ -336,7 +340,8 @@
 
             </LinearLayout>
 
-            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:id="@+id/store2LL">
 
                 <TextView
                         android:layout_marginTop="41.87dp"
@@ -365,6 +370,7 @@
 
 
             <LinearLayout
+                android:id="@+id/storeLL"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="60dp"
@@ -561,10 +567,10 @@
                     android:textSize="11.75dp"/>
             <View
                     android:layout_width="match_parent"
-                    android:layout_height="3dp"
+                    android:layout_height="5dp"
                     android:layout_alignParentBottom="true"
-                    android:visibility="invisible"
-                    android:background="#D0D0D0"
+                    android:visibility="visible"
+                    android:background="#063588"
             />
         </RelativeLayout>
 
