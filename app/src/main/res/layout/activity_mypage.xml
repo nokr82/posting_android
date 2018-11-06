@@ -185,6 +185,7 @@
                                 android:gravity="center">
 
                                 <TextView
+                                    android:layout_height="match_parent"
                                     android:gravity="center"
                                     android:text="붙이기"
                                     android:textColor="#8F8E8A"
@@ -221,6 +222,7 @@
                                 android:gravity="center">
 
                                 <TextView
+                                    android:layout_height="match_parent"
                                     android:gravity="center"
                                     android:text="떼기"
                                     android:textColor="#8F8E8A"
