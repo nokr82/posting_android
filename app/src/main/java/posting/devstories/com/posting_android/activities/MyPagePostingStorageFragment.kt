@@ -185,9 +185,12 @@ open class MyPagePostingStorageFragment : Fragment() {
                 val type = Utils.getInt(Posting,"type")
                 if (taptype ==1) {
                     if (type == 3 || type == 4 || type == 5) {
-                        val intent = Intent(context, MyPostingActivity::class.java)
-                        intent.putExtra("id", Utils.getString(Posting, "id"))
-                        intent.putExtra("image_uri", Utils.getString(Posting, "image_uri"))
+//                        val intent = Intent(context, MyPostingActivity::class.java)
+//                        intent.putExtra("id", Utils.getString(Posting, "id"))
+//                        intent.putExtra("image_uri", Utils.getString(Posting, "image_uri"))
+//                        startActivity(intent)
+                        val intent = Intent(context, MatchInfoActivity::class.java)
+                        intent.putExtra("posting_id", Utils.getString(Posting, "id"))
                         startActivity(intent)
                     }else {
                         val intent = Intent(context, DetailActivity::class.java)
