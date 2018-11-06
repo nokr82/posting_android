@@ -9,22 +9,29 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/titleTV"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/titleLL"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="14dp"
-            android:text="자유 New"
-            android:textColor="#1D9AD7"
-            android:textSize="13dp" />
+            android:paddingLeft="20dp"
+            android:paddingTop="14dp"
+            android:paddingBottom="13dp">
+
+            <TextView
+                android:id="@+id/titleTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="자유 New"
+                android:textColor="#1D9AD7"
+                android:textSize="13dp" />
+
+        </LinearLayout>
 
         <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
-            android:layout_marginTop="13dp"
             android:scrollbars="none">
 
             <LinearLayout

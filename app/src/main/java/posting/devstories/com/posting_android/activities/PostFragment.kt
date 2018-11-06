@@ -136,6 +136,17 @@ open class PostFragment : Fragment() {
             mainAdapter.notifyDataSetChanged()
         }
     }
+    internal var setViewReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent?) {
+
+            if(intent != null) {
+                tabType = intent.getIntExtra("tabType", 1)
+
+                pagerVP.currentItem = tabType - 1
+            }
+
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -152,6 +163,8 @@ open class PostFragment : Fragment() {
         mainActivity.registerReceiver(delPostingReceiver, filter2)
         val filter1 = IntentFilter("SAVE_POSTING")
         mainActivity.registerReceiver(savePostingReceiver, filter1)
+        val filter3 = IntentFilter("SET_VIEW")
+        mainActivity.registerReceiver(setViewReceiver, filter3)
 
         return inflater.inflate(R.layout.fra_post, container, false)
     }
@@ -202,7 +215,6 @@ open class PostFragment : Fragment() {
 
     }
 
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
@@ -243,7 +255,6 @@ open class PostFragment : Fragment() {
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
 
             }
-
 
             override fun onPageSelected(position: Int) {
 
@@ -708,6 +719,9 @@ open class PostFragment : Fragment() {
             couponV.visibility = View.VISIBLE
             couponTV.setTextColor(Color.parseColor("#01b4ec"))
         }
+
+        searchET.setText("")
+
     }
 
     fun mainData() {
@@ -847,6 +861,9 @@ open class PostFragment : Fragment() {
             }
             if (delPostingReceiver != null) {
                 context!!.unregisterReceiver(delPostingReceiver)
+            }
+            if (setViewReceiver != null) {
+                context!!.unregisterReceiver(setViewReceiver)
             }
         } catch (e: IllegalArgumentException) {
         }
