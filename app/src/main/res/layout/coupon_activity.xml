@@ -35,7 +35,7 @@
                     android:id="@+id/most4SP"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@null">
+                    android:background="@drawable/background_border_707070">
 
             </Spinner>
 

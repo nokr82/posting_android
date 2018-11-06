@@ -188,7 +188,7 @@
                     android:layout_height="40dp"
                     android:gravity="center_vertical"
                     android:paddingLeft="7dp"
-                    android:hint="학교 검색(1개 선택)"
+                    android:hint="상권내 학교 검색(1개 선택)"
                     android:textColorHint="#BCBEC0"
                     android:textSize="11.33sp" />
 

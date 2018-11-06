@@ -18,6 +18,7 @@ import kotlinx.android.synthetic.main.activity_detail.*
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
+import posting.devstories.com.posting_android.Actions.MemberAction
 import posting.devstories.com.posting_android.Actions.PostingAction
 import posting.devstories.com.posting_android.Actions.PostingAction.detail
 import posting.devstories.com.posting_android.Actions.PostingAction.save_posting
@@ -33,7 +34,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class DetailActivity : RootActivity() {
-
+    var nick = ""
     lateinit var context:Context
     private var progressDialog: ProgressDialog? = null
     var member_id = -1
@@ -58,9 +59,9 @@ class DetailActivity : RootActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
-
         this.context = this
         progressDialog = ProgressDialog(context)
+        loadInfo()
 
         intent = getIntent()
         taptype=intent.getIntExtra("taptype",-1)
@@ -144,6 +145,85 @@ class DetailActivity : RootActivity() {
         detaildata()
 
     }
+
+    fun loadInfo() {
+        val params = RequestParams()
+        params.put("member_id", PrefUtils.getIntPreference(context, "member_id"))
+
+        MemberAction.my_info(params, object : JsonHttpResponseHandler() {
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+
+                try {
+                    val result = response!!.getString("result")
+
+                    if ("ok" == result) {
+
+                        var member = response.getJSONObject("member")
+                        nick =  Utils.getString(member, "nick_name")
+
+                        var image_uri = Utils.getString(member, "image_uri")
+                        var image = Config.url + image_uri
+                        ImageLoader.getInstance().displayImage(image,myIV, Utils.UILoptionsPosting)
+                        mynameTV.text =nick
+
+                    } else {
+                        Toast.makeText(context, "일치하는 회원이 존재하지 않습니다.", Toast.LENGTH_LONG).show()
+                    }
+
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+
+            }
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, responseString: String?) {
+
+                // System.out.println(responseString);
+            }
+
+            private fun error() {
+                Utils.alert(context, "조회중 장애가 발생하였습니다.")
+            }
+
+            override fun onFailure(
+                    statusCode: Int,
+                    headers: Array<Header>?,
+                    responseString: String?,
+                    throwable: Throwable
+            ) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+
+                // System.out.println(responseString);
+
+                throwable.printStackTrace()
+                error()
+            }
+
+
+            override fun onStart() {
+                // show dialog
+                if (progressDialog != null) {
+
+                    progressDialog!!.show()
+                }
+            }
+
+            override fun onFinish() {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+            }
+        })
+    }
+
+
+
 
     fun writeComments(comments:String) {
         val params = RequestParams()
@@ -333,6 +413,9 @@ class DetailActivity : RootActivity() {
             }
         })
     }
+
+
+
 
     fun detaildata() {
         val params = RequestParams()

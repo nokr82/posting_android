@@ -34,7 +34,7 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/myIV"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:src="@mipmap/myimg"
@@ -42,7 +42,7 @@
                     android:layout_marginLeft="10.5dp" />
 
             <TextView
-                    android:visibility="gone"
+                    android:visibility="visible"
                     android:id="@+id/mynameTV"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
