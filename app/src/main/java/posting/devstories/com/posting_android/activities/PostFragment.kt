@@ -140,9 +140,10 @@ open class PostFragment : Fragment() {
         override fun onReceive(context: Context, intent: Intent?) {
 
             if(intent != null) {
-                tabType = intent.getIntExtra("tabType", 1)
+                tabType = intent!!.getIntExtra("tabType", 1)
 
                 pagerVP.currentItem = tabType - 1
+
             }
 
         }
