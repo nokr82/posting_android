@@ -82,9 +82,10 @@ class PostWriteActivity : RootActivity() {
         contents = intent.getStringExtra("contents")
         image_uri = intent.getStringExtra("image_uri")
 
-        print("--------------이미지--"+image_uri)
+
 
         if (!posting_id.equals("")){
+            postingType = "M"
              image = Config.url + image_uri
               com.nostra13.universalimageloader.core.ImageLoader.getInstance().displayImage(image, imgIV2, Utils.UILoptionsUserProfile)
             imgIV2.visibility = View.VISIBLE

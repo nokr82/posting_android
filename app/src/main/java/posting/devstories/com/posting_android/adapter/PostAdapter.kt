@@ -8,7 +8,6 @@ import android.widget.*
 import com.nostra13.universalimageloader.core.ImageLoader
 import org.json.JSONObject
 import posting.devstories.com.posting_android.R
-import posting.devstories.com.posting_android.R.id.coupon_TV
 import posting.devstories.com.posting_android.base.Utils
 import posting.devstories.com.posting_android.base.Config
 

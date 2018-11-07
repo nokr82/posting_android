@@ -12,7 +12,6 @@ import posting.devstories.com.posting_android.R
 import posting.devstories.com.posting_android.base.Utils
 import posting.devstories.com.posting_android.base.Config
 import com.nostra13.universalimageloader.core.ImageLoader
-import posting.devstories.com.posting_android.R.id.*
 import posting.devstories.com.posting_android.activities.DetailActivity
 
 open class MainPostAdapter(context: Context?, view: Int, data: ArrayList<JSONObject>) :

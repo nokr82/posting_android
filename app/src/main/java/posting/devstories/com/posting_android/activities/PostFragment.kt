@@ -30,7 +30,6 @@ import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 import posting.devstories.com.posting_android.Actions.PostingAction
-import posting.devstories.com.posting_android.Actions.SchoolAction
 import posting.devstories.com.posting_android.R
 import posting.devstories.com.posting_android.adapter.FullScreenImageAdapter
 import posting.devstories.com.posting_android.adapter.MainPostAdapter

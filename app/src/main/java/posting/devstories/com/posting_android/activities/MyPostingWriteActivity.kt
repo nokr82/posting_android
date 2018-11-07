@@ -53,9 +53,6 @@ class MyPostingWriteActivity : RootActivity() {
     var getday=""
     var postingType:String?= null
 
-
-    lateinit var adpater: ArrayAdapter<String>
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_posttextwrite)
@@ -121,6 +118,9 @@ class MyPostingWriteActivity : RootActivity() {
             popupRL.visibility = View.VISIBLE
 
             captureIV.setImageBitmap(Utils.getImage(context.contentResolver, imgid))
+        }else if (postingType.equals("M")){
+            com.nostra13.universalimageloader.core.ImageLoader.getInstance().displayImage(image, captureIV, Utils.UILoptionsUserProfile)
+            captureIV.visibility = View.VISIBLE
         }
 
 
