@@ -557,7 +557,7 @@ class DetailActivity : RootActivity() {
                         var sale_price:String =  Utils.getString(posting, "sale_price")
                         var contents =   Utils.getString(posting, "contents")
 
-                        var image_uri = Utils.getString(posting, "image_uri")
+                       image_uri = Utils.getString(posting, "image_uri")
                         var leftCount = Utils.getString(posting, "leftCount")
 
 
@@ -869,6 +869,7 @@ class DetailActivity : RootActivity() {
             val intent = Intent(context, PostWriteActivity::class.java)
             intent.putExtra("posting_id", posting_id)
             intent.putExtra("image_uri",image_uri)
+            println("------------dlalwl"+image_uri)
             intent.putExtra("member_type",member_type)
             intent.putExtra("contents",contents)
 

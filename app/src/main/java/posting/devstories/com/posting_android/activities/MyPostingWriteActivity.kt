@@ -24,7 +24,6 @@ import posting.devstories.com.posting_android.base.PrefUtils
 import posting.devstories.com.posting_android.base.RootActivity
 import posting.devstories.com.posting_android.base.Utils
 import java.io.ByteArrayInputStream
-import java.util.*
 
 
 class MyPostingWriteActivity : RootActivity() {

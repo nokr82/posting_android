@@ -4,7 +4,6 @@ import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.database.Cursor
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.ArrayAdapter
@@ -16,21 +15,14 @@ import posting.devstories.com.posting_android.base.RootActivity
 import java.util.*
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
-import android.app.Activity
 import android.graphics.Bitmap
-import android.graphics.Color
 import android.view.View
-import kotlinx.android.synthetic.main.activity_detail.*
 import kotlinx.android.synthetic.main.activity_postwrite.*
-import posting.devstories.com.posting_android.R.id.meeting2LL
 import posting.devstories.com.posting_android.base.Config
 import posting.devstories.com.posting_android.base.Utils
-import android.R.array
 import android.net.Uri
 import android.os.Environment
 import android.support.v4.content.FileProvider
-import android.widget.TextView
-import posting.devstories.com.posting_android.R.id.imgIV2
 import java.io.File
 import java.io.IOException
 
@@ -90,10 +82,11 @@ class PostWriteActivity : RootActivity() {
         contents = intent.getStringExtra("contents")
         image_uri = intent.getStringExtra("image_uri")
 
+        print("--------------이미지--"+image_uri)
 
         if (!posting_id.equals("")){
              image = Config.url + image_uri
-            com.nostra13.universalimageloader.core.ImageLoader.getInstance().displayImage(image, imgIV2, Utils.UILoptionsUserProfile)
+              com.nostra13.universalimageloader.core.ImageLoader.getInstance().displayImage(image, imgIV2, Utils.UILoptionsUserProfile)
             imgIV2.visibility = View.VISIBLE
 
         }
