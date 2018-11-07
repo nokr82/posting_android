@@ -109,7 +109,8 @@ open class MainPostAdapter(context: Context?, view: Int, data: ArrayList<JSONObj
 
             var p: JSONObject = list[i] as JSONObject
             var posting = p.getJSONObject("Posting")
-
+            val member = p.getJSONObject("Member")
+            var company_name = Utils.getString(member, "company_name")
             var id = Utils.getString(posting, "id")
             var contents = Utils.getString(posting, "contents")
             var image_uri = Utils.getString(posting, "image_uri")
@@ -144,6 +145,7 @@ open class MainPostAdapter(context: Context?, view: Int, data: ArrayList<JSONObj
             if (coupon_type.equals("1")){
                 contentsTV.visibility = View.GONE
                 couponLL.visibility = View.VISIBLE
+                coupon_orderTV.text = company_name
                 coupon_titleTV.text = menu_name
                 coupon_saleTV.text = sale_per
                 coupon_sale2TV.text = "할인"
@@ -152,6 +154,7 @@ open class MainPostAdapter(context: Context?, view: Int, data: ArrayList<JSONObj
                 coupon_enddateTV.text = uses_end_date
             }else if (coupon_type.equals("2")){
                contentsTV.visibility = View.GONE
+                coupon_orderTV.text = company_name
                 couponLL.setBackgroundColor(Color.parseColor("#FB2B70"))
                 couponLL.visibility = View.VISIBLE
                 coupon_titleTV.text = menu_name
@@ -164,6 +167,7 @@ open class MainPostAdapter(context: Context?, view: Int, data: ArrayList<JSONObj
             }else if (coupon_type.equals("3")){
                contentsTV.visibility = View.GONE
                couponLL.visibility = View.VISIBLE
+                coupon_orderTV.text = company_name
                 couponLL.setBackgroundColor(Color.parseColor("#A12BFB"))
                 coupon_titleTV.text = menu_name
                coupon_saleTV.text = sale_price

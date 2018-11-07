@@ -37,7 +37,8 @@ open class MyPostingAdapter(context:Context, view:Int, data:ArrayList<JSONObject
         }
 
         var json = data.get(position)
-
+        val member = json.getJSONObject("Member")
+        var company_name = Utils.getString(member, "company_name")
         var posting = json.getJSONObject("Posting")
         var contents =   Utils.getString(posting, "contents")
         var image_uri = Utils.getString(posting, "image_uri")
@@ -52,6 +53,7 @@ open class MyPostingAdapter(context:Context, view:Int, data:ArrayList<JSONObject
 
         item.storageIV.visibility = View.GONE
         if (coupon_type.equals("1")){
+            item.coupon_orderTV.text = company_name
             item.storageTV.visibility = View.GONE
             item.couponLL.visibility = View.VISIBLE
             item.coupon_titleTV.text = menu_name
@@ -61,6 +63,7 @@ open class MyPostingAdapter(context:Context, view:Int, data:ArrayList<JSONObject
             item.coupon_contentTV.text = contents
             item.coupon_enddateTV.text = uses_end_date
         }else if (coupon_type.equals("2")){
+            item.coupon_orderTV.text = company_name
             item.storageTV.visibility = View.GONE
             item.couponLL.setBackgroundColor(Color.parseColor("#FB2B70"))
             item.couponLL.visibility = View.VISIBLE
@@ -72,6 +75,7 @@ open class MyPostingAdapter(context:Context, view:Int, data:ArrayList<JSONObject
             item.coupon_startdateTV.text = uses_start_date
             item.coupon_enddateTV.text = uses_end_date
         }else if (coupon_type.equals("3")){
+            item.coupon_orderTV.text = company_name
             item.storageTV.visibility = View.GONE
             item.couponLL.visibility = View.VISIBLE
             item.couponLL.setBackgroundColor(Color.parseColor("#A12BFB"))
