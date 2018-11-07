@@ -1,6 +1,5 @@
 package posting.devstories.com.posting_android.activities
 
-import android.app.DatePickerDialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
@@ -49,10 +48,11 @@ class MyPostingWriteActivity : RootActivity() {
     var startd:String?=null
     var last:String?=null
     var mount:Int? = 0
-
+    var absolutePath:String? =null
     var getmee:String?= null
     var getmost = ""
     var getday=""
+    var postingType:String?= null
 
 
     lateinit var adpater: ArrayAdapter<String>
@@ -66,22 +66,21 @@ class MyPostingWriteActivity : RootActivity() {
         progressDialog = ProgressDialog(context)
 
         member_type = PrefUtils.getStringPreference(context, "member_type")
-        intent = getIntent()
 
+        intent = getIntent()
+        // 카메라 사진
+        absolutePath = intent.getStringExtra("absolutePath")
+        // 포스팅 타입 G-갤러리 P-포토
+        postingType = intent.getStringExtra("postingType")
 
         getmee = intent.getStringExtra("getmee")
         getmost = intent.getStringExtra("getmost")
         getday = intent.getStringExtra("getday")
 
-        println("===============종류"+getmee)
-        println("===============수량"+getmost)
-        println("===============기간"+getday)
-
 
         text = intent.getStringExtra("text")
         imgid = intent.getStringExtra("imgid")
         println("dddddddddddddd"+imgid)
-        capture = intent.getParcelableExtra("capture")
         contents2 = intent.getStringExtra("contents")
         startd = intent.getStringExtra("startd")
         last = intent.getStringExtra("last")
@@ -112,15 +111,22 @@ class MyPostingWriteActivity : RootActivity() {
 
         member_id =  PrefUtils.getIntPreference(context,"member_id")
 
-
-        //이미지
-        img2RL.background = Drawable.createFromPath(imgid)
-        captureIV.setImageBitmap(capture)
-        ImageLoader.getInstance().displayImage(image, captureIV, Utils.UILoptionsUserProfile)
-
-        if (imgid != null && "" != imgid && imgid!!.length> 1&&capture != null&&image != null){
+        if (postingType.equals("P")){
+            capture = Utils.getImage(context.contentResolver, absolutePath)
+            captureIV.setImageBitmap(capture)
             popupRL.visibility = View.VISIBLE
+        }else if (postingType.equals("G")){
+            //이미지
+            img2RL.background = Drawable.createFromPath(imgid)
+            ImageLoader.getInstance().displayImage(image, captureIV, Utils.UILoptionsUserProfile)
+            popupRL.visibility = View.VISIBLE
+
+            captureIV.setImageBitmap(Utils.getImage(context.contentResolver, imgid))
         }
+
+
+
+
 
 
 

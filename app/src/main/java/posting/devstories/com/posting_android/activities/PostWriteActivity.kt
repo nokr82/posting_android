@@ -26,8 +26,13 @@ import posting.devstories.com.posting_android.R.id.meeting2LL
 import posting.devstories.com.posting_android.base.Config
 import posting.devstories.com.posting_android.base.Utils
 import android.R.array
+import android.net.Uri
+import android.os.Environment
+import android.support.v4.content.FileProvider
 import android.widget.TextView
 import posting.devstories.com.posting_android.R.id.imgIV2
+import java.io.File
+import java.io.IOException
 
 
 class PostWriteActivity : RootActivity() {
@@ -38,12 +43,15 @@ class PostWriteActivity : RootActivity() {
     private val photoList = ArrayList<ImageAdapter.PhotoData>()
     private val selected = LinkedList<String>()
     private val REQUEST_CAMERA = 0
+   var imageUri: Uri? = null
+ var absolutePath: String? = null
     var mee = arrayOf("자유","정보","스터디","동아리","미팅")
     var  most =arrayOf("수량","1","3","5","10","20","∞")
     var day = arrayOf("기간","1일","5일","7일","10일","30일","60일")
     var getmee:String?= null
     var getmost = ""
     var getday=""
+    var postingType = ""
 
 
 
@@ -207,7 +215,8 @@ class PostWriteActivity : RootActivity() {
             var intent = Intent(context, MyPostingWriteActivity::class.java)
             intent.putExtra("image", image)
             intent.putExtra("imgid", imgid)
-            intent.putExtra("capture", capture)
+            intent.putExtra("postingType", postingType)
+            intent.putExtra("absolutePath", absolutePath)
             intent.putExtra("contents", contents)
             intent.putExtra("posting_id",posting_id)
             intent.putExtra("image_uri",image_uri)
@@ -222,9 +231,29 @@ class PostWriteActivity : RootActivity() {
         }
         cameraRL.setOnClickListener {
             val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            if (intent.resolveActivity(packageManager)!=null){
+            if (intent.resolveActivity(packageManager) != null) {
 
-                startActivityForResult(intent,REQUEST_CAMERA)
+                val storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+
+
+
+                try {
+                    val photo = File.createTempFile(
+                            System.currentTimeMillis().toString(), /* prefix */
+                            ".jpg", /* suffix */
+                            storageDir      /* directory */
+                    )
+
+                    absolutePath = photo.absolutePath
+                    //imageUri = Uri.fromFile(photo);
+                    imageUri = FileProvider.getUriForFile(context,packageName + ".provider", photo)
+                    intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
+                    startActivityForResult(intent, REQUEST_CAMERA)
+
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                }
+
             }
 
 
@@ -240,7 +269,7 @@ class PostWriteActivity : RootActivity() {
         listGV.adapter = adapter
         listGV.setOnItemClickListener { parent, view, position, id ->
 
-
+            postingType = "G"
             image = ""
 
             val photo = photoList[position]
@@ -285,16 +314,17 @@ class PostWriteActivity : RootActivity() {
 
         when(requestCode){
             REQUEST_CAMERA ->{
-                if(resultCode== Activity.RESULT_OK && data !=null){
-                    imgid = ""
-                    image = ""
-
-                    capture = data.extras.get("data") as Bitmap
-
+                val realPathFromURI = imageUri!!.getPath()
+                context.sendBroadcast(Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://$realPathFromURI")))
+                try {
+                    capture = Utils.getImage(context.contentResolver, absolutePath)
+                    postingType = "P"
                     imgIV2.setImageBitmap(capture)
 
-
+                } catch (e: Exception) {
+                    e.printStackTrace()
                 }
+
             }
             else -> {
                 Toast.makeText(this,"Unrecognized request code",Toast.LENGTH_SHORT)
