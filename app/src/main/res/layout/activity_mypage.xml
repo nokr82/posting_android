@@ -75,7 +75,7 @@
                         android:id="@+id/myproIV"
                         android:layout_width="68.05dp"
                         android:layout_height="68.05dp"
-                        android:src="@mipmap/alram_my" />
+                        android:src="@mipmap/myimg" />
 
                     <LinearLayout
 

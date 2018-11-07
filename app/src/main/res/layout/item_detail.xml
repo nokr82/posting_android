@@ -38,12 +38,7 @@
 
     </posting.devstories.com.posting_android.base.RationalRelativeLayout>
 
-    <ImageView
-            android:layout_width="40.2dp"
-            android:layout_height="40.2dp"
-            android:src="@mipmap/blue"
-            android:layout_alignParentTop="true"
-            android:layout_centerInParent="true"/>
+
 
 </posting.devstories.com.posting_android.base.RationalRelativeLayout>
 

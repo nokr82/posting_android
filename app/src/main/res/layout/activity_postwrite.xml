@@ -89,8 +89,12 @@
                 android:src="@mipmap/semo" />
 
         </LinearLayout>
+        <LinearLayout
+            android:id="@+id/nextLL"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
         <TextView
-            android:id="@+id/nextTX"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -100,7 +104,7 @@
             android:textSize="11.5dp"
 
             />
-
+        </LinearLayout>
 
     </LinearLayout>
 
@@ -114,30 +118,26 @@
 
 
         <RelativeLayout
-            android:layout_width="286.02dp"
-            android:layout_height="292.67dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
             android:background="@mipmap/wtite_bg"
-            android:gravity="center"
-             >
+            android:gravity="center">
 
             <RelativeLayout
-                    android:id="@+id/imgRL"
-                android:layout_width="247.23dp"
-                android:layout_height="261.21dp"
-               >
+                android:id="@+id/imgRL"
+                android:layout_margin="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
                 <ImageView
+                    android:id="@+id/imgIV2"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:id="@+id/imgIV2"
-                    android:scaleType="centerCrop"/>
-
+                    android:scaleType="centerCrop" />
 
 
             </RelativeLayout>
-
-
-
-
 
 
         </RelativeLayout>

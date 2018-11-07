@@ -196,7 +196,7 @@ class PostWriteActivity : RootActivity() {
           }
 }
 
-        nextTX.setOnClickListener {
+        nextLL.setOnClickListener {
             getmee = meetingSP2.selectedItem.toString()
             getmost = mostSP.selectedItem.toString()
             getday = daySP.selectedItem.toString()

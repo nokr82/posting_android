@@ -23,10 +23,13 @@ import org.json.JSONException
 import org.json.JSONObject
 import posting.devstories.com.posting_android.Actions.MemberAction
 import posting.devstories.com.posting_android.Actions.PostingAction
+import posting.devstories.com.posting_android.Actions.PostingAction.del_posting
 import posting.devstories.com.posting_android.Actions.PostingAction.detail
 import posting.devstories.com.posting_android.Actions.PostingAction.save_posting
+import posting.devstories.com.posting_android.Actions.PostingAction.savedel_posting
 import posting.devstories.com.posting_android.Actions.PostingAction.write_comments
 import posting.devstories.com.posting_android.Actions.ReviewAction
+import posting.devstories.com.posting_android.Actions.ReviewAction.report
 import posting.devstories.com.posting_android.R
 import posting.devstories.com.posting_android.adapter.DetailAnimationRecyclerAdapter
 import posting.devstories.com.posting_android.adapter.ReAdapter
@@ -225,10 +228,12 @@ class DetailActivity : RootActivity() {
 
                         var member = response.getJSONObject("member")
                         nick =  Utils.getString(member, "nick_name")
-
                         var image_uri = Utils.getString(member, "image_uri")
+                        if (!image_uri.equals("")||image_uri!=null){
                         var image = Config.url + image_uri
                         ImageLoader.getInstance().displayImage(image,myIV, Utils.UILoptionsPosting)
+                        }
+
                         mynameTV.text =nick
 
                     } else {
@@ -541,6 +546,7 @@ class DetailActivity : RootActivity() {
                         var sale_per:String =  Utils.getString(posting, "sale_per")
                         var sale_price:String =  Utils.getString(posting, "sale_price")
                         var contents =   Utils.getString(posting, "contents")
+
                         var image_uri = Utils.getString(posting, "image_uri")
                         var leftCount = Utils.getString(posting, "leftCount")
 
@@ -597,7 +603,7 @@ class DetailActivity : RootActivity() {
                         image_uri = Utils.getString(posting, "image_uri")
                         count = Utils.getInt(posting, "leftCount")
 
-
+                        leftCntTV.text = count.toString()
 //                        var created =   Utils.getString(posting, "created")
 
                         if (taptype==2){

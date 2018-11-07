@@ -115,7 +115,6 @@
 
                         </android.support.v7.widget.RecyclerView>
 
-
                         <posting.devstories.com.posting_android.base.RationalRelativeLayout
                             android:layout_width="247.23dp"
                             android:layout_height="261.21dp"
@@ -260,13 +259,26 @@
 
                         </posting.devstories.com.posting_android.base.RationalRelativeLayout>
 
-                        <ImageView
-                            android:layout_width="40.2dp"
-                            android:layout_height="40.2dp"
-                            android:layout_alignParentTop="true"
-                            android:layout_centerInParent="true"
-                            android:src="@mipmap/blue" />
+                        <LinearLayout
+                            android:id="@+id/countLL"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:background="@mipmap/nemocount"
+                            android:layout_alignParentBottom="true"
+                            android:layout_margin="10dp"
+                            android:gravity="center_vertical">
 
+                            <TextView
+                                android:id="@+id/leftCntTV"
+                                android:layout_marginLeft="4.5dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="0"
+                                android:textSize="17.67dp"
+                                android:textColor="#FFFFFF"/>
+
+                        </LinearLayout>
                     </posting.devstories.com.posting_android.base.RationalRelativeLayout>
 
                 </LinearLayout>
@@ -433,7 +445,7 @@ android:gravity="center_vertical">
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="30dp"
+                android:layout_height="40dp"
                 android:layout_weight="1"
                 android:background="@mipmap/chat_bg">
 
@@ -445,7 +457,7 @@ android:gravity="center_vertical">
                     android:layout_marginLeft="17.23dp"
                     android:layout_weight="1"
                     android:background="@null"
-                    android:hint="메시지를 입력하세요..."
+                    android:hint="댓글을 입력하세요..."
                     android:imeOptions="actionDone"
                     android:singleLine="true"
                     android:textSize="10.5dp" />
@@ -460,9 +472,41 @@ android:gravity="center_vertical">
 
             </LinearLayout>
 
+
             <View
                 android:layout_width="48dp"
                 android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="43dp"
+            android:layout_marginLeft="30.8dp"
+            android:layout_marginRight="30.8dp"
+            android:layout_marginBottom="16dp"
+            android:orientation="horizontal"
+            android:background="#FAC841"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="21dp"
+                android:src="@mipmap/mycoupon"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#063588"
+                android:textSize="17dp"
+                android:text="My Storage로 떼어가기"/>
+
+
+
+
+
+
 
         </LinearLayout>
     </LinearLayout>
