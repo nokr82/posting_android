@@ -101,6 +101,7 @@ class LoginActivity : RootActivity() {
                         val data = response.getJSONObject("member")
                         val school = response.getJSONObject("school")
 
+
                         val school_id = Utils.getInt(school, "id")
                         PrefUtils.setPreference(context, "current_school_id", school_id)
 
@@ -114,9 +115,17 @@ class LoginActivity : RootActivity() {
 
                         val member_type = PrefUtils.getStringPreference(context,"member_type")
 
-                        val intent = Intent(context, MainActivity::class.java)
-                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                        startActivity(intent)
+                        if (member_type.equals("3")){
+                            val intent = Intent(context,MainActivity::class.java)
+                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                            startActivity(intent)
+                        }else{
+                            val intent = Intent(context, MainActivity::class.java)
+                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                            startActivity(intent)
+                        }
+
+
 
                     } else {
                         Toast.makeText(context, "일치하는 회원이 존재하지 않습니다.", Toast.LENGTH_LONG).show()

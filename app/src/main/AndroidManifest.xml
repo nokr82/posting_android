@@ -81,6 +81,12 @@
             android:theme="@style/NoTitleDialog"
             android:windowSoftInputMode="stateHidden|adjustResize"/>
 
+       <activity
+        android:name=".activities.gpsActivity"
+        android:screenOrientation="portrait"
+        android:theme="@style/NoTitleDialog"
+        android:windowSoftInputMode="stateHidden|adjustResize"/>
+
         <activity
             android:name=".activities.ServiceActivity"
             android:screenOrientation="portrait"

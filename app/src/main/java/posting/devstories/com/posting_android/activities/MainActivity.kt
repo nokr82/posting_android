@@ -32,6 +32,7 @@ class MainActivity : FragmentActivity() {
     private val BACK_PRESSED_TERM = (1000 * 2).toLong()
     private var backPressedTime: Long = 0
 
+    var  order_check = "N"
     var tabType = 1
     var type = ""
     var tabWriteV: View? = null
@@ -72,6 +73,7 @@ class MainActivity : FragmentActivity() {
 
         this.context = this
 
+        order_check = intent.getStringExtra("order_check")
         posting_id = intent.getStringExtra("posting_id")
         is_push = intent.getBooleanExtra("is_push", false)
 
@@ -105,6 +107,7 @@ class MainActivity : FragmentActivity() {
 
         if(member_type.equals("3")){
             fragmentFT.addTab(fragmentFT.newTabSpec("myPage").setIndicator(tabMypageV), OrderPageFragment::class.java, null)
+
         }else{
             fragmentFT.addTab(fragmentFT.newTabSpec("myPage").setIndicator(tabMypageV), MyPageFragment::class.java, null)
         }
@@ -117,7 +120,7 @@ class MainActivity : FragmentActivity() {
 
             if(fragmentFT.currentTab == 0) {
                 val postFragment = supportFragmentManager.findFragmentByTag("post") as PostFragment
-                postFragment.setMainView()
+                postFragment
             }
 
             fragmentFT.onTabChanged("post")
