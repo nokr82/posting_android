@@ -480,6 +480,7 @@ android:gravity="center_vertical">
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/saveLL"
             android:layout_width="match_parent"
             android:layout_height="43dp"
             android:layout_marginLeft="30.8dp"
@@ -487,6 +488,7 @@ android:gravity="center_vertical">
             android:layout_marginBottom="16dp"
             android:orientation="horizontal"
             android:background="#FAC841"
+            android:visibility="gone"
             android:gravity="center">
 
             <ImageView

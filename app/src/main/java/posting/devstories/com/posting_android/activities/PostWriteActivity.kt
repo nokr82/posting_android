@@ -27,6 +27,7 @@ import posting.devstories.com.posting_android.base.Config
 import posting.devstories.com.posting_android.base.Utils
 import android.R.array
 import android.widget.TextView
+import posting.devstories.com.posting_android.R.id.imgIV2
 
 
 class PostWriteActivity : RootActivity() {
@@ -170,30 +171,26 @@ class PostWriteActivity : RootActivity() {
 
 
         textRL.setOnClickListener {
-
-            getmee = meetingSP2.selectedItem.toString()
-            getmost = mostSP.selectedItem.toString()
-            getday = daySP.selectedItem.toString()
-            if (getmost.equals("수량")){
-                Toast.makeText(context,"수량을 선택해주세요",Toast.LENGTH_SHORT).show()
-            }else if (getday.equals("기간")){
-                Toast.makeText(context,"기간을 선택해주세요",Toast.LENGTH_SHORT).show()
-            }else{
-                if(member_type.equals("3")){
-                    var intent = Intent(context, CouponTextActivity::class.java)
-                    intent.putExtra("getmost",getmost)
-                    intent.putExtra("getday",getday)
+            if(member_type.equals("3")){
+                var intent = Intent(context, CouponTextActivity::class.java)
+                startActivity(intent)
+            }else {
+                getmee = meetingSP2.selectedItem.toString()
+                getmost = mostSP.selectedItem.toString()
+                getday = daySP.selectedItem.toString()
+                if (getmost.equals("수량")) {
+                    Toast.makeText(context, "수량을 선택해주세요", Toast.LENGTH_SHORT).show()
+                } else if (getday.equals("기간")) {
+                    Toast.makeText(context, "기간을 선택해주세요", Toast.LENGTH_SHORT).show()
+                } else {
+                    var intent = Intent(context, MyPostingWriteActivity::class.java)
+                    intent.putExtra("getmee", getmee)
+                    intent.putExtra("getmost", getmost)
+                    intent.putExtra("getday", getday)
+                    intent.putExtra("text", text)
                     startActivity(intent)
-                }else{
-            var intent = Intent(context, MyPostingWriteActivity::class.java)
-                intent.putExtra("getmee",getmee)
-                intent.putExtra("getmost",getmost)
-                intent.putExtra("getday",getday)
-            intent.putExtra("text", text)
-            startActivity(intent)
-
                 }
-          }
+            }
 }
 
         nextLL.setOnClickListener {

@@ -198,8 +198,17 @@ class DetailActivity : RootActivity() {
                 return@setOnClickListener
             }
 
-            savePosting();
+           savePosting()
 
+        }
+        saveLL.setOnClickListener {
+            if(count < 1) {
+
+                Toast.makeText(context, "남은 포스팅 갯수가 없습니다.", Toast.LENGTH_LONG).show()
+
+                return@setOnClickListener
+            }
+            savePosting()
         }
 
         backLL.setOnClickListener {
@@ -587,6 +596,11 @@ class DetailActivity : RootActivity() {
                             usesTV.visibility = View.VISIBLE
                             usesTV.text = "사용기간:"+uses_start_date+" ~ "+uses_end_date+" 까지"
                         }
+
+                        if (save_yn.equals("N")){
+                            saveLL.visibility = View.VISIBLE
+                        }
+
 
 
                         if (type ==6&&use_yn.equals("Y")){

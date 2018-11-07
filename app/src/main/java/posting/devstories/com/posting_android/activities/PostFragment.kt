@@ -38,6 +38,7 @@ import posting.devstories.com.posting_android.adapter.SchoolAdapter
 import posting.devstories.com.posting_android.base.NonSwipeableViewPager
 import posting.devstories.com.posting_android.base.PrefUtils
 import posting.devstories.com.posting_android.base.Utils
+import kotlin.concurrent.timer
 
 open class PostFragment : Fragment() {
 
@@ -399,7 +400,7 @@ open class PostFragment : Fragment() {
 
                 val keyword = Utils.getString(searchET)
 
-                searchSchool(keyword)
+//                searchSchool(keyword)
 
             }
 
@@ -408,132 +409,132 @@ open class PostFragment : Fragment() {
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
         })
 
-        adapter = SchoolAdapter(context!!, R.layout.school_item, adapterData)
-        schoolLV.adapter = adapter
-        adapter.notifyDataSetChanged()
+//        adapter = SchoolAdapter(context!!, R.layout.school_item, adapterData)
+//        schoolLV.adapter = adapter
+//        adapter.notifyDataSetChanged()
 
-        schoolLV.setOnItemClickListener { adapterView, view, i, l ->
-            if(adapterData.size > i) {
-                val schoolO = adapterData.get(i)
-                val school = schoolO.getJSONObject("School")
-                val school_id = Utils.getInt(school, "id")
-
-                println("school : $school")
-                println("school_id : $school_id")
-
-                PrefUtils.setPreference(context, "current_school_id", school_id)
-
-                val intent = Intent(context, MainActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                startActivity(intent)
-            }
-        }
+//        schoolLV.setOnItemClickListener { adapterView, view, i, l ->
+//            if(adapterData.size > i) {
+//                val schoolO = adapterData.get(i)
+//                val school = schoolO.getJSONObject("School")
+//                val school_id = Utils.getInt(school, "id")
+//
+//                println("school : $school")
+//                println("school_id : $school_id")
+//
+//                PrefUtils.setPreference(context, "current_school_id", school_id)
+//
+//                val intent = Intent(context, MainActivity::class.java)
+//                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+//                startActivity(intent)
+//            }
+//        }
 
     }
 
-    fun searchSchool(searchKeyword: String) {
-
-        val params = RequestParams()
-        params.put("searchKeyword", searchKeyword)
-
-        SchoolAction.School(params, object : JsonHttpResponseHandler() {
-
-            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
-                if (progressDialog != null) {
-                    progressDialog!!.dismiss()
-                }
-
-                try {
-
-                    adapterData.clear()
-                    adapter.notifyDataSetChanged()
-
-                    val result = response!!.getString("result")
-                    val dbSearchKeyword = response!!.getString("searchKeyword")
-                    val list = response!!.getJSONArray("list")
-
-                    println(response)
-
-                    if("ok" == result && dbSearchKeyword == searchKeyword) {
-
-                        for (i in 0..(list.length() - 1)) {
-                            var data  = list.get(i) as JSONObject
-                            checkSchoolData(data)
-                        }
-
-                        adapter.notifyDataSetChanged()
-
-                    } else {
-
-                    }
-
-                    if(adapterData.size == 0) {
-                        schoolLV.visibility = View.GONE
-                    } else {
-                        schoolLV.visibility = View.VISIBLE
-                    }
-
-                } catch (e: JSONException) {
-                    e.printStackTrace()
-                }
-
-            }
-
-            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONArray?) {
-                super.onSuccess(statusCode, headers, response)
-            }
-
-            override fun onSuccess(statusCode: Int, headers: Array<Header>?, responseString: String?) {
-
-                // System.out.println(responseString);
-            }
-
-            private fun error() {
-                Utils.alert(context, "조회중 장애가 발생하였습니다.")
-            }
-
-            override fun onFailure(statusCode: Int, headers: Array<Header>?, responseString: String?, throwable: Throwable) {
-                if (progressDialog != null) {
-                    progressDialog!!.dismiss()
-                }
-
-                // System.out.println(responseString);
-
-                throwable.printStackTrace()
-                error()
-            }
-
-            override fun onFailure(statusCode: Int, headers: Array<Header>?, throwable: Throwable, errorResponse: JSONObject?) {
-                if (progressDialog != null) {
-                    progressDialog!!.dismiss()
-                }
-                throwable.printStackTrace()
-                error()
-            }
-
-            override fun onFailure(statusCode: Int, headers: Array<Header>?, throwable: Throwable, errorResponse: JSONArray?) {
-                if (progressDialog != null) {
-                    progressDialog!!.dismiss()
-                }
-                throwable.printStackTrace()
-                error()
-            }
-
-            override fun onStart() {
-                // show dialog
-                if (progressDialog != null) {
-
-                    // progressDialog!!.show()
-                }
-            }
-
-            override fun onFinish() {
-                if (progressDialog != null) {
-                    progressDialog!!.dismiss()
-                }
-            }
-        })
-    }
+//    fun searchSchool(searchKeyword: String) {
+//
+//        val params = RequestParams()
+//        params.put("searchKeyword", searchKeyword)
+//
+//        SchoolAction.School(params, object : JsonHttpResponseHandler() {
+//
+//            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
+//                if (progressDialog != null) {
+//                    progressDialog!!.dismiss()
+//                }
+//
+//                try {
+//
+//                    adapterData.clear()
+//                    adapter.notifyDataSetChanged()
+//
+//                    val result = response!!.getString("result")
+//                    val dbSearchKeyword = response!!.getString("searchKeyword")
+//                    val list = response!!.getJSONArray("list")
+//
+//                    println(response)
+//
+//                    if("ok" == result && dbSearchKeyword == searchKeyword) {
+//
+//                        for (i in 0..(list.length() - 1)) {
+//                            var data  = list.get(i) as JSONObject
+//                            checkSchoolData(data)
+//                        }
+//
+//                        adapter.notifyDataSetChanged()
+//
+//                    } else {
+//
+//                    }
+//
+//                    if(adapterData.size == 0) {
+//                        schoolLV.visibility = View.GONE
+//                    } else {
+//                        schoolLV.visibility = View.VISIBLE
+//                    }
+//
+//                } catch (e: JSONException) {
+//                    e.printStackTrace()
+//                }
+//
+//            }
+//
+//            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONArray?) {
+//                super.onSuccess(statusCode, headers, response)
+//            }
+//
+//            override fun onSuccess(statusCode: Int, headers: Array<Header>?, responseString: String?) {
+//
+//                // System.out.println(responseString);
+//            }
+//
+//            private fun error() {
+//                Utils.alert(context, "조회중 장애가 발생하였습니다.")
+//            }
+//
+//            override fun onFailure(statusCode: Int, headers: Array<Header>?, responseString: String?, throwable: Throwable) {
+//                if (progressDialog != null) {
+//                    progressDialog!!.dismiss()
+//                }
+//
+//                // System.out.println(responseString);
+//
+//                throwable.printStackTrace()
+//                error()
+//            }
+//
+//            override fun onFailure(statusCode: Int, headers: Array<Header>?, throwable: Throwable, errorResponse: JSONObject?) {
+//                if (progressDialog != null) {
+//                    progressDialog!!.dismiss()
+//                }
+//                throwable.printStackTrace()
+//                error()
+//            }
+//
+//            override fun onFailure(statusCode: Int, headers: Array<Header>?, throwable: Throwable, errorResponse: JSONArray?) {
+//                if (progressDialog != null) {
+//                    progressDialog!!.dismiss()
+//                }
+//                throwable.printStackTrace()
+//                error()
+//            }
+//
+//            override fun onStart() {
+//                // show dialog
+//                if (progressDialog != null) {
+//
+//                    // progressDialog!!.show()
+//                }
+//            }
+//
+//            override fun onFinish() {
+//                if (progressDialog != null) {
+//                    progressDialog!!.dismiss()
+//                }
+//            }
+//        })
+//    }
 
     fun checkSchoolData(data:JSONObject){
 

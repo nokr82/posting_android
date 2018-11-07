@@ -51,14 +51,11 @@ class CouponTextActivity : RootActivity() {
         this.context = this
         progressDialog = ProgressDialog(context)
         viewcoupon()
-        intent = getIntent()
-        getmost = intent.getStringExtra("getmost")
-        print("----------getmost"+getmost)
+
 
 
         adpater = ArrayAdapter<String>(this, R.layout.spinner_item, most)
         most4SP.adapter = adpater
-
 
         member_id =  PrefUtils.getIntPreference(context,"member_id")
 
@@ -191,7 +188,12 @@ class CouponTextActivity : RootActivity() {
                 uses_end_date = Utils.getString(enddate3TV)
                 contents = Utils.getString(content4ET)
             }
+            if (getmost.equals("수량")){
+                Toast.makeText(context,"수량을 선택해주세요",Toast.LENGTH_SHORT).show()
+            }else{
             write()
+            }
+
         }
 
 
@@ -213,6 +215,8 @@ class CouponTextActivity : RootActivity() {
 
     fun write(){
         val params = RequestParams()
+        getmost =  most4SP.selectedItem.toString()
+
         params.put("member_id", member_id)
         params.put("current_school_id", PrefUtils.getIntPreference(context, "current_school_id"))
         params.put("type", type)
