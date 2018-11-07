@@ -12,6 +12,7 @@ import posting.devstories.com.posting_android.R
 import posting.devstories.com.posting_android.base.Utils
 import posting.devstories.com.posting_android.base.Config
 import com.nostra13.universalimageloader.core.ImageLoader
+import posting.devstories.com.posting_android.R.id.*
 import posting.devstories.com.posting_android.activities.DetailActivity
 
 open class MainPostAdapter(context: Context?, view: Int, data: ArrayList<JSONObject>) :
@@ -113,6 +114,13 @@ open class MainPostAdapter(context: Context?, view: Int, data: ArrayList<JSONObj
             var contents = Utils.getString(posting, "contents")
             var image_uri = Utils.getString(posting, "image_uri")
             var leftCnt = Utils.getString(posting, "leftCount")
+            var coupon_type:String =  Utils.getString(posting, "coupon_type")
+            var uses_start_date =   Utils.getString(posting, "uses_start_date")
+            var uses_end_date:String =  Utils.getString(posting, "uses_end_date")
+            var menu_name:String =  Utils.getString(posting, "menu_name")
+            var sale_per:String =  Utils.getString(posting, "sale_per")
+            var sale_price:String =  Utils.getString(posting, "sale_price")
+
 
             val postingView = View.inflate(context, R.layout.item_post, null)
 
@@ -120,11 +128,52 @@ open class MainPostAdapter(context: Context?, view: Int, data: ArrayList<JSONObj
             var postIV: ImageView = postingView.findViewById(R.id.postIV);
             var leftCntTV: TextView = postingView.findViewById(R.id.leftCntTV);
             var contentsTV: TextView = postingView.findViewById(R.id.contentsTV);
+           var couponLL = postingView.findViewById(R.id.couponLL) as LinearLayout
+            var  coupon_orderTV = postingView.findViewById(R.id.coupon_orderTV) as TextView
+            var  coupon_titleTV = postingView.findViewById(R.id.coupon_titleTV) as TextView
+            var coupon_contentTV = postingView.findViewById(R.id.coupon_contentTV) as TextView
+            var coupon_saleTV = postingView.findViewById(R.id.coupon_saleTV) as TextView
+            var coupon_sale2TV = postingView.findViewById(R.id.coupon_sale2TV) as TextView
+            var  coupon_TV = postingView.findViewById(R.id.coupon_TV) as TextView
+            var coupon_startdateTV = postingView.findViewById(R.id.coupon_startdateTV) as TextView
+            var  coupon_enddateTV = postingView.findViewById(R.id.coupon_enddateTV) as TextView
 
             val params = postRL.layoutParams as LinearLayout.LayoutParams
             params.setMargins(10, 0, 0, 0)
             postRL.layoutParams = params
-
+            if (coupon_type.equals("1")){
+                contentsTV.visibility = View.GONE
+                couponLL.visibility = View.VISIBLE
+                coupon_titleTV.text = menu_name
+                coupon_saleTV.text = sale_per
+                coupon_sale2TV.text = "할인"
+                coupon_startdateTV.text = uses_start_date
+                coupon_contentTV.text = contents
+                coupon_enddateTV.text = uses_end_date
+            }else if (coupon_type.equals("2")){
+               contentsTV.visibility = View.GONE
+                couponLL.setBackgroundColor(Color.parseColor("#FB2B70"))
+                couponLL.visibility = View.VISIBLE
+                coupon_titleTV.text = menu_name
+              coupon_saleTV.text = "FREE"
+               coupon_TV.visibility = View.GONE
+                coupon_sale2TV.visibility = View.GONE
+                coupon_contentTV.text = contents
+               coupon_startdateTV.text = uses_start_date
+                coupon_enddateTV.text = uses_end_date
+            }else if (coupon_type.equals("3")){
+               contentsTV.visibility = View.GONE
+               couponLL.visibility = View.VISIBLE
+                couponLL.setBackgroundColor(Color.parseColor("#A12BFB"))
+                coupon_titleTV.text = menu_name
+               coupon_saleTV.text = sale_price
+              coupon_contentTV.text = contents
+               coupon_TV.text = "원"
+                coupon_sale2TV.text = "할인"
+                coupon_startdateTV.text = uses_start_date
+                coupon_enddateTV.text = uses_end_date
+            }else{
+                couponLL.visibility = View.GONE
             if(!image_uri.isEmpty() && image_uri != "") {
                 var image:String = Config.url+image_uri
                 ImageLoader.getInstance().displayImage(image, postIV, Utils.UILoptionsPosting)
@@ -132,6 +181,7 @@ open class MainPostAdapter(context: Context?, view: Int, data: ArrayList<JSONObj
             } else {
                 contentsTV.visibility = View.VISIBLE
                 contentsTV.text = contents
+            }
             }
 
             postRL.setOnClickListener {
