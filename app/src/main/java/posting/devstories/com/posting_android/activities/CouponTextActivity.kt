@@ -51,7 +51,8 @@ class CouponTextActivity : RootActivity() {
         this.context = this
         progressDialog = ProgressDialog(context)
         viewcoupon()
-
+        intent = getIntent()
+        print("----------getmost"+getmost)
 
 
         adpater = ArrayAdapter<String>(this, R.layout.spinner_item, most)
@@ -169,29 +170,30 @@ class CouponTextActivity : RootActivity() {
 
         }
         nextTX.setOnClickListener {
-            if (coupon_type.equals("1")) {
+            getmost = most4SP.selectedItem.toString()
+            if (getmost.equals("수량")){
+                Toast.makeText(context,"수량을 선택해주세요",Toast.LENGTH_SHORT).show()
+            }else if (coupon_type.equals("1")) {
                 menu_name = Utils.getString(titleET)
                 sale_per = Utils.getString(saleET)
                 uses_start_date = Utils.getString(startdateTV)
                 uses_end_date = Utils.getString(enddateTV)
                 contents = Utils.getString(content2ET)
+                write()
             }else if (coupon_type.equals("2")){
                 menu_name = Utils.getString(title2ET)
                 sale_per = Utils.getString(saleET)
                 uses_start_date = Utils.getString(startdate2TV)
                 uses_end_date = Utils.getString(enddate2TV)
                 contents = Utils.getString(content3ET)
+                write()
             }else if (coupon_type.equals("3")){
                 menu_name = Utils.getString(title3ET)
                 sale_price = Utils.getString(moneyET)
                 uses_start_date = Utils.getString(startdate3TV)
                 uses_end_date = Utils.getString(enddate3TV)
                 contents = Utils.getString(content4ET)
-            }
-            if (getmost.equals("수량")){
-                Toast.makeText(context,"수량을 선택해주세요",Toast.LENGTH_SHORT).show()
-            }else{
-            write()
+                write()
             }
 
         }
@@ -214,9 +216,8 @@ class CouponTextActivity : RootActivity() {
 
 
     fun write(){
+        getmost = most4SP.selectedItem.toString()
         val params = RequestParams()
-        getmost =  most4SP.selectedItem.toString()
-
         params.put("member_id", member_id)
         params.put("current_school_id", PrefUtils.getIntPreference(context, "current_school_id"))
         params.put("type", type)
