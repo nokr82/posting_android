@@ -11,6 +11,7 @@
         android:id="@+id/selectRL"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:scaleType="centerCrop"
         app:ratio="1:1"
         android:padding="1dp"
         android:background="#FFFF"
