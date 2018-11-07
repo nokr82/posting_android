@@ -30,7 +30,6 @@ class IntroActivity : RootActivity() {
 
     private var posting_id:String = ""
     private var is_push:Boolean = false
-    private var order_check:String = "N"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -128,20 +127,17 @@ class IntroActivity : RootActivity() {
                         PrefUtils.setPreference(context, "autoLogin", true)
                         val member_type = PrefUtils.getStringPreference(context,"member_type")
 
+
                         if (member_type.equals("3")){
                             val intent = Intent(context, MainActivity::class.java)
-                            order_check = "Y"
                             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                             intent.putExtra("is_push", is_push)
                             intent.putExtra("posting_id", posting_id)
-                            intent.putExtra("order_check", order_check)
                             startActivity(intent)
                         }else{
-                            order_check = "N"
                             val intent = Intent(context, MainActivity::class.java)
                             intent.putExtra("is_push", is_push)
                             intent.putExtra("posting_id", posting_id)
-                            intent.putExtra("order_check", order_check)
                             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                             startActivity(intent)
                         }

@@ -32,7 +32,6 @@ class MainActivity : FragmentActivity() {
     private val BACK_PRESSED_TERM = (1000 * 2).toLong()
     private var backPressedTime: Long = 0
 
-    var  order_check = "N"
     var tabType = 1
     var type = ""
     var tabWriteV: View? = null
@@ -73,7 +72,6 @@ class MainActivity : FragmentActivity() {
 
         this.context = this
 
-        order_check = intent.getStringExtra("order_check")
         posting_id = intent.getStringExtra("posting_id")
         is_push = intent.getBooleanExtra("is_push", false)
 

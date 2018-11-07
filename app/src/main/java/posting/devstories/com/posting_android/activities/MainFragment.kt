@@ -125,7 +125,6 @@ open class MainFragment : Fragment(), AbsListView.OnScrollListener {
         activity.registerReceiver(searchKeywordReceiver, filter3)
 
 
-
         adapterMain = PostAdapter(activity, R.layout.item_post, adapterData)
         gideGV.adapter = adapterMain
         member_id = PrefUtils.getIntPreference(context, "member_id")
