@@ -256,7 +256,6 @@ class DetailActivity : RootActivity() {
             pageCurlView.FlipAnimationStep()
 
             savePosting()
-            saveLL.visibility = View.GONE
 
         }
 
@@ -500,7 +499,6 @@ class DetailActivity : RootActivity() {
 
                     }else if ("empty"==result){
                         Toast.makeText(context,"남은 수량이 없습니다.",Toast.LENGTH_SHORT).show()
-
                     }else if ("already"==result){
                         Toast.makeText(context,"이미 떼어간 포스트입니다.",Toast.LENGTH_SHORT).show()
                     } else if ("over" == result) {
@@ -623,14 +621,30 @@ class DetailActivity : RootActivity() {
 
                         println("==========학교"+current_school_id)
                         println("==========학교"+school_id)
-//게시자의 학교아뒤 나의학교아뒤
-                        if (school_id!=me_school_id){
+
+                        count = Utils.getInt(posting, "leftCount")
+
+                        if(count < 1 || me_school_id != school_id || member_id == member_id2 || "Y" == save_yn) {
+
+                            println("count : " + count)
+                            println("me_school_id : " + me_school_id)
+                            println("school_id : " + school_id)
+                            println("member_id : " + member_id)
+                            println("member_id2 : " + member_id2)
+                            println("save_yn : " + save_yn)
+
                             saveLL.visibility = View.GONE
-                        }else if (current_school_id != school_id){
+                        } else {
+                            saveLL.visibility = View.VISIBLE
+                        }
+
+//                        if (school_id!=me_school_id){
+//                            saveLL.visibility = View.GONE
+                        if (current_school_id != school_id){
                           postingLL.background = getDrawable(R.mipmap.write_bg2)
-                            saveLL.visibility = View.GONE
-                        }else if(save_yn.equals("N")&&member_id2!=member_id){
-                                saveLL.visibility = View.VISIBLE
+//                            saveLL.visibility = View.GONE
+//                        }else if(save_yn.equals("N")&&member_id2!=member_id){
+//                                saveLL.visibility = View.VISIBLE
                         }
                         else{
                             postingLL.background = getDrawable(R.mipmap.wtite_bg)
@@ -695,14 +709,16 @@ class DetailActivity : RootActivity() {
 
 
                         image_uri = Utils.getString(posting, "image_uri")
-                        count = Utils.getInt(posting, "leftCount")
 
-                        leftCntTV.text = count.toString()
+                        if(count == 9999) {
+                            leftCntTV.text = "∞"
+                        } else {
+                            leftCntTV.text = count.toString()
+                        }
 //                        var created =   Utils.getString(posting, "created")
 
                         if (taptype==2){
                             menuIV.visibility = View.VISIBLE
-
                         }
 
 

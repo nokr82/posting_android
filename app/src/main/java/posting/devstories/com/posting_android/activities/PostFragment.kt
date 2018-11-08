@@ -119,8 +119,12 @@ open class PostFragment : Fragment() {
                         var posting = p.getJSONObject("Posting")
 
                         if(Utils.getString(posting, "id") == posting_id) {
-                            var cnt = Utils.getInt(posting, "leftCount") - 1
-                            posting.put("leftCount", cnt)
+
+                            if(Utils.getInt(posting, "leftCount") != 9999) {
+                                var cnt = Utils.getInt(posting, "leftCount") - 1
+                                posting.put("leftCount", cnt)
+                            }
+
                         }
 
                     }
