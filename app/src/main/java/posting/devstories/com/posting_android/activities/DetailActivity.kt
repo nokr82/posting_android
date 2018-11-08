@@ -73,8 +73,6 @@ class DetailActivity : RootActivity() {
 
     private lateinit var detailAnimationRecyclerAdapterData: ArrayList<JSONObject>
 
-    lateinit var pageCurlView: PageCurlView
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
@@ -222,6 +220,12 @@ class DetailActivity : RootActivity() {
         */
 
         saveLL.setOnClickListener {
+
+            if("N" == confirm_yn) {
+                Toast.makeText(context, "학교 인증 후 이용 가능합니다", Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
+
             if(count < 1) {
 
                 Toast.makeText(context, "남은 포스팅 갯수가 없습니다.", Toast.LENGTH_LONG).show()
@@ -229,30 +233,31 @@ class DetailActivity : RootActivity() {
                 return@setOnClickListener
             }
 
-            if("N" == confirm_yn) {
-                Toast.makeText(context, "학교 인증 후 이용 가능합니다", Toast.LENGTH_LONG).show()
-                return@setOnClickListener
-            }
 
-            savePosting()
+            val pageCurlView = PageCurlView(context)
 
-            /*
+            // val bm = ImageLoader.getInstance().loadImageSync(Config.url + image_uri)
+
+            // pageCurlView.setmBackground(bm)
+
             coupon3RL.setDrawingCacheEnabled(true);
             var bm = coupon3RL.getDrawingCache()
             bm = bm.copy(bm.getConfig(), true)
-            */
 
-            // pageCurlViewLL.visibility = View.VISIBLE
-            // pageCurlView.addPostit(bm);
-            // pageCurlView.invalidate()
+            pageCurlView.setmForeground(bm)
+
+            // pageCurlView.setmBackground(Utils.createImage(pageCurlViewLL.width, pageCurlViewLL.height, Color.BLACK))
+
+            pageCurlViewLL.addView(pageCurlView)
 
             coupon3RL.visibility = View.GONE
 
             pageCurlView.setbFlipping(true)
             pageCurlView.FlipAnimationStep()
 
-            // savePosting()
-            // saveLL.visibility = View.GONE
+            savePosting()
+            saveLL.visibility = View.GONE
+
         }
 
         backLL.setOnClickListener {
@@ -539,6 +544,8 @@ class DetailActivity : RootActivity() {
     }
 
 
+
+
     fun detaildata() {
         val params = RequestParams()
         params.put("member_id",member_id)
@@ -743,29 +750,6 @@ class DetailActivity : RootActivity() {
                             contentsTV.text = contents
                             contentsTV.visibility = View.VISIBLE
                         }
-
-
-                        var image = Config.url + image_uri
-                        val bi = ImageLoader.getInstance().loadImageSync(image)
-
-                        pageCurlView = PageCurlView(context)
-                        pageCurlView.setmBackground(bi)
-                        pageCurlView.setmForeground(bi)
-
-                        pageCurlViewLL.addView(pageCurlView)
-
-                        pageCurlView.invalidate()
-
-                        /*
-                        ImageLoader.getInstance().loadImage(image, object : SimpleImageLoadingListener() {
-                            override fun onLoadingComplete(imageUri: String, view: View, loadedImage: Bitmap) {
-
-                                println("loadedImage : $loadedImage")
-
-                                // pageCurlView.setPostit(loadedImage)
-                            }
-                        })
-                        */
 
                         for(idx in 0..count) {
                             detailAnimationRecyclerAdapterData.add(posting)
