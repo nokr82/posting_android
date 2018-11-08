@@ -18,6 +18,7 @@ import org.json.JSONException
 import org.json.JSONObject
 import posting.devstories.com.posting_android.Actions.PostingAction
 import posting.devstories.com.posting_android.R
+import posting.devstories.com.posting_android.R.mipmap.back
 import posting.devstories.com.posting_android.base.BackPressCloseHandler
 import posting.devstories.com.posting_android.base.PrefUtils
 import posting.devstories.com.posting_android.base.RootActivity
@@ -68,6 +69,8 @@ class MatchInfoActivity : RootActivity() {
         val params = RequestParams()
         params.put("member_id", member_id)
         params.put("posting_id", posting_id)
+        print("러드"+member_id)
+        print("데드"+posting_id)
 
         PostingAction.save_members(params, object : JsonHttpResponseHandler() {
 
@@ -97,10 +100,14 @@ class MatchInfoActivity : RootActivity() {
                             var profileIV:CircleImageView = profileView.findViewById(R.id.profileIV)
                             var alarmCntTV:TextView = profileView.findViewById(R.id.alarmCntTV)
                             var RL:RelativeLayout = profileView.findViewById(R.id.RL)
+                            val savemember_id = Utils.getInt(member,"id")
 
+                            if (member_id==savemember_id){
+                                    RL.visibility = View.GONE
+                            }else{
                             var profile_uri = Config.url + Utils.getString(member,"image_uri")
                             ImageLoader.getInstance().displayImage(profile_uri, profileIV, Utils.UILoptionsProfile)
-
+                            }
                             profileIV.setOnClickListener {
 
                                 if(Utils.getInt(member, "id") != member_id) {

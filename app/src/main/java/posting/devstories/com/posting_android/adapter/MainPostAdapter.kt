@@ -111,6 +111,8 @@ open class MainPostAdapter(context: Context?, view: Int, data: ArrayList<JSONObj
             val member = p.getJSONObject("Member")
             var company_name = Utils.getString(member, "company_name")
             var id = Utils.getString(posting, "id")
+            var current_school_id = Utils.getString(member, "school_id")
+            var school_id = Utils.getString(posting, "school_id")
             var contents = Utils.getString(posting, "contents")
             var image_uri = Utils.getString(posting, "image_uri")
             var leftCnt = Utils.getString(posting, "leftCount")
@@ -122,8 +124,8 @@ open class MainPostAdapter(context: Context?, view: Int, data: ArrayList<JSONObj
             var sale_price:String =  Utils.getString(posting, "sale_price")
 
 
-            val postingView = View.inflate(context, R.layout.item_post, null)
-
+            val postingView = View.inflate(context, R.layout.item_main_post, null)
+            var postbgIV:ImageView = postingView.findViewById(R.id.postbgIV)
             var postRL: RelativeLayout = postingView.findViewById(R.id.postRL)
             var postIV: ImageView = postingView.findViewById(R.id.postIV);
             var leftCntTV: TextView = postingView.findViewById(R.id.leftCntTV);
@@ -137,6 +139,13 @@ open class MainPostAdapter(context: Context?, view: Int, data: ArrayList<JSONObj
             var  coupon_TV = postingView.findViewById(R.id.coupon_TV) as TextView
             var coupon_startdateTV = postingView.findViewById(R.id.coupon_startdateTV) as TextView
             var  coupon_enddateTV = postingView.findViewById(R.id.coupon_enddateTV) as TextView
+
+            if (current_school_id != school_id){
+                postbgIV.setImageResource(R.mipmap.write_bg2)
+            }else{
+                postbgIV.setImageResource(R.mipmap.bg)
+            }
+
 
             val params = postRL.layoutParams as LinearLayout.LayoutParams
             params.setMargins(10, 0, 0, 0)

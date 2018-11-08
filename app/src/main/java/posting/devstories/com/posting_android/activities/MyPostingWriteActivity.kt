@@ -73,7 +73,7 @@ class MyPostingWriteActivity : RootActivity() {
 
         getmee = intent.getStringExtra("getmee")
         getmost = intent.getStringExtra("getmost")
-        getday = intent.getStringExtra("getday")
+//        getday = intent.getStringExtra("getday")
 
 
         text = intent.getStringExtra("text")

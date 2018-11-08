@@ -14,7 +14,6 @@ import java.util.*
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
 import android.graphics.Bitmap
-import android.graphics.drawable.Drawable
 import android.view.View
 import kotlinx.android.synthetic.main.activity_postwrite.*
 import android.net.Uri
@@ -23,7 +22,7 @@ import android.support.v4.content.FileProvider
 import posting.devstories.com.posting_android.base.*
 import java.io.File
 import java.io.IOException
-
+import com.nostra13.universalimageloader.core.ImageLoader
 
 class PostWriteActivity : RootActivity() {
 
@@ -33,14 +32,14 @@ class PostWriteActivity : RootActivity() {
     private val photoList = ArrayList<ImageAdapter.PhotoData>()
     private val selected = LinkedList<String>()
     private val REQUEST_CAMERA = 0
-   var imageUri: Uri? = null
- var absolutePath: String? = null
-    var mee = arrayOf("자유","정보","스터디","동아리","미팅")
-    var  most =arrayOf("수량","1","3","5","10","20","∞")
-    var day = arrayOf("기간","1일","5일","7일","10일","30일","60일")
-    var getmee:String?= null
+    var imageUri: Uri? = null
+    var absolutePath: String? = null
+    var mee = arrayOf("자유", "정보", "스터디", "동아리", "미팅")
+    var most = arrayOf("수량", "1", "3", "5", "10", "20", "∞")
+    var day = arrayOf("기간", "1일", "5일", "7일", "10일", "30일", "60일")
+    var getmee: String? = null
     var getmost = ""
-    var getday=""
+    var getday = ""
     var postingType = ""
 
     var current_school = -1
@@ -48,73 +47,71 @@ class PostWriteActivity : RootActivity() {
 
     val text = "1"
 
-
-
-    var member_type :String?= null
-    var imgid:String?= null
-    var posting_id:String?= null
-    var contents :String?= null
-    var image_uri :String?= null
-    var image:String?= null
+    var member_type: String? = null
+    var imgid: String? = null
+    var posting_id: String? = null
+    var contents: String? = null
+    var image_uri: String? = null
+    var image: String? = null
     var capture: Bitmap? = null
 
-//
-//    final ArrayAdapter<String> adapter= new ArrayAdapter<String>(getContext(),R.layout.spinner_item,str);
-//
-//    adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
-//
-//    spinner_field.setAdapter(adapter);
-
     lateinit var adapter: ArrayAdapter<String>
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_postwrite)
 
-
-
+        this.context = this
+        progressDialog = ProgressDialog(context)
 
         intent = getIntent()
+
         member_type = intent.getStringExtra("member_type")
-        current_school = intent.getIntExtra("current_school",-1)
-        school_id = intent.getIntExtra("school_id",-1)
+        current_school = intent.getIntExtra("current_school", -1)
+        school_id = intent.getIntExtra("school_id", -1)
         posting_id = intent.getStringExtra("posting_id")
         contents = intent.getStringExtra("contents")
         image_uri = intent.getStringExtra("image_uri")
 
-
-        if (current_school != school_id){
+        if (current_school != school_id) {
             bgRL.background = getDrawable(R.mipmap.write_bg2)
-        }else{
+        } else {
             bgRL.background = getDrawable(R.mipmap.wtite_bg)
         }
 
-
-
-        if (!posting_id.equals("")){
+        if (!posting_id.equals("")) {
             postingType = "M"
-             image = Config.url + image_uri
-              com.nostra13.universalimageloader.core.ImageLoader.getInstance().displayImage(image, imgIV2, Utils.UILoptionsUserProfile)
+            image = Config.url + image_uri
+            ImageLoader.getInstance().displayImage(image, imgIV2, Utils.UILoptionsPosting)
             imgIV2.visibility = View.VISIBLE
-
         }
 
+        if (member_type.equals("3")) {
+            meeting2LL.visibility = View.GONE
+        } else {
+            dayLL.visibility = View.GONE
+        }
 
         var cursor: Cursor? = null
         val resolver = contentResolver
 
-
-        this.context = this
-        progressDialog = ProgressDialog(context)
-
-
         try {
-            val proj = arrayOf(MediaStore.Images.Media._ID, MediaStore.Images.Media.DATA, MediaStore.Images.Media.DISPLAY_NAME, MediaStore.Images.Media.ORIENTATION, MediaStore.Images.Media.BUCKET_DISPLAY_NAME)
+            val proj = arrayOf(
+                MediaStore.Images.Media._ID,
+                MediaStore.Images.Media.DATA,
+                MediaStore.Images.Media.DISPLAY_NAME,
+                MediaStore.Images.Media.ORIENTATION,
+                MediaStore.Images.Media.BUCKET_DISPLAY_NAME
+            )
             val idx = IntArray(proj.size)
 
-            cursor = MediaStore.Images.Media.query(resolver, MediaStore.Images.Media.EXTERNAL_CONTENT_URI, null, null, MediaStore.Images.Media.DATE_ADDED + " DESC")
+            cursor = MediaStore.Images.Media.query(
+                resolver,
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                null,
+                null,
+                MediaStore.Images.Media.DATE_ADDED + " DESC"
+            )
             if (cursor != null && cursor.moveToFirst()) {
                 idx[0] = cursor.getColumnIndex(proj[0])
                 idx[1] = cursor.getColumnIndex(proj[1])
@@ -154,15 +151,9 @@ class PostWriteActivity : RootActivity() {
             }
 
         }
-        if (member_type.equals("3")){
-
-            meeting2LL.visibility = View.GONE
-        }
 
         adapter = ArrayAdapter<String>(this, R.layout.spinner_item, mee)
         meetingSP2.adapter = adapter
-
-
 
         adapter = ArrayAdapter<String>(this, R.layout.spinner_item, day)
         daySP.adapter = adapter
@@ -170,66 +161,62 @@ class PostWriteActivity : RootActivity() {
         adapter = ArrayAdapter<String>(this, R.layout.spinner_item, most)
         mostSP.adapter = adapter
 
-
-
-
-
-
-
         finishLL.setOnClickListener {
             finish()
         }
 
-
         textRL.setOnClickListener {
-            if(member_type.equals("3")){
+
+            getmee = meetingSP2.selectedItem.toString()
+            getmost = mostSP.selectedItem.toString()
+            getday = daySP.selectedItem.toString()
+
+            if (member_type.equals("3")) {
                 var intent = Intent(context, CouponTextActivity::class.java)
                 startActivity(intent)
-            }else {
-                getmee = meetingSP2.selectedItem.toString()
-                getmost = mostSP.selectedItem.toString()
-                getday = daySP.selectedItem.toString()
+            } else {
                 if (getmost.equals("수량")) {
                     Toast.makeText(context, "수량을 선택해주세요", Toast.LENGTH_SHORT).show()
-                } else if (getday.equals("기간")) {
-                    Toast.makeText(context, "기간을 선택해주세요", Toast.LENGTH_SHORT).show()
+//                } else if (getday.equals("기간")) {
+//                    Toast.makeText(context, "기간을 선택해주세요", Toast.LENGTH_SHORT).show()
                 } else {
                     var intent = Intent(context, MyPostingWriteActivity::class.java)
                     intent.putExtra("getmee", getmee)
                     intent.putExtra("getmost", getmost)
-                    intent.putExtra("getday", getday)
+//                    intent.putExtra("getday", getday)
                     intent.putExtra("text", text)
                     startActivity(intent)
                 }
             }
-}
+        }
 
         nextLL.setOnClickListener {
+
             getmee = meetingSP2.selectedItem.toString()
             getmost = mostSP.selectedItem.toString()
             getday = daySP.selectedItem.toString()
-            if (getmost.equals("수량")){
-                Toast.makeText(context,"수량을 선택해주세요",Toast.LENGTH_SHORT).show()
-            }else if (getday.equals("기간")){
-                Toast.makeText(context,"기간을 선택해주세요",Toast.LENGTH_SHORT).show()
-            }
-            else{
-            var intent = Intent(context, MyPostingWriteActivity::class.java)
-            intent.putExtra("image", image)
+
+            if (getmost.equals("수량")) {
+                Toast.makeText(context, "수량을 선택해주세요", Toast.LENGTH_SHORT).show()
+//            } else if (getday.equals("기간")) {
+//                Toast.makeText(context, "기간을 선택해주세요", Toast.LENGTH_SHORT).show()
+            } else {
+                var intent = Intent(context, MyPostingWriteActivity::class.java)
+                intent.putExtra("image", image)
                 intent.putExtra("current_school", current_school)
                 intent.putExtra("school_id", school_id)
-            intent.putExtra("imgid", imgid)
-            intent.putExtra("postingType", postingType)
-            intent.putExtra("absolutePath", absolutePath)
-            intent.putExtra("contents", contents)
-            intent.putExtra("posting_id",posting_id)
-            intent.putExtra("image_uri",image_uri)
-            intent.putExtra("getmee",getmee)
-            intent.putExtra("getmost",getmost)
-            intent.putExtra("getday",getday)
+                intent.putExtra("imgid", imgid)
+                intent.putExtra("postingType", postingType)
+                intent.putExtra("absolutePath", absolutePath)
+                intent.putExtra("contents", contents)
+                intent.putExtra("posting_id", posting_id)
+                intent.putExtra("image_uri", image_uri)
+                intent.putExtra("getmee", getmee)
+                intent.putExtra("getmost", getmost)
+                intent.putExtra("getday", getday)
 
 
-            startActivity(intent)
+                startActivity(intent)
             }
 
         }
@@ -239,18 +226,16 @@ class PostWriteActivity : RootActivity() {
 
                 val storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
 
-
-
                 try {
                     val photo = File.createTempFile(
-                            System.currentTimeMillis().toString(), /* prefix */
-                            ".jpg", /* suffix */
-                            storageDir      /* directory */
+                        System.currentTimeMillis().toString(), /* prefix */
+                        ".jpg", /* suffix */
+                        storageDir      /* directory */
                     )
 
                     absolutePath = photo.absolutePath
                     //imageUri = Uri.fromFile(photo);
-                    imageUri = FileProvider.getUriForFile(context,packageName + ".provider", photo)
+                    imageUri = FileProvider.getUriForFile(context, packageName + ".provider", photo)
                     intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
                     startActivityForResult(intent, REQUEST_CAMERA)
 
@@ -264,10 +249,7 @@ class PostWriteActivity : RootActivity() {
         }
 
 
-
         val imageLoader = ImageLoader(resolver)
-
-        println(photoList)
 
         val adapter = ImageAdapter(context, photoList, imageLoader, selected)
         listGV.adapter = adapter
@@ -278,19 +260,14 @@ class PostWriteActivity : RootActivity() {
 
             val photo = photoList[position]
 
-//            imgRL.background = Drawable.createFromPath(photo.photoPath)
             //이미지가져오기
             imgid = photo.photoPath!!
 
             imgIV2.setImageBitmap(Utils.getImage(context.contentResolver, imgid))
 
-
         }
 
-
-
         imageLoader.setListener(adapter)
-
 
         val permissionlistener = object : PermissionListener {
             override fun onPermissionGranted() {
@@ -299,27 +276,33 @@ class PostWriteActivity : RootActivity() {
             override fun onPermissionDenied(deniedPermissions: List<String>) {
             }
 
-
         }
 
         TedPermission.with(this)
-                .setPermissionListener(permissionlistener)
-                .setDeniedMessage("[설정] > [권한] 에서 권한을 허용할 수 있습니다.")
-                .setPermissions(android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.CAMERA, android.Manifest.permission.READ_EXTERNAL_STORAGE)
-                .check();
-
+            .setPermissionListener(permissionlistener)
+            .setDeniedMessage("[설정] > [권한] 에서 권한을 허용할 수 있습니다.")
+            .setPermissions(
+                android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                android.Manifest.permission.CAMERA,
+                android.Manifest.permission.READ_EXTERNAL_STORAGE
+            )
+            .check();
 
     }
-
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
         super.onActivityResult(requestCode, resultCode, data)
 
-        when(requestCode){
-            REQUEST_CAMERA ->{
+        when (requestCode) {
+            REQUEST_CAMERA -> {
                 val realPathFromURI = imageUri!!.getPath()
-                context.sendBroadcast(Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://$realPathFromURI")))
+                context.sendBroadcast(
+                    Intent(
+                        Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
+                        Uri.parse("file://$realPathFromURI")
+                    )
+                )
                 try {
                     capture = Utils.getImage(context.contentResolver, absolutePath)
                     postingType = "P"
@@ -331,14 +314,12 @@ class PostWriteActivity : RootActivity() {
 
             }
             else -> {
-                Toast.makeText(this,"Unrecognized request code",Toast.LENGTH_SHORT)
+                Toast.makeText(this, "Unrecognized request code", Toast.LENGTH_SHORT)
             }
         }
 
 
-
     }
-
 
 
     override fun onDestroy() {

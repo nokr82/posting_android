@@ -49,6 +49,7 @@ class DetailActivity : RootActivity() {
     var adapterData: ArrayList<JSONObject> = ArrayList<JSONObject>()
     var count = 0
     var del_yn = ""
+    var member_id2=-1
     var use_yn:String?= null
     var member_type:String? = null
     var image_uri = ""
@@ -57,6 +58,13 @@ class DetailActivity : RootActivity() {
     var coupon = -1
     var taptype = -1
     var save_id :String? = null
+
+
+
+    var school_id = -1
+    var me_school_id =-1
+
+    var confirm_yn = ""
     lateinit var adapterRe: ReAdapter
 
     var postingData:JSONObject = JSONObject();
@@ -75,9 +83,7 @@ class DetailActivity : RootActivity() {
         intent = getIntent()
         taptype=intent.getIntExtra("taptype",-1)
         save_id = intent.getStringExtra("save_id")
-        println("22222222"+save_id)
 
-        println("----------------tap"+taptype)
         coupon = intent.getIntExtra("coupon",-1)
         use_yn = intent.getStringExtra("use_yn")
 
@@ -85,6 +91,9 @@ class DetailActivity : RootActivity() {
 
         member_type= PrefUtils.getStringPreference(context,"member_type")
         member_id = PrefUtils.getIntPreference(context, "member_id")
+
+        confirm_yn = PrefUtils.getStringPreference(context, "confirm_yn")
+
         commentsLV.isExpanded = true
         adapterRe = ReAdapter(context,R.layout.item_re, adapterData)
         commentsLV.adapter = adapterRe
@@ -98,6 +107,12 @@ class DetailActivity : RootActivity() {
         val swipeableTouchHelperCallback = object : SwipeableTouchHelperCallback(object : OnItemSwiped {
             override fun onItemSwiped() {
                 detailAnimationRecyclerAdapter.removeTopItem()
+
+                if("N" == confirm_yn) {
+                    couponLL.visibility = View.GONE
+                    Toast.makeText(context, "학교 인증 후 이용 가능합니다", Toast.LENGTH_LONG).show()
+                    return
+                }
 
                 savePosting();
             }
@@ -194,12 +209,23 @@ class DetailActivity : RootActivity() {
                 return@setOnClickListener
             }
 
+            if("N" == confirm_yn) {
+                Toast.makeText(context, "학교 인증 후 이용 가능합니다", Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
+
            savePosting()
 
         }
         */
 
         saveLL.setOnClickListener {
+
+            if("N" == confirm_yn) {
+                Toast.makeText(context, "학교 인증 후 이용 가능합니다", Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
+
             if(count < 1) {
 
                 Toast.makeText(context, "남은 포스팅 갯수가 없습니다.", Toast.LENGTH_LONG).show()
@@ -469,11 +495,15 @@ class DetailActivity : RootActivity() {
                         intent.action = "SAVE_POSTING"
                         sendBroadcast(intent)
 
+                        saveLL.visibility = View.GONE
+
                     }else if ("empty"==result){
                         Toast.makeText(context,"남은 수량이 없습니다.",Toast.LENGTH_SHORT).show()
 
                     }else if ("already"==result){
                         Toast.makeText(context,"이미 떼어간 포스트입니다.",Toast.LENGTH_SHORT).show()
+                    } else if ("over" == result) {
+                        Toast.makeText(context,"오늘 하루 제한량만큼 떼어갔습니다.",Toast.LENGTH_SHORT).show()
                     }
 
                 } catch (e: JSONException) {
@@ -521,7 +551,7 @@ class DetailActivity : RootActivity() {
         params.put("member_id",member_id)
         params.put("posting_id", posting_id)
         params.put("del_yn", del_yn)
-
+        me_school_id  = PrefUtils.getIntPreference(context,"school_id")
         detail(params, object : JsonHttpResponseHandler() {
 
             override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
@@ -569,7 +599,7 @@ class DetailActivity : RootActivity() {
 
                         var coupon_type:String =  Utils.getString(posting, "coupon_type")
                         var id = Utils.getString(posting, "id")
-                        var member_id2 =   Utils.getInt(posting, "member_id")
+                      member_id2 =   Utils.getInt(posting, "member_id")
 
                         var del = Utils.getString(posting,"del_yn")
                         var Image = Utils.getString(posting, "Image")
@@ -581,7 +611,27 @@ class DetailActivity : RootActivity() {
 
                        image_uri = Utils.getString(posting, "image_uri")
                         var leftCount = Utils.getString(posting, "leftCount")
+                        var current_school_id = Utils.getInt(member1, "school_id")
+                        PrefUtils.setPreference(context, "detail_current_school_id", current_school_id)
 
+
+                       school_id = Utils.getInt(posting, "school_id")
+
+
+                        println("==========학교"+current_school_id)
+                        println("==========학교"+school_id)
+
+                        if (school_id!=me_school_id){
+                            saveLL.visibility = View.GONE
+                        }else if (current_school_id != school_id){
+                          postingLL.background = getDrawable(R.mipmap.write_bg2)
+                            saveLL.visibility = View.GONE
+                        }else if(save_yn.equals("N")&&member_id2!=member_id){
+                                saveLL.visibility = View.VISIBLE
+                        }
+                        else{
+                            postingLL.background = getDrawable(R.mipmap.wtite_bg)
+                        }
 
 
                         if (coupon_type.equals("1")){
@@ -623,9 +673,7 @@ class DetailActivity : RootActivity() {
                             usesTV.text = "사용기간:"+uses_start_date+" ~ "+uses_end_date+" 까지"
                         }
 
-                        if (save_yn.equals("N")){
-                            saveLL.visibility = View.VISIBLE
-                        }
+
 
 
 
@@ -702,6 +750,29 @@ class DetailActivity : RootActivity() {
                             contentsTV.text = contents
                             contentsTV.visibility = View.VISIBLE
                         }
+
+
+                        var image = Config.url + image_uri
+                        val bi = ImageLoader.getInstance().loadImageSync(image)
+
+                        pageCurlView = PageCurlView(context)
+                        pageCurlView.setmBackground(bi)
+                        pageCurlView.setmForeground(bi)
+
+                        pageCurlViewLL.addView(pageCurlView)
+
+                        pageCurlView.invalidate()
+
+                        /*
+                        ImageLoader.getInstance().loadImage(image, object : SimpleImageLoadingListener() {
+                            override fun onLoadingComplete(imageUri: String, view: View, loadedImage: Bitmap) {
+
+                                println("loadedImage : $loadedImage")
+
+                                // pageCurlView.setPostit(loadedImage)
+                            }
+                        })
+                        */
 
                         for(idx in 0..count) {
                             detailAnimationRecyclerAdapterData.add(posting)

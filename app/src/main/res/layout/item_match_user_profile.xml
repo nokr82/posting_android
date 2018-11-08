@@ -13,7 +13,7 @@
             android:id="@+id/profileIV"
             android:layout_width="59dp"
             android:layout_height="59dp"
-            android:src="@mipmap/mypostimg"
+            android:src="@mipmap/myimg"
             android:scaleType="centerCrop"/>
 
         <LinearLayout

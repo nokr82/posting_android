@@ -50,7 +50,6 @@
 
             </Spinner>
 
-
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -59,6 +58,7 @@
                 android:src="@mipmap/semo" />
 
             </LinearLayout>
+
             <Spinner
                 android:popupBackground="@drawable/background_border_707070"
                 android:id="@+id/mostSP"
@@ -73,22 +73,32 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginRight="20dp"
                 android:src="@mipmap/semo" />
-            <Spinner
-                android:popupBackground="@drawable/background_border_707070"
-                android:id="@+id/daySP"
+
+            <LinearLayout
+                android:id="@+id/dayLL"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@null">
+                android:orientation="horizontal">
 
-            </Spinner>
+                <Spinner
+                    android:popupBackground="@drawable/background_border_707070"
+                    android:id="@+id/daySP"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@null">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:src="@mipmap/semo" />
+                </Spinner>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:src="@mipmap/semo" />
+
+            </LinearLayout>
 
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/nextLL"
             android:layout_width="wrap_content"
