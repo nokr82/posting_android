@@ -51,6 +51,7 @@
         </LinearLayout>
 
     </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="0.3dp"
@@ -60,92 +61,86 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="vertical">
-        
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:orientation="horizontal">
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_width="87dp"
-                android:layout_height="87dp"
-                android:layout_marginTop="21dp"
-                android:layout_marginLeft="38dp"
-                android:layout_marginRight="54dp"
-                android:src="@mipmap/starbucks_img"/>
+            android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginRight="22.5dp"
-                android:gravity="center"
-                android:orientation="vertical">
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
 
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="쿠폰"
-                        android:textSize="15dp"
-                        android:textColor="#8F8E8A"
-                        android:gravity="center_horizontal"/>
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="1"
-                        android:textSize="15dp"
-                        android:gravity="center_horizontal"
-                    />
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="87dp"
+                    android:layout_height="87dp"
+                    android:layout_marginTop="21dp"
+                    android:layout_marginLeft="38dp"
+                    android:layout_marginRight="54dp"
+                    android:src="@mipmap/starbucks_img"/>
 
-            </LinearLayout>
-
-            <LinearLayout
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:layout_marginRight="22.5dp"
                     android:gravity="center"
                     android:orientation="vertical">
 
-                <TextView
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="쿠폰"
+                            android:textSize="15dp"
+                            android:textColor="#8F8E8A"
+                            android:gravity="center_horizontal"/>
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="1"
+                            android:textSize="15dp"
+                            android:gravity="center_horizontal"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Tok ＆ Review"
-                        android:textSize="15dp"
-                        android:textColor="#8F8E8A"/>
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="6"
-                        android:textSize="15dp"
-                        android:gravity="center_horizontal"
-                    />
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Tok ＆ Review"
+                            android:textSize="15dp"
+                            android:textColor="#8F8E8A"/>
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="6"
+                            android:textSize="15dp"
+                            android:gravity="center_horizontal"
+                        />
+
+                </LinearLayout>
+
+
 
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_marginTop="9.52dp"
+                android:layout_marginLeft="50.67dp"
+                android:layout_marginRight="50.67dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-
-        </LinearLayout>
-
-
-        <LinearLayout
-
-            android:layout_marginTop="9.52dp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-
-        <LinearLayout
-            android:layout_marginLeft="50.67dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
+                <TextView
+                    android:id="@+id/companyNameTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="starbucks"
@@ -153,139 +148,130 @@
                     android:textStyle="bold"
                     android:textSize="10.5sp"/>
 
+                    <LinearLayout
+                        android:id="@+id/gpsLL"
+                        android:layout_marginTop="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical">
 
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/gpspoint"/>
 
+                        <TextView
+                            android:id="@+id/storeInfoTV"
+                            android:layout_marginLeft="8dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="9.5dp"
+                            android:text=""/>
 
-            </LinearLayout>
+                    </LinearLayout>
+
+                </LinearLayout>
+
             <LinearLayout
-                android:id="@+id/gpsLL"
-                android:layout_marginLeft="50.67dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            <ImageView
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-                android:src="@mipmap/gpspoint"/>
-            <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="9.5dp"
-                    android:text="스타벅스 연세대점 02-343-9598\n서울 서대문구 신촌로 128 동하빌딩 1F"/>
-
-            </LinearLayout>
-            <LinearLayout
+                <LinearLayout
                     android:layout_marginTop="33dp"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:orientation="horizontal">
 
-                <LinearLayout
+                    <LinearLayout
                         android:id="@+id/couponLL"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:orientation="vertical">
-                <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:text="쿠폰"
-                        android:gravity="center"
-                        android:textSize="14sp"
-                        android:textColor="#8F8E8A"/>
-                    <View
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:text="쿠폰"
+                            android:gravity="center"
+                            android:textSize="14sp"
+                            android:textColor="#8F8E8A"/>
+
+                        <View
                             android:id="@+id/couponV"
                             android:layout_width="match_parent"
                             android:layout_height="0.3dp"
                             android:background="#063588"
-                            android:visibility="invisible"
-                        />
+                            android:visibility="invisible"/>
 
-                </LinearLayout>
-                <LinearLayout
-                        android:id="@+id/reviewLL"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:orientation="vertical"
-                        android:gravity="center">
-                    <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
+                    </LinearLayout>
+
+                    <LinearLayout
+                            android:id="@+id/reviewLL"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:text="Talk ＆ Review"
-                            android:textSize="14sp"
-                            android:textColor="#8F8E8A"
-                            android:gravity="center"/>
-                    <View
-                            android:id="@+id/reviewV"
-                            android:layout_width="match_parent"
-                            android:layout_height="0.3dp"
-                            android:background="#063588"
-                            android:visibility="invisible"
+                            android:orientation="vertical"
+                            android:gravity="center">
+                        <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:text="Talk ＆ Review"
+                                android:textSize="14sp"
+                                android:textColor="#8F8E8A"
+                                android:gravity="center"/>
+                        <View
+                                android:id="@+id/reviewV"
+                                android:layout_width="match_parent"
+                                android:layout_height="0.3dp"
+                                android:background="#063588"
+                                android:visibility="invisible"
                         />
 
+                    </LinearLayout>
                 </LinearLayout>
-            </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.3dp"
+                        android:background="#A19F9B"/>
+
+                    <com.github.paolorotolo.expandableheightlistview.ExpandableHeightGridView
+                        android:id="@+id/couponGV"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:numColumns="3">
+
+                    </com.github.paolorotolo.expandableheightlistview.ExpandableHeightGridView>
+
+                </LinearLayout>
+
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="0.3dp"
-                    android:background="#A19F9B"
-                    />
-
-                <com.github.paolorotolo.expandableheightlistview.ExpandableHeightGridView
-                    android:id="@+id/couponGV"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:numColumns="3">
-
-                </com.github.paolorotolo.expandableheightlistview.ExpandableHeightGridView>
-
-
-
+                    android:layout_height="0.5dp"
+                    android:background="#888888" />
 
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="#888888" />
-
-
-
-
-
-
-
-
-
         </LinearLayout>
-
-
-
-
-
-        </LinearLayout>
-
-
-
-
 
     </ScrollView>
 
     <LinearLayout
         android:id="@+id/review2LL"
         android:visibility="visible"
-    android:layout_width="match_parent"
-    android:layout_height="37dp"
+        android:layout_width="match_parent"
+        android:layout_height="37dp"
         android:layout_gravity="bottom"
         android:gravity="center"
         android:layout_marginRight="70dp"

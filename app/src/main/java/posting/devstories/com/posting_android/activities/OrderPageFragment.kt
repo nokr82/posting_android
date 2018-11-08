@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
 import com.github.paolorotolo.expandableheightlistview.ExpandableHeightGridView
 import com.loopj.android.http.JsonHttpResponseHandler
@@ -41,6 +42,7 @@ open class OrderPageFragment : Fragment() {
     lateinit var couponV:View
     lateinit var couponGV:ExpandableHeightGridView
     lateinit var gpsLL:LinearLayout
+    lateinit var storeInfoTV:TextView
     var clicktype = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,7 +54,6 @@ open class OrderPageFragment : Fragment() {
         if (null != ctx) {
             doSomethingWithContext(ctx)
         }
-
 
         return inflater.inflate(R.layout.fra_orderpg, container, false)
     }
@@ -70,7 +71,7 @@ open class OrderPageFragment : Fragment() {
         couponV = view.findViewById(R.id.couponV)
         couponGV = view.findViewById(R.id.couponGV)
         gpsLL = view.findViewById(R.id.gpsLL)
-
+        storeInfoTV = view.findViewById(R.id.storeInfoTV)
 
     }
 
@@ -105,8 +106,6 @@ open class OrderPageFragment : Fragment() {
 
         }
 
-
-
         couponGV.isExpanded = true
         couponLL.setOnClickListener {
             review2LL.visibility = View.GONE
@@ -139,6 +138,7 @@ open class OrderPageFragment : Fragment() {
         val params = RequestParams()
         params.put("company_member_id", member_id)
         params.put("member_id",member_id)
+        params.put("type",clicktype)
 
         MemberAction.company_page(params, object : JsonHttpResponseHandler() {
 
@@ -152,17 +152,22 @@ open class OrderPageFragment : Fragment() {
 
                     if ("ok" == result) {
 
+                        val member = response.getJSONObject("member")
+
+                        companyNameTV.text = Utils.getString(member, "company_name")
+                        storeInfoTV.text = Utils.getString(member, "address") + " " + Utils.getString(member, "address_detail")
+
                         if (clicktype ==1){
 
                         val data = response.getJSONArray("postList")
 
-                        for (i in 0..data.length() - 1) {
-
+                        for (i in 0..(data.length() - 1)) {
                             adapterData.add(data[i] as JSONObject)
-
                         }
+
                         adapterOrder.notifyDataSetChanged()
-                        }else{
+
+                        } else {
                             val data = response.getJSONArray("reviewList")
                             for (i in 0..data.length() - 1) {
                                 adapterData.add(data[i] as JSONObject)
@@ -187,12 +192,7 @@ open class OrderPageFragment : Fragment() {
                 Utils.alert(context, "조회중 장애가 발생하였습니다.")
             }
 
-            override fun onFailure(
-                    statusCode: Int,
-                    headers: Array<Header>?,
-                    responseString: String?,
-                    throwable: Throwable
-            ) {
+            override fun onFailure(statusCode: Int, headers: Array<Header>?, responseString: String?, throwable: Throwable) {
                 if (progressDialog != null) {
                     progressDialog!!.dismiss()
                 }
