@@ -6,6 +6,9 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.CAMERA"/>
 
+    <!-- 다음 지도 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:name=".base.GlobalApplication"
@@ -38,6 +41,8 @@
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
             </intent-filter>
         </service>
+
+        <meta-data android:name="com.kakao.sdk.AppKey" android:value="ae9bab6d10c2a572a34ec516b6d07717"/>
 
         <activity
             android:name=".activities.IntroActivity"
@@ -82,7 +87,7 @@
             android:windowSoftInputMode="stateHidden|adjustResize"/>
 
        <activity
-        android:name=".activities.gpsActivity"
+        android:name=".activities.OrderMapActivity"
         android:screenOrientation="portrait"
         android:theme="@style/NoTitleDialog"
         android:windowSoftInputMode="stateHidden|adjustResize"/>

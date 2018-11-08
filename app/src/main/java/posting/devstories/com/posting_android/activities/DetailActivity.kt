@@ -63,6 +63,7 @@ class DetailActivity : RootActivity() {
     var coupon = -1
     var taptype = -1
     var save_id :String? = null
+    var confirm_yn = ""
     lateinit var adapterRe: ReAdapter
 
     var postingData:JSONObject = JSONObject();
@@ -81,9 +82,7 @@ class DetailActivity : RootActivity() {
         intent = getIntent()
         taptype=intent.getIntExtra("taptype",-1)
         save_id = intent.getStringExtra("save_id")
-        println("22222222"+save_id)
 
-        println("----------------tap"+taptype)
         coupon = intent.getIntExtra("coupon",-1)
         use_yn = intent.getStringExtra("use_yn")
 
@@ -91,6 +90,9 @@ class DetailActivity : RootActivity() {
 
         member_type= PrefUtils.getStringPreference(context,"member_type")
         member_id = PrefUtils.getIntPreference(context, "member_id")
+
+        confirm_yn = PrefUtils.getStringPreference(context, "confirm_yn")
+
         commentsLV.isExpanded = true
         adapterRe = ReAdapter(context,R.layout.item_re, adapterData)
         commentsLV.adapter = adapterRe
@@ -104,6 +106,11 @@ class DetailActivity : RootActivity() {
         val swipeableTouchHelperCallback = object : SwipeableTouchHelperCallback(object : OnItemSwiped {
             override fun onItemSwiped() {
                 detailAnimationRecyclerAdapter.removeTopItem()
+
+                if("N" == confirm_yn) {
+                    Toast.makeText(context, "학교 인증 후 이용 가능합니다", Toast.LENGTH_LONG).show()
+                    return
+                }
 
                 savePosting();
             }
@@ -198,6 +205,11 @@ class DetailActivity : RootActivity() {
                 return@setOnClickListener
             }
 
+            if("N" == confirm_yn) {
+                Toast.makeText(context, "학교 인증 후 이용 가능합니다", Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
+
            savePosting()
 
         }
@@ -208,8 +220,13 @@ class DetailActivity : RootActivity() {
 
                 return@setOnClickListener
             }
+
+            if("N" == confirm_yn) {
+                Toast.makeText(context, "학교 인증 후 이용 가능합니다", Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
+
             savePosting()
-            saveLL.visibility = View.GONE
         }
 
         backLL.setOnClickListener {
@@ -441,11 +458,12 @@ class DetailActivity : RootActivity() {
                         var intent = Intent(context, DlgStorageActivity::class.java)
                         startActivity(intent)
 
-
                         intent = Intent()
                         intent.putExtra("posting_id", posting_id)
                         intent.action = "SAVE_POSTING"
                         sendBroadcast(intent)
+
+                        saveLL.visibility = View.GONE
 
                     }else if ("empty"==result){
                         Toast.makeText(context,"남은 수량이 없습니다.",Toast.LENGTH_SHORT).show()

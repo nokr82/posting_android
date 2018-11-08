@@ -109,8 +109,6 @@ class IntroActivity : RootActivity() {
                 try {
                     val result = response!!.getString("result")
 
-                    print(response)
-
                     if ("ok" == result) {
 
                         val data = response.getJSONObject("member")
@@ -124,6 +122,7 @@ class IntroActivity : RootActivity() {
                         PrefUtils.setPreference(context, "passwd", Utils.getString(data, "passwd"))
                         PrefUtils.setPreference(context, "member_type", Utils.getString(data, "member_type"))
                         PrefUtils.setPreference(context, "school_id", Utils.getInt(data, "school_id"))
+                        PrefUtils.setPreference(context, "confirm_yn", Utils.getString(data, "confirm_yn"))
                         PrefUtils.setPreference(context, "autoLogin", true)
                         val member_type = PrefUtils.getStringPreference(context,"member_type")
 
@@ -142,6 +141,10 @@ class IntroActivity : RootActivity() {
                             startActivity(intent)
                         }
 
+                    } else {
+                        val intent = Intent(context, LoginActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        startActivity(intent)
                     }
 
                 } catch (e: JSONException) {

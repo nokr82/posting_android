@@ -63,11 +63,11 @@ class LoginActivity : RootActivity() {
                 return@setOnClickListener
             }
 
-//            if(!Utils.isValidEmail(getName)) {
-//                Toast.makeText(context, "이메일을 확인해주세요.", Toast.LENGTH_LONG).show();
-//                IDET.requestFocus()
-//                return@setOnClickListener
-//            }
+            if(!Utils.isValidEmail(getName)) {
+                Toast.makeText(context, "이메일을 확인해주세요.", Toast.LENGTH_LONG).show();
+                IDET.requestFocus()
+                return@setOnClickListener
+            }
 
             login(getName, getPW)
 
@@ -85,7 +85,6 @@ class LoginActivity : RootActivity() {
         params.put("email", email)
         params.put("passwd", passwd)
 
-
         LoginAction.login(params, object : JsonHttpResponseHandler() {
 
             override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
@@ -101,8 +100,8 @@ class LoginActivity : RootActivity() {
                         val data = response.getJSONObject("member")
                         val school = response.getJSONObject("school")
 
-
                         val school_id = Utils.getInt(school, "id")
+
                         PrefUtils.setPreference(context, "current_school_id", school_id)
 
                         PrefUtils.setPreference(context, "loginID", loginID)
@@ -111,17 +110,15 @@ class LoginActivity : RootActivity() {
                         PrefUtils.setPreference(context, "passwd", Utils.getString(data, "passwd"))
                         PrefUtils.setPreference(context, "member_type", Utils.getString(data, "member_type"))
                         PrefUtils.setPreference(context, "school_id", Utils.getInt(data, "school_id"))
+                        PrefUtils.setPreference(context, "confirm_yn", Utils.getString(data, "confirm_yn"))
                         PrefUtils.setPreference(context, "autoLogin", autoLogin)
 
-                        val member_type = PrefUtils.getStringPreference(context,"member_type")
+                        val intent = Intent(context, MainActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        startActivity(intent)
 
-                            val intent = Intent(context, MainActivity::class.java)
-                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                            startActivity(intent)
-
-
-
-
+                    } else if("confirm_no" == result) {
+                        Toast.makeText(context, "관리자 승인 후 로그인이 가능합니다.", Toast.LENGTH_LONG).show()
                     } else {
                         Toast.makeText(context, "일치하는 회원이 존재하지 않습니다.", Toast.LENGTH_LONG).show()
                     }
