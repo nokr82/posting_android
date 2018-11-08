@@ -933,23 +933,23 @@ public class Utils {
 
     public static DisplayImageOptions UILoptionsProfile = new DisplayImageOptions.Builder()
         // .displayer(new RoundedBitmapDisplayer(2))
-         .showImageOnLoading(R.mipmap.alram_my)
-         .showImageForEmptyUri(R.mipmap.alram_my)
-        .showImageOnFail(R.mipmap.alram_my).delayBeforeLoading(100)
+         .showImageOnLoading(R.mipmap.myimg)
+         .showImageForEmptyUri(R.mipmap.myimg)
+        .showImageOnFail(R.mipmap.myimg).delayBeforeLoading(100)
         .cacheInMemory(true).cacheOnDisk(true).considerExifParams(true).imageScaleType(ImageScaleType.EXACTLY).bitmapConfig(Bitmap.Config.RGB_565).build();
 
     public static DisplayImageOptions UILoptionsPosting = new DisplayImageOptions.Builder()
         // .displayer(new RoundedBitmapDisplayer(2))
-         .showImageOnLoading(R.mipmap.bg)
-         .showImageForEmptyUri(R.mipmap.bg)
-        .showImageOnFail(R.mipmap.bg).delayBeforeLoading(100)
+         .showImageOnLoading(R.mipmap.empty)
+         .showImageForEmptyUri(R.mipmap.empty)
+        .showImageOnFail(R.mipmap.empty).delayBeforeLoading(100)
         .cacheInMemory(true).cacheOnDisk(true).considerExifParams(true).imageScaleType(ImageScaleType.EXACTLY).bitmapConfig(Bitmap.Config.RGB_565).build();
 
     public static DisplayImageOptions UILoptionsUserProfile = new DisplayImageOptions.Builder()
         // .displayer(new RoundedBitmapDisplayer(2))
-//         .showImageOnLoading(R.mipmap.game_profile)
-//         .showImageForEmptyUri(R.mipmap.game_profile)
-//        .showImageOnFail(R.mipmap.game_profile).delayBeforeLoading(100)
+         .showImageOnLoading(R.mipmap.myimg)
+         .showImageForEmptyUri(R.mipmap.myimg)
+        .showImageOnFail(R.mipmap.myimg).delayBeforeLoading(100)
         .cacheInMemory(true).cacheOnDisk(true).considerExifParams(true).imageScaleType(ImageScaleType.EXACTLY).bitmapConfig(Bitmap.Config.RGB_565).build();
 
     public static String fullDateTime(String created) {

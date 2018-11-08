@@ -9,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
-import android.widget.GridView
 import android.widget.LinearLayout
 import android.widget.Toast
 import com.github.paolorotolo.expandableheightlistview.ExpandableHeightGridView
@@ -20,10 +19,8 @@ import kotlinx.android.synthetic.main.fra_orderpg.*
 import org.json.JSONException
 import org.json.JSONObject
 import posting.devstories.com.posting_android.Actions.MemberAction
-import posting.devstories.com.posting_android.Actions.PostingAction
 import posting.devstories.com.posting_android.R
 import posting.devstories.com.posting_android.adapter.OrderAdapter
-import posting.devstories.com.posting_android.adapter.PostAdapter
 import posting.devstories.com.posting_android.adapter.ReviewAdapter
 import posting.devstories.com.posting_android.base.PrefUtils
 import posting.devstories.com.posting_android.base.Utils
@@ -91,7 +88,7 @@ open class OrderPageFragment : Fragment() {
 
 
         gpsLL.setOnClickListener {
-            val intent = Intent(context, gpsActivity::class.java)
+            val intent = Intent(context, OrderMapActivity::class.java)
             startActivity(intent)
         }
 
