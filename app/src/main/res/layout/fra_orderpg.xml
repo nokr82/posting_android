@@ -158,6 +158,7 @@
 
             </LinearLayout>
             <LinearLayout
+                android:id="@+id/gpsLL"
                 android:layout_marginLeft="50.67dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">

@@ -43,6 +43,7 @@ open class OrderPageFragment : Fragment() {
     lateinit var couponLL: LinearLayout
     lateinit var couponV:View
     lateinit var couponGV:ExpandableHeightGridView
+    lateinit var gpsLL:LinearLayout
     var clicktype = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -71,6 +72,7 @@ open class OrderPageFragment : Fragment() {
         couponLL = view.findViewById(R.id.couponLL)
         couponV = view.findViewById(R.id.couponV)
         couponGV = view.findViewById(R.id.couponGV)
+        gpsLL = view.findViewById(R.id.gpsLL)
 
 
     }
@@ -87,6 +89,11 @@ open class OrderPageFragment : Fragment() {
            startActivity(intent)
        }
 
+
+        gpsLL.setOnClickListener {
+            val intent = Intent(context, gpsActivity::class.java)
+            startActivity(intent)
+        }
 
         reviewLL.setOnClickListener {
 

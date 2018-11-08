@@ -209,6 +209,7 @@ class DetailActivity : RootActivity() {
                 return@setOnClickListener
             }
             savePosting()
+            saveLL.visibility = View.GONE
         }
 
         backLL.setOnClickListener {
@@ -515,8 +516,8 @@ class DetailActivity : RootActivity() {
 
                         val posting = data.getJSONObject("Posting")
 
-
-
+                        val member1 = data.getJSONObject("Member")
+                        var company_name = Utils.getString(member1, "company_name")
 
 
                         postingData = posting
@@ -556,7 +557,7 @@ class DetailActivity : RootActivity() {
                         var sale_price:String =  Utils.getString(posting, "sale_price")
                         var contents =   Utils.getString(posting, "contents")
 
-                        var image_uri = Utils.getString(posting, "image_uri")
+                       image_uri = Utils.getString(posting, "image_uri")
                         var leftCount = Utils.getString(posting, "leftCount")
 
 
@@ -565,6 +566,7 @@ class DetailActivity : RootActivity() {
                             coupon3RL.visibility = View.VISIBLE
                             coupon_titleTV.text = menu_name
                             coupon_saleTV.text = sale_per
+                            coupon_orderTV.text = company_name
                             coupon_sale2TV.text = "할인"
                             coupon_startdateTV.text = uses_start_date
                             coupon_contentTV.text = contents
@@ -573,6 +575,7 @@ class DetailActivity : RootActivity() {
                             usesTV.text = "사용기간:"+uses_start_date+" ~ "+uses_end_date+" 까지"
                         }else if (coupon_type.equals("2")){
                             coupon3RL.visibility = View.VISIBLE
+                            coupon_orderTV.text = company_name
                             coupon3LL.setBackgroundColor(Color.parseColor("#FB2B70"))
                             coupon_titleTV.text = menu_name
                             coupon_saleTV.text = "FREE"
@@ -585,6 +588,7 @@ class DetailActivity : RootActivity() {
                             usesTV.text = "사용기간:"+uses_start_date+" ~ "+uses_end_date+" 까지"
                         }else if (coupon_type.equals("3")){
                             coupon3RL.visibility = View.VISIBLE
+                            coupon_orderTV.text = company_name
                             coupon3LL.setBackgroundColor(Color.parseColor("#A12BFB"))
                             coupon_titleTV.text = menu_name
                             coupon_saleTV.text = sale_price
@@ -627,7 +631,7 @@ class DetailActivity : RootActivity() {
 
 
                         if (member_id==member_id2){
-                            myLL.visibility = View.VISIBLE
+//                            myLL.visibility = View.VISIBLE
                             menuIV.visibility = View.VISIBLE
                         }
 
@@ -865,6 +869,7 @@ class DetailActivity : RootActivity() {
             val intent = Intent(context, PostWriteActivity::class.java)
             intent.putExtra("posting_id", posting_id)
             intent.putExtra("image_uri",image_uri)
+            println("------------dlalwl"+image_uri)
             intent.putExtra("member_type",member_type)
             intent.putExtra("contents",contents)
 

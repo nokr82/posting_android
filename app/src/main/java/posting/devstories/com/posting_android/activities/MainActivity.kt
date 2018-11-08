@@ -105,6 +105,7 @@ class MainActivity : FragmentActivity() {
 
         if(member_type.equals("3")){
             fragmentFT.addTab(fragmentFT.newTabSpec("myPage").setIndicator(tabMypageV), OrderPageFragment::class.java, null)
+
         }else{
             fragmentFT.addTab(fragmentFT.newTabSpec("myPage").setIndicator(tabMypageV), MyPageFragment::class.java, null)
         }
@@ -117,7 +118,7 @@ class MainActivity : FragmentActivity() {
 
             if(fragmentFT.currentTab == 0) {
                 val postFragment = supportFragmentManager.findFragmentByTag("post") as PostFragment
-                postFragment.setMainView()
+                postFragment
             }
 
             fragmentFT.onTabChanged("post")

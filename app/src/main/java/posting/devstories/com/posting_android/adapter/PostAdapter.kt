@@ -8,7 +8,6 @@ import android.widget.*
 import com.nostra13.universalimageloader.core.ImageLoader
 import org.json.JSONObject
 import posting.devstories.com.posting_android.R
-import posting.devstories.com.posting_android.R.id.coupon_TV
 import posting.devstories.com.posting_android.base.Utils
 import posting.devstories.com.posting_android.base.Config
 
@@ -39,6 +38,10 @@ open class PostAdapter(context:Context, view:Int, data:ArrayList<JSONObject>) : 
 
         var json = data.get(position)
 
+        val member = json.getJSONObject("Member")
+        var company_name = Utils.getString(member, "company_name")
+
+
         var posting = json.getJSONObject("Posting")
 
         var id = Utils.getString(posting, "id")
@@ -62,6 +65,7 @@ open class PostAdapter(context:Context, view:Int, data:ArrayList<JSONObject>) : 
         if (coupon_type.equals("1")){
             item.contentsTV.visibility = View.GONE
             item.couponLL.visibility = View.VISIBLE
+            item.coupon_orderTV.text = company_name
             item.coupon_titleTV.text = menu_name
             item.coupon_saleTV.text = sale_per
             item.coupon_sale2TV.text = "할인"
@@ -70,6 +74,7 @@ open class PostAdapter(context:Context, view:Int, data:ArrayList<JSONObject>) : 
             item.coupon_enddateTV.text = uses_end_date
         }else if (coupon_type.equals("2")){
             item.contentsTV.visibility = View.GONE
+            item.coupon_orderTV.text = company_name
             item.couponLL.setBackgroundColor(Color.parseColor("#FB2B70"))
             item.couponLL.visibility = View.VISIBLE
             item.coupon_titleTV.text = menu_name
@@ -81,6 +86,7 @@ open class PostAdapter(context:Context, view:Int, data:ArrayList<JSONObject>) : 
             item.coupon_enddateTV.text = uses_end_date
         }else if (coupon_type.equals("3")){
             item.contentsTV.visibility = View.GONE
+            item.coupon_orderTV.text = company_name
             item.couponLL.visibility = View.VISIBLE
             item.couponLL.setBackgroundColor(Color.parseColor("#A12BFB"))
             item.coupon_titleTV.text = menu_name

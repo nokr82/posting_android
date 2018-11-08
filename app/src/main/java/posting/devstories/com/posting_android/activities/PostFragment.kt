@@ -38,7 +38,6 @@ import posting.devstories.com.posting_android.adapter.SchoolAdapter
 import posting.devstories.com.posting_android.base.NonSwipeableViewPager
 import posting.devstories.com.posting_android.base.PrefUtils
 import posting.devstories.com.posting_android.base.Utils
-import kotlin.concurrent.timer
 
 open class PostFragment : Fragment() {
 
@@ -70,14 +69,14 @@ open class PostFragment : Fragment() {
 
     lateinit var mainLV: ExpandableHeightListView
     lateinit var pagerVP: NonSwipeableViewPager
-    
+
     lateinit var freeTV:TextView
     lateinit var infoTV:TextView
     lateinit var studyTV:TextView
     lateinit var classTV:TextView
     lateinit var meetingTV:TextView
     lateinit var couponTV:TextView
-    
+
     lateinit var freeV:View
     lateinit var infoV:View
     lateinit var studyV:View
@@ -178,6 +177,8 @@ open class PostFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        mainData()
 
         mainLV = view.findViewById(R.id.mainLV)
         adverVP = view.findViewById(R.id.adverVP)
@@ -400,7 +401,7 @@ open class PostFragment : Fragment() {
 
                 val keyword = Utils.getString(searchET)
 
-//                searchSchool(keyword)
+                searchSchool(keyword)
 
             }
 
@@ -409,132 +410,132 @@ open class PostFragment : Fragment() {
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
         })
 
-//        adapter = SchoolAdapter(context!!, R.layout.school_item, adapterData)
-//        schoolLV.adapter = adapter
-//        adapter.notifyDataSetChanged()
+        adapter = SchoolAdapter(context!!, R.layout.school_item, adapterData)
+        schoolLV.adapter = adapter
+        adapter.notifyDataSetChanged()
 
-//        schoolLV.setOnItemClickListener { adapterView, view, i, l ->
-//            if(adapterData.size > i) {
-//                val schoolO = adapterData.get(i)
-//                val school = schoolO.getJSONObject("School")
-//                val school_id = Utils.getInt(school, "id")
-//
-//                println("school : $school")
-//                println("school_id : $school_id")
-//
-//                PrefUtils.setPreference(context, "current_school_id", school_id)
-//
-//                val intent = Intent(context, MainActivity::class.java)
-//                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-//                startActivity(intent)
-//            }
-//        }
+        schoolLV.setOnItemClickListener { adapterView, view, i, l ->
+            if(adapterData.size > i) {
+                val schoolO = adapterData.get(i)
+                val school = schoolO.getJSONObject("School")
+                val school_id = Utils.getInt(school, "id")
+
+                println("school : $school")
+                println("school_id : $school_id")
+
+                PrefUtils.setPreference(context, "current_school_id", school_id)
+
+
+                searchET.setText("")
+                mainData2()
+            }
+        }
 
     }
 
-//    fun searchSchool(searchKeyword: String) {
-//
-//        val params = RequestParams()
-//        params.put("searchKeyword", searchKeyword)
-//
-//        SchoolAction.School(params, object : JsonHttpResponseHandler() {
-//
-//            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
-//                if (progressDialog != null) {
-//                    progressDialog!!.dismiss()
-//                }
-//
-//                try {
-//
-//                    adapterData.clear()
-//                    adapter.notifyDataSetChanged()
-//
-//                    val result = response!!.getString("result")
-//                    val dbSearchKeyword = response!!.getString("searchKeyword")
-//                    val list = response!!.getJSONArray("list")
-//
-//                    println(response)
-//
-//                    if("ok" == result && dbSearchKeyword == searchKeyword) {
-//
-//                        for (i in 0..(list.length() - 1)) {
-//                            var data  = list.get(i) as JSONObject
-//                            checkSchoolData(data)
-//                        }
-//
-//                        adapter.notifyDataSetChanged()
-//
-//                    } else {
-//
-//                    }
-//
-//                    if(adapterData.size == 0) {
-//                        schoolLV.visibility = View.GONE
-//                    } else {
-//                        schoolLV.visibility = View.VISIBLE
-//                    }
-//
-//                } catch (e: JSONException) {
-//                    e.printStackTrace()
-//                }
-//
-//            }
-//
-//            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONArray?) {
-//                super.onSuccess(statusCode, headers, response)
-//            }
-//
-//            override fun onSuccess(statusCode: Int, headers: Array<Header>?, responseString: String?) {
-//
-//                // System.out.println(responseString);
-//            }
-//
-//            private fun error() {
-//                Utils.alert(context, "조회중 장애가 발생하였습니다.")
-//            }
-//
-//            override fun onFailure(statusCode: Int, headers: Array<Header>?, responseString: String?, throwable: Throwable) {
-//                if (progressDialog != null) {
-//                    progressDialog!!.dismiss()
-//                }
-//
-//                // System.out.println(responseString);
-//
-//                throwable.printStackTrace()
-//                error()
-//            }
-//
-//            override fun onFailure(statusCode: Int, headers: Array<Header>?, throwable: Throwable, errorResponse: JSONObject?) {
-//                if (progressDialog != null) {
-//                    progressDialog!!.dismiss()
-//                }
-//                throwable.printStackTrace()
-//                error()
-//            }
-//
-//            override fun onFailure(statusCode: Int, headers: Array<Header>?, throwable: Throwable, errorResponse: JSONArray?) {
-//                if (progressDialog != null) {
-//                    progressDialog!!.dismiss()
-//                }
-//                throwable.printStackTrace()
-//                error()
-//            }
-//
-//            override fun onStart() {
-//                // show dialog
-//                if (progressDialog != null) {
-//
-//                    // progressDialog!!.show()
-//                }
-//            }
-//
-//            override fun onFinish() {
-//                if (progressDialog != null) {
-//                    progressDialog!!.dismiss()
-//                }
-//            }
-//        })
-//    }
+    fun searchSchool(searchKeyword: String) {
+
+        val params = RequestParams()
+        params.put("searchKeyword", searchKeyword)
+
+        SchoolAction.School(params, object : JsonHttpResponseHandler() {
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+
+                try {
+
+                    adapterData.clear()
+                    adapter.notifyDataSetChanged()
+
+                    val result = response!!.getString("result")
+                    val dbSearchKeyword = response!!.getString("searchKeyword")
+                    val list = response!!.getJSONArray("list")
+
+                    println(response)
+
+                    if("ok" == result && dbSearchKeyword == searchKeyword) {
+
+                        for (i in 0..(list.length() - 1)) {
+                            var data  = list.get(i) as JSONObject
+                            checkSchoolData(data)
+                        }
+
+                        adapter.notifyDataSetChanged()
+
+                    } else {
+
+                    }
+
+                    if(adapterData.size == 0) {
+                        schoolLV.visibility = View.GONE
+                    } else {
+                        schoolLV.visibility = View.VISIBLE
+                    }
+
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+
+            }
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONArray?) {
+                super.onSuccess(statusCode, headers, response)
+            }
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, responseString: String?) {
+
+                // System.out.println(responseString);
+            }
+
+            private fun error() {
+                Utils.alert(context, "조회중 장애가 발생하였습니다.")
+            }
+
+            override fun onFailure(statusCode: Int, headers: Array<Header>?, responseString: String?, throwable: Throwable) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+
+                // System.out.println(responseString);
+
+                throwable.printStackTrace()
+                error()
+            }
+
+            override fun onFailure(statusCode: Int, headers: Array<Header>?, throwable: Throwable, errorResponse: JSONObject?) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+                throwable.printStackTrace()
+                error()
+            }
+
+            override fun onFailure(statusCode: Int, headers: Array<Header>?, throwable: Throwable, errorResponse: JSONArray?) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+                throwable.printStackTrace()
+                error()
+            }
+
+            override fun onStart() {
+                // show dialog
+                if (progressDialog != null) {
+
+                    // progressDialog!!.show()
+                }
+            }
+
+            override fun onFinish() {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+            }
+        })
+    }
 
     fun checkSchoolData(data:JSONObject){
 
@@ -726,10 +727,134 @@ open class PostFragment : Fragment() {
 
     }
 
-    fun mainData() {
+    fun mainData2() {
         val params = RequestParams()
         params.put("member_id",member_id)
         params.put("current_school_id", PrefUtils.getIntPreference(context, "current_school_id"))
+        params.put("type",type)
+
+        PostingAction.mainlist(params, object : JsonHttpResponseHandler() {
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+
+                try {
+
+                    adverImagePaths.clear()
+                    adverAdapterData.clear()
+                    mainAdapterData.clear()
+
+                    var path = "http://13.124.13.37/data/ad/5ba1ebab-0018-486f-ace1-624cac1f0bcc";
+
+                    adverImagePaths.add(path);
+                    adverImagePaths.add(path);
+                    adverImagePaths.add(path);
+                    adverImagePaths.add(path);
+                    adverImagePaths.add(path);
+                    adverImagePaths.add(path);
+
+                    var data = JSONObject();
+                    data.put("path", path)
+
+                    adverAdapterData.add(data)
+                    adverAdapterData.add(data)
+                    adverAdapterData.add(data)
+                    adverAdapterData.add(data)
+                    adverAdapterData.add(data)
+                    adverAdapterData.add(data)
+
+                    val result = response!!.getString("result")
+
+                    if ("ok" == result) {
+
+                        var alarm_count = Utils.getInt(response, "alarm_count")
+
+                        if(alarm_count < 1) {
+                            mainActivity.alarmCntTV.visibility = View.GONE
+                        } else {
+                            mainActivity.alarmCntTV.visibility = View.VISIBLE
+                            mainActivity.alarmCntTV.text = alarm_count.toString()
+                        }
+
+                        val list = response.getJSONArray("list")
+
+                        for (i in 0..(list.length()-1)){
+                            mainAdapterData.add(list[i] as JSONObject)
+                        }
+
+                        mainAdapter.notifyDataSetChanged()
+                        adverAdapter.notifyDataSetChanged()
+
+                    }
+
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+
+            }
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONArray?) {
+                super.onSuccess(statusCode, headers, response)
+            }
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, responseString: String?) {
+
+                // System.out.println(responseString);
+            }
+
+            private fun error() {
+                Utils.alert(context, "조회중 장애가 발생하였습니다.")
+            }
+
+            override fun onFailure(statusCode: Int, headers: Array<Header>?, responseString: String?, throwable: Throwable) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+
+                // System.out.println(responseString);
+
+                throwable.printStackTrace()
+                error()
+            }
+
+            override fun onFailure(statusCode: Int, headers: Array<Header>?, throwable: Throwable, errorResponse: JSONObject?) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+                throwable.printStackTrace()
+                error()
+            }
+
+            override fun onFailure(statusCode: Int, headers: Array<Header>?, throwable: Throwable, errorResponse: JSONArray?) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+                throwable.printStackTrace()
+                error()
+            }
+
+            override fun onStart() {
+                // show dialog
+                if (progressDialog != null) {
+
+                    progressDialog!!.show()
+                }
+            }
+
+            override fun onFinish() {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+            }
+        })
+    }
+
+    fun mainData() {
+        val params = RequestParams()
+        params.put("member_id",member_id)
+        params.put("current_school_id", PrefUtils.getIntPreference(context, "school_id"))
         params.put("type",type)
 
         PostingAction.mainlist(params, object : JsonHttpResponseHandler() {

@@ -137,7 +137,7 @@
                             android:layout_width="0dp"
                             android:layout_weight="1"
                             android:layout_height="40dp"
-                            android:text="활인율"
+                            android:text="할인율"
                             android:textSize="14dp"
                             android:textColor="#8F8E8A"
                             android:background="@null"
@@ -145,7 +145,8 @@
                     />
                     <EditText
                         android:id="@+id/saleET"
-                        android:layout_width="wrap_content" android:layout_height="40dp"
+                        android:gravity="right"
+                        android:layout_width="150dp" android:layout_height="40dp"
                               android:background="@null"
                               android:hint="            "
                     />
@@ -438,8 +439,9 @@
                         android:text="할인금액"
                         android:textColor="#8F8E8A"
                         android:textSize="14dp" />
-                    <EditText android:layout_width="wrap_content" android:layout_height="40dp"
+                    <EditText android:layout_width="150dp" android:layout_height="40dp"
                               android:hint="    "
+                        android:gravity="right"
                               android:textSize="14dp"
                               android:background="@null"
                         android:id="@+id/moneyET"
