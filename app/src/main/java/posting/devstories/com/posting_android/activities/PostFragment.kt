@@ -782,6 +782,8 @@ open class PostFragment : Fragment() {
                         var school = response.getJSONObject("school")
                         val schoolindex = school.getJSONObject("School")
                         val image_uri = Utils.getString(schoolindex,"image_uri")
+
+
                         print("---------------------이미지"+image_uri)
                         var univimg = Config.url +image_uri
                         ImageLoader.getInstance().displayImage(univimg, univIV, Utils.UILoptionsUserProfile)

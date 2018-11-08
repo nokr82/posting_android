@@ -494,6 +494,7 @@ class DetailActivity : RootActivity() {
                         intent.putExtra("posting_id", posting_id)
                         intent.action = "SAVE_POSTING"
                         sendBroadcast(intent)
+                        detaildata()
 
                         saveLL.visibility = View.GONE
 
