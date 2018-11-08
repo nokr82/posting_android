@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-              android:background="@null"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#00000000">
 
-    <posting.devstories.com.posting_android.base.RationalRelativeLayout
+    <LinearLayout
         android:id="@+id/popup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/background_border_707070"
-        app:ratio="960:500"
        >
 
       <LinearLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:orientation="vertical">
+          android:orientation="vertical"
+          android:background="#00000000">
 
 
           <TextView
@@ -26,7 +26,8 @@
               android:textColor="#20408C"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:text="My Posting"/>
+              android:text="My Posting"
+              android:background="#00000000"/>
           <View
               android:layout_width="match_parent"
               android:layout_height="0.3dp"
@@ -36,29 +37,32 @@
               />
         <LinearLayout
            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginLeft="21dp">
+            android:layout_marginLeft="21dp"
+            android:background="#00000000">
 
         <TextView
             android:id="@+id/delTV"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content"
+              android:layout_height="40dp"
+                android:gravity="center_vertical"
               android:text="삭제"
               android:textColor="#888888"/>
           <TextView
               android:id="@+id/modiTV"
-              android:layout_marginTop="15.8dp"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content"
+              android:layout_height="40dp"
+              android:gravity="center_vertical"
               android:text="수정"
               android:textColor="#888888"/>
           <TextView
               android:id="@+id/recyTV"
-              android:layout_marginTop="15.8dp"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content"
+              android:layout_height="40dp"
+              android:gravity="center_vertical"
               android:text="재사용"
               android:textColor="#888888"/>
 
@@ -71,8 +75,7 @@
 
 
 
-
-    </posting.devstories.com.posting_android.base.RationalRelativeLayout>
+</LinearLayout>
 
 
 

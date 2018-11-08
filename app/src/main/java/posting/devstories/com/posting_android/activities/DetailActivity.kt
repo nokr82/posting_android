@@ -552,6 +552,7 @@ class DetailActivity : RootActivity() {
         params.put("member_id",member_id)
         params.put("posting_id", posting_id)
         params.put("del_yn", del_yn)
+        //나의학교아이디
         me_school_id  = PrefUtils.getIntPreference(context,"school_id")
         detail(params, object : JsonHttpResponseHandler() {
 
@@ -616,12 +617,13 @@ class DetailActivity : RootActivity() {
                         PrefUtils.setPreference(context, "detail_current_school_id", current_school_id)
 
 
+                        //게시물의 학교아이디
                        school_id = Utils.getInt(posting, "school_id")
 
 
                         println("==========학교"+current_school_id)
                         println("==========학교"+school_id)
-
+//게시자의 학교아뒤 나의학교아뒤
                         if (school_id!=me_school_id){
                             saveLL.visibility = View.GONE
                         }else if (current_school_id != school_id){
