@@ -160,10 +160,10 @@ else {
         var coupon_contentTV :TextView
         var postbg2IV:ImageView
         init {
-            postbg2IV = v.findViewById(R.id.postbg2IV)as ImageView
+            postbg2IV = v.findViewById(R.id.postbgIV)as ImageView
             storageIV = v.findViewById(R.id.storageIV) as ImageView
             storageTV = v.findViewById(R.id.storageTV) as TextView
-            leftCntTV = v.findViewById(R.id.leftCnt2TV) as TextView
+            leftCntTV = v.findViewById(R.id.leftCntTV) as TextView
             chatAlarmCntTV = v.findViewById(R.id.chatAlarmCntTV) as TextView
             couponLL = v.findViewById(R.id.couponLL) as LinearLayout
             coupon_orderTV = v.findViewById(R.id.coupon_orderTV) as TextView
