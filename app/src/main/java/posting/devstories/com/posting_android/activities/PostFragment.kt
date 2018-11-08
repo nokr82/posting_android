@@ -425,6 +425,7 @@ open class PostFragment : Fragment() {
 
                 PrefUtils.setPreference(context, "current_school_id", school_id)
 
+                PrefUtils.getStringPreference(context, "current_school_image_uri ")
                 val intent = Intent(context, MainActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intent)
@@ -783,9 +784,12 @@ open class PostFragment : Fragment() {
                         val schoolindex = school.getJSONObject("School")
                         val image_uri = Utils.getString(schoolindex,"image_uri")
 
+                        PrefUtils.setPreference(context, "current_school_image_uri ", image_uri )
 
-                        print("---------------------이미지"+image_uri)
-                        var univimg = Config.url +image_uri
+                      val current_school_image_uri=  PrefUtils.getStringPreference(context, "current_school_image_uri ")
+
+                        print("---------------------이미지"+current_school_image_uri)
+                        var univimg = Config.url +current_school_image_uri
                         ImageLoader.getInstance().displayImage(univimg, univIV, Utils.UILoptionsUserProfile)
 
                         for (i in 0..(list.length()-1)){
