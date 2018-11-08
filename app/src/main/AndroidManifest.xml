@@ -180,6 +180,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/full_screen_dialog1"/>
         <activity
+                android:name=".activities.DlgReportActivity"
+                android:screenOrientation="portrait"
+                android:theme="@style/full_screen_dialog1"/>
+        <activity
             android:name=".activities.DlgPoliceActivity"
             android:screenOrientation="portrait"
             android:theme="@style/full_screen_dialog1"/>

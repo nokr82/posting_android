@@ -24,7 +24,7 @@
               android:id="@+id/titleTV"
               android:padding="10dp"
               android:textColor="#20408C"
-              android:layout_width="wrap_content"
+              android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:text="My Posting"
               android:background="#00000000"/>

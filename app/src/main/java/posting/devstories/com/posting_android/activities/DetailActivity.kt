@@ -59,6 +59,8 @@ class DetailActivity : RootActivity() {
     var taptype = -1
     var save_id :String? = null
 
+    var dlgtype  = ""
+
 
 
     var school_id = -1
@@ -823,36 +825,15 @@ class DetailActivity : RootActivity() {
     }
 
     fun policedlgView(){
-        var mPopupDlg: DialogInterface? = null
-
-        val builder = AlertDialog.Builder(this)
-        val dialogView = layoutInflater.inflate(R.layout.myposting_dlg, null)
-        val titleTV = dialogView.findViewById<TextView>(R.id.titleTV)
-        val delTV = dialogView.findViewById<TextView>(R.id.delTV)
-        val modiTV = dialogView.findViewById<TextView>(R.id.modiTV)
-        val recyTV = dialogView.findViewById<TextView>(R.id.recyTV)
-        titleTV.text = "이 포스트를 신고하는 이유를 선택하세요"
-        delTV.text = "불건전합니다"
-        modiTV.text = "부적절합니다"
-        recyTV.text = "스팸입니다"
-
-        delTV.setOnClickListener {
-            report("1")
-            mPopupDlg!!.dismiss()
-
-        }
-        modiTV.setOnClickListener {
-            report("2")
-            mPopupDlg!!.dismiss()
-        }
-        recyTV.setOnClickListener {
-            report("3")
-            mPopupDlg!!.dismiss()
-        }
+        dlgtype = "police"
+        var intent = Intent(context, DlgReportActivity::class.java)
+        intent.putExtra("posting_id", posting_id)
+        intent.putExtra("member_id", member_id)
+        intent.putExtra("dlgtype", dlgtype)
 
 
 
-        mPopupDlg =  builder.setView(dialogView).show()
+        startActivity(intent)
 
     }
 
@@ -880,104 +861,16 @@ class DetailActivity : RootActivity() {
 
     }
 
-
-    fun report(type:String){
-        val params = RequestParams()
-        params.put("member_id", member_id)
-        params.put("posting_id", posting_id)
-        params.put("type", type)
-
-        ReviewAction.report(params, object : JsonHttpResponseHandler() {
-
-            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
-                if (progressDialog != null) {
-                    progressDialog!!.dismiss()
-                }
-
-                try {
-                    val result = response!!.getString("result")
-                    if ("ok" == result) {
-
-                        var intent = Intent(context, DlgPoliceActivity::class.java)
-                        startActivity(intent)
-
-                    } else if("already" == result) {
-                        Toast.makeText(context, "신고한 게시물입니다.", Toast.LENGTH_LONG).show()
-                    }
-
-                } catch (e: JSONException) {
-                    e.printStackTrace()
-                }
-
-            }
-
-            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONArray?) {
-                super.onSuccess(statusCode, headers, response)
-            }
-
-            private fun error() {
-                Utils.alert(context, "조회중 장애가 발생하였습니다.")
-            }
-
-            override fun onFailure(statusCode: Int, headers: Array<Header>?, throwable: Throwable, errorResponse: JSONArray?) {
-                if (progressDialog != null) {
-                    progressDialog!!.dismiss()
-                }
-                throwable.printStackTrace()
-                error()
-            }
-
-            override fun onStart() {
-                // show dialog
-                if (progressDialog != null) {
-
-                    progressDialog!!.show()
-                }
-            }
-
-            override fun onFinish() {
-                if (progressDialog != null) {
-                    progressDialog!!.dismiss()
-                }
-            }
-        })
-    }
-
     fun dlgView(){
-        var mPopupDlg: DialogInterface? = null
-
-        val builder = AlertDialog.Builder(this)
-        val dialogView = layoutInflater.inflate(R.layout.myposting_dlg, null)
-        val delTV = dialogView.findViewById<TextView>(R.id.delTV)
-        val modiTV = dialogView.findViewById<TextView>(R.id.modiTV)
-        val recyTV = dialogView.findViewById<TextView>(R.id.recyTV)
-        recyTV.visibility = View.GONE
-
-        delTV.setOnClickListener {
-            del_posting()
-            mPopupDlg!!.cancel()
-        }
-
-        modiTV.setOnClickListener {
-
-            val intent = Intent(context, PostWriteActivity::class.java)
-            intent.putExtra("posting_id", posting_id)
-            intent.putExtra("image_uri",image_uri)
-            println("------------dlalwl"+image_uri)
-            intent.putExtra("member_type",member_type)
-            intent.putExtra("contents",contents)
-
-            context.startActivity(intent)
-            finish()
-
-            mPopupDlg!!.cancel()
-
-        }
-
-
-
-
-        mPopupDlg =  builder.setView(dialogView).show()
+        dlgtype = "Myposting"
+        var intent = Intent(context, DlgReportActivity::class.java)
+        intent.putExtra("posting_id", posting_id)
+        intent.putExtra("dlgtype", dlgtype)
+        intent.putExtra("image_uri",image_uri)
+        intent.putExtra("member_type",member_type)
+        intent.putExtra("contents",contents)
+        intent.putExtra("type",type)
+        startActivity(intent)
 
     }
 
