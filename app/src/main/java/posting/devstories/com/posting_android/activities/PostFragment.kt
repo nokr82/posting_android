@@ -23,6 +23,7 @@ import android.widget.*
 import com.github.paolorotolo.expandableheightlistview.ExpandableHeightListView
 import com.loopj.android.http.JsonHttpResponseHandler
 import com.loopj.android.http.RequestParams
+import com.nostra13.universalimageloader.core.ImageLoader
 import cz.msebera.android.httpclient.Header
 import kotlinx.android.synthetic.main.fra_post.*
 import kotlinx.android.synthetic.main.tab_mypage_view.*
@@ -35,6 +36,7 @@ import posting.devstories.com.posting_android.R
 import posting.devstories.com.posting_android.adapter.FullScreenImageAdapter
 import posting.devstories.com.posting_android.adapter.MainPostAdapter
 import posting.devstories.com.posting_android.adapter.SchoolAdapter
+import posting.devstories.com.posting_android.base.Config
 import posting.devstories.com.posting_android.base.NonSwipeableViewPager
 import posting.devstories.com.posting_android.base.PrefUtils
 import posting.devstories.com.posting_android.base.Utils
@@ -777,6 +779,17 @@ open class PostFragment : Fragment() {
                         }
 
                         val list = response.getJSONArray("list")
+                        var school = response.getJSONObject("school")
+                        val schoolindex = school.getJSONObject("School")
+                        val image_uri = Utils.getString(schoolindex,"image_uri")
+                        print("---------------------이미지"+image_uri)
+                        var univimg = Config.url +image_uri
+                        ImageLoader.getInstance().displayImage(univimg, univIV, Utils.UILoptionsUserProfile)
+
+
+
+
+
 
                         for (i in 0..(list.length()-1)){
                             mainAdapterData.add(list[i] as JSONObject)
