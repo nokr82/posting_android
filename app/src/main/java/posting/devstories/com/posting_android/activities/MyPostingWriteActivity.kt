@@ -53,6 +53,8 @@ class MyPostingWriteActivity : RootActivity() {
     var getday=""
     var postingType:String?= null
 
+    var current_school = -1
+    var school_id = -1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_posttextwrite)
@@ -79,10 +81,20 @@ class MyPostingWriteActivity : RootActivity() {
         println("dddddddddddddd"+imgid)
         contents2 = intent.getStringExtra("contents")
         startd = intent.getStringExtra("startd")
+        current_school = intent.getIntExtra("current_school",-1)
+        school_id = intent.getIntExtra("school_id",-1)
+
         last = intent.getStringExtra("last")
         posting_id = intent!!.getStringExtra("posting_id")
         image = intent.getStringExtra("image")
         mount = intent.getIntExtra("mount",0)
+
+
+        if (current_school != school_id){
+            popupRL.background = getDrawable(R.mipmap.write_bg2)
+        }else{
+            popupRL.background = getDrawable(R.mipmap.wtite_bg)
+        }
 
 
         contentET.setText(contents2)
