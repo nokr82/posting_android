@@ -494,6 +494,7 @@ class DetailActivity : RootActivity() {
                         intent.putExtra("posting_id", posting_id)
                         intent.action = "SAVE_POSTING"
                         sendBroadcast(intent)
+                        detaildata()
 
                         saveLL.visibility = View.GONE
 
@@ -635,7 +636,8 @@ class DetailActivity : RootActivity() {
 
 
                         if (coupon_type.equals("1")){
-                            coupon3RL.visibility = View.VISIBLE
+                            contentsTV.visibility = View.GONE
+                            coupon3LL.visibility = View.VISIBLE
                             coupon_titleTV.text = menu_name
                             coupon_saleTV.text = sale_per
                             coupon_orderTV.text = company_name
@@ -646,7 +648,8 @@ class DetailActivity : RootActivity() {
                             usesTV.visibility = View.VISIBLE
                             usesTV.text = "사용기간:"+uses_start_date+" ~ "+uses_end_date+" 까지"
                         }else if (coupon_type.equals("2")){
-                            coupon3RL.visibility = View.VISIBLE
+                            contentsTV.visibility = View.GONE
+                            coupon3LL.visibility = View.VISIBLE
                             coupon_orderTV.text = company_name
                             coupon3LL.setBackgroundColor(Color.parseColor("#FB2B70"))
                             coupon_titleTV.text = menu_name
@@ -659,7 +662,8 @@ class DetailActivity : RootActivity() {
                             usesTV.visibility = View.VISIBLE
                             usesTV.text = "사용기간:"+uses_start_date+" ~ "+uses_end_date+" 까지"
                         }else if (coupon_type.equals("3")){
-                            coupon3RL.visibility = View.VISIBLE
+                            contentsTV.visibility = View.GONE
+                            coupon3LL.visibility = View.VISIBLE
                             coupon_orderTV.text = company_name
                             coupon3LL.setBackgroundColor(Color.parseColor("#A12BFB"))
                             coupon_titleTV.text = menu_name
@@ -747,8 +751,12 @@ class DetailActivity : RootActivity() {
                             ImageLoader.getInstance().displayImage(image, imgIV, Utils.UILoptionsUserProfile)
                             imgIV.visibility = View.VISIBLE
                         } else {
-                            contentsTV.text = contents
-                            contentsTV.visibility = View.VISIBLE
+                            if (!coupon_type.equals("")){
+                                contentsTV.visibility=View.GONE
+                            }else {
+                                contentsTV.text = contents
+                                contentsTV.visibility = View.VISIBLE
+                            }
                         }
 
                         for(idx in 0..count) {
