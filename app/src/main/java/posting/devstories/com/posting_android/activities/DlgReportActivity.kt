@@ -36,6 +36,8 @@ class DlgReportActivity : RootActivity() {
     var member_type:String?= null
     var contents:String?= null
     var type = 1
+    var save_id:String?= null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.myposting_dlg)
@@ -49,6 +51,7 @@ class DlgReportActivity : RootActivity() {
         member_id =intent.getIntExtra("member_id",-1)
         posting_id = intent.getStringExtra("posting_id")
         dlgtype = intent.getStringExtra("dlgtype")
+        save_id= intent.getStringExtra("save_id")
         image_uri  = intent.getStringExtra("image_uri")
         contents = intent.getStringExtra("contents")
         member_type = intent.getStringExtra("member_type")
@@ -84,7 +87,8 @@ class DlgReportActivity : RootActivity() {
                 finish()
             }
 
-        }else if (dlgtype.equals("Myposting")){
+        }
+        else if (dlgtype.equals("Myposting")){
 
             recyTV.visibility = View.GONE
             delTV.setOnClickListener {
@@ -109,6 +113,20 @@ class DlgReportActivity : RootActivity() {
             }
 
         }
+        else if (dlgtype.equals("Storage")){
+            titleTV.text = "My Storage"
+            recyTV.visibility = View.GONE
+            modiTV.visibility = View.GONE
+
+            delTV.setOnClickListener {
+                savedel_posting()
+                //이것을 어찌할꼬...
+                val intent = Intent(context, MainActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+
+            }
+        }
 
 
 
@@ -117,6 +135,8 @@ class DlgReportActivity : RootActivity() {
 
 
     }
+
+    //안될시 디테일에 뿌려줄것
 
     fun del_posting(){
         val params = RequestParams()
@@ -206,6 +226,69 @@ class DlgReportActivity : RootActivity() {
 
                     } else if("already" == result) {
                         Toast.makeText(context, "신고한 게시물입니다.", Toast.LENGTH_LONG).show()
+                    }
+
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+
+            }
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONArray?) {
+                super.onSuccess(statusCode, headers, response)
+            }
+
+            private fun error() {
+                Utils.alert(context, "조회중 장애가 발생하였습니다.")
+            }
+
+            override fun onFailure(statusCode: Int, headers: Array<Header>?, throwable: Throwable, errorResponse: JSONArray?) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+                throwable.printStackTrace()
+                error()
+            }
+
+            override fun onStart() {
+                // show dialog
+                if (progressDialog != null) {
+
+                    progressDialog!!.show()
+                }
+            }
+
+            override fun onFinish() {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+            }
+        })
+    }
+
+    fun savedel_posting(){
+        val params = RequestParams()
+        params.put("posting_id", save_id)
+
+        PostingAction.savedel_posting(params, object : JsonHttpResponseHandler() {
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+
+                try {
+                    val result = response!!.getString("result")
+                    if ("ok" == result) {
+
+                        intent = Intent()
+                        intent.putExtra("posting_id", posting_id)
+                        intent.putExtra("type", type)
+                        intent.action = "DEL_POSTING"
+                        sendBroadcast(intent)
+
+                        finish()
+
                     }
 
                 } catch (e: JSONException) {

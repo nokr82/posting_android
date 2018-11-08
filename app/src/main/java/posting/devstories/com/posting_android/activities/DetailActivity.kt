@@ -269,6 +269,7 @@ class DetailActivity : RootActivity() {
 
     }
 
+    //사용자정보
     fun loadInfo() {
         val params = RequestParams()
         params.put("member_id", PrefUtils.getIntPreference(context, "member_id"))
@@ -346,10 +347,7 @@ class DetailActivity : RootActivity() {
             }
         })
     }
-
-
-
-
+    //댓글
     fun writeComments(comments:String) {
         val params = RequestParams()
         params.put("member_id",member_id)
@@ -411,65 +409,7 @@ class DetailActivity : RootActivity() {
             }
         })
     }
-
-    fun use_posting(){
-        val params = RequestParams()
-        params.put("posting_save_id", posting_save_id)
-
-        PostingAction.use_posting(params, object : JsonHttpResponseHandler() {
-
-            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
-                if (progressDialog != null) {
-                    progressDialog!!.dismiss()
-                }
-
-                try {
-                    val result = response!!.getString("result")
-                    if ("ok" == result) {
-
-
-                        finish()
-
-                    }
-
-                } catch (e: JSONException) {
-                    e.printStackTrace()
-                }
-
-            }
-
-            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONArray?) {
-                super.onSuccess(statusCode, headers, response)
-            }
-
-            private fun error() {
-                Utils.alert(context, "조회중 장애가 발생하였습니다.")
-            }
-
-            override fun onFailure(statusCode: Int, headers: Array<Header>?, throwable: Throwable, errorResponse: JSONArray?) {
-                if (progressDialog != null) {
-                    progressDialog!!.dismiss()
-                }
-                throwable.printStackTrace()
-                error()
-            }
-
-            override fun onStart() {
-                // show dialog
-                if (progressDialog != null) {
-
-                    progressDialog!!.show()
-                }
-            }
-
-
-            override fun onFinish() {
-                if (progressDialog != null) {
-                    progressDialog!!.dismiss()
-                }
-            }
-        })
-    }
+    //저장
     fun savePosting() {
         val params = RequestParams()
         params.put("member_id",member_id)
@@ -543,10 +483,7 @@ class DetailActivity : RootActivity() {
             }
         })
     }
-
-
-
-
+    //상세뽑기
     fun detaildata() {
         val params = RequestParams()
         params.put("member_id",member_id)
@@ -824,6 +761,7 @@ class DetailActivity : RootActivity() {
         })
     }
 
+    //수정완료
     fun policedlgView(){
         dlgtype = "police"
         var intent = Intent(context, DlgReportActivity::class.java)
@@ -836,7 +774,28 @@ class DetailActivity : RootActivity() {
         startActivity(intent)
 
     }
+    fun dlgView(){
+        dlgtype = "Myposting"
+        var intent = Intent(context, DlgReportActivity::class.java)
+        intent.putExtra("posting_id", posting_id)
+        intent.putExtra("dlgtype", dlgtype)
+        intent.putExtra("image_uri",image_uri)
+        intent.putExtra("member_type",member_type)
+        intent.putExtra("contents",contents)
+        intent.putExtra("type",type)
+        startActivity(intent)
 
+    }
+    fun storagedlgView(){
+        dlgtype = "Storage"
+        var intent = Intent(context, DlgReportActivity::class.java)
+        intent.putExtra("save_id", save_id)
+        intent.putExtra("dlgtype", dlgtype)
+        startActivity(intent)
+
+    }
+
+    //다이얼로그수정
     fun coupondlgView(){
         var mPopupDlg: DialogInterface? = null
 
@@ -860,51 +819,11 @@ class DetailActivity : RootActivity() {
         mPopupDlg =  builder.setView(dialogView).show()
 
     }
-
-    fun dlgView(){
-        dlgtype = "Myposting"
-        var intent = Intent(context, DlgReportActivity::class.java)
-        intent.putExtra("posting_id", posting_id)
-        intent.putExtra("dlgtype", dlgtype)
-        intent.putExtra("image_uri",image_uri)
-        intent.putExtra("member_type",member_type)
-        intent.putExtra("contents",contents)
-        intent.putExtra("type",type)
-        startActivity(intent)
-
-    }
-
-
-    fun storagedlgView(){
-        var mPopupDlg: DialogInterface? = null
-
-        val builder = AlertDialog.Builder(this)
-        val dialogView = layoutInflater.inflate(R.layout.myposting_dlg, null)
-        val delTV = dialogView.findViewById<TextView>(R.id.delTV)
-        val modiTV = dialogView.findViewById<TextView>(R.id.modiTV)
-        val recyTV = dialogView.findViewById<TextView>(R.id.recyTV)
-        val titleTV = dialogView.findViewById<TextView>(R.id.titleTV)
-        titleTV.text = "My Storage"
-        recyTV.visibility = View.GONE
-        modiTV.visibility = View.GONE
-
-        delTV.setOnClickListener {
-            savedel_posting()
-            mPopupDlg!!.cancel()
-        }
-
-
-
-        mPopupDlg =  builder.setView(dialogView).show()
-
-    }
-
-
-    fun savedel_posting(){
+    fun use_posting(){
         val params = RequestParams()
-        params.put("posting_id", save_id)
+        params.put("posting_save_id", posting_save_id)
 
-        PostingAction.savedel_posting(params, object : JsonHttpResponseHandler() {
+        PostingAction.use_posting(params, object : JsonHttpResponseHandler() {
 
             override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
                 if (progressDialog != null) {
@@ -915,11 +834,6 @@ class DetailActivity : RootActivity() {
                     val result = response!!.getString("result")
                     if ("ok" == result) {
 
-                        intent = Intent()
-                        intent.putExtra("posting_id", posting_id)
-                        intent.putExtra("type", type)
-                        intent.action = "DEL_POSTING"
-                        sendBroadcast(intent)
 
                         finish()
 
@@ -955,68 +869,6 @@ class DetailActivity : RootActivity() {
                 }
             }
 
-            override fun onFinish() {
-                if (progressDialog != null) {
-                    progressDialog!!.dismiss()
-                }
-            }
-        })
-    }
-
-    fun del_posting(){
-        val params = RequestParams()
-        params.put("posting_id", posting_id)
-
-    PostingAction.del_posting(params, object : JsonHttpResponseHandler() {
-
-            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
-                if (progressDialog != null) {
-                    progressDialog!!.dismiss()
-                }
-
-                try {
-                    val result = response!!.getString("result")
-                    if ("ok" == result) {
-
-                        intent = Intent()
-                        intent.putExtra("posting_id", posting_id)
-                        intent.putExtra("type", type)
-                        intent.action = "DEL_POSTING"
-                        sendBroadcast(intent)
-
-                        finish()
-
-                    }
-
-                } catch (e: JSONException) {
-                    e.printStackTrace()
-                }
-
-            }
-
-            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONArray?) {
-                super.onSuccess(statusCode, headers, response)
-            }
-
-            private fun error() {
-                Utils.alert(context, "조회중 장애가 발생하였습니다.")
-            }
-
-            override fun onFailure(statusCode: Int, headers: Array<Header>?, throwable: Throwable, errorResponse: JSONArray?) {
-                if (progressDialog != null) {
-                    progressDialog!!.dismiss()
-                }
-                throwable.printStackTrace()
-                error()
-            }
-
-            override fun onStart() {
-                // show dialog
-                if (progressDialog != null) {
-
-                    progressDialog!!.show()
-                }
-            }
 
             override fun onFinish() {
                 if (progressDialog != null) {
@@ -1025,6 +877,12 @@ class DetailActivity : RootActivity() {
             }
         })
     }
+
+
+
+
+
+
     override fun onDestroy() {
         super.onDestroy()
 
