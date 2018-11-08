@@ -124,7 +124,7 @@ open class MainPostAdapter(context: Context?, view: Int, data: ArrayList<JSONObj
             var sale_price:String =  Utils.getString(posting, "sale_price")
 
 
-            val postingView = View.inflate(context, R.layout.item_post, null)
+            val postingView = View.inflate(context, R.layout.item_main_post, null)
             var postbgIV:ImageView = postingView.findViewById(R.id.postbgIV)
             var postRL: RelativeLayout = postingView.findViewById(R.id.postRL)
             var postIV: ImageView = postingView.findViewById(R.id.postIV);

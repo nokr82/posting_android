@@ -26,8 +26,10 @@ import posting.devstories.com.posting_android.Actions.PostingAction
 import posting.devstories.com.posting_android.Actions.PostingAction.del_posting
 import posting.devstories.com.posting_android.Actions.PostingAction.detail
 import posting.devstories.com.posting_android.Actions.PostingAction.save_posting
- import posting.devstories.com.posting_android.Actions.PostingAction.write_comments
+import posting.devstories.com.posting_android.Actions.PostingAction.savedel_posting
+import posting.devstories.com.posting_android.Actions.PostingAction.write_comments
 import posting.devstories.com.posting_android.Actions.ReviewAction
+import posting.devstories.com.posting_android.Actions.ReviewAction.report
 import posting.devstories.com.posting_android.R
 import posting.devstories.com.posting_android.adapter.DetailAnimationRecyclerAdapter
 import posting.devstories.com.posting_android.adapter.ReAdapter
@@ -53,14 +55,22 @@ class DetailActivity : RootActivity() {
     var adapterData: ArrayList<JSONObject> = ArrayList<JSONObject>()
     var count = 0
     var del_yn = ""
+    var member_id2=-1
     var use_yn:String?= null
     var member_type:String? = null
     var image_uri = ""
     var type = 1
     var contents = ""
+
     var coupon = -1
     var taptype = -1
+
     var save_id :String? = null
+
+
+    var school_id = -1
+    var me_school_id =""
+
     lateinit var adapterRe: ReAdapter
 
     var postingData:JSONObject = JSONObject();
@@ -75,6 +85,8 @@ class DetailActivity : RootActivity() {
         this.context = this
         progressDialog = ProgressDialog(context)
         loadInfo()
+
+//        me_school_id = PrefUtils.getStringPreference(context,"school_id")
 
         intent = getIntent()
         taptype=intent.getIntExtra("taptype",-1)
@@ -423,8 +435,18 @@ class DetailActivity : RootActivity() {
         val params = RequestParams()
         params.put("member_id",member_id)
         params.put("posting_id", posting_id)
+        val me_school_id = PrefUtils.getIntPreference(context,"school_id")
+        print("jgfjsdkfj"+me_school_id)
+        print("jgfjsdkfj"+school_id)
+    if (member_id == member_id2){
+        Toast.makeText(context,"자기포스트는 떼어갈수 없습니다",Toast.LENGTH_SHORT).show()
+    }else if (school_id!=me_school_id){
+        Toast.makeText(context,"다른학교포스트는 떼어갈수 없습니다",Toast.LENGTH_SHORT).show()
+    }
+    else{
 
         save_posting(params, object : JsonHttpResponseHandler() {
+
 
             override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
                 if (progressDialog != null) {
@@ -445,11 +467,11 @@ class DetailActivity : RootActivity() {
                         intent.action = "SAVE_POSTING"
                         sendBroadcast(intent)
 
-                    }else if ("empty"==result){
-                        Toast.makeText(context,"남은 수량이 없습니다.",Toast.LENGTH_SHORT).show()
+                    } else if ("empty" == result) {
+                        Toast.makeText(context, "남은 수량이 없습니다.", Toast.LENGTH_SHORT).show()
 
-                    }else if ("already"==result){
-                        Toast.makeText(context,"이미 떼어간 포스트입니다.",Toast.LENGTH_SHORT).show()
+                    } else if ("already" == result) {
+                        Toast.makeText(context, "이미 떼어간 포스트입니다.", Toast.LENGTH_SHORT).show()
                     }
 
                 } catch (e: JSONException) {
@@ -488,6 +510,7 @@ class DetailActivity : RootActivity() {
             }
         })
     }
+    }
 
 
 
@@ -517,10 +540,6 @@ class DetailActivity : RootActivity() {
                         val member1 = data.getJSONObject("Member")
                         var company_name = Utils.getString(member1, "company_name")
 
-                        var current_school_id = Utils.getString(member1, "school_id")
-                        PrefUtils.setPreference(context, "detail_current_school_id", current_school_id)
-
-                        var school_id = Utils.getString(posting, "school_id")
 
                         postingData = posting
 
@@ -549,18 +568,24 @@ class DetailActivity : RootActivity() {
 
                         var coupon_type:String =  Utils.getString(posting, "coupon_type")
                         var id = Utils.getString(posting, "id")
-                        var member_id2 =   Utils.getInt(posting, "member_id")
+                      member_id2 =   Utils.getInt(posting, "member_id")
 
                         var del = Utils.getString(posting,"del_yn")
                         var Image = Utils.getString(posting, "Image")
                         type = Utils.getInt(posting,"type")
                         var menu_name:String =  Utils.getString(posting, "menu_name")
+
                         var sale_per:String =  Utils.getString(posting, "sale_per")
                         var sale_price:String =  Utils.getString(posting, "sale_price")
                         var contents =   Utils.getString(posting, "contents")
 
                        image_uri = Utils.getString(posting, "image_uri")
                         var leftCount = Utils.getString(posting, "leftCount")
+                        var current_school_id = Utils.getInt(member1, "school_id")
+                        PrefUtils.setPreference(context, "detail_current_school_id", current_school_id)
+
+
+                       school_id = Utils.getInt(posting, "school_id")
 
 
                         println("==========학교"+current_school_id)
@@ -570,6 +595,7 @@ class DetailActivity : RootActivity() {
 
                         if (current_school_id != school_id){
                           postingLL.background = getDrawable(R.mipmap.write_bg2)
+                            saveLL.visibility = View.GONE
                         }else{
                             postingLL.background = getDrawable(R.mipmap.wtite_bg)
                         }
@@ -614,7 +640,7 @@ class DetailActivity : RootActivity() {
                             usesTV.text = "사용기간:"+uses_start_date+" ~ "+uses_end_date+" 까지"
                         }
 
-                        if (save_yn.equals("N")){
+                        if (save_yn.equals("N")&&member_id2!=member_id){
                             saveLL.visibility = View.VISIBLE
                         }
 

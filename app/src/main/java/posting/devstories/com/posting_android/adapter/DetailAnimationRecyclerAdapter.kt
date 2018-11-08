@@ -58,8 +58,8 @@ class ListItem(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         val image_uri = Utils.getString(posting, "image_uri")
         val contents =   Utils.getString(posting, "contents")
-        var school_id = Utils.getString(posting, "school_id")
-        var current_school_id = PrefUtils.getStringPreference(itemView.context,"detail_current_school_id")
+        var school_id = Utils.getInt(posting, "school_id")
+        var current_school_id = PrefUtils.getIntPreference(itemView.context,"detail_current_school_id")
         println("=========학교잼"+current_school_id)
         println("=========학교잼"+school_id)
         if (current_school_id != school_id){
