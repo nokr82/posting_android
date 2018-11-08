@@ -786,11 +786,6 @@ open class PostFragment : Fragment() {
                         var univimg = Config.url +image_uri
                         ImageLoader.getInstance().displayImage(univimg, univIV, Utils.UILoptionsUserProfile)
 
-
-
-
-
-
                         for (i in 0..(list.length()-1)){
                             mainAdapterData.add(list[i] as JSONObject)
                         }
