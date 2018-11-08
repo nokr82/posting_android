@@ -61,16 +61,15 @@ class DetailActivity : RootActivity() {
     var image_uri = ""
     var type = 1
     var contents = ""
-
     var coupon = -1
     var taptype = -1
-
     var save_id :String? = null
 
 
     var school_id = -1
     var me_school_id =""
 
+    var confirm_yn = ""
     lateinit var adapterRe: ReAdapter
 
     var postingData:JSONObject = JSONObject();
@@ -86,14 +85,10 @@ class DetailActivity : RootActivity() {
         progressDialog = ProgressDialog(context)
         loadInfo()
 
-//        me_school_id = PrefUtils.getStringPreference(context,"school_id")
-
         intent = getIntent()
         taptype=intent.getIntExtra("taptype",-1)
         save_id = intent.getStringExtra("save_id")
-        println("22222222"+save_id)
 
-        println("----------------tap"+taptype)
         coupon = intent.getIntExtra("coupon",-1)
         use_yn = intent.getStringExtra("use_yn")
 
@@ -101,6 +96,9 @@ class DetailActivity : RootActivity() {
 
         member_type= PrefUtils.getStringPreference(context,"member_type")
         member_id = PrefUtils.getIntPreference(context, "member_id")
+
+        confirm_yn = PrefUtils.getStringPreference(context, "confirm_yn")
+
         commentsLV.isExpanded = true
         adapterRe = ReAdapter(context,R.layout.item_re, adapterData)
         commentsLV.adapter = adapterRe
@@ -114,6 +112,11 @@ class DetailActivity : RootActivity() {
         val swipeableTouchHelperCallback = object : SwipeableTouchHelperCallback(object : OnItemSwiped {
             override fun onItemSwiped() {
                 detailAnimationRecyclerAdapter.removeTopItem()
+
+                if("N" == confirm_yn) {
+                    Toast.makeText(context, "학교 인증 후 이용 가능합니다", Toast.LENGTH_LONG).show()
+                    return
+                }
 
                 savePosting();
             }
@@ -208,6 +211,11 @@ class DetailActivity : RootActivity() {
                 return@setOnClickListener
             }
 
+            if("N" == confirm_yn) {
+                Toast.makeText(context, "학교 인증 후 이용 가능합니다", Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
+
            savePosting()
 
         }
@@ -218,6 +226,12 @@ class DetailActivity : RootActivity() {
 
                 return@setOnClickListener
             }
+
+            if("N" == confirm_yn) {
+                Toast.makeText(context, "학교 인증 후 이용 가능합니다", Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
+
             savePosting()
             saveLL.visibility = View.GONE
         }
@@ -447,7 +461,6 @@ class DetailActivity : RootActivity() {
 
         save_posting(params, object : JsonHttpResponseHandler() {
 
-
             override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
                 if (progressDialog != null) {
                     progressDialog!!.dismiss()
@@ -467,11 +480,13 @@ class DetailActivity : RootActivity() {
                         intent.action = "SAVE_POSTING"
                         sendBroadcast(intent)
 
-                    } else if ("empty" == result) {
-                        Toast.makeText(context, "남은 수량이 없습니다.", Toast.LENGTH_SHORT).show()
+                        saveLL.visibility = View.GONE
 
-                    } else if ("already" == result) {
-                        Toast.makeText(context, "이미 떼어간 포스트입니다.", Toast.LENGTH_SHORT).show()
+                    }else if ("empty"==result){
+                        Toast.makeText(context,"남은 수량이 없습니다.",Toast.LENGTH_SHORT).show()
+
+                    }else if ("already"==result){
+                        Toast.makeText(context,"이미 떼어간 포스트입니다.",Toast.LENGTH_SHORT).show()
                     }
 
                 } catch (e: JSONException) {
@@ -574,7 +589,6 @@ class DetailActivity : RootActivity() {
                         var Image = Utils.getString(posting, "Image")
                         type = Utils.getInt(posting,"type")
                         var menu_name:String =  Utils.getString(posting, "menu_name")
-
                         var sale_per:String =  Utils.getString(posting, "sale_per")
                         var sale_price:String =  Utils.getString(posting, "sale_price")
                         var contents =   Utils.getString(posting, "contents")

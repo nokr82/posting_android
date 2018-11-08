@@ -40,6 +40,10 @@ open class OrderPageActivity : RootActivity() {
     var clicktype = 1
     var company_id = -1
 
+    var lat:Double = 0.0
+    var lng:Double = 0.0
+    var companyName:String = ""
+
     internal var delReviewReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent?) {
             if (intent != null) {
@@ -120,6 +124,19 @@ open class OrderPageActivity : RootActivity() {
             startActivityForResult(intent, WRTIE_REVIEW)
         }
 
+        gpsLL.setOnClickListener {
+            if(lat == 0.0 && lng == 0.0) {
+                Toast.makeText(context, "위치 정보가 없습니다.", Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
+
+            var intent = Intent(context, OrderMapActivity::class.java)
+            intent.putExtra("lat", lat)
+            intent.putExtra("lng", lng)
+            intent.putExtra("name", companyName)
+            startActivity(intent)
+        }
+
         loadData()
     }
 
@@ -128,6 +145,7 @@ open class OrderPageActivity : RootActivity() {
         val params = RequestParams()
         params.put("company_member_id", company_id)
         params.put("member_id",PrefUtils.getIntPreference(context, "member_id"))
+        params.put("type",clicktype)
 
         MemberAction.company_page(params, object : JsonHttpResponseHandler() {
 
@@ -148,9 +166,12 @@ open class OrderPageActivity : RootActivity() {
                         reviewCntTV.text = reviewCnt
 
                         val member = response.getJSONObject("member")
-
-                        companyNameTV.text = Utils.getString(member, "company_name")
+                        companyName = Utils.getString(member, "company_name")
+                        companyNameTV.text = companyName
                         infoTV.text = Utils.getString(member, "address") + Utils.getString(member, "address_detail")
+
+                        lat = Utils.getDouble(member, "lat")
+                        lng = Utils.getDouble(member, "lng")
 
                         var profile = Config.url + Utils.getString(member,"image_uri")
                         ImageLoader.getInstance().displayImage(profile, profileIV, Utils.UILoptionsUserProfile)
