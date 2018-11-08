@@ -23,6 +23,11 @@ import posting.devstories.com.posting_android.base.*
 import java.io.File
 import java.io.IOException
 import com.nostra13.universalimageloader.core.ImageLoader
+import android.R.attr.name
+import android.content.ComponentName
+import android.content.pm.ResolveInfo
+
+
 
 class PostWriteActivity : RootActivity() {
 
@@ -32,6 +37,7 @@ class PostWriteActivity : RootActivity() {
     private val photoList = ArrayList<ImageAdapter.PhotoData>()
     private val selected = LinkedList<String>()
     private val REQUEST_CAMERA = 0
+    private val CROP_FROM_CAMERA = 100
     var imageUri: Uri? = null
     var absolutePath: String? = null
     var mee = arrayOf("자유", "정보", "스터디", "동아리", "미팅")
@@ -296,6 +302,9 @@ class PostWriteActivity : RootActivity() {
 
         when (requestCode) {
             REQUEST_CAMERA -> {
+
+                println("intent : " + data)
+
                 val realPathFromURI = imageUri!!.getPath()
                 context.sendBroadcast(
                     Intent(
@@ -304,13 +313,20 @@ class PostWriteActivity : RootActivity() {
                     )
                 )
                 try {
-                    capture = Utils.getImage(context.contentResolver, absolutePath)
-                    postingType = "P"
-                    imgIV2.setImageBitmap(capture)
+
+                    cropImage()
 
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
+
+            }
+            CROP_FROM_CAMERA -> {
+//                    capture = Utils.getImage(context.contentResolver, absolutePath)
+                    val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, imageUri)
+                    capture = bitmap
+                    postingType = "P"
+                    imgIV2.setImageBitmap(capture)
 
             }
             else -> {
@@ -321,6 +337,35 @@ class PostWriteActivity : RootActivity() {
 
     }
 
+    fun cropImage() {
+        context.grantUriPermission(
+            "com.android.camera", imageUri,
+            Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION
+        )
+
+        val intent = Intent("com.android.camera.action.CROP")
+        intent.setDataAndType(imageUri, "image/*")
+
+        //you must setup two line below
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
+
+        intent.putExtra("crop", "true")
+        intent.putExtra("aspectX", 1)
+        intent.putExtra("aspectY", 1)
+        intent.putExtra("outputX", 200)
+        intent.putExtra("outputY", 200)
+        intent.putExtra("return-data", true)
+
+        grantUriPermission(
+            packageName, imageUri,
+            Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION
+        )
+        //you must setup this
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
+        startActivityForResult(intent, CROP_FROM_CAMERA)
+
+    }
 
     override fun onDestroy() {
         super.onDestroy()
