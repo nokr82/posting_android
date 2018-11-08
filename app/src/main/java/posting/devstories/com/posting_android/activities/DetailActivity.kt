@@ -23,20 +23,14 @@ import org.json.JSONException
 import org.json.JSONObject
 import posting.devstories.com.posting_android.Actions.MemberAction
 import posting.devstories.com.posting_android.Actions.PostingAction
-import posting.devstories.com.posting_android.Actions.PostingAction.del_posting
 import posting.devstories.com.posting_android.Actions.PostingAction.detail
 import posting.devstories.com.posting_android.Actions.PostingAction.save_posting
-import posting.devstories.com.posting_android.Actions.PostingAction.savedel_posting
 import posting.devstories.com.posting_android.Actions.PostingAction.write_comments
 import posting.devstories.com.posting_android.Actions.ReviewAction
-import posting.devstories.com.posting_android.Actions.ReviewAction.report
 import posting.devstories.com.posting_android.R
 import posting.devstories.com.posting_android.adapter.DetailAnimationRecyclerAdapter
 import posting.devstories.com.posting_android.adapter.ReAdapter
-import posting.devstories.com.posting_android.base.Config
-import posting.devstories.com.posting_android.base.PrefUtils
-import posting.devstories.com.posting_android.base.RootActivity
-import posting.devstories.com.posting_android.base.Utils
+import posting.devstories.com.posting_android.base.*
 import swipeable.com.layoutmanager.OnItemSwiped
 import swipeable.com.layoutmanager.SwipeableLayoutManager
 import swipeable.com.layoutmanager.SwipeableTouchHelperCallback
@@ -71,6 +65,8 @@ class DetailActivity : RootActivity() {
     private lateinit var detailAnimationRecyclerAdapter: DetailAnimationRecyclerAdapter
 
     private lateinit var detailAnimationRecyclerAdapterData: ArrayList<JSONObject>
+
+    lateinit var pageCurlView: PageCurlView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -196,6 +192,8 @@ class DetailActivity : RootActivity() {
             return@setOnEditorActionListener true
 
         }
+
+        /*
         postingLL.setOnClickListener {
 
             if(count < 1) {
@@ -213,6 +211,8 @@ class DetailActivity : RootActivity() {
            savePosting()
 
         }
+        */
+
         saveLL.setOnClickListener {
             if(count < 1) {
 
@@ -221,12 +221,34 @@ class DetailActivity : RootActivity() {
                 return@setOnClickListener
             }
 
+<<<<<<< Updated upstream
             if("N" == confirm_yn) {
                 Toast.makeText(context, "학교 인증 후 이용 가능합니다", Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
 
             savePosting()
+=======
+            /*
+            coupon3RL.setDrawingCacheEnabled(true);
+            var bm = coupon3RL.getDrawingCache()
+            bm = bm.copy(bm.getConfig(), true)
+            */
+
+            // pageCurlViewLL.visibility = View.VISIBLE
+            // pageCurlView.addPostit(bm);
+            // pageCurlView.invalidate()
+
+            println("gfdsa")
+
+            coupon3RL.visibility = View.GONE
+
+            pageCurlView.setbFlipping(true)
+            pageCurlView.FlipAnimationStep()
+
+            // savePosting()
+            // saveLL.visibility = View.GONE
+>>>>>>> Stashed changes
         }
 
         backLL.setOnClickListener {
@@ -510,8 +532,6 @@ class DetailActivity : RootActivity() {
     }
 
 
-
-
     fun detaildata() {
         val params = RequestParams()
         params.put("member_id",member_id)
@@ -689,16 +709,37 @@ class DetailActivity : RootActivity() {
 
                         upTX.text = create_date
 
-                        /*
                         //uri를 이미지로 변환시켜준다
                         if (!image_uri.isEmpty() && image_uri != "") {
                             var image = Config.url + image_uri
-                            // ImageLoader.getInstance().displayImage(image, imgIV, Utils.UILoptionsUserProfile)
-                            // imgIV.visibility = View.VISIBLE
+                            ImageLoader.getInstance().displayImage(image, imgIV, Utils.UILoptionsUserProfile)
+                            imgIV.visibility = View.VISIBLE
                         } else {
                             contentsTV.text = contents
                             contentsTV.visibility = View.VISIBLE
                         }
+
+
+                        var image = Config.url + image_uri
+                        val bi = ImageLoader.getInstance().loadImageSync(image)
+
+                        pageCurlView = PageCurlView(context)
+                        pageCurlView.setmBackground(bi)
+                        pageCurlView.setmForeground(bi)
+
+                        pageCurlViewLL.addView(pageCurlView)
+
+                        pageCurlView.invalidate()
+
+                        /*
+                        ImageLoader.getInstance().loadImage(image, object : SimpleImageLoadingListener() {
+                            override fun onLoadingComplete(imageUri: String, view: View, loadedImage: Bitmap) {
+
+                                println("loadedImage : $loadedImage")
+
+                                // pageCurlView.setPostit(loadedImage)
+                            }
+                        })
                         */
 
                         for(idx in 0..count) {
