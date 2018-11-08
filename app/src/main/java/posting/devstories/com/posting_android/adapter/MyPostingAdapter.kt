@@ -109,7 +109,12 @@ else {
 
             }
         }
-        item.leftCntTV.text = leftCount
+
+        if(leftCount == "9999") {
+            item.leftCntTV.text = "∞"
+        } else {
+            item.leftCntTV.text = leftCount
+        }
 
         var chattingCnt = Utils.getInt(posting, "chattingCnt")
 

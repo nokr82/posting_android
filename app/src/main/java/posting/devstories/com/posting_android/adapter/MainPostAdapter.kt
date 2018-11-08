@@ -202,7 +202,13 @@ open class MainPostAdapter(context: Context?, view: Int, data: ArrayList<JSONObj
                 context.startActivity(intent)
             }
 
-            leftCntTV.text = leftCnt
+            if(leftCnt == "9999") {
+                leftCntTV.text = "∞"
+            } else {
+                leftCntTV.text = leftCnt
+            }
+
+
             item.postingLL.addView(postingView)
 
         }

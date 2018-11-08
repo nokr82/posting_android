@@ -104,7 +104,12 @@ open class OrderAdapter(context:Context, view:Int, data:ArrayList<JSONObject>) :
                 item.contentsTV.visibility = View.VISIBLE
             }
         }
-        item.leftCntTV.text = leftCount
+
+        if(leftCount == "9999") {
+            item.leftCntTV.text = "∞"
+        } else {
+            item.leftCntTV.text = leftCount
+        }
 
         return retView
     }
