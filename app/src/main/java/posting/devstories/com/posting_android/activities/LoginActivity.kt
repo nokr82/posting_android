@@ -115,15 +115,10 @@ class LoginActivity : RootActivity() {
 
                         val member_type = PrefUtils.getStringPreference(context,"member_type")
 
-                        if (member_type.equals("3")){
-                            val intent = Intent(context,MainActivity::class.java)
-                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                            startActivity(intent)
-                        }else{
                             val intent = Intent(context, MainActivity::class.java)
                             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                             startActivity(intent)
-                        }
+
 
 
 

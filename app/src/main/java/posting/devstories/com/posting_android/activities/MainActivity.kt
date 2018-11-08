@@ -105,20 +105,27 @@ class MainActivity : FragmentActivity() {
 
         if(member_type.equals("3")){
             fragmentFT.addTab(fragmentFT.newTabSpec("myPage").setIndicator(tabMypageV), OrderPageFragment::class.java, null)
-
         }else{
             fragmentFT.addTab(fragmentFT.newTabSpec("myPage").setIndicator(tabMypageV), MyPageFragment::class.java, null)
         }
-
+        if(member_type.equals("3")) {
+            setTabBar()
+            myPageIV.setImageResource(R.mipmap.clickmy)
+            fragmentFT.currentTab = 2
+        }
         homeLL.setOnClickListener {
 
             setTabBar()
 
             homeIV.setImageResource(R.mipmap.home)
 
+
+            val school_id = PrefUtils.getIntPreference(context, "school_id")
+            PrefUtils.setPreference(context, "current_school_id", school_id)
+
             if(fragmentFT.currentTab == 0) {
                 val postFragment = supportFragmentManager.findFragmentByTag("post") as PostFragment
-                postFragment
+                postFragment.setMainView()
             }
 
             fragmentFT.onTabChanged("post")
