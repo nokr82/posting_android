@@ -221,14 +221,13 @@ class DetailActivity : RootActivity() {
                 return@setOnClickListener
             }
 
-<<<<<<< Updated upstream
             if("N" == confirm_yn) {
                 Toast.makeText(context, "학교 인증 후 이용 가능합니다", Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
 
             savePosting()
-=======
+
             /*
             coupon3RL.setDrawingCacheEnabled(true);
             var bm = coupon3RL.getDrawingCache()
@@ -239,8 +238,6 @@ class DetailActivity : RootActivity() {
             // pageCurlView.addPostit(bm);
             // pageCurlView.invalidate()
 
-            println("gfdsa")
-
             coupon3RL.visibility = View.GONE
 
             pageCurlView.setbFlipping(true)
@@ -248,7 +245,6 @@ class DetailActivity : RootActivity() {
 
             // savePosting()
             // saveLL.visibility = View.GONE
->>>>>>> Stashed changes
         }
 
         backLL.setOnClickListener {
@@ -492,6 +488,8 @@ class DetailActivity : RootActivity() {
 
                     }else if ("already"==result){
                         Toast.makeText(context,"이미 떼어간 포스트입니다.",Toast.LENGTH_SHORT).show()
+                    } else if ("over" == result) {
+                        Toast.makeText(context,"오늘 하루 제한량만큼 떼어갔습니다.",Toast.LENGTH_SHORT).show()
                     }
 
                 } catch (e: JSONException) {
