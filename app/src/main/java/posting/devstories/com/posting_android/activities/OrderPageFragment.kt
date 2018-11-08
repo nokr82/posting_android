@@ -23,6 +23,7 @@ import posting.devstories.com.posting_android.Actions.MemberAction
 import posting.devstories.com.posting_android.R
 import posting.devstories.com.posting_android.adapter.OrderAdapter
 import posting.devstories.com.posting_android.adapter.ReviewAdapter
+import posting.devstories.com.posting_android.base.Config
 import posting.devstories.com.posting_android.base.PrefUtils
 import posting.devstories.com.posting_android.base.Utils
 
@@ -43,7 +44,12 @@ open class OrderPageFragment : Fragment() {
     lateinit var couponGV:ExpandableHeightGridView
     lateinit var gpsLL:LinearLayout
     lateinit var storeInfoTV:TextView
-    var clicktype = -1
+
+    var clicktype = 1
+
+    var name = ""
+    var lng = 0.0
+    var lat = 0.0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -90,8 +96,18 @@ open class OrderPageFragment : Fragment() {
 
         gpsLL.setOnClickListener {
             val intent = Intent(context, OrderMapActivity::class.java)
+            intent.putExtra("lat", lat)
+            intent.putExtra("lng", lng)
+            intent.putExtra("name", name)
             startActivity(intent)
         }
+
+        adapterOrder = OrderAdapter(activity, R.layout.item_post,adapterData)
+        adapterReview = ReviewAdapter(activity, R.layout.item_post,adapterData)
+
+        couponGV.adapter = adapterOrder
+        couponGV.isExpanded = true
+
 
         reviewLL.setOnClickListener {
 
@@ -99,7 +115,6 @@ open class OrderPageFragment : Fragment() {
             adapterData.clear()
             reviewV.visibility = View.VISIBLE
             couponV.visibility = View.INVISIBLE
-            adapterReview = ReviewAdapter(activity, R.layout.item_post,adapterData)
             couponGV.adapter = adapterReview
             clicktype = 2
             loadData()
@@ -112,7 +127,6 @@ open class OrderPageFragment : Fragment() {
             adapterData.clear()
             couponV.visibility = View.VISIBLE
             reviewV.visibility = View.INVISIBLE
-            adapterOrder = OrderAdapter(activity, R.layout.item_post,adapterData)
             couponGV.adapter = adapterOrder
             clicktype = 1
           loadData()
@@ -131,6 +145,7 @@ open class OrderPageFragment : Fragment() {
             }
 
         }
+        loadData()
 
     }
 
@@ -154,8 +169,15 @@ open class OrderPageFragment : Fragment() {
 
                         val member = response.getJSONObject("member")
 
-                        companyNameTV.text = Utils.getString(member, "company_name")
+                        name = Utils.getString(member, "company_name")
+                        lng = Utils.getDouble(member, "lat")
+                        lat = Utils.getDouble(member, "lng")
+
+                        companyNameTV.text = name
                         storeInfoTV.text = Utils.getString(member, "address") + " " + Utils.getString(member, "address_detail")
+
+                        var profile_uri = Config.url + Utils.getString(member,"image_uri")
+                        com.nostra13.universalimageloader.core.ImageLoader.getInstance().displayImage(profile_uri, profileIV, Utils.UILoptionsProfile)
 
                         if (clicktype ==1){
 

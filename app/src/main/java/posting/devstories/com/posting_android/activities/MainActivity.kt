@@ -66,6 +66,8 @@ class MainActivity : FragmentActivity() {
         }
     }
 
+    private var confirm_yn = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -74,6 +76,8 @@ class MainActivity : FragmentActivity() {
 
         posting_id = intent.getStringExtra("posting_id")
         is_push = intent.getBooleanExtra("is_push", false)
+
+        confirm_yn = PrefUtils.getStringPreference(context, "confirm_yn")
 
         if(is_push) {
 
@@ -133,6 +137,13 @@ class MainActivity : FragmentActivity() {
 
         writeLL.setOnClickListener {
 
+            println("confirm_yn : " + confirm_yn)
+
+            if("N" == confirm_yn) {
+                Toast.makeText(context, "학교 인증 후 이용하실 수 있습니다.", Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
+
             val current_school = PrefUtils.getIntPreference(context, "current_school_id")
             val school_id = PrefUtils.getIntPreference(context, "school_id")
             val intent = Intent(this, PostWriteActivity::class.java)
@@ -141,7 +152,6 @@ class MainActivity : FragmentActivity() {
             intent.putExtra("member_type",member_type)
 
             startActivity(intent)
-
 
 //            setTabBar()
 //
