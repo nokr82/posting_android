@@ -79,5 +79,6 @@ dependencies {
 
     compile 'com.github.nihad92:SwipeableCards:1.0.19'
 
+
 }
 apply plugin: 'com.google.gms.google-services'
