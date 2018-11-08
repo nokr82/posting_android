@@ -40,6 +40,8 @@ open class MyPostingAdapter(context:Context, view:Int, data:ArrayList<JSONObject
         val member = json.getJSONObject("Member")
         var company_name = Utils.getString(member, "company_name")
         var posting = json.getJSONObject("Posting")
+        var current_school_id = Utils.getString(member, "school_id")
+        var school_id = Utils.getString(posting, "school_id")
         var contents =   Utils.getString(posting, "contents")
         var image_uri = Utils.getString(posting, "image_uri")
         var leftCount = Utils.getString(posting, "leftCount")
@@ -52,6 +54,13 @@ open class MyPostingAdapter(context:Context, view:Int, data:ArrayList<JSONObject
         var sale_price:String =  Utils.getString(posting, "sale_price")
 
         item.storageIV.visibility = View.GONE
+
+        if (current_school_id != school_id){
+            item.postbg2IV.setImageResource(R.mipmap.write_bg2)
+        }else{
+            item.postbg2IV.setImageResource(R.mipmap.bg)
+        }
+
         if (coupon_type.equals("1")){
             item.coupon_orderTV.text = company_name
             item.storageTV.visibility = View.GONE
@@ -149,7 +158,9 @@ else {
         var coupon_startdateTV :TextView
         var coupon_enddateTV :TextView
         var coupon_contentTV :TextView
+        var postbg2IV:ImageView
         init {
+            postbg2IV = v.findViewById(R.id.postbg2IV)as ImageView
             storageIV = v.findViewById(R.id.storageIV) as ImageView
             storageTV = v.findViewById(R.id.storageTV) as TextView
             leftCntTV = v.findViewById(R.id.leftCnt2TV) as TextView

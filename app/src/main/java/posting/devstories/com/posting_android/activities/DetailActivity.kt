@@ -26,10 +26,8 @@ import posting.devstories.com.posting_android.Actions.PostingAction
 import posting.devstories.com.posting_android.Actions.PostingAction.del_posting
 import posting.devstories.com.posting_android.Actions.PostingAction.detail
 import posting.devstories.com.posting_android.Actions.PostingAction.save_posting
-import posting.devstories.com.posting_android.Actions.PostingAction.savedel_posting
-import posting.devstories.com.posting_android.Actions.PostingAction.write_comments
+ import posting.devstories.com.posting_android.Actions.PostingAction.write_comments
 import posting.devstories.com.posting_android.Actions.ReviewAction
-import posting.devstories.com.posting_android.Actions.ReviewAction.report
 import posting.devstories.com.posting_android.R
 import posting.devstories.com.posting_android.adapter.DetailAnimationRecyclerAdapter
 import posting.devstories.com.posting_android.adapter.ReAdapter
@@ -519,6 +517,10 @@ class DetailActivity : RootActivity() {
                         val member1 = data.getJSONObject("Member")
                         var company_name = Utils.getString(member1, "company_name")
 
+                        var current_school_id = Utils.getString(member1, "school_id")
+                        PrefUtils.setPreference(context, "detail_current_school_id", current_school_id)
+
+                        var school_id = Utils.getString(posting, "school_id")
 
                         postingData = posting
 
@@ -560,6 +562,17 @@ class DetailActivity : RootActivity() {
                        image_uri = Utils.getString(posting, "image_uri")
                         var leftCount = Utils.getString(posting, "leftCount")
 
+
+                        println("==========학교"+current_school_id)
+                        println("==========학교"+school_id)
+
+
+
+                        if (current_school_id != school_id){
+                          postingLL.background = getDrawable(R.mipmap.write_bg2)
+                        }else{
+                            postingLL.background = getDrawable(R.mipmap.wtite_bg)
+                        }
 
 
                         if (coupon_type.equals("1")){

@@ -40,6 +40,7 @@ open class PostAdapter(context:Context, view:Int, data:ArrayList<JSONObject>) : 
 
         val member = json.getJSONObject("Member")
         var company_name = Utils.getString(member, "company_name")
+        var current_school_id = Utils.getString(member, "school_id")
 
 
         var posting = json.getJSONObject("Posting")
@@ -48,6 +49,7 @@ open class PostAdapter(context:Context, view:Int, data:ArrayList<JSONObject>) : 
 
         var member_id =   Utils.getString(posting, "member_id")
         var Image = Utils.getString(posting, "Image")
+        var school_id = Utils.getString(posting, "school_id")
         var created =   Utils.getString(posting, "created")
         var coupon_type:String =  Utils.getString(posting, "coupon_type")
         var uses_start_date =   Utils.getString(posting, "uses_start_date")
@@ -58,6 +60,13 @@ open class PostAdapter(context:Context, view:Int, data:ArrayList<JSONObject>) : 
         var contents =   Utils.getString(posting, "contents")
         var image_uri = Utils.getString(posting, "image_uri")
         var leftCount = Utils.getString(posting, "leftCount")
+
+        if (current_school_id != school_id){
+            item.postbgIV.setImageResource(R.mipmap.write_bg2)
+        }else{
+            item.postbgIV.setImageResource(R.mipmap.bg)
+        }
+
 
         item.postIV.visibility = View.GONE
         item.contentsTV.visibility = View.GONE
@@ -151,12 +160,13 @@ open class PostAdapter(context:Context, view:Int, data:ArrayList<JSONObject>) : 
         var coupon_startdateTV :TextView
         var coupon_enddateTV :TextView
         var coupon_contentTV :TextView
-
+        var postbgIV:ImageView
 
 
 
 
         init {
+            postbgIV = v.findViewById(R.id.postbgIV)as ImageView
             postIV = v.findViewById(R.id.postIV) as ImageView
             contentsTV = v.findViewById(R.id.contentsTV) as TextView
             leftCntTV = v.findViewById(R.id.leftCntTV) as TextView

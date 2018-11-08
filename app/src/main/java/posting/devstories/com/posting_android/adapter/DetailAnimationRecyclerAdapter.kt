@@ -1,5 +1,6 @@
 package posting.devstories.com.posting_android.adapter
 
+import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -10,8 +11,10 @@ import com.nostra13.universalimageloader.core.ImageLoader
 import org.json.JSONObject
 import posting.devstories.com.posting_android.R
 import posting.devstories.com.posting_android.base.Config
+import posting.devstories.com.posting_android.base.RationalRelativeLayout
 import posting.devstories.com.posting_android.base.Utils
 import java.util.*
+import posting.devstories.com.posting_android.base.PrefUtils
 
 class DetailAnimationRecyclerAdapter(detailAnimationRecyclerAdapterData: ArrayList<JSONObject>) : RecyclerView.Adapter<ListItem>() {
 
@@ -23,7 +26,7 @@ class DetailAnimationRecyclerAdapter(detailAnimationRecyclerAdapterData: ArrayLi
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListItem {
         return ListItem(
-            LayoutInflater.from(parent.context).inflate(R.layout.recyclerview_detail_item, parent, false)
+                LayoutInflater.from(parent.context).inflate(R.layout.recyclerview_detail_item, parent, false)
         )
     }
 
@@ -44,8 +47,9 @@ class DetailAnimationRecyclerAdapter(detailAnimationRecyclerAdapterData: ArrayLi
 class ListItem(itemView: View) : RecyclerView.ViewHolder(itemView) {
     internal lateinit var imgIV: ImageView
     internal lateinit var contentsTV: TextView
-
+    internal lateinit var postingLL: RationalRelativeLayout
     init {
+        postingLL= itemView.findViewById(R.id.postingLL)
         imgIV = itemView.findViewById(R.id.imgIV)
         contentsTV = itemView.findViewById(R.id.contentsTV)
     }
@@ -54,6 +58,16 @@ class ListItem(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         val image_uri = Utils.getString(posting, "image_uri")
         val contents =   Utils.getString(posting, "contents")
+        var school_id = Utils.getString(posting, "school_id")
+        var current_school_id = PrefUtils.getStringPreference(itemView.context,"detail_current_school_id")
+        println("=========학교잼"+current_school_id)
+        println("=========학교잼"+school_id)
+        if (current_school_id != school_id){
+            postingLL.background = itemView.context.getDrawable(R.mipmap.write_bg2)
+        }else{
+            postingLL.background = itemView.context.getDrawable(R.mipmap.wtite_bg)
+        }
+
 
         //uri를 이미지로 변환시켜준다
         if (!image_uri.isEmpty() && image_uri != "") {
