@@ -1382,4 +1382,20 @@ public class Utils {
         return "0일 0시간 0분 0초";
     }
 
+    /**
+     * A one color image.
+     * @param width
+     * @param height
+     * @param color
+     * @return A one color image with the given width and height.
+     */
+    public static Bitmap createImage(int width, int height, int color) {
+        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        Paint paint = new Paint();
+        paint.setColor(color);
+        paint.setAlpha(155);
+        canvas.drawRect(0F, 0F, (float) width, (float) height, paint);
+        return bitmap;
+    }
 }
