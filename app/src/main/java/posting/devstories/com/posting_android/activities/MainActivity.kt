@@ -133,7 +133,11 @@ class MainActivity : FragmentActivity() {
 
         writeLL.setOnClickListener {
 
+            val current_school = PrefUtils.getIntPreference(context, "current_school_id")
+            val school_id = PrefUtils.getIntPreference(context, "school_id")
             val intent = Intent(this, PostWriteActivity::class.java)
+            intent.putExtra("current_school",current_school)
+            intent.putExtra("school_id",school_id)
             intent.putExtra("member_type",member_type)
 
             startActivity(intent)

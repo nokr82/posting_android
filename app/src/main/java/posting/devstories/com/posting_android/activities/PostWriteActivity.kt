@@ -10,19 +10,17 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import posting.devstories.com.posting_android.R
 import posting.devstories.com.posting_android.adapter.ImageAdapter
-import posting.devstories.com.posting_android.base.ImageLoader
-import posting.devstories.com.posting_android.base.RootActivity
 import java.util.*
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
 import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.view.View
 import kotlinx.android.synthetic.main.activity_postwrite.*
-import posting.devstories.com.posting_android.base.Config
-import posting.devstories.com.posting_android.base.Utils
 import android.net.Uri
 import android.os.Environment
 import android.support.v4.content.FileProvider
+import posting.devstories.com.posting_android.base.*
 import java.io.File
 import java.io.IOException
 
@@ -45,7 +43,8 @@ class PostWriteActivity : RootActivity() {
     var getday=""
     var postingType = ""
 
-
+    var current_school = -1
+    var school_id = -1
 
     val text = "1"
 
@@ -74,12 +73,23 @@ class PostWriteActivity : RootActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_postwrite)
 
+
+
+
         intent = getIntent()
         member_type = intent.getStringExtra("member_type")
-
+        current_school = intent.getIntExtra("current_school",-1)
+        school_id = intent.getIntExtra("school_id",-1)
         posting_id = intent.getStringExtra("posting_id")
         contents = intent.getStringExtra("contents")
         image_uri = intent.getStringExtra("image_uri")
+
+
+        if (current_school != school_id){
+            bgRL.background = getDrawable(R.mipmap.write_bg2)
+        }else{
+            bgRL.background = getDrawable(R.mipmap.wtite_bg)
+        }
 
 
 
@@ -204,9 +214,10 @@ class PostWriteActivity : RootActivity() {
                 Toast.makeText(context,"기간을 선택해주세요",Toast.LENGTH_SHORT).show()
             }
             else{
-
             var intent = Intent(context, MyPostingWriteActivity::class.java)
             intent.putExtra("image", image)
+                intent.putExtra("current_school", current_school)
+                intent.putExtra("school_id", school_id)
             intent.putExtra("imgid", imgid)
             intent.putExtra("postingType", postingType)
             intent.putExtra("absolutePath", absolutePath)
