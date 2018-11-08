@@ -74,7 +74,6 @@ class PostWriteActivity : RootActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_postwrite)
 
-
         intent = getIntent()
         member_type = intent.getStringExtra("member_type")
 
