@@ -37,6 +37,7 @@ open class MainFragment : Fragment(), AbsListView.OnScrollListener {
     lateinit var gideGV: GridView
 
     var keyword = ""
+    var type = 1
 
     private var page = 1
     private var totalPage = 0
@@ -71,7 +72,7 @@ open class MainFragment : Fragment(), AbsListView.OnScrollListener {
     internal var delPostingReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent?) {
             if (intent != null) {
-                var type:Int = intent.getIntExtra("type", 1)
+                type = intent.getIntExtra("type", 1)
                 loadData(type)
             }
         }
@@ -80,7 +81,7 @@ open class MainFragment : Fragment(), AbsListView.OnScrollListener {
     internal var searchKeywordReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent?) {
             if (intent != null) {
-                var type:Int = intent.getIntExtra("type", 1)
+                type = intent.getIntExtra("type", 1)
                 keyword = intent.getStringExtra("keyword")
                 loadData(type)
             }
@@ -162,6 +163,7 @@ open class MainFragment : Fragment(), AbsListView.OnScrollListener {
         params.put("current_school_id", PrefUtils.getIntPreference(context, "current_school_id"))
         params.put("type", type)
         params.put("keyword", keyword)
+        params.put("page", page)
 
 //        var postFragment:PostFragment = PostFragment()
 //
@@ -187,7 +189,7 @@ open class MainFragment : Fragment(), AbsListView.OnScrollListener {
                         totalPage = response.getInt("totalPage");
                         page = response.getInt("page");
 
-                        for (i in 0..data.length() - 1) {
+                        for (i in 0..(data.length() - 1)) {
 
                             adapterData.add(data[i] as JSONObject)
 
@@ -277,7 +279,7 @@ open class MainFragment : Fragment(), AbsListView.OnScrollListener {
                 page++
                 lastcount = totalItemCountScroll
 
-                loadData(activity.tabType)
+                loadData(type)
             }
         }
     }
