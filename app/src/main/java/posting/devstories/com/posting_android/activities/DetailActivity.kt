@@ -751,29 +751,6 @@ class DetailActivity : RootActivity() {
                             contentsTV.visibility = View.VISIBLE
                         }
 
-
-                        var image = Config.url + image_uri
-                        val bi = ImageLoader.getInstance().loadImageSync(image)
-
-                        pageCurlView = PageCurlView(context)
-                        pageCurlView.setmBackground(bi)
-                        pageCurlView.setmForeground(bi)
-
-                        pageCurlViewLL.addView(pageCurlView)
-
-                        pageCurlView.invalidate()
-
-                        /*
-                        ImageLoader.getInstance().loadImage(image, object : SimpleImageLoadingListener() {
-                            override fun onLoadingComplete(imageUri: String, view: View, loadedImage: Bitmap) {
-
-                                println("loadedImage : $loadedImage")
-
-                                // pageCurlView.setPostit(loadedImage)
-                            }
-                        })
-                        */
-
                         for(idx in 0..count) {
                             detailAnimationRecyclerAdapterData.add(posting)
                         }
