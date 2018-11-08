@@ -126,8 +126,7 @@
                             android:id="@+id/coupon3RL"
                             android:layout_width="247.23dp"
                             android:layout_height="261.21dp"
-                            android:layout_centerInParent="true"
-                            android:visibility="gone">
+                            android:layout_centerInParent="true">
 
                             <LinearLayout
                                 android:id="@+id/coupon3LL"
