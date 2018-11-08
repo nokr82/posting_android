@@ -294,6 +294,9 @@ class MainActivity : FragmentActivity() {
         if (updateAlarmCntReceiver != null) {
             context.unregisterReceiver(updateAlarmCntReceiver)
         }
+        if (editPostingReceiver != null) {
+            context.unregisterReceiver(editPostingReceiver)
+        }
     }
 
 }

@@ -66,8 +66,9 @@ class DetailActivity : RootActivity() {
     var save_id :String? = null
 
 
+
     var school_id = -1
-    var me_school_id =""
+    var me_school_id =-1
 
     var confirm_yn = ""
     lateinit var adapterRe: ReAdapter
@@ -114,6 +115,7 @@ class DetailActivity : RootActivity() {
                 detailAnimationRecyclerAdapter.removeTopItem()
 
                 if("N" == confirm_yn) {
+                    couponLL.visibility = View.GONE
                     Toast.makeText(context, "학교 인증 후 이용 가능합니다", Toast.LENGTH_LONG).show()
                     return
                 }
@@ -449,9 +451,8 @@ class DetailActivity : RootActivity() {
         val params = RequestParams()
         params.put("member_id",member_id)
         params.put("posting_id", posting_id)
-        val me_school_id = PrefUtils.getIntPreference(context,"school_id")
-        print("jgfjsdkfj"+me_school_id)
-        print("jgfjsdkfj"+school_id)
+
+
     if (member_id == member_id2){
         Toast.makeText(context,"자기포스트는 떼어갈수 없습니다",Toast.LENGTH_SHORT).show()
     }else if (school_id!=me_school_id){
@@ -535,7 +536,7 @@ class DetailActivity : RootActivity() {
         params.put("member_id",member_id)
         params.put("posting_id", posting_id)
         params.put("del_yn", del_yn)
-
+        me_school_id  = PrefUtils.getIntPreference(context,"school_id")
         detail(params, object : JsonHttpResponseHandler() {
 
             override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
@@ -605,12 +606,15 @@ class DetailActivity : RootActivity() {
                         println("==========학교"+current_school_id)
                         println("==========학교"+school_id)
 
-
-
-                        if (current_school_id != school_id){
+                        if (school_id!=me_school_id){
+                            saveLL.visibility = View.GONE
+                        }else if (current_school_id != school_id){
                           postingLL.background = getDrawable(R.mipmap.write_bg2)
                             saveLL.visibility = View.GONE
-                        }else{
+                        }else if(save_yn.equals("N")&&member_id2!=member_id){
+                                saveLL.visibility = View.VISIBLE
+                        }
+                        else{
                             postingLL.background = getDrawable(R.mipmap.wtite_bg)
                         }
 
@@ -654,9 +658,7 @@ class DetailActivity : RootActivity() {
                             usesTV.text = "사용기간:"+uses_start_date+" ~ "+uses_end_date+" 까지"
                         }
 
-                        if (save_yn.equals("N")&&member_id2!=member_id){
-                            saveLL.visibility = View.VISIBLE
-                        }
+
 
 
 
