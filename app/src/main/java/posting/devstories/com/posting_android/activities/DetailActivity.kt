@@ -533,8 +533,6 @@ class DetailActivity : RootActivity() {
 
                         var uses_start_date = Utils.getString(posting, "uses_start_date")
                         var uses_end_date =   Utils.getString(posting, "uses_end_date")
-                        val ymd = SimpleDateFormat("yy년MM월dd일", Locale.KOREA)
-                        val cymd = SimpleDateFormat("yy.MM.dd", Locale.KOREA)
 
                         var coupon_type:String =  Utils.getString(posting, "coupon_type")
                         var id = Utils.getString(posting, "id")
@@ -587,6 +585,10 @@ class DetailActivity : RootActivity() {
                         }
 
                         if(6 == type) {
+
+                            val ymd = SimpleDateFormat("yy년MM월dd일", Locale.KOREA)
+                            val cymd = SimpleDateFormat("yy.MM.dd", Locale.KOREA)
+
                             val coupon_startdate = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(uses_start_date)
                             //내용 쿠폰날짜
                             val c_startdate = ymd.format(coupon_startdate)
