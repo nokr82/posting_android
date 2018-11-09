@@ -298,10 +298,20 @@ open class MainFragment : Fragment(), AbsListView.OnScrollListener {
         try {
             if (savePostingReceiver != null) {
                 context!!.unregisterReceiver(savePostingReceiver)
-            } else if (delPostingReceiver != null) {
-                context!!.unregisterReceiver(delPostingReceiver)
-            } else if (searchKeywordReceiver != null) {
+            }
+        } catch (e: IllegalArgumentException) {
+        }
+
+        try {
+            if (searchKeywordReceiver != null) {
                 context!!.unregisterReceiver(searchKeywordReceiver)
+            }
+        } catch (e: IllegalArgumentException) {
+        }
+
+        try {
+            if (delPostingReceiver != null) {
+                context!!.unregisterReceiver(delPostingReceiver)
             }
         } catch (e: IllegalArgumentException) {
         }
