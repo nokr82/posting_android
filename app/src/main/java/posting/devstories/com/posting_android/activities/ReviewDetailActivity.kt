@@ -34,6 +34,7 @@ class ReviewDetailActivity : RootActivity() {
     val EDIT_REIVEW = 101
     var member_id = -1
     var review_id  = -1
+    var company_member_id  = -1
     var image_uri  = ""
     var contents  = ""
 
@@ -84,6 +85,8 @@ class ReviewDetailActivity : RootActivity() {
                         val reviewData = response.getJSONObject("review")
                         val review = reviewData.getJSONObject("Review")
                         val member = reviewData.getJSONObject("Member")
+
+                        company_member_id = Utils.getInt(review, "company_member_id")
 
                         var Image = Utils.getString(review, "Image")
 
@@ -219,6 +222,7 @@ class ReviewDetailActivity : RootActivity() {
             intent.putExtra("review_id", review_id)
             intent.putExtra("image_uri",image_uri)
             intent.putExtra("contents",contents)
+            intent.putExtra("company_member_id", company_member_id)
 
             startActivityForResult(intent, EDIT_REIVEW)
             finish()

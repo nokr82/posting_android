@@ -10,16 +10,18 @@ import android.widget.Toast
 import posting.devstories.com.posting_android.R
 import posting.devstories.com.posting_android.base.RootActivity
 import android.graphics.Bitmap
-import android.graphics.drawable.Drawable
+import android.graphics.BitmapFactory
 import android.view.View
 import com.loopj.android.http.JsonHttpResponseHandler
 import com.loopj.android.http.RequestParams
+import com.nostra13.universalimageloader.core.ImageLoader
 import cz.msebera.android.httpclient.Header
 import kotlinx.android.synthetic.main.activity_reivew_write_contents.*
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 import posting.devstories.com.posting_android.Actions.ReviewAction
+import posting.devstories.com.posting_android.base.Config
 import posting.devstories.com.posting_android.base.PrefUtils
 import posting.devstories.com.posting_android.base.Utils
 import java.io.ByteArrayInputStream
@@ -42,6 +44,9 @@ class ReviewWriteContentsActivity : RootActivity() {
     var geterror = ""
     var company_member_id = -1
     var review_id = -1
+    var postingType = ""
+    var absolutePath = ""
+    var str:String? = null
 
     lateinit var adpater: ArrayAdapter<String>
 
@@ -55,14 +60,23 @@ class ReviewWriteContentsActivity : RootActivity() {
         member_id =  PrefUtils.getIntPreference(context,"member_id")
 
         intent = getIntent()
+        // 카메라 사진
+        absolutePath = intent.getStringExtra("absolutePath")
+        // 포스팅 타입 G-갤러리 P-포토 T-텍스트
+        postingType = intent.getStringExtra("postingType")
+
         review_id = intent.getIntExtra("review_id", -1)
         company_member_id = intent.getIntExtra("company_member_id", -1)
         contents = intent.getStringExtra("contents")
         imgid = intent.getStringExtra("imgid")
-        capture = intent.getParcelableExtra("capture")
         image = intent.getStringExtra("image")
 
         if(review_id > 0) {
+
+            image = Config.url + image_uri
+            ImageLoader.getInstance().displayImage(image, captureIV, Utils.UILoptionsPosting)
+            captureIV.visibility = View.VISIBLE
+
             contentET.setText(contents)
         }
 
@@ -70,9 +84,30 @@ class ReviewWriteContentsActivity : RootActivity() {
             finish()
         }
 
-        //이미지
-        captureIV.setImageBitmap(capture)
-        com.nostra13.universalimageloader.core.ImageLoader.getInstance().displayImage(image, captureIV, Utils.UILoptionsUserProfile)
+        val options = BitmapFactory.Options()
+        options.inJustDecodeBounds = true
+        BitmapFactory.decodeFile(str, options)
+        options.inJustDecodeBounds = false
+
+
+        if (postingType.equals("P")){
+
+            println("postingType : $postingType")
+            println("absolutePath : $absolutePath")
+
+            capture = Utils.getImage(context.contentResolver, absolutePath)
+            captureIV.setImageBitmap(capture)
+            popupRL.visibility = View.VISIBLE
+        }else if (postingType.equals("G")){
+            //이미지
+            ImageLoader.getInstance().displayImage(image, captureIV, Utils.UILoptionsUserProfile)
+            popupRL.visibility = View.VISIBLE
+
+            captureIV.setImageBitmap(Utils.getImage(context.contentResolver, imgid))
+        }else if (postingType.equals("M")){
+            com.nostra13.universalimageloader.core.ImageLoader.getInstance().displayImage(image, captureIV, Utils.UILoptionsUserProfile)
+            captureIV.visibility = View.VISIBLE
+        }
 
         if (imgid != null && "" != imgid && imgid!!.length> 1&&capture != null&&image != null){
             popupRL.visibility = View.VISIBLE
@@ -209,6 +244,7 @@ class ReviewWriteContentsActivity : RootActivity() {
         params.put("company_member_id", company_member_id)
         params.put("member_id", member_id)
         params.put("contents", contents)
+        params.put("review_id", review_id)
 
         if (capture==null){
 

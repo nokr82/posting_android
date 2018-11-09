@@ -36,7 +36,7 @@ class FullScreenImageAdapter(activity:Activity, imagePaths: ArrayList<String>) :
         imgDisplay = viewLayout.findViewById(R.id.imgDisplay)
         imgDisplay.scaleType = ImageView.ScaleType.CENTER_CROP
 
-        ImageLoader.getInstance().displayImage(_imagePaths.get(position), imgDisplay, Utils.UILoptionsProfile)
+        ImageLoader.getInstance().displayImage(_imagePaths.get(position), imgDisplay, Utils.UILoptionsAder)
 
         (container as ViewPager).addView(viewLayout)
 
