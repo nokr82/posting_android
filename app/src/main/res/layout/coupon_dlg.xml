@@ -9,7 +9,7 @@
         android:id="@+id/popup"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:ratio="960:515"
+        app:ratio="960:600"
         android:background="@drawable/background_round_ffffff">
 
         <LinearLayout

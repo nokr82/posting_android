@@ -797,90 +797,11 @@ class DetailActivity : RootActivity() {
 
     //다이얼로그수정
     fun coupondlgView(){
-        var mPopupDlg: DialogInterface? = null
 
-        val builder = AlertDialog.Builder(this)
-        val dialogView = layoutInflater.inflate(R.layout.coupon_dlg, null)
-        val couponnoTX = dialogView.findViewById<TextView>(R.id.couponnoTX)
-        val couponyTX = dialogView.findViewById<TextView>(R.id.couponyTX)
-
-
-        couponnoTX.setOnClickListener {
-            mPopupDlg!!.cancel()
-        }
-
-        couponyTX.setOnClickListener {
-
-            use_posting()
-            mPopupDlg!!.cancel()
-
-        }
-
-        mPopupDlg =  builder.setView(dialogView).show()
-
+        var intent = Intent(context, DlgCouponActivity::class.java)
+        intent.putExtra("posting_save_id", posting_save_id)
+        startActivity(intent)
     }
-    fun use_posting(){
-        val params = RequestParams()
-        params.put("posting_save_id", posting_save_id)
-
-        PostingAction.use_posting(params, object : JsonHttpResponseHandler() {
-
-            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
-                if (progressDialog != null) {
-                    progressDialog!!.dismiss()
-                }
-
-                try {
-                    val result = response!!.getString("result")
-                    if ("ok" == result) {
-
-
-                        finish()
-
-                    }
-
-                } catch (e: JSONException) {
-                    e.printStackTrace()
-                }
-
-            }
-
-            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONArray?) {
-                super.onSuccess(statusCode, headers, response)
-            }
-
-            private fun error() {
-                Utils.alert(context, "조회중 장애가 발생하였습니다.")
-            }
-
-            override fun onFailure(statusCode: Int, headers: Array<Header>?, throwable: Throwable, errorResponse: JSONArray?) {
-                if (progressDialog != null) {
-                    progressDialog!!.dismiss()
-                }
-                throwable.printStackTrace()
-                error()
-            }
-
-            override fun onStart() {
-                // show dialog
-                if (progressDialog != null) {
-
-                    progressDialog!!.show()
-                }
-            }
-
-
-            override fun onFinish() {
-                if (progressDialog != null) {
-                    progressDialog!!.dismiss()
-                }
-            }
-        })
-    }
-
-
-
-
 
 
     override fun onDestroy() {
