@@ -66,6 +66,18 @@ class MainActivity : FragmentActivity() {
         }
     }
 
+    internal var setViewReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent?) {
+            if (intent != null) {
+
+                if(fragmentFT.currentTab != 0) {
+                    fragmentFT.onTabChanged("post")
+                }
+
+            }
+        }
+    }
+
     private var confirm_yn = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -94,6 +106,9 @@ class MainActivity : FragmentActivity() {
 
         val filter1 = IntentFilter("UPDATE_ALARM_CNT")
         context.registerReceiver(updateAlarmCntReceiver, filter1)
+
+        val filter2 = IntentFilter("SET_VIEW")
+        context.registerReceiver(setViewReceiver, filter2)
 
         fragmentFT.setup(context, supportFragmentManager, R.id.fragmentFL)
 

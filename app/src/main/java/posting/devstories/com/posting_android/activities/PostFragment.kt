@@ -148,17 +148,13 @@ open class PostFragment : Fragment() {
 
             if(intent != null) {
                 tabType = intent!!.getIntExtra("tabType", 1)
-                val type =intent!!.getIntExtra("type",-1)
+                val type = tabType - 1
 
-                print("type---------"+type)
-                val w_type = type -1
-
-                print("type---------2"+w_type)
-                if (w_type == pagerVP.currentItem) {
+                if (type == pagerVP.currentItem) {
                     setMenuTabView()
                 }
-                pagerVP.currentItem = w_type
 
+                pagerVP.currentItem = type
             }
 
         }
