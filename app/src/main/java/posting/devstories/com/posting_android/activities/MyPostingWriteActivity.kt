@@ -20,6 +20,7 @@ import org.json.JSONException
 import org.json.JSONObject
 import posting.devstories.com.posting_android.Actions.PostingAction
 import posting.devstories.com.posting_android.R
+import posting.devstories.com.posting_android.base.Config
 import posting.devstories.com.posting_android.base.PrefUtils
 import posting.devstories.com.posting_android.base.RootActivity
 import posting.devstories.com.posting_android.base.Utils
@@ -90,6 +91,13 @@ class MyPostingWriteActivity : RootActivity() {
         mount = intent.getIntExtra("mount",0)
 
 
+        if (!posting_id.equals("")) {
+            postingType = "M"
+            var image = Config.url + image_uri
+            ImageLoader.getInstance().displayImage(image, captureIV, Utils.UILoptionsPosting)
+            popupRL.visibility = View.VISIBLE
+        }
+
         if (current_school != school_id){
             popupRL.background = getDrawable(R.mipmap.write_bg2)
         }else{
@@ -107,8 +115,6 @@ class MyPostingWriteActivity : RootActivity() {
         options.inJustDecodeBounds = true
         BitmapFactory.decodeFile(str, options)
         options.inJustDecodeBounds = false
-
-
 
 
         backLL.setOnClickListener {
@@ -565,10 +571,11 @@ class MyPostingWriteActivity : RootActivity() {
     }
 
 
+    override fun finish() {
+        super.finish()
 
-
-
-
+        Utils.hideKeyboard(context)
+    }
 
 
     override fun onDestroy() {
