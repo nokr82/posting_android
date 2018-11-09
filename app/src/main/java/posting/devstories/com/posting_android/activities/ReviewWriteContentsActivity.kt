@@ -71,7 +71,6 @@ class ReviewWriteContentsActivity : RootActivity() {
         }
 
         //이미지
-        img2RL.background = Drawable.createFromPath(imgid)
         captureIV.setImageBitmap(capture)
         com.nostra13.universalimageloader.core.ImageLoader.getInstance().displayImage(image, captureIV, Utils.UILoptionsUserProfile)
 
