@@ -273,7 +273,9 @@
                                 android:gravity="center"
                                 android:layout_centerInParent="true"
                                 android:text=""
-                                android:visibility="gone" />
+                                android:visibility="gone"
+                                android:maxLines="3"
+                                android:ellipsize="end"/>
 
                         </posting.devstories.com.posting_android.base.RationalRelativeLayout>
 
