@@ -47,7 +47,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="post_0904"
+                android:text=""
                 android:textSize="14dp"
                 android:visibility="visible" />
 
@@ -312,7 +312,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="9dp"
-                        android:text="lala_girl"
+                        android:text=""
                         android:textSize="13.5dp" />
 
                     <LinearLayout
@@ -326,7 +326,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_marginLeft="20dp"
-                            android:text="8월31일"
+                            android:text=""
                             android:textSize="9.5dp"
                             android:visibility="visible" />
 

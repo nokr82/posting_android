@@ -27,7 +27,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="post_0904"
+                android:text=""
                 android:gravity="center_vertical"/>
 
 
@@ -124,7 +124,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="32"
+                        android:text=""
                         android:textSize="10dp"
                         android:textColor="#FFFFFF"
                         android:layout_marginLeft="27dp"
@@ -416,7 +416,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="7/16"
+                    android:text=""
                     android:gravity="center"/>
 
 
@@ -443,7 +443,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="6"
+                    android:text=""
                     android:gravity="center"/>
 
 
@@ -484,7 +484,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="32"
+                        android:text=""
                         android:textSize="10dp"
                         android:textColor="#FFFFFF"
                         android:layout_marginLeft="50dp"
@@ -605,7 +605,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="32"
+                        android:text=""
                         android:textSize="10dp"
                         android:textColor="#FFFFFF"
                         android:layout_marginLeft="27dp"

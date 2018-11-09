@@ -36,7 +36,7 @@
             android:layout_marginLeft="8dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="post_0904"
+            android:text=""
             android:textSize="13dp"
             android:textColor="#050000"
             android:gravity="center_vertical"/>

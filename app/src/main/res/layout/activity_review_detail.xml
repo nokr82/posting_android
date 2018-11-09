@@ -147,7 +147,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="9dp"
                         android:textSize="13.5dp"
-                        android:text="lala_girl"
+                        android:text=""
                         android:id="@+id/wnameTX"/>
 
                     <LinearLayout
@@ -162,7 +162,7 @@
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginLeft="20dp"
                                 android:textSize="9.5dp"
-                                android:text="8월31일"/>
+                                android:text=""/>
                         <TextView
                                 android:id="@+id/policeTV"
                                 android:layout_width="wrap_content"
