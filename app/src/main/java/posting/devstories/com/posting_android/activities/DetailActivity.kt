@@ -586,8 +586,8 @@ class DetailActivity : RootActivity() {
 
                         if(6 == type) {
 
-                            val ymd = SimpleDateFormat("YY년MM월dd일", Locale.KOREA)
-                            val cymd = SimpleDateFormat("YY.MM.dd", Locale.KOREA)
+                            val ymd = SimpleDateFormat("yy년MM월dd일", Locale.KOREA)
+                            val cymd = SimpleDateFormat("yy.MM.dd", Locale.KOREA)
 
                             val coupon_startdate = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(uses_start_date)
                             //내용 쿠폰날짜
