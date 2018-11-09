@@ -224,7 +224,9 @@ open class PostFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
+        val image_uri =   PrefUtils.getStringPreference(context, "current_school_image_uri")
+        var univimg = Config.url +image_uri
+        ImageLoader.getInstance().displayImage(univimg, univIV, Utils.UILoptionsUserProfile)
         member_id = PrefUtils.getIntPreference(context, "member_id")
 
         // 메인 데이터
@@ -429,7 +431,7 @@ open class PostFragment : Fragment() {
 
                 PrefUtils.setPreference(context, "current_school_id", school_id)
 
-                PrefUtils.getStringPreference(context, "current_school_image_uri ")
+
                 val intent = Intent(context, MainActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intent)
