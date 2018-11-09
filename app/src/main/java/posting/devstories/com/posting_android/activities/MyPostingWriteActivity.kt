@@ -5,10 +5,8 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
-import android.widget.ArrayAdapter
 import android.widget.Toast
 import com.loopj.android.http.JsonHttpResponseHandler
 import com.loopj.android.http.RequestParams
@@ -50,7 +48,7 @@ class MyPostingWriteActivity : RootActivity() {
     var absolutePath:String? =null
     var getmee:String?= null
     var getmost = ""
-    var getday=""
+    var getday:String?= null
     var postingType:String?= null
 
     var current_school = -1
@@ -70,10 +68,12 @@ class MyPostingWriteActivity : RootActivity() {
         absolutePath = intent.getStringExtra("absolutePath")
         // 포스팅 타입 G-갤러리 P-포토 T-텍스트
         postingType = intent.getStringExtra("postingType")
-
         getmee = intent.getStringExtra("getmee")
         getmost = intent.getStringExtra("getmost")
-//        getday = intent.getStringExtra("getday")
+
+        if("3" == member_type){
+            getday = intent.getStringExtra("getday")
+        }
 
         imgid = intent.getStringExtra("imgid")
         // 수정 contents
@@ -136,33 +136,20 @@ class MyPostingWriteActivity : RootActivity() {
 
 
 
-
-
-
-
-
-        if (member_type.equals("3")){
-
-          }
-
-
-
-
-
-
-
-
-
         nextLL2.setOnClickListener {
 
             contents = Utils.getString(contentET)
-
-
 //            "Free","Info","Study","Class","Metting","Coupon"
 
 
             if (member_type.equals("3")){
                 type = 6
+
+
+
+
+
+
 //                count = meetingSP3.selectedItem.toString()
 //                startd = Utils.getString(date2TX)
 //                last = Utils.getString(limit2TX)
@@ -237,6 +224,7 @@ class MyPostingWriteActivity : RootActivity() {
         params.put("uses_start_date",startd)
         params.put("uses_end_date",last)
         params.put("current_school_id", PrefUtils.getIntPreference(context, "current_school_id"))
+        params.put("days",getday)
 
 
         if (capture==null){

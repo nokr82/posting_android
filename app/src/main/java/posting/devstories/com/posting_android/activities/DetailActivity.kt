@@ -598,6 +598,10 @@ class DetailActivity : RootActivity() {
                             val c_enddate = ymd.format(coupon_enddate)
                             val ctv_enddate = cymd.format(coupon_enddate)
 
+                            usesTV.visibility = View.VISIBLE
+                            usesTV.text = "사용기간:"+c_startdate+" ~ "+c_enddate+" 까지"
+
+
                             if (coupon_type.equals("1")){
                                 contentsTV.visibility = View.GONE
                                 coupon3LL.visibility = View.VISIBLE
@@ -608,8 +612,6 @@ class DetailActivity : RootActivity() {
                                 coupon_startdateTV.text = ctv_startdate+"~"
                                 coupon_contentTV.text = contents
                                 coupon_enddateTV.text = ctv_enddate
-                                usesTV.visibility = View.VISIBLE
-                                usesTV.text = "사용기간:"+c_startdate+" ~ "+c_enddate+" 까지"
                             }else if (coupon_type.equals("2")){
                                 contentsTV.visibility = View.GONE
                                 coupon3LL.visibility = View.VISIBLE
@@ -622,8 +624,6 @@ class DetailActivity : RootActivity() {
                                 coupon_startdateTV.text = ctv_startdate+"~"
                                 coupon_contentTV.text = contents
                                 coupon_enddateTV.text = ctv_enddate
-                                usesTV.visibility = View.VISIBLE
-                                usesTV.text = "사용기간:"+c_startdate+" ~ "+c_enddate+" 까지"
                             }else if (coupon_type.equals("3")){
                                 contentsTV.visibility = View.GONE
                                 coupon3LL.visibility = View.VISIBLE
@@ -636,18 +636,12 @@ class DetailActivity : RootActivity() {
                                 coupon_startdateTV.text = ctv_startdate+"~"
                                 coupon_contentTV.text = contents
                                 coupon_enddateTV.text = ctv_enddate
-                                usesTV.visibility = View.VISIBLE
-                                usesTV.text = "사용기간:"+c_startdate+" ~ "+c_enddate+" 까지"
                             }
 
                             if (use_yn.equals("Y")){
                                 couponLL.visibility = View.GONE
-                                usesTV.visibility = View.VISIBLE
-                                usesTV.text = "사용기간:"+c_startdate+" ~ "+c_enddate+" 까지"
                             }else if(save_yn.equals("Y")&&use_yn.equals("N")){
                                 couponLL.visibility = View.VISIBLE
-                                usesTV.visibility = View.VISIBLE
-                                usesTV.text = "사용기간:"+c_startdate+" ~ "+c_enddate+" 까지"
                             }
                         }
 
