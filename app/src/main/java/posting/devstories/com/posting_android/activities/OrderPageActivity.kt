@@ -85,6 +85,12 @@ open class OrderPageActivity : RootActivity() {
 
         company_id = intent.getIntExtra("company_id", -1)
 
+        val image_uri =   PrefUtils.getStringPreference(context, "school_image")
+        var univimg = Config.url +image_uri
+        println("이미지!!!!"+image_uri)
+        com.nostra13.universalimageloader.core.ImageLoader.getInstance().displayImage(univimg, univIV, Utils.UILoptionsProfile)
+
+
         val filter1 = IntentFilter("DEL_REVIEW")
         registerReceiver(delReviewReceiver, filter1)
 
@@ -184,6 +190,13 @@ open class OrderPageActivity : RootActivity() {
                         companyName = Utils.getString(member, "company_name")
                         companyNameTV.text = companyName
                         infoTV.text = Utils.getString(member, "address") + Utils.getString(member, "address_detail")
+
+                        val school = response.getJSONObject("school")
+
+                        val image = Utils.getString(school,"image_uri")
+
+                        var school_image = Config.url + image
+                        ImageLoader.getInstance().displayImage(school_image, univIV, Utils.UILoptionsUserProfile)
 
                         lat = Utils.getDouble(member, "lat")
                         lng = Utils.getDouble(member, "lng")
