@@ -236,10 +236,13 @@ open class MyPageFragment : Fragment() {
         try {
             if (updateAlarmCntReceiver != null) {
                 context!!.unregisterReceiver(updateAlarmCntReceiver)
-            } else if (editProfileReceiver != null) {
+            }
+        } catch (e: IllegalArgumentException) {
+        }
+        try {
+            if (editProfileReceiver != null) {
                 context!!.unregisterReceiver(editProfileReceiver)
             }
-
         } catch (e: IllegalArgumentException) {
         }
 

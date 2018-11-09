@@ -28,6 +28,7 @@ import android.widget.*;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 
+import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import posting.devstories.com.posting_android.R;
 import posting.devstories.com.posting_android.activities.LoginActivity;
 
@@ -932,21 +933,21 @@ public class Utils {
         .cacheInMemory(true).cacheOnDisk(true).considerExifParams(true).imageScaleType(ImageScaleType.EXACTLY).bitmapConfig(Bitmap.Config.RGB_565).build();
 
     public static DisplayImageOptions UILoptionsProfile = new DisplayImageOptions.Builder()
-        // .displayer(new RoundedBitmapDisplayer(2))
+//         .displayer(new RoundedBitmapDisplayer(2))
          .showImageOnLoading(R.mipmap.myimg)
          .showImageForEmptyUri(R.mipmap.myimg)
         .showImageOnFail(R.mipmap.myimg).delayBeforeLoading(100)
         .cacheInMemory(true).cacheOnDisk(true).considerExifParams(true).imageScaleType(ImageScaleType.EXACTLY).bitmapConfig(Bitmap.Config.RGB_565).build();
 
     public static DisplayImageOptions UILoptionsPosting = new DisplayImageOptions.Builder()
-        // .displayer(new RoundedBitmapDisplayer(2))
+//         .displayer(new RoundedBitmapDisplayer(2))
          .showImageOnLoading(R.mipmap.empty)
          .showImageForEmptyUri(R.mipmap.empty)
         .showImageOnFail(R.mipmap.empty).delayBeforeLoading(100)
         .cacheInMemory(true).cacheOnDisk(true).considerExifParams(true).imageScaleType(ImageScaleType.EXACTLY).bitmapConfig(Bitmap.Config.RGB_565).build();
 
     public static DisplayImageOptions UILoptionsUserProfile = new DisplayImageOptions.Builder()
-        // .displayer(new RoundedBitmapDisplayer(2))
+//         .displayer(new RoundedBitmapDisplayer(2))
          .showImageOnLoading(R.mipmap.myimg)
          .showImageForEmptyUri(R.mipmap.myimg)
         .showImageOnFail(R.mipmap.myimg).delayBeforeLoading(100)
