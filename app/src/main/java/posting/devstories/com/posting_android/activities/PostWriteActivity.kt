@@ -23,11 +23,6 @@ import posting.devstories.com.posting_android.base.*
 import java.io.File
 import java.io.IOException
 import com.nostra13.universalimageloader.core.ImageLoader
-import android.R.attr.name
-import android.content.ComponentName
-import android.content.pm.ResolveInfo
-
-
 
 class PostWriteActivity : RootActivity() {
 
@@ -50,8 +45,6 @@ class PostWriteActivity : RootActivity() {
 
     var current_school = -1
     var school_id = -1
-
-    val text = "1"
 
     var member_type: String? = null
     var imgid: String? = null
@@ -190,7 +183,7 @@ class PostWriteActivity : RootActivity() {
                     intent.putExtra("getmee", getmee)
                     intent.putExtra("getmost", getmost)
 //                    intent.putExtra("getday", getday)
-                    intent.putExtra("text", text)
+                    intent.putExtra("postingType", "T")
                     startActivity(intent)
                 }
             }

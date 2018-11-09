@@ -207,8 +207,8 @@ android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="43.7dp"
-
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+    android:visibility="gone">
 
         <RelativeLayout
             android:layout_width="0dp"

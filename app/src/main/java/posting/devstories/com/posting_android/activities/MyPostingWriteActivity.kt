@@ -38,7 +38,6 @@ class MyPostingWriteActivity : RootActivity() {
     var image:String? = null
     var str:String? = null
     var posting_id :String?=null
-    var text:String? = null
     var member_id = -1
     var type:String?=null
     var contents = ""
@@ -60,26 +59,24 @@ class MyPostingWriteActivity : RootActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_posttextwrite)
 
-
         this.context = this
         progressDialog = ProgressDialog(context)
 
+        member_id =  PrefUtils.getIntPreference(context,"member_id")
         member_type = PrefUtils.getStringPreference(context, "member_type")
 
         intent = getIntent()
         // 카메라 사진
         absolutePath = intent.getStringExtra("absolutePath")
-        // 포스팅 타입 G-갤러리 P-포토
+        // 포스팅 타입 G-갤러리 P-포토 T-텍스트
         postingType = intent.getStringExtra("postingType")
 
         getmee = intent.getStringExtra("getmee")
         getmost = intent.getStringExtra("getmost")
 //        getday = intent.getStringExtra("getday")
 
-
-        text = intent.getStringExtra("text")
         imgid = intent.getStringExtra("imgid")
-        println("dddddddddddddd"+imgid)
+        // 수정 contents
         contents2 = intent.getStringExtra("contents")
         startd = intent.getStringExtra("startd")
         current_school = intent.getIntExtra("current_school",-1)
@@ -91,31 +88,28 @@ class MyPostingWriteActivity : RootActivity() {
         mount = intent.getIntExtra("mount",0)
 
 
-        if (!posting_id.equals("")) {
-            postingType = "M"
+        // 이미지 uri 로드
+        if (!posting_id.equals("") && "M" == postingType) {
             var image = Config.url + image_uri
             ImageLoader.getInstance().displayImage(image, captureIV, Utils.UILoptionsPosting)
             popupRL.visibility = View.VISIBLE
+        } else if ("T" == postingType) {
+            popupRL.visibility = View.GONE
         }
 
+        // 배경 포스트잇
         if (current_school != school_id){
             popupRL.background = getDrawable(R.mipmap.write_bg2)
         }else{
             popupRL.background = getDrawable(R.mipmap.wtite_bg)
         }
 
-
         contentET.setText(contents2)
-
-        if (text.equals("1")){
-            popupRL.visibility = View.GONE
-        }
 
         val options = BitmapFactory.Options()
         options.inJustDecodeBounds = true
         BitmapFactory.decodeFile(str, options)
         options.inJustDecodeBounds = false
-
 
         backLL.setOnClickListener {
             finish()
@@ -123,7 +117,6 @@ class MyPostingWriteActivity : RootActivity() {
 
 
 
-        member_id =  PrefUtils.getIntPreference(context,"member_id")
 
         if (postingType.equals("P")){
             capture = Utils.getImage(context.contentResolver, absolutePath)
