@@ -8,10 +8,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import com.github.paolorotolo.expandableheightlistview.ExpandableHeightGridView
 import com.loopj.android.http.JsonHttpResponseHandler
 import com.loopj.android.http.RequestParams
@@ -24,6 +21,7 @@ import posting.devstories.com.posting_android.R
 import posting.devstories.com.posting_android.adapter.OrderAdapter
 import posting.devstories.com.posting_android.adapter.ReviewAdapter
 import posting.devstories.com.posting_android.base.Config
+import posting.devstories.com.posting_android.base.ImageLoader
 import posting.devstories.com.posting_android.base.PrefUtils
 import posting.devstories.com.posting_android.base.Utils
 
@@ -43,6 +41,7 @@ open class OrderPageFragment : Fragment() {
     lateinit var reviewV:View
     lateinit var couponLL: LinearLayout
     lateinit var couponV:View
+    lateinit var univIV:ImageView
     lateinit var couponGV:ExpandableHeightGridView
     lateinit var gpsLL:LinearLayout
     lateinit var storeInfoTV:TextView
@@ -78,6 +77,7 @@ open class OrderPageFragment : Fragment() {
         reviewLL = view.findViewById(R.id.reviewLL)
         reviewV = view.findViewById(R.id.reviewV)
         couponLL = view.findViewById(R.id.couponLL)
+        univIV = view.findViewById(R.id.univIV)
         couponV = view.findViewById(R.id.couponV)
         couponGV = view.findViewById(R.id.couponGV)
         gpsLL = view.findViewById(R.id.gpsLL)
@@ -95,6 +95,8 @@ open class OrderPageFragment : Fragment() {
         member_type = PrefUtils.getStringPreference(context,"member_type")
 
         adapterData.clear()
+
+
        menuLL.setOnClickListener {
            val intent = Intent(context, MyPageActivity::class.java)
            startActivity(intent)
@@ -192,7 +194,10 @@ open class OrderPageFragment : Fragment() {
 
                         var profile_uri = Config.url + Utils.getString(member,"image_uri")
                         com.nostra13.universalimageloader.core.ImageLoader.getInstance().displayImage(profile_uri, profileIV, Utils.UILoptionsProfile)
-
+                        val image_uri =   PrefUtils.getStringPreference(context, "school_image")
+                        var univimg = Config.url +image_uri
+                        println("이미지!!!!"+image_uri)
+                        com.nostra13.universalimageloader.core.ImageLoader.getInstance().displayImage(univimg, univIV, Utils.UILoptionsProfile)
                         adapterData.clear()
 
                         if (clicktype ==1){
