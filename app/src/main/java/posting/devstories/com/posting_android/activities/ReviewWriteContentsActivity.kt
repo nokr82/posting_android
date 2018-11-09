@@ -4,14 +4,12 @@ import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
-import android.os.Bundle
-import android.widget.ArrayAdapter
-import android.widget.Toast
-import posting.devstories.com.posting_android.R
-import posting.devstories.com.posting_android.base.RootActivity
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.os.Bundle
 import android.view.View
+import android.widget.ArrayAdapter
+import android.widget.Toast
 import com.loopj.android.http.JsonHttpResponseHandler
 import com.loopj.android.http.RequestParams
 import com.nostra13.universalimageloader.core.ImageLoader
@@ -21,8 +19,10 @@ import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 import posting.devstories.com.posting_android.Actions.ReviewAction
+import posting.devstories.com.posting_android.R
 import posting.devstories.com.posting_android.base.Config
 import posting.devstories.com.posting_android.base.PrefUtils
+import posting.devstories.com.posting_android.base.RootActivity
 import posting.devstories.com.posting_android.base.Utils
 import java.io.ByteArrayInputStream
 
@@ -166,8 +166,11 @@ class ReviewWriteContentsActivity : RootActivity() {
 
                     if ("ok" == result) {
 
+                        Utils.hideKeyboard(context)
+
                         val intent = Intent();
                         setResult(Activity.RESULT_OK, intent)
+
                         finish()
 
                     } else {
@@ -276,6 +279,8 @@ class ReviewWriteContentsActivity : RootActivity() {
                     val result = response!!.getString("result")
 
                     if ("ok" == result) {
+
+                        Utils.hideKeyboard(context)
 
                         val intent = Intent();
                         intent.putExtra("review_id", review_id)
