@@ -135,6 +135,11 @@ class MainActivity : FragmentActivity() {
         }
         homeLL.setOnClickListener {
 
+            //탭다른거눌러도 홈으로
+            val intent = Intent(context, MainActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+
             setTabBar()
 
             homeIV.setImageResource(R.mipmap.home)
