@@ -233,12 +233,17 @@ open class MyPageFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
 
-        if (updateAlarmCntReceiver != null) {
-            context!!.unregisterReceiver(updateAlarmCntReceiver)
+        try {
+            if (updateAlarmCntReceiver != null) {
+                context!!.unregisterReceiver(updateAlarmCntReceiver)
+            }
+            if (editProfileReceiver != null) {
+                context!!.unregisterReceiver(editProfileReceiver)
+            }
+
+        } catch (e: IllegalArgumentException) {
         }
-        if (editProfileReceiver != null) {
-            context!!.unregisterReceiver(editProfileReceiver)
-        }
+
     }
 
 }

@@ -151,7 +151,9 @@ class AddressActivity : RootActivity(), AbsListView.OnScrollListener {
 
     override fun onDestroy() {
 
-        progressDialog = null
+        if (progressDialog != null) {
+            progressDialog!!.dismiss()
+        }
 
         super.onDestroy()
     }

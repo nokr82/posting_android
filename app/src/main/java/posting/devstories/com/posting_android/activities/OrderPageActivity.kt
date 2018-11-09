@@ -260,8 +260,13 @@ open class OrderPageActivity : RootActivity() {
     override fun onDestroy() {
         super.onDestroy()
 
-        if(null != delReviewReceiver) {
-            unregisterReceiver(delReviewReceiver)
+
+        try {
+            if(null != delReviewReceiver) {
+                unregisterReceiver(delReviewReceiver)
+            }
+
+        } catch (e: IllegalArgumentException) {
         }
 
     }

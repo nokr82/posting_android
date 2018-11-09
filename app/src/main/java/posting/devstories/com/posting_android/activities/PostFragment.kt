@@ -794,7 +794,6 @@ open class PostFragment : Fragment() {
 
                       val current_school_image_uri=  PrefUtils.getStringPreference(context, "current_school_image_uri ")
 
-                        print("---------------------이미지"+current_school_image_uri)
                         var univimg = Config.url +current_school_image_uri
                         ImageLoader.getInstance().displayImage(univimg, univIV, Utils.UILoptionsUserProfile)
 

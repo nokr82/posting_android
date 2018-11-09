@@ -351,8 +351,12 @@ open class MyPagePostingStorageFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
 
-        if (delPostingReceiver != null) {
-            context!!.unregisterReceiver(delPostingReceiver)
+        try {
+            if (delPostingReceiver != null) {
+                context!!.unregisterReceiver(delPostingReceiver)
+            }
+
+        } catch (e: IllegalArgumentException) {
         }
 
     }

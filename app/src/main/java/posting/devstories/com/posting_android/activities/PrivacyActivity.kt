@@ -58,7 +58,9 @@ class PrivacyActivity : RootActivity() {
     override fun onDestroy() {
         super.onDestroy()
 
-        progressDialog = null
+        if (progressDialog != null) {
+            progressDialog!!.dismiss()
+        }
 
     }
 

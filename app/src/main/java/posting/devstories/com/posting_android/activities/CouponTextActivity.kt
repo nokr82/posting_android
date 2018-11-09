@@ -323,8 +323,10 @@ class CouponTextActivity : RootActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+        if (progressDialog != null) {
+            progressDialog!!.dismiss()
+        }
 
-        progressDialog = null
 
     }
 

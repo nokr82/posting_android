@@ -363,6 +363,11 @@ class MyPageActivity : FragmentActivity() {
             print(thumbnail)
             params.put("upload", ByteArrayInputStream(Utils.getByteArray(thumbnail)))
         }
+
+        println(" gallery $gallery")
+        println(" thumbnail $thumbnail")
+
+
         params.put("push_yn", push_yn)
 
         MemberAction.edit_info(params, object : JsonHttpResponseHandler() {
@@ -379,9 +384,9 @@ class MyPageActivity : FragmentActivity() {
 
                         Toast.makeText(context, "변경되었습니다.", Toast.LENGTH_SHORT).show()
 
-                        var intent = Intent()
-                        intent.action = "EDIT_PROFILE"
-                        sendBroadcast(intent)
+//                        var intent = Intent()
+//                        intent.action = "EDIT_PROFILE"
+//                        sendBroadcast(intent)
 
                         loadInfo()
 
@@ -647,7 +652,9 @@ class MyPageActivity : FragmentActivity() {
     override fun onDestroy() {
         super.onDestroy()
 
-        progressDialog = null
+        if (progressDialog != null) {
+            progressDialog!!.dismiss()
+        }
 
     }
 

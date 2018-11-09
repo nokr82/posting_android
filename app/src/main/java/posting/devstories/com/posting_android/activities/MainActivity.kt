@@ -291,11 +291,15 @@ class MainActivity : FragmentActivity() {
     override fun onDestroy() {
         super.onDestroy()
 
-        if (updateAlarmCntReceiver != null) {
-            context.unregisterReceiver(updateAlarmCntReceiver)
-        }
-        if (editPostingReceiver != null) {
-            context.unregisterReceiver(editPostingReceiver)
+        try {
+            if (updateAlarmCntReceiver != null) {
+                context.unregisterReceiver(updateAlarmCntReceiver)
+            }
+            if (editPostingReceiver != null) {
+                context.unregisterReceiver(editPostingReceiver)
+            }
+
+        } catch (e: IllegalArgumentException) {
         }
     }
 
