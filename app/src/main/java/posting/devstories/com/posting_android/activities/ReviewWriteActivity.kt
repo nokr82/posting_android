@@ -17,11 +17,16 @@ import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
 import android.app.Activity
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Build
+import android.os.Environment
+import android.support.v4.content.FileProvider
 import android.view.View
 import kotlinx.android.synthetic.main.activity_review_write.*
 import posting.devstories.com.posting_android.base.Config
 import posting.devstories.com.posting_android.base.Utils
+import java.io.File
+import java.io.IOException
 
 
 class ReviewWriteActivity : RootActivity() {
@@ -33,17 +38,23 @@ class ReviewWriteActivity : RootActivity() {
 
     private val photoList = ArrayList<ImageAdapter.PhotoData>()
     private val selected = LinkedList<String>()
+
     private val REQUEST_CAMERA = 0
+    private val CROP_FROM_CAMERA = 100
 
     var imgid: String = ""
-    var posting_id = ""
     var contents = ""
     var image_uri = ""
     var image = ""
     var text = ""
-    var capture: Bitmap? = null
+    var postingType = ""
     var company_member_id = -1
     var review_id = -1
+
+    var imageUri: Uri? = null
+    var absolutePath: String? = ""
+
+    var capture: Bitmap? = null
 
     lateinit var adpater: ArrayAdapter<String>
 
@@ -59,6 +70,9 @@ class ReviewWriteActivity : RootActivity() {
         review_id = intent.getIntExtra("review_id", -1)
 
         if (review_id > 0) {
+
+            postingType = "M"
+
             image_uri = intent.getStringExtra("image_uri")
             contents = intent.getStringExtra("contents")
 
@@ -125,17 +139,21 @@ class ReviewWriteActivity : RootActivity() {
             intent.putExtra("review_id", review_id)
             intent.putExtra("contents", contents)
             intent.putExtra("company_member_id", company_member_id)
+            intent.putExtra("postingType", "T")
             startActivityForResult(intent, WRITE_RIVEW)
         }
 
         nextTX.setOnClickListener {
             var intent = Intent(context, ReviewWriteContentsActivity::class.java)
+            intent.putExtra("review_id", review_id)
             intent.putExtra("image", image)
             intent.putExtra("imgid", imgid)
             intent.putExtra("contents", contents)
             intent.putExtra("capture", capture)
             intent.putExtra("image_uri",image_uri)
             intent.putExtra("company_member_id",company_member_id)
+            intent.putExtra("postingType",postingType)
+            intent.putExtra("absolutePath", absolutePath)
             startActivityForResult(intent, WRITE_RIVEW)
         }
 
@@ -149,7 +167,25 @@ class ReviewWriteActivity : RootActivity() {
                         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
                         if (intent.resolveActivity(packageManager)!=null){
 
-                            startActivityForResult(intent,REQUEST_CAMERA)
+                            val storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+
+                            try {
+                                val photo = File.createTempFile(
+                                    System.currentTimeMillis().toString(), /* prefix */
+                                    ".jpg", /* suffix */
+                                    storageDir      /* directory */
+                                )
+
+                                absolutePath = photo.absolutePath
+                                //imageUri = Uri.fromFile(photo);
+                                imageUri = FileProvider.getUriForFile(context, packageName + ".provider", photo)
+                                intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
+                                startActivityForResult(intent, REQUEST_CAMERA)
+
+                            } catch (e: IOException) {
+                                e.printStackTrace()
+                            }
+
                         }
 
                     }
@@ -170,7 +206,26 @@ class ReviewWriteActivity : RootActivity() {
                 val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
                 if (intent.resolveActivity(packageManager)!=null){
 
-                    startActivityForResult(intent,REQUEST_CAMERA)
+
+                    val storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+
+                    try {
+                        val photo = File.createTempFile(
+                            System.currentTimeMillis().toString(), /* prefix */
+                            ".jpg", /* suffix */
+                            storageDir      /* directory */
+                        )
+
+                        absolutePath = photo.absolutePath
+                        //imageUri = Uri.fromFile(photo);
+                        imageUri = FileProvider.getUriForFile(context, packageName + ".provider", photo)
+                        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
+                        startActivityForResult(intent, REQUEST_CAMERA)
+
+                    } catch (e: IOException) {
+                        e.printStackTrace()
+                    }
+
                 }
 
             }
@@ -183,6 +238,7 @@ class ReviewWriteActivity : RootActivity() {
         listGV.adapter = adapter
         listGV.setOnItemClickListener { parent, view, position, id ->
             image = ""
+            postingType="G"
 
             val photo = photoList[position]
 
@@ -218,30 +274,79 @@ class ReviewWriteActivity : RootActivity() {
 
         super.onActivityResult(requestCode, resultCode, data)
 
-        if(resultCode== Activity.RESULT_OK) {
             when(requestCode){
                 REQUEST_CAMERA ->{
-                    if(data !=null){
-                        imgid = ""
-                        image = ""
+                    imgid = ""
 
-                        capture = data.extras.get("data") as Bitmap
-                        imgIV2.setImageBitmap(capture)
+                    val realPathFromURI = imageUri!!.getPath()
+                    context.sendBroadcast(
+                        Intent(
+                            Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
+                            Uri.parse("file://$realPathFromURI")
+                        )
+                    )
+                    try {
 
+                        cropImage()
+
+                    } catch (e: Exception) {
+                        e.printStackTrace()
                     }
+
+                }
+
+                CROP_FROM_CAMERA -> {
+//                    capture = Utils.getImage(context.contentResolver, absolutePath)
+                    val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, imageUri)
+                    capture = bitmap
+                    postingType = "P"
+                    imgIV2.setImageBitmap(capture)
+
                 }
 
                 WRITE_RIVEW -> {
-                    var intent = Intent()
-                    setResult(Activity.RESULT_OK, intent)
-                    finish()
+                    if(resultCode== Activity.RESULT_OK) {
+                        var intent = Intent()
+                        setResult(Activity.RESULT_OK, intent)
+                        finish()
+                    }
                 }
 
                 else -> {
                     Toast.makeText(this,"Unrecognized request code",Toast.LENGTH_SHORT)
                 }
             }
-        }
+
+
+    }
+
+    fun cropImage() {
+        context.grantUriPermission(
+            "com.android.camera", imageUri,
+            Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION
+        )
+
+        val intent = Intent("com.android.camera.action.CROP")
+        intent.setDataAndType(imageUri, "image/*")
+
+        //you must setup two line below
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
+
+        intent.putExtra("crop", "true")
+        intent.putExtra("aspectX", 1)
+        intent.putExtra("aspectY", 1)
+        intent.putExtra("outputX", 200)
+        intent.putExtra("outputY", 200)
+        intent.putExtra("return-data", true)
+
+        grantUriPermission(
+            packageName, imageUri,
+            Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION
+        )
+        //you must setup this
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
+        startActivityForResult(intent, CROP_FROM_CAMERA)
 
     }
 
