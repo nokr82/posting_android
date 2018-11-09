@@ -37,7 +37,7 @@
                 android:layout_height="match_parent"
                 android:background="#FBCA2B"
                 android:orientation="vertical"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:paddingRight="3dp"
                 android:paddingTop="2dp">
 
@@ -106,11 +106,10 @@
                                 android:textSize="11dp"
                                 android:visibility="visible" />
 
-
                         </LinearLayout>
 
-
                     </LinearLayout>
+
                 </LinearLayout>
 
                 <TextView

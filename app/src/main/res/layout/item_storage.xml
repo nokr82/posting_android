@@ -37,7 +37,7 @@
                 android:layout_height="match_parent"
                 android:background="#FBCA2B"
                 android:orientation="vertical"
-                android:visibility="visible"
+                android:visibility="gone"
                 android:paddingRight="3dp"
                 android:paddingTop="2dp">
 
@@ -153,7 +153,6 @@
 
             </LinearLayout>
 
-
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -176,6 +175,7 @@
                     android:visibility="gone"/>
 
             </LinearLayout>
+
             <ImageView
                 android:id="@+id/storageIV"
                 android:layout_width="match_parent"
@@ -204,7 +204,6 @@
                 android:layout_alignParentBottom="true"
                 android:background="@mipmap/nemocount"
                 android:gravity="center_vertical"
-
                 android:orientation="horizontal">
 
                 <TextView
