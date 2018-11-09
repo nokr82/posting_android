@@ -89,7 +89,7 @@ open class PostAdapter(context:Context, view:Int, data:ArrayList<JSONObject>) : 
                 item.coupon_titleTV.text = menu_name
                 item.coupon_saleTV.text = sale_per
                 item.coupon_sale2TV.text = "할인"
-                item.coupon_startdateTV.text = ctv_startdate
+                item.coupon_startdateTV.text = ctv_startdate + " ~ "
                 item.coupon_contentTV.text = contents
                 item.coupon_enddateTV.text = ctv_enddate
             }else if (coupon_type.equals("2")){
@@ -102,7 +102,7 @@ open class PostAdapter(context:Context, view:Int, data:ArrayList<JSONObject>) : 
                 item.coupon_TV.visibility = View.GONE
                 item.coupon_sale2TV.visibility = View.GONE
                 item.coupon_contentTV.text = contents
-                item.coupon_startdateTV.text = ctv_startdate
+                item.coupon_startdateTV.text = ctv_startdate + " ~ "
                 item.coupon_enddateTV.text = ctv_enddate
             }else if (coupon_type.equals("3")){
                 item.contentsTV.visibility = View.GONE
@@ -114,7 +114,7 @@ open class PostAdapter(context:Context, view:Int, data:ArrayList<JSONObject>) : 
                 item.coupon_contentTV.text = contents
                 item.coupon_TV.text = "원"
                 item.coupon_sale2TV.text = "할인"
-                item.coupon_startdateTV.text = ctv_startdate
+                item.coupon_startdateTV.text = ctv_startdate + " ~ "
                 item.coupon_enddateTV.text = ctv_enddate
             }
 
