@@ -65,6 +65,17 @@ open class OrderPageActivity : RootActivity() {
         }
     }
 
+    internal var editReviewReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent?) {
+            if (intent != null) {
+                var review_id:Int = intent.getIntExtra("review_id", 1)
+
+                    loadData()
+
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_order_page)
@@ -75,6 +86,9 @@ open class OrderPageActivity : RootActivity() {
 
         val filter1 = IntentFilter("DEL_REVIEW")
         registerReceiver(delReviewReceiver, filter1)
+
+        val filter2 = IntentFilter("EDIT_REVIEW")
+        registerReceiver(editReviewReceiver, filter2)
 
         adapterReview = ReviewAdapter(context, R.layout.item_post,adapterData)
         adapterOrder = OrderAdapter(context, R.layout.item_post,adapterData)
@@ -176,7 +190,10 @@ open class OrderPageActivity : RootActivity() {
                         var profile = Config.url + Utils.getString(member,"image_uri")
                         ImageLoader.getInstance().displayImage(profile, profileIV, Utils.UILoptionsUserProfile)
 
+                        adapterData.clear()
+
                         if (clicktype ==1){
+                            adapterOrder.notifyDataSetChanged()
 
                             val data = response.getJSONArray("postList")
 
@@ -188,6 +205,8 @@ open class OrderPageActivity : RootActivity() {
                             adapterOrder.notifyDataSetChanged()
 
                         } else {
+                            adapterReview.notifyDataSetChanged()
+
                             val data = response.getJSONArray("reviewList")
                             for (i in 0..data.length() - 1) {
                                 adapterData.add(data[i] as JSONObject)
@@ -264,6 +283,14 @@ open class OrderPageActivity : RootActivity() {
         try {
             if(null != delReviewReceiver) {
                 unregisterReceiver(delReviewReceiver)
+            }
+
+        } catch (e: IllegalArgumentException) {
+        }
+
+        try {
+            if(null != editReviewReceiver) {
+                unregisterReceiver(editReviewReceiver)
             }
 
         } catch (e: IllegalArgumentException) {

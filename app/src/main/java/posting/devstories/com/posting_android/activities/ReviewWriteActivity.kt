@@ -77,7 +77,7 @@ class ReviewWriteActivity : RootActivity() {
             contents = intent.getStringExtra("contents")
 
             image = Config.url + image_uri
-            com.nostra13.universalimageloader.core.ImageLoader.getInstance().displayImage(image, imgIV2, Utils.UILoptionsUserProfile)
+            com.nostra13.universalimageloader.core.ImageLoader.getInstance().displayImage(image, imgIV2, Utils.UILoptionsPosting)
             imgIV2.visibility = View.VISIBLE
 
         }
@@ -140,6 +140,7 @@ class ReviewWriteActivity : RootActivity() {
             intent.putExtra("contents", contents)
             intent.putExtra("company_member_id", company_member_id)
             intent.putExtra("postingType", "T")
+            intent.putExtra("absolutePath", "")
             startActivityForResult(intent, WRITE_RIVEW)
         }
 
