@@ -54,6 +54,14 @@ open class MyPageFragment : Fragment() {
         }
     }
 
+    internal var editProfileReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent?) {
+            if (intent != null) {
+                loadData()
+            }
+        }
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,6 +71,9 @@ open class MyPageFragment : Fragment() {
 
         val filter1 = IntentFilter("UPDATE_ALARM_CNT")
         context!!.registerReceiver(updateAlarmCntReceiver, filter1)
+
+        val filter2 = IntentFilter("EDIT_PROFILE")
+        context!!.registerReceiver(editProfileReceiver, filter2)
 
         mainActivity = activity as MainActivity
         return inflater.inflate(R.layout.fra_my_page, container, false)
@@ -224,6 +235,9 @@ open class MyPageFragment : Fragment() {
 
         if (updateAlarmCntReceiver != null) {
             context!!.unregisterReceiver(updateAlarmCntReceiver)
+        }
+        if (editProfileReceiver != null) {
+            context!!.unregisterReceiver(editProfileReceiver)
         }
     }
 
