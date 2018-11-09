@@ -68,6 +68,15 @@ open class MyPagePostingStorageFragment : Fragment() {
         }
     }
 
+    internal var editProfileReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent?) {
+            if (intent != null) {
+                var type:Int = intent.getIntExtra("type", 1)
+                loadData(type)
+            }
+        }
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -116,6 +125,8 @@ open class MyPagePostingStorageFragment : Fragment() {
         activity = getActivity() as MainActivity
         val filter2 = IntentFilter("DEL_POSTING")
         activity.registerReceiver(delPostingReceiver, filter2)
+        val filter1 = IntentFilter("EDIT_PROFILE")
+        activity.registerReceiver(editProfileReceiver, filter1)
 
         //기본화면설정
         tabType= 1
@@ -344,6 +355,18 @@ open class MyPagePostingStorageFragment : Fragment() {
         } else if (tabType == 6) {
             coupon2V.visibility = View.VISIBLE
             coupon2TV.setTextColor(Color.parseColor("#01b4ec"))
+        }
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        if (delPostingReceiver != null) {
+            context!!.unregisterReceiver(delPostingReceiver)
+        }
+        if (editProfileReceiver != null) {
+            context!!.unregisterReceiver(editProfileReceiver)
         }
 
     }

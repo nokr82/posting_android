@@ -531,7 +531,6 @@ class DetailActivity : RootActivity() {
                         val save_yn = Utils.getString(posting,"save_yn")
                         val use_yn = Utils.getString(posting,"use_yn")
 
-
                         var uses_start_date = Utils.getString(posting, "uses_start_date")
                         var uses_end_date =   Utils.getString(posting, "uses_end_date")
                         val ymd = SimpleDateFormat("YY년MM월dd일", Locale.KOREA)
@@ -539,7 +538,7 @@ class DetailActivity : RootActivity() {
 
                         var coupon_type:String =  Utils.getString(posting, "coupon_type")
                         var id = Utils.getString(posting, "id")
-                      member_id2 =   Utils.getInt(posting, "member_id")
+                        member_id2 =   Utils.getInt(posting, "member_id")
 
                         var del = Utils.getString(posting,"del_yn")
                         var Image = Utils.getString(posting, "Image")
@@ -556,7 +555,7 @@ class DetailActivity : RootActivity() {
 
 
                         //게시물의 학교아이디
-                       school_id = Utils.getInt(posting, "school_id")
+                        school_id = Utils.getInt(posting, "school_id")
 
                         count = Utils.getInt(posting, "leftCount")
 
