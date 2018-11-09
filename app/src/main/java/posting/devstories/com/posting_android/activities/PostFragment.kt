@@ -220,7 +220,6 @@ open class PostFragment : Fragment() {
         meetingRL = view.findViewById(R.id.meetingRL)
         couponRL = view.findViewById(R.id.couponRL)
 
-
         mainLL = view.findViewById(R.id.mainLL)
 
         schoolLV = view.findViewById(R.id.schoolLV)
