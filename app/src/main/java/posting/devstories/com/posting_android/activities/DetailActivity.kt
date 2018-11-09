@@ -1,10 +1,8 @@
 package posting.devstories.com.posting_android.activities
 
 import android.app.Activity
-import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -12,7 +10,6 @@ import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
-import android.widget.TextView
 import android.widget.Toast
 import com.loopj.android.http.JsonHttpResponseHandler
 import com.loopj.android.http.RequestParams
@@ -23,11 +20,9 @@ import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 import posting.devstories.com.posting_android.Actions.MemberAction
-import posting.devstories.com.posting_android.Actions.PostingAction
 import posting.devstories.com.posting_android.Actions.PostingAction.detail
 import posting.devstories.com.posting_android.Actions.PostingAction.save_posting
 import posting.devstories.com.posting_android.Actions.PostingAction.write_comments
-import posting.devstories.com.posting_android.Actions.ReviewAction
 import posting.devstories.com.posting_android.R
 import posting.devstories.com.posting_android.adapter.DetailAnimationRecyclerAdapter
 import posting.devstories.com.posting_android.adapter.ReAdapter
@@ -40,6 +35,12 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class DetailActivity : RootActivity() {
+
+    val EDIT_POST = 101;
+    val STORAGE_POST = 201;
+    val USES_COUPON = 301;
+
+
     var nick = ""
     lateinit var context:Context
     private var progressDialog: ProgressDialog? = null
@@ -61,9 +62,6 @@ class DetailActivity : RootActivity() {
     var save_id :String? = null
 
     var dlgtype  = ""
-
-    val EDIT_POST = 101;
-    val STORAGE_POST = 201;
 
 
     var school_id = -1
@@ -536,8 +534,16 @@ class DetailActivity : RootActivity() {
 
                         var uses_start_date = Utils.getString(posting, "uses_start_date")
                         var uses_end_date =   Utils.getString(posting, "uses_end_date")
-
-
+                        val ymd = SimpleDateFormat("YY년MM월dd일", Locale.KOREA)
+                        val cymd = SimpleDateFormat("YY.MM.dd", Locale.KOREA)
+                        val coupon_startdate = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(uses_start_date)
+                       //내용 쿠폰날짜
+                        val c_startdate = ymd.format(coupon_startdate)
+                        //디테일 이미지에보이는 날짜
+                        val ctv_startdate = cymd.format(coupon_startdate)
+                        val coupon_enddate = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(uses_end_date)
+                        val c_enddate = ymd.format(coupon_enddate)
+                        val ctv_enddate = cymd.format(coupon_enddate)
 
                         var coupon_type:String =  Utils.getString(posting, "coupon_type")
                         var id = Utils.getString(posting, "id")
@@ -600,11 +606,11 @@ class DetailActivity : RootActivity() {
                             coupon_saleTV.text = sale_per
                             coupon_orderTV.text = company_name
                             coupon_sale2TV.text = "할인"
-                            coupon_startdateTV.text = uses_start_date
+                            coupon_startdateTV.text = ctv_startdate+"~"
                             coupon_contentTV.text = contents
-                            coupon_enddateTV.text = uses_end_date
+                            coupon_enddateTV.text = ctv_enddate
                             usesTV.visibility = View.VISIBLE
-                            usesTV.text = "사용기간:"+uses_start_date+" ~ "+uses_end_date+" 까지"
+                            usesTV.text = "사용기간:"+c_startdate+" ~ "+c_enddate+" 까지"
                         }else if (coupon_type.equals("2")){
                             contentsTV.visibility = View.GONE
                             coupon3LL.visibility = View.VISIBLE
@@ -614,11 +620,11 @@ class DetailActivity : RootActivity() {
                             coupon_saleTV.text = "FREE"
                             coupon_TV.visibility = View.GONE
                             coupon_sale2TV.visibility = View.GONE
-                            coupon_startdateTV.text = uses_start_date
+                            coupon_startdateTV.text = ctv_startdate+"~"
                             coupon_contentTV.text = contents
-                            coupon_enddateTV.text = uses_end_date
+                            coupon_enddateTV.text = ctv_enddate
                             usesTV.visibility = View.VISIBLE
-                            usesTV.text = "사용기간:"+uses_start_date+" ~ "+uses_end_date+" 까지"
+                            usesTV.text = "사용기간:"+c_startdate+" ~ "+c_enddate+" 까지"
                         }else if (coupon_type.equals("3")){
                             contentsTV.visibility = View.GONE
                             coupon3LL.visibility = View.VISIBLE
@@ -628,11 +634,11 @@ class DetailActivity : RootActivity() {
                             coupon_saleTV.text = sale_price
                             coupon_sale2TV.text = "할인"
                             coupon_TV.text = "원"
-                            coupon_startdateTV.text = uses_start_date
+                            coupon_startdateTV.text = ctv_startdate+"~"
                             coupon_contentTV.text = contents
-                            coupon_enddateTV.text = uses_end_date
+                            coupon_enddateTV.text = ctv_enddate
                             usesTV.visibility = View.VISIBLE
-                            usesTV.text = "사용기간:"+uses_start_date+" ~ "+uses_end_date+" 까지"
+                            usesTV.text = "사용기간:"+c_startdate+" ~ "+c_enddate+" 까지"
                         }
 
 
@@ -642,11 +648,11 @@ class DetailActivity : RootActivity() {
                         if (type ==6&&use_yn.equals("Y")){
                             couponLL.visibility = View.GONE
                             usesTV.visibility = View.VISIBLE
-                            usesTV.text = "사용기간:"+uses_start_date+" ~ "+uses_end_date+" 까지"
+                            usesTV.text = "사용기간:"+c_startdate+" ~ "+c_enddate+" 까지"
                         }else if(type ==6&&save_yn.equals("Y")&&use_yn.equals("N")){
                             couponLL.visibility = View.VISIBLE
                             usesTV.visibility = View.VISIBLE
-                            usesTV.text = "사용기간:"+uses_start_date+" ~ "+uses_end_date+" 까지"
+                            usesTV.text = "사용기간:"+c_startdate+" ~ "+c_enddate+" 까지"
                         }
 
 
@@ -797,88 +803,11 @@ class DetailActivity : RootActivity() {
 
     //다이얼로그수정
     fun coupondlgView(){
-        var mPopupDlg: DialogInterface? = null
 
-        val builder = AlertDialog.Builder(this)
-        val dialogView = layoutInflater.inflate(R.layout.coupon_dlg, null)
-        val couponnoTX = dialogView.findViewById<TextView>(R.id.couponnoTX)
-        val couponyTX = dialogView.findViewById<TextView>(R.id.couponyTX)
-
-
-        couponnoTX.setOnClickListener {
-            mPopupDlg!!.cancel()
-        }
-
-        couponyTX.setOnClickListener {
-
-            use_posting()
-            mPopupDlg!!.cancel()
-
-        }
-
-        mPopupDlg =  builder.setView(dialogView).show()
-
+        var intent = Intent(context, DlgCouponActivity::class.java)
+        intent.putExtra("posting_save_id", posting_save_id)
+        startActivityForResult(intent, USES_COUPON)
     }
-
-    fun use_posting(){
-        val params = RequestParams()
-        params.put("posting_save_id", posting_save_id)
-
-        PostingAction.use_posting(params, object : JsonHttpResponseHandler() {
-
-            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
-                if (progressDialog != null) {
-                    progressDialog!!.dismiss()
-                }
-
-                try {
-                    val result = response!!.getString("result")
-                    if ("ok" == result) {
-
-
-                        finish()
-
-                    }
-
-                } catch (e: JSONException) {
-                    e.printStackTrace()
-                }
-
-            }
-
-            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONArray?) {
-                super.onSuccess(statusCode, headers, response)
-            }
-
-            private fun error() {
-                Utils.alert(context, "조회중 장애가 발생하였습니다.")
-            }
-
-            override fun onFailure(statusCode: Int, headers: Array<Header>?, throwable: Throwable, errorResponse: JSONArray?) {
-                if (progressDialog != null) {
-                    progressDialog!!.dismiss()
-                }
-                throwable.printStackTrace()
-                error()
-            }
-
-            override fun onStart() {
-                // show dialog
-                if (progressDialog != null) {
-
-                    progressDialog!!.show()
-                }
-            }
-
-
-            override fun onFinish() {
-                if (progressDialog != null) {
-                    progressDialog!!.dismiss()
-                }
-            }
-        })
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -889,6 +818,9 @@ class DetailActivity : RootActivity() {
                 }
                 STORAGE_POST -> {
                     finish()
+                }
+                USES_COUPON -> {
+                    couponTV.visibility = View.GONE
                 }
             }
         }

@@ -143,73 +143,10 @@ class MyPostingWriteActivity : RootActivity() {
 
 
         if (member_type.equals("3")){
-//            meetingSP3.visibility = View.GONE
-//
-//
-//            adpater = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, day)
-//            daySP3.adapter = adpater
-//
-//
-//            adpater = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, most)
-//            mostSP3.adapter = adpater
-//
-//            date2TX.text = startd
-//            limit2TX.text = last
-//
-//            if (startd==null||startd.equals("")){
-//                date2TX.text = SimpleDateFormat("yy.MM.dd").format(System.currentTimeMillis())+"~"
+
           }
 
-//            mostSP3.setSelection(mount!!)
 
-//
-//            var cal = Calendar.getInstance()
-//
-//            val dateSetListener = DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-//                cal.set(Calendar.YEAR, year)
-//                cal.set(Calendar.MONTH, monthOfYear)
-//                cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-//
-//                val myFormat = "yy.MM.dd" // mention the format you need
-//                val sdf = SimpleDateFormat(myFormat, Locale.KOREA)
-//                date2TX.text = sdf.format(cal.time)+"~"
-//
-//            }
-//
-//            val dateSetListener2 = DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-//                cal.set(Calendar.YEAR, year)
-//                cal.set(Calendar.MONTH, monthOfYear)
-//                cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-//
-//                val myFormat = "yy.MM.dd" // mention the format you need
-//                val sdf = SimpleDateFormat(myFormat, Locale.KOREA)
-//                limit2TX.text = sdf.format(cal.time)
-//
-//            }
-
-//            date2LL.setOnClickListener {
-//                DatePickerDialog(context, dateSetListener2,
-//                    cal.get(Calendar.YEAR),
-//                    cal.get(Calendar.MONTH),
-//                    cal.get(Calendar.DAY_OF_MONTH)).show()
-//                DatePickerDialog(context, dateSetListener,
-//                    cal.get(Calendar.YEAR),
-//                    cal.get(Calendar.MONTH),
-//                    cal.get(Calendar.DAY_OF_MONTH)).show()
-//            }
-
-//        }else{
-//            // dateTX.visibility = View.GONE
-////            adpater = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, day)
-////            daySP3.adapter = adpater
-////
-////            adpater = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, mee)
-////            meetingSP3.adapter = adpater
-////
-////            adpater = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, most)
-////            mostSP3.adapter = adpater
-//
-//        }
 
 
 
@@ -433,7 +370,6 @@ class MyPostingWriteActivity : RootActivity() {
 
     fun edit_posting(){
 
-
         val params = RequestParams()
 
         params.put("posting_id", posting_id)
@@ -448,31 +384,13 @@ class MyPostingWriteActivity : RootActivity() {
         }else{
             params.put("upload",ByteArrayInputStream(Utils.getByteArray(capture)))
 
-
-//            params.put("upload",capture)
         }
-//        if (image.equals("")||image==null){
-//
-//        }else{
-//
-//
-//            val add_file = Utils.getImage(context.contentResolver, image_uri)
-//            params.put("upload",ByteArrayInputStream(Utils.getByteArray(add_file)))
-//
-//        }
-
         if (imgid.equals("")||imgid==null){
 
         }else{
-
-
             val add_file = Utils.getImage(context.contentResolver, imgid)
             params.put("upload",ByteArrayInputStream(Utils.getByteArray(add_file)))
-
         }
-
-
-
 
         PostingAction.edit_posting(params, object : JsonHttpResponseHandler() {
 

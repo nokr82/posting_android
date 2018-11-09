@@ -170,7 +170,7 @@ class ReviewDetailActivity : RootActivity() {
     fun policedlgView(){
         var mPopupDlg: DialogInterface? = null
 
-        val builder = AlertDialog.Builder(this)
+        val builder = AlertDialog.Builder(this, R.style.full_screen_dialog1)
         val dialogView = layoutInflater.inflate(R.layout.myposting_dlg, null)
         val titleTV = dialogView.findViewById<TextView>(R.id.titleTV)
         val delTV = dialogView.findViewById<TextView>(R.id.delTV)
