@@ -46,6 +46,8 @@ open class OrderPageFragment : Fragment() {
     lateinit var couponGV:ExpandableHeightGridView
     lateinit var gpsLL:LinearLayout
     lateinit var storeInfoTV:TextView
+    lateinit var reviewCntTV:TextView
+    lateinit var postCntTV:TextView
 
     var clicktype = 1
 
@@ -80,6 +82,8 @@ open class OrderPageFragment : Fragment() {
         couponGV = view.findViewById(R.id.couponGV)
         gpsLL = view.findViewById(R.id.gpsLL)
         storeInfoTV = view.findViewById(R.id.storeInfoTV)
+        postCntTV = view.findViewById(R.id.postCntTV)
+        reviewCntTV = view.findViewById(R.id.reviewCntTV)
 
     }
 
@@ -173,6 +177,9 @@ open class OrderPageFragment : Fragment() {
                     val result = response!!.getString("result")
 
                     if ("ok" == result) {
+
+                        reviewCntTV.text = Utils.getString(response, "reviewCnt");
+                        postCntTV.text = Utils.getString(response, "postCnt");
 
                         val member = response.getJSONObject("member")
 
