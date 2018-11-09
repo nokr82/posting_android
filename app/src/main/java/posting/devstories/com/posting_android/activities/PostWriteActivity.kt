@@ -277,6 +277,8 @@ class PostWriteActivity : RootActivity() {
             imgid = photo.photoPath!!
 
             imgIV2.setImageBitmap(Utils.getImage(context.contentResolver, imgid, 200))
+            capture = null
+            imageUri = null
 
         }
 
@@ -309,6 +311,7 @@ class PostWriteActivity : RootActivity() {
 
         when (requestCode) {
             REQUEST_CAMERA -> {
+                imgid = null
 
                 val realPathFromURI = imageUri!!.getPath()
                 context.sendBroadcast(
