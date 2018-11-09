@@ -9,6 +9,7 @@ import android.content.IntentFilter
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
+import android.widget.ScrollView
 import android.widget.Toast
 import com.loopj.android.http.JsonHttpResponseHandler
 import com.loopj.android.http.RequestParams
@@ -94,7 +95,7 @@ open class OrderPageActivity : RootActivity() {
         adapterOrder = OrderAdapter(context, R.layout.item_post,adapterData)
 
         couponGV.adapter = adapterOrder
-        couponGV.isExpanded = true
+        couponGV.isExpanded = false
 
         couponLL.setOnClickListener {
             reviewWriteLL.visibility = View.GONE

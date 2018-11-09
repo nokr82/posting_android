@@ -28,52 +28,53 @@
             android:background="#D0D0D0"/>
 
     <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:fillViewport="true">
+            android:id="@+id/containerSV"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:fillViewport="true">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
                 <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/profileIV"
-                    android:layout_width="87dp"
-                    android:layout_height="87dp"
-                    android:layout_marginTop="21dp"
-                    android:layout_marginLeft="38dp"
-                    android:layout_marginRight="54dp"
-                    android:src="@mipmap/myimg"/>
+                        android:id="@+id/profileIV"
+                        android:layout_width="87dp"
+                        android:layout_height="87dp"
+                        android:layout_marginTop="21dp"
+                        android:layout_marginLeft="38dp"
+                        android:layout_marginRight="54dp"
+                        android:src="@mipmap/myimg"/>
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginRight="22.5dp"
-                    android:gravity="center"
-                    android:orientation="vertical">
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="22.5dp"
+                        android:gravity="center"
+                        android:orientation="vertical">
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="쿠폰"
-                        android:textSize="15dp"
-                        android:textColor="#8F8E8A"
-                        android:gravity="center_horizontal"/>
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="쿠폰"
+                            android:textSize="15dp"
+                            android:textColor="#8F8E8A"
+                            android:gravity="center_horizontal"/>
 
                     <TextView
-                        android:id="@+id/couponCntTV"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text=""
-                        android:textSize="15dp"
-                        android:gravity="center_horizontal"/>
+                            android:id="@+id/couponCntTV"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=""
+                            android:textSize="15dp"
+                            android:gravity="center_horizontal"/>
 
                 </LinearLayout>
 
@@ -90,24 +91,24 @@
                             android:textSize="15dp"
                             android:textColor="#8F8E8A"/>
                     <TextView
-                        android:id="@+id/reviewCntTV"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text=""
-                        android:textSize="15dp"
-                        android:gravity="center_horizontal"/>
+                            android:id="@+id/reviewCntTV"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=""
+                            android:textSize="15dp"
+                            android:gravity="center_horizontal"/>
 
                 </LinearLayout>
 
             </LinearLayout>
 
             <LinearLayout
-                android:layout_marginTop="9.52dp"
-                android:layout_marginLeft="50.67dp"
-                android:layout_marginRight="50.67dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                    android:layout_marginTop="9.52dp"
+                    android:layout_marginLeft="50.67dp"
+                    android:layout_marginRight="50.67dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
                 <TextView
                         android:id="@+id/companyNameTV"
@@ -229,16 +230,16 @@
     </ScrollView>
 
     <LinearLayout
-        android:id="@+id/reviewWriteLL"
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="37dp"
-        android:layout_gravity="bottom"
-        android:gravity="center"
-        android:layout_marginRight="70dp"
-        android:layout_marginLeft="70dp"
-        android:background="@drawable/background_round_ffe330"
-        android:layout_marginBottom="11.5dp">
+            android:id="@+id/reviewWriteLL"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="37dp"
+            android:layout_gravity="bottom"
+            android:gravity="center"
+            android:layout_marginRight="70dp"
+            android:layout_marginLeft="70dp"
+            android:background="@drawable/background_round_ffe330"
+            android:layout_marginBottom="11.5dp">
 
         <ImageView
                 android:paddingLeft="10dp"

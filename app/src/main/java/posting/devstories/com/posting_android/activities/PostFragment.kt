@@ -62,6 +62,8 @@ open class PostFragment : Fragment() {
 
     var member_id = -1
 
+    private var onPageSelectedEnabled = true
+
     lateinit var adverVP: ViewPager
     lateinit var pagerAdapter: PagerAdapter
 
@@ -273,6 +275,10 @@ open class PostFragment : Fragment() {
 
             override fun onPageSelected(position: Int) {
 
+                if(!onPageSelectedEnabled) {
+                    return
+                }
+
                 when (position) {
                     0 -> {
                         tabType = 1;
@@ -308,6 +314,7 @@ open class PostFragment : Fragment() {
             }
 
             override fun onPageScrollStateChanged(state: Int) {
+
             }
         })
 
@@ -400,7 +407,9 @@ open class PostFragment : Fragment() {
         }
 
         timer()
-        mainData()
+
+        setMainView()
+        // mainData()
 
         // 학교 검색
         searchET.addTextChangedListener(object : TextWatcher {
@@ -677,7 +686,7 @@ open class PostFragment : Fragment() {
         }
     }
 
-    fun setMainView(){
+    fun setMainView() {
         freeTV.setTextColor(Color.parseColor("#A19F9B"))
         infoTV.setTextColor(Color.parseColor("#A19F9B"))
         studyTV.setTextColor(Color.parseColor("#A19F9B"))
@@ -699,6 +708,9 @@ open class PostFragment : Fragment() {
     }
 
     fun setMenuTabView() {
+
+        onPageSelectedEnabled = true
+
         freeTV.setTextColor(Color.parseColor("#A19F9B"))
         infoTV.setTextColor(Color.parseColor("#A19F9B"))
         studyTV.setTextColor(Color.parseColor("#A19F9B"))
@@ -902,6 +914,10 @@ open class PostFragment : Fragment() {
         } catch (e: IllegalArgumentException) {
         }
 
+    }
+
+    fun disableOnPageSelected() {
+        onPageSelectedEnabled = false
     }
 
 }
