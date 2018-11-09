@@ -209,6 +209,7 @@ class PostWriteActivity : RootActivity() {
             getmost = mostSP.selectedItem.toString()
             getday = daySP.selectedItem.toString()
 
+
             if (getmost.equals("수량")) {
                 Toast.makeText(context, "수량을 선택해주세요", Toast.LENGTH_SHORT).show()
 //            } else if (getday.equals("기간")) {
@@ -227,7 +228,6 @@ class PostWriteActivity : RootActivity() {
                 intent.putExtra("getmee", getmee)
                 intent.putExtra("getmost", getmost)
                 intent.putExtra("getday", getday)
-
 
                 startActivity(intent)
             }
