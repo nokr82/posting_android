@@ -176,6 +176,9 @@ open class OrderPageActivity : RootActivity() {
                 }
 
                 try {
+
+                    println(response)
+
                     val result = response!!.getString("result")
 
                     if ("ok" == result) {
@@ -187,6 +190,12 @@ open class OrderPageActivity : RootActivity() {
                         reviewCntTV.text = reviewCnt
 
                         val member = response.getJSONObject("member")
+                        val school = response.getJSONObject("school")
+
+                        val school_image_uri = Utils.getString(school, "image_uri")
+                        var univimg = Config.url + school_image_uri
+                        ImageLoader.getInstance().displayImage(univimg, univIV, Utils.UILoptionsUserProfile)
+
                         companyName = Utils.getString(member, "company_name")
                         companyNameTV.text = companyName
                         infoTV.text = Utils.getString(member, "address") + Utils.getString(member, "address_detail")
@@ -255,7 +264,7 @@ open class OrderPageActivity : RootActivity() {
                     progressDialog!!.dismiss()
                 }
 
-                // System.out.println(responseString);
+                System.out.println(responseString);
 
                 throwable.printStackTrace()
                 error()

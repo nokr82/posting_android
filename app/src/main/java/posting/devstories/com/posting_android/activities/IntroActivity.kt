@@ -115,18 +115,15 @@ class IntroActivity : RootActivity() {
                         val school = response.getJSONObject("school")
 
                         val school_id = Utils.getInt(school, "id")
-
-
+                        val school_image_uri = Utils.getString(school, "image_uri")
 
                         PrefUtils.setPreference(context, "current_school_id", school_id)
-                        //사업자학교이미지
-                        PrefUtils.setPreference(context, "school_image",  Utils.getString(school, "image_uri"))
+                        PrefUtils.setPreference(context, "current_school_image_uri", school_image_uri)
+
                         PrefUtils.setPreference(context, "member_id", Utils.getInt(data, "id"))
                         PrefUtils.setPreference(context, "email", Utils.getString(data, "email"))
                         PrefUtils.setPreference(context, "passwd", Utils.getString(data, "passwd"))
                         PrefUtils.setPreference(context, "member_type", Utils.getString(data, "member_type"))
-
-
                         PrefUtils.setPreference(context, "school_id", Utils.getInt(data, "school_id"))
                         PrefUtils.setPreference(context, "confirm_yn", Utils.getString(data, "confirm_yn"))
                         PrefUtils.setPreference(context, "autoLogin", true)
