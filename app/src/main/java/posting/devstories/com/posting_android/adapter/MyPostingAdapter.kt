@@ -121,7 +121,6 @@ open class MyPostingAdapter(context:Context, view:Int, data:ArrayList<JSONObject
                 item.storageTV.text = contents
                 item.storageTV.visibility = View.VISIBLE
                 item.storageIV.visibility = View.GONE
-
             }
         }
 
@@ -135,7 +134,7 @@ open class MyPostingAdapter(context:Context, view:Int, data:ArrayList<JSONObject
 
         item.chatAlarmCntTV.visibility = View.GONE
 
-        if(chattingCnt > 0 && type == "3" || type == "4" || type == "5") {
+        if(chattingCnt > 0 && (type == "3" || type == "4" || type == "5")) {
             item.chatAlarmCntTV.visibility = View.VISIBLE
             item.chatAlarmCntTV.text = chattingCnt.toString()
         }
