@@ -823,6 +823,11 @@ class DetailActivity : RootActivity() {
 
     }
 
+    override fun finish() {
+        super.finish()
+        Utils.hideKeyboard(context)
+    }
+
     override fun onDestroy() {
         super.onDestroy()
 

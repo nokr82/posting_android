@@ -280,7 +280,7 @@ class MyPostingWriteActivity : RootActivity() {
 
                     if ("ok" == result) {
 
-
+                        Utils.hideKeyboard(context)
                         val intent = Intent(context,MainActivity::class.java)
                         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                         startActivity(intent)
@@ -404,7 +404,7 @@ class MyPostingWriteActivity : RootActivity() {
 
                     if ("ok" == result) {
 
-
+                        Utils.hideKeyboard(context)
                         val intent = Intent(context,MainActivity::class.java)
                         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                         startActivity(intent)
