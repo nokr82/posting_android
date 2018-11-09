@@ -95,10 +95,10 @@ open class MainPostAdapter(context: Context?, view: Int, data: ArrayList<JSONObj
 
         item.titleLL.setOnClickListener {
 
-            println("tabType : " + tabType)
+            println("tabType adatper: $tabType")
 
             var intent = Intent()
-            intent.putExtra("type", tabType)
+            intent.putExtra("tabType", tabType)
             intent.action = "SET_VIEW"
             context.sendBroadcast(intent)
 
