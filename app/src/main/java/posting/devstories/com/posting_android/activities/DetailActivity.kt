@@ -144,11 +144,11 @@ class DetailActivity : RootActivity() {
         itemTouchHelper.attachToRecyclerView(recycler_view)
 
         recycler_view.setLayoutManager(
-            SwipeableLayoutManager().setAngle(10)
-                .setAnimationDuratuion(450)
-                .setMaxShowCount(3)
-                .setScaleGap(0.1f)
-                .setTransYGap(0)
+                SwipeableLayoutManager().setAngle(10)
+                        .setAnimationDuratuion(450)
+                        .setMaxShowCount(3)
+                        .setScaleGap(0.1f)
+                        .setTransYGap(0)
         )
         recycler_view.setAdapter(detailAnimationRecyclerAdapter)
 
@@ -184,7 +184,7 @@ class DetailActivity : RootActivity() {
             }else{
                 dlgView()
             }
-            }
+        }
 
         commentsET.setOnEditorActionListener { textView, i, keyEvent ->
             commentsET.hint = "댓글쓰기"
@@ -291,8 +291,8 @@ class DetailActivity : RootActivity() {
                         nick =  Utils.getString(member, "nick_name")
                         var image_uri = Utils.getString(member, "image_uri")
                         if (!image_uri.equals("")||image_uri!=null){
-                        var image = Config.url + image_uri
-                        ImageLoader.getInstance().displayImage(image,myIV, Utils.UILoptionsPosting)
+                            var image = Config.url + image_uri
+                            ImageLoader.getInstance().displayImage(image,myIV, Utils.UILoptionsPosting)
                         }
 
                         mynameTV.text =nick
@@ -546,7 +546,7 @@ class DetailActivity : RootActivity() {
                         var sale_price:String =  Utils.getString(posting, "sale_price")
                         var contents =   Utils.getString(posting, "contents")
 
-                       image_uri = Utils.getString(posting, "image_uri")
+                        image_uri = Utils.getString(posting, "image_uri")
                         var leftCount = Utils.getString(posting, "leftCount")
                         var current_school_id = Utils.getInt(member1, "school_id")
                         PrefUtils.setPreference(context, "detail_current_school_id", current_school_id)
@@ -575,7 +575,7 @@ class DetailActivity : RootActivity() {
 //                        if (school_id!=me_school_id){
 //                            saveLL.visibility = View.GONE
                         if (current_school_id != school_id){
-                          postingLL.background = getDrawable(R.mipmap.write_bg2)
+                            postingLL.background = getDrawable(R.mipmap.write_bg2)
 //                            saveLL.visibility = View.GONE
 //                        }else if(save_yn.equals("N")&&member_id2!=member_id){
 //                                saveLL.visibility = View.VISIBLE
@@ -609,6 +609,7 @@ class DetailActivity : RootActivity() {
                                 coupon_saleTV.text = sale_per
                                 coupon_orderTV.text = company_name
                                 coupon_sale2TV.text = "할인"
+                                coupon_TV.text = "%"
                                 coupon_startdateTV.text = ctv_startdate+"~"
                                 coupon_contentTV.text = contents
                                 coupon_enddateTV.text = ctv_enddate
