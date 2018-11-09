@@ -25,7 +25,6 @@ import com.loopj.android.http.JsonHttpResponseHandler
 import com.loopj.android.http.RequestParams
 import com.nostra13.universalimageloader.core.ImageLoader
 import cz.msebera.android.httpclient.Header
-import kotlinx.android.synthetic.main.fra_post.*
 import kotlinx.android.synthetic.main.tab_mypage_view.*
 import org.json.JSONArray
 import org.json.JSONException
@@ -95,6 +94,8 @@ open class PostFragment : Fragment() {
     lateinit var meetingRL:RelativeLayout
     lateinit var couponRL:RelativeLayout
 
+    lateinit var schoolLV:ListView
+
     lateinit var mainLL:LinearLayout
 
     lateinit var searchET:EditText
@@ -147,11 +148,16 @@ open class PostFragment : Fragment() {
 
             if(intent != null) {
                 tabType = intent!!.getIntExtra("tabType", 1)
-                val type = tabType - 1
-                if (type == pagerVP.currentItem) {
+                val type =intent!!.getIntExtra("type",-1)
+
+                print("type---------"+type)
+                val w_type = type -1
+
+                print("type---------2"+w_type)
+                if (w_type == pagerVP.currentItem) {
                     setMenuTabView()
                 }
-                pagerVP.currentItem = type
+                pagerVP.currentItem = w_type
 
             }
 
@@ -220,6 +226,8 @@ open class PostFragment : Fragment() {
 
 
         mainLL = view.findViewById(R.id.mainLL)
+
+        schoolLV = view.findViewById(R.id.schoolLV)
 
         searchET = view.findViewById(R.id.searchET)
 
@@ -883,7 +891,8 @@ open class PostFragment : Fragment() {
                 context!!.unregisterReceiver(savePostingReceiver)
             } else if (delPostingReceiver != null) {
                 context!!.unregisterReceiver(delPostingReceiver)
-            } else if (setViewReceiver != null) {
+            }  //브로드캐스트받기
+            else if (setViewReceiver != null) {
                 context!!.unregisterReceiver(setViewReceiver)
             }
         } catch (e: IllegalArgumentException) {

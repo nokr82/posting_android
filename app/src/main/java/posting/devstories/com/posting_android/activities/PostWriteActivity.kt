@@ -1,8 +1,10 @@
 package posting.devstories.com.posting_android.activities
 
 import android.app.ProgressDialog
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.database.Cursor
 import android.os.Bundle
 import android.provider.MediaStore
@@ -56,9 +58,21 @@ class PostWriteActivity : RootActivity() {
 
     lateinit var adapter: ArrayAdapter<String>
 
+    //mypostwrite에서 브로드캐스트로 인텐트를 받는다
+    internal var setViewReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent?) {
+            if(intent != null) {
+                finish()
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_postwrite)
+
+        val filter1 = IntentFilter("SET_VIEW")
+        registerReceiver(setViewReceiver, filter1)
 
         this.context = this
         progressDialog = ProgressDialog(context)
@@ -262,7 +276,7 @@ class PostWriteActivity : RootActivity() {
             //이미지가져오기
             imgid = photo.photoPath!!
 
-            imgIV2.setImageBitmap(Utils.getImage(context.contentResolver, imgid))
+            imgIV2.setImageBitmap(Utils.getImage(context.contentResolver, imgid, 200))
 
         }
 
