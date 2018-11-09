@@ -39,7 +39,7 @@ class MyPostingWriteActivity : RootActivity() {
     var str:String? = null
     var posting_id :String?=null
     var member_id = -1
-    var type:String?=null
+    var type = -1
     var contents = ""
     var contents2:String?=null
     var count:String?=null
@@ -163,7 +163,7 @@ class MyPostingWriteActivity : RootActivity() {
 
 
             if (member_type.equals("3")){
-                type = "6"
+                type = 6
 //                count = meetingSP3.selectedItem.toString()
 //                startd = Utils.getString(date2TX)
 //                last = Utils.getString(limit2TX)
@@ -186,17 +186,17 @@ class MyPostingWriteActivity : RootActivity() {
 //                type = meetingSP3.selectedItem.toString()
 //                count = mostSP3.selectedItem.toString()
                 if (getmee.equals("자유")) {
-                    type = "1"
+                    type = 1
                 } else if (getmee.equals("정보")) {
-                    type = "2"
+                    type = 2
                 } else if (getmee.equals("스터디")) {
-                    type = "3"
+                    type = 3
                 } else if (getmee.equals("동아리")) {
-                    type = "4"
+                    type = 4
                 } else if (getmee.equals("미팅")) {
-                    type = "5"
+                    type =5
                 } else if (getmee.equals("쿠폰")) {
-                    type = "6"
+                    type = 6
                 }
                 if(count.equals("수량")){
 
@@ -281,13 +281,16 @@ class MyPostingWriteActivity : RootActivity() {
                     if ("ok" == result) {
 
                         Utils.hideKeyboard(context)
-                        val intent = Intent(context,MainActivity::class.java)
+//                        val intent = Intent(context,MainActivity::class.java)
+                   //브로드캐스트로 날려주기
+                        val intent = Intent()
                         intent.putExtra("type",type)
-                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                        startActivity(intent)
+                        intent.action = "SET_VIEW"
+                        sendBroadcast(intent)
 
                         Toast.makeText(context, "글작성이 완료되었습니다", Toast.LENGTH_SHORT).show()
 
+                        finish()
 
 
                     } else if ("over" == result) {
