@@ -124,9 +124,11 @@ class ReviewDetailActivity : RootActivity() {
                             var image = Config.url + image_uri
                             ImageLoader.getInstance().displayImage(image, imgIV, Utils.UILoptionsUserProfile)
                             imgIV.visibility = View.VISIBLE
+                            contentsTV.visibility = View.GONE
                         } else {
                             contentsTV.text = contents
                             contentsTV.visibility = View.VISIBLE
+                            imgIV.visibility = View.GONE
                         }
 
                     }
