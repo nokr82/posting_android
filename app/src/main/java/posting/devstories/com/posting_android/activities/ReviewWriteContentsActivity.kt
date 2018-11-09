@@ -244,6 +244,7 @@ class ReviewWriteContentsActivity : RootActivity() {
         params.put("company_member_id", company_member_id)
         params.put("member_id", member_id)
         params.put("contents", contents)
+        params.put("review_id", review_id)
 
         if (capture==null){
 
