@@ -169,6 +169,7 @@ open class MainPostAdapter(context: Context?, view: Int, data: ArrayList<JSONObj
                     coupon_orderTV.text = company_name
                     coupon_titleTV.text = menu_name
                     coupon_saleTV.text = sale_per
+                    coupon_TV.text = "%"
                     coupon_sale2TV.text = "할인"
                     coupon_startdateTV.text = ctv_startdate+"~"
                     coupon_contentTV.text = contents
