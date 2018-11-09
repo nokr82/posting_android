@@ -10,6 +10,8 @@ import org.json.JSONObject
 import posting.devstories.com.posting_android.R
 import posting.devstories.com.posting_android.base.Utils
 import posting.devstories.com.posting_android.base.Config
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 open class OrderAdapter(context:Context, view:Int, data:ArrayList<JSONObject>) : ArrayAdapter<JSONObject>(context, view, data) {
@@ -53,6 +55,14 @@ open class OrderAdapter(context:Context, view:Int, data:ArrayList<JSONObject>) :
         var sale_per:String =  Utils.getString(posting, "sale_per")
         var sale_price:String =  Utils.getString(posting, "sale_price")
 
+        //디테일 이미지에보이는 날짜
+        val cymd = SimpleDateFormat("yy.MM.dd", Locale.KOREA)
+        val coupon_startdate = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(uses_start_date)
+
+        val ctv_startdate = cymd.format(coupon_startdate)
+        val coupon_enddate = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(uses_end_date)
+
+        val ctv_enddate = cymd.format(coupon_enddate)
 
         item.postIV.visibility = View.GONE
         item.contentsTV.visibility = View.GONE
@@ -65,9 +75,9 @@ open class OrderAdapter(context:Context, view:Int, data:ArrayList<JSONObject>) :
             item.coupon_titleTV.text = menu_name
             item.coupon_saleTV.text = sale_per
             item.coupon_sale2TV.text = "할인"
-            item.coupon_startdateTV.text = uses_start_date
+            item.coupon_startdateTV.text = ctv_startdate+"~"
             item.coupon_contentTV.text = contents
-            item.coupon_enddateTV.text = uses_end_date
+            item.coupon_enddateTV.text = ctv_enddate
         }else if (coupon_type.equals("2")){
             item.contentsTV.visibility = View.GONE
 
@@ -79,8 +89,8 @@ open class OrderAdapter(context:Context, view:Int, data:ArrayList<JSONObject>) :
             item.coupon_TV.visibility = View.GONE
             item.coupon_sale2TV.visibility = View.GONE
             item.coupon_contentTV.text = contents
-            item.coupon_startdateTV.text = uses_start_date
-            item.coupon_enddateTV.text = uses_end_date
+            item.coupon_startdateTV.text = ctv_startdate+"~"
+            item.coupon_enddateTV.text = ctv_enddate
         }else if (coupon_type.equals("3")){
             item.contentsTV.visibility = View.GONE
             item.couponLL.visibility = View.VISIBLE
@@ -91,8 +101,8 @@ open class OrderAdapter(context:Context, view:Int, data:ArrayList<JSONObject>) :
             item.coupon_contentTV.text = contents
             item.coupon_TV.text = "원"
             item.coupon_sale2TV.text = "할인"
-            item.coupon_startdateTV.text = uses_start_date
-            item.coupon_enddateTV.text = uses_end_date
+            item.coupon_startdateTV.text = ctv_startdate+"~"
+            item.coupon_enddateTV.text = ctv_enddate
         }else {
             item.couponLL.visibility = View.GONE
             if (!image_uri.isEmpty() && image_uri != "") {
