@@ -295,10 +295,13 @@ class MainActivity : FragmentActivity() {
         try {
             if (updateAlarmCntReceiver != null) {
                 context.unregisterReceiver(updateAlarmCntReceiver)
-            } else if (editPostingReceiver != null) {
+            }
+        } catch (e: IllegalArgumentException) {
+        }
+        try {
+            if (editPostingReceiver != null) {
                 context.unregisterReceiver(editPostingReceiver)
             }
-
         } catch (e: IllegalArgumentException) {
         }
     }

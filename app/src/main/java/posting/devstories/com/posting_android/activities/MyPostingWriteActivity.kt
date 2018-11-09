@@ -309,7 +309,6 @@ class MyPostingWriteActivity : RootActivity() {
             }
 
             override fun onSuccess(statusCode: Int, headers: Array<Header>?, responseString: String?) {
-
                 // System.out.println(responseString);
             }
 
@@ -360,16 +359,7 @@ class MyPostingWriteActivity : RootActivity() {
 
         })
 
-
-
-
-
-
     }
-
-
-
-
 
     fun edit_posting(){
 
@@ -380,7 +370,6 @@ class MyPostingWriteActivity : RootActivity() {
         params.put("type", type)
         params.put("contents", contents)
         params.put("count", count)
-
 
         if (capture==null){
 
@@ -491,13 +480,11 @@ class MyPostingWriteActivity : RootActivity() {
         Utils.hideKeyboard(context)
     }
 
-
     override fun onDestroy() {
         super.onDestroy()
         if (progressDialog != null) {
             progressDialog!!.dismiss()
         }
-
 
     }
 
