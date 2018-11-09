@@ -40,9 +40,9 @@ open class MyPostingAdapter(context:Context, view:Int, data:ArrayList<JSONObject
 
         var json = data.get(position)
         val member = json.getJSONObject("Member")
-        var company_name = Utils.getString(member, "company_name")
         var posting = json.getJSONObject("Posting")
         var current_school_id = Utils.getString(member, "school_id")
+        var company_name = Utils.getString(member, "company_name")
         var school_id = Utils.getString(posting, "school_id")
         var contents =   Utils.getString(posting, "contents")
         var image_uri = Utils.getString(posting, "image_uri")
