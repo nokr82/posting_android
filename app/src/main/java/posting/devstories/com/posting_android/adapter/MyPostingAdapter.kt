@@ -135,6 +135,7 @@ open class MyPostingAdapter(context:Context, view:Int, data:ArrayList<JSONObject
 
         item.chatAlarmCntTV.visibility = View.GONE
 
+        //채팅카운트
         if(chattingCnt > 0 && type == "3" || type == "4" || type == "5") {
             item.chatAlarmCntTV.visibility = View.GONE
             item.chatAlarmCntTV.text = chattingCnt.toString()

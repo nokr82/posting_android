@@ -165,7 +165,7 @@
                     android:id="@+id/chatAlarmCntTV"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="32"
+                    android:text=""
                     android:textSize="10dp"
                     android:background="@drawable/circle_red"
                     android:textColor="#FFFFFF"
