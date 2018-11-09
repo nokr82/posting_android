@@ -193,7 +193,11 @@ open class OrderPageFragment : Fragment() {
                         var profile_uri = Config.url + Utils.getString(member,"image_uri")
                         com.nostra13.universalimageloader.core.ImageLoader.getInstance().displayImage(profile_uri, profileIV, Utils.UILoptionsProfile)
 
+                        adapterData.clear()
+
                         if (clicktype ==1){
+
+                            adapterOrder.notifyDataSetChanged()
 
                         val data = response.getJSONArray("postList")
 
@@ -204,6 +208,8 @@ open class OrderPageFragment : Fragment() {
                         adapterOrder.notifyDataSetChanged()
 
                         } else {
+                            adapterReview.notifyDataSetChanged()
+
                             val data = response.getJSONArray("reviewList")
                             for (i in 0..data.length() - 1) {
                                 adapterData.add(data[i] as JSONObject)

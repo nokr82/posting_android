@@ -70,14 +70,32 @@ class ReviewWriteContentsActivity : RootActivity() {
         contents = intent.getStringExtra("contents")
         imgid = intent.getStringExtra("imgid")
         image = intent.getStringExtra("image")
+        image_uri = intent.getStringExtra("image_uri")
 
-        if(review_id > 0) {
+        if(review_id > 0 && "M" == postingType) {
 
             image = Config.url + image_uri
             ImageLoader.getInstance().displayImage(image, captureIV, Utils.UILoptionsPosting)
             captureIV.visibility = View.VISIBLE
 
             contentET.setText(contents)
+        } else if (postingType.equals("P")){
+
+            println("postingType : $postingType")
+            println("absolutePath : $absolutePath")
+
+            capture = Utils.getImage(context.contentResolver, absolutePath)
+            captureIV.setImageBitmap(capture)
+            popupRL.visibility = View.VISIBLE
+        }else if (postingType.equals("G")){
+            //이미지
+            ImageLoader.getInstance().displayImage(image, captureIV, Utils.UILoptionsPosting)
+            popupRL.visibility = View.VISIBLE
+
+            captureIV.setImageBitmap(Utils.getImage(context.contentResolver, imgid))
+//        }else if (postingType.equals("M")){
+//            com.nostra13.universalimageloader.core.ImageLoader.getInstance().displayImage(image, captureIV, Utils.UILoptionsUserProfile)
+//            captureIV.visibility = View.VISIBLE
         }
 
         backLL.setOnClickListener {
@@ -90,24 +108,6 @@ class ReviewWriteContentsActivity : RootActivity() {
         options.inJustDecodeBounds = false
 
 
-        if (postingType.equals("P")){
-
-            println("postingType : $postingType")
-            println("absolutePath : $absolutePath")
-
-            capture = Utils.getImage(context.contentResolver, absolutePath)
-            captureIV.setImageBitmap(capture)
-            popupRL.visibility = View.VISIBLE
-        }else if (postingType.equals("G")){
-            //이미지
-            ImageLoader.getInstance().displayImage(image, captureIV, Utils.UILoptionsUserProfile)
-            popupRL.visibility = View.VISIBLE
-
-            captureIV.setImageBitmap(Utils.getImage(context.contentResolver, imgid))
-        }else if (postingType.equals("M")){
-            com.nostra13.universalimageloader.core.ImageLoader.getInstance().displayImage(image, captureIV, Utils.UILoptionsUserProfile)
-            captureIV.visibility = View.VISIBLE
-        }
 
         if (imgid != null && "" != imgid && imgid!!.length> 1&&capture != null&&image != null){
             popupRL.visibility = View.VISIBLE
@@ -246,18 +246,23 @@ class ReviewWriteContentsActivity : RootActivity() {
         params.put("contents", contents)
         params.put("review_id", review_id)
 
-        if (capture==null){
+        if(postingType == "T") {
+            params.put("image", "")
+            params.put("image_uri", "")
+        } else {
+            if (capture==null){
 
-        }else{
-            params.put("upload", ByteArrayInputStream(Utils.getByteArray(capture)))
-        }
+            }else{
+                params.put("upload", ByteArrayInputStream(Utils.getByteArray(capture)))
+            }
 
-        if (imgid.equals("")||imgid==null){
+            if (imgid.equals("")||imgid==null){
 
-        }else{
-            val add_file = Utils.getImage(context.contentResolver, imgid)
-            params.put("upload", ByteArrayInputStream(Utils.getByteArray(add_file)))
+            }else{
+                val add_file = Utils.getImage(context.contentResolver, imgid)
+                params.put("upload", ByteArrayInputStream(Utils.getByteArray(add_file)))
 
+            }
         }
 
         ReviewAction.edit_review(params, object : JsonHttpResponseHandler() {
@@ -273,6 +278,9 @@ class ReviewWriteContentsActivity : RootActivity() {
                     if ("ok" == result) {
 
                         val intent = Intent();
+                        intent.putExtra("review_id", review_id)
+                        intent.action = "EDIT_REVIEW"
+                        sendBroadcast(intent)
                         setResult(Activity.RESULT_OK, intent)
                         finish()
 

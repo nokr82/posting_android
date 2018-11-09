@@ -3,9 +3,7 @@ package posting.devstories.com.posting_android.activities
 import android.app.Activity
 import android.app.AlertDialog
 import android.app.ProgressDialog
-import android.content.Context
-import android.content.DialogInterface
-import android.content.Intent
+import android.content.*
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
@@ -41,6 +39,7 @@ class ReviewDetailActivity : RootActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_review_detail)
+
 
         this.context = this
         progressDialog = ProgressDialog(context)
@@ -223,10 +222,7 @@ class ReviewDetailActivity : RootActivity() {
             intent.putExtra("image_uri",image_uri)
             intent.putExtra("contents",contents)
             intent.putExtra("company_member_id", company_member_id)
-
             startActivityForResult(intent, EDIT_REIVEW)
-            finish()
-
             mPopupDlg!!.cancel()
 
         }
