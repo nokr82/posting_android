@@ -290,6 +290,8 @@ class MyPostingWriteActivity : RootActivity() {
 
 
 
+                    } else if ("over" == result) {
+                        Toast.makeText(context, "하루 제한량만큼 작성하셨습니다.", Toast.LENGTH_SHORT).show()
                     } else {
                         geterror = "작성실패"
 

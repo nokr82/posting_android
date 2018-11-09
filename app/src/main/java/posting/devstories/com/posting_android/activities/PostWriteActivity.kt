@@ -296,8 +296,6 @@ class PostWriteActivity : RootActivity() {
         when (requestCode) {
             REQUEST_CAMERA -> {
 
-                println("intent : " + data)
-
                 val realPathFromURI = imageUri!!.getPath()
                 context.sendBroadcast(
                     Intent(
