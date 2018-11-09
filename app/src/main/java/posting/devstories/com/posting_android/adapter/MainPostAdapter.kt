@@ -23,8 +23,6 @@ open class MainPostAdapter(context: Context?, view: Int, data: ArrayList<JSONObj
     var view: Int = view
     var data: ArrayList<JSONObject> = data
 
-
-
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
 
         lateinit var retView: View
@@ -147,8 +145,6 @@ open class MainPostAdapter(context: Context?, view: Int, data: ArrayList<JSONObj
             }else{
                 postbgIV.setImageResource(R.mipmap.bg)
             }
-
-
 
             val cymd = SimpleDateFormat("yy.MM.dd", Locale.KOREA)
 

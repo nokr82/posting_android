@@ -953,6 +953,13 @@ public class Utils {
         .showImageOnFail(R.mipmap.myimg).delayBeforeLoading(100)
         .cacheInMemory(true).cacheOnDisk(true).considerExifParams(true).imageScaleType(ImageScaleType.EXACTLY).bitmapConfig(Bitmap.Config.RGB_565).build();
 
+    public static DisplayImageOptions UILoptionsAder = new DisplayImageOptions.Builder()
+//         .displayer(new RoundedBitmapDisplayer(2))
+         .showImageOnLoading(R.drawable.no_image_box)
+         .showImageForEmptyUri(R.drawable.no_image_box)
+        .showImageOnFail(R.drawable.no_image_box).delayBeforeLoading(100)
+        .cacheInMemory(true).cacheOnDisk(true).considerExifParams(true).imageScaleType(ImageScaleType.EXACTLY).bitmapConfig(Bitmap.Config.RGB_565).build();
+
     public static String fullDateTime(String created) {
         SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", java.util.Locale.KOREA);
         SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy년 MM월 dd일 EEE요일 a h시 mm분", java.util.Locale.KOREA);
