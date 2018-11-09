@@ -881,11 +881,9 @@ open class PostFragment : Fragment() {
         try {
             if (savePostingReceiver != null) {
                 context!!.unregisterReceiver(savePostingReceiver)
-            }
-            if (delPostingReceiver != null) {
+            } else if (delPostingReceiver != null) {
                 context!!.unregisterReceiver(delPostingReceiver)
-            }
-            if (setViewReceiver != null) {
+            } else if (setViewReceiver != null) {
                 context!!.unregisterReceiver(setViewReceiver)
             }
         } catch (e: IllegalArgumentException) {

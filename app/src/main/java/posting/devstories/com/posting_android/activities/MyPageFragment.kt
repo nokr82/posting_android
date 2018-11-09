@@ -236,8 +236,7 @@ open class MyPageFragment : Fragment() {
         try {
             if (updateAlarmCntReceiver != null) {
                 context!!.unregisterReceiver(updateAlarmCntReceiver)
-            }
-            if (editProfileReceiver != null) {
+            } else if (editProfileReceiver != null) {
                 context!!.unregisterReceiver(editProfileReceiver)
             }
 
