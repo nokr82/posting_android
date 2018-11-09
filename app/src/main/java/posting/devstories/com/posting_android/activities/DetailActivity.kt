@@ -536,14 +536,6 @@ class DetailActivity : RootActivity() {
                         var uses_end_date =   Utils.getString(posting, "uses_end_date")
                         val ymd = SimpleDateFormat("YY년MM월dd일", Locale.KOREA)
                         val cymd = SimpleDateFormat("YY.MM.dd", Locale.KOREA)
-                        val coupon_startdate = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(uses_start_date)
-                       //내용 쿠폰날짜
-                        val c_startdate = ymd.format(coupon_startdate)
-                        //디테일 이미지에보이는 날짜
-                        val ctv_startdate = cymd.format(coupon_startdate)
-                        val coupon_enddate = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(uses_end_date)
-                        val c_enddate = ymd.format(coupon_enddate)
-                        val ctv_enddate = cymd.format(coupon_enddate)
 
                         var coupon_type:String =  Utils.getString(posting, "coupon_type")
                         var id = Utils.getString(posting, "id")
@@ -566,10 +558,6 @@ class DetailActivity : RootActivity() {
                         //게시물의 학교아이디
                        school_id = Utils.getInt(posting, "school_id")
 
-
-                        println("==========학교"+current_school_id)
-                        println("==========학교"+school_id)
-
                         count = Utils.getInt(posting, "leftCount")
 
                         if(count < 1 || me_school_id != school_id || member_id == member_id2 || "Y" == save_yn || "3" == member_type) {
@@ -580,6 +568,7 @@ class DetailActivity : RootActivity() {
                             println("member_id : " + member_id)
                             println("member_id2 : " + member_id2)
                             println("save_yn : " + save_yn)
+                            println("member_type : " + member_type)
 
                             saveLL.visibility = View.GONE
                         } else {
@@ -598,61 +587,67 @@ class DetailActivity : RootActivity() {
                             postingLL.background = getDrawable(R.mipmap.wtite_bg)
                         }
 
+                        if(6 == type) {
+                            val coupon_startdate = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(uses_start_date)
+                            //내용 쿠폰날짜
+                            val c_startdate = ymd.format(coupon_startdate)
+                            //디테일 이미지에보이는 날짜
+                            val ctv_startdate = cymd.format(coupon_startdate)
+                            val coupon_enddate = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(uses_end_date)
+                            val c_enddate = ymd.format(coupon_enddate)
+                            val ctv_enddate = cymd.format(coupon_enddate)
 
-                        if (coupon_type.equals("1")){
-                            contentsTV.visibility = View.GONE
-                            coupon3LL.visibility = View.VISIBLE
-                            coupon_titleTV.text = menu_name
-                            coupon_saleTV.text = sale_per
-                            coupon_orderTV.text = company_name
-                            coupon_sale2TV.text = "할인"
-                            coupon_startdateTV.text = ctv_startdate+"~"
-                            coupon_contentTV.text = contents
-                            coupon_enddateTV.text = ctv_enddate
-                            usesTV.visibility = View.VISIBLE
-                            usesTV.text = "사용기간:"+c_startdate+" ~ "+c_enddate+" 까지"
-                        }else if (coupon_type.equals("2")){
-                            contentsTV.visibility = View.GONE
-                            coupon3LL.visibility = View.VISIBLE
-                            coupon_orderTV.text = company_name
-                            coupon3LL.setBackgroundColor(Color.parseColor("#FB2B70"))
-                            coupon_titleTV.text = menu_name
-                            coupon_saleTV.text = "FREE"
-                            coupon_TV.visibility = View.GONE
-                            coupon_sale2TV.visibility = View.GONE
-                            coupon_startdateTV.text = ctv_startdate+"~"
-                            coupon_contentTV.text = contents
-                            coupon_enddateTV.text = ctv_enddate
-                            usesTV.visibility = View.VISIBLE
-                            usesTV.text = "사용기간:"+c_startdate+" ~ "+c_enddate+" 까지"
-                        }else if (coupon_type.equals("3")){
-                            contentsTV.visibility = View.GONE
-                            coupon3LL.visibility = View.VISIBLE
-                            coupon_orderTV.text = company_name
-                            coupon3LL.setBackgroundColor(Color.parseColor("#A12BFB"))
-                            coupon_titleTV.text = menu_name
-                            coupon_saleTV.text = sale_price
-                            coupon_sale2TV.text = "할인"
-                            coupon_TV.text = "원"
-                            coupon_startdateTV.text = ctv_startdate+"~"
-                            coupon_contentTV.text = contents
-                            coupon_enddateTV.text = ctv_enddate
-                            usesTV.visibility = View.VISIBLE
-                            usesTV.text = "사용기간:"+c_startdate+" ~ "+c_enddate+" 까지"
-                        }
+                            if (coupon_type.equals("1")){
+                                contentsTV.visibility = View.GONE
+                                coupon3LL.visibility = View.VISIBLE
+                                coupon_titleTV.text = menu_name
+                                coupon_saleTV.text = sale_per
+                                coupon_orderTV.text = company_name
+                                coupon_sale2TV.text = "할인"
+                                coupon_startdateTV.text = ctv_startdate+"~"
+                                coupon_contentTV.text = contents
+                                coupon_enddateTV.text = ctv_enddate
+                                usesTV.visibility = View.VISIBLE
+                                usesTV.text = "사용기간:"+c_startdate+" ~ "+c_enddate+" 까지"
+                            }else if (coupon_type.equals("2")){
+                                contentsTV.visibility = View.GONE
+                                coupon3LL.visibility = View.VISIBLE
+                                coupon_orderTV.text = company_name
+                                coupon3LL.setBackgroundColor(Color.parseColor("#FB2B70"))
+                                coupon_titleTV.text = menu_name
+                                coupon_saleTV.text = "FREE"
+                                coupon_TV.visibility = View.GONE
+                                coupon_sale2TV.visibility = View.GONE
+                                coupon_startdateTV.text = ctv_startdate+"~"
+                                coupon_contentTV.text = contents
+                                coupon_enddateTV.text = ctv_enddate
+                                usesTV.visibility = View.VISIBLE
+                                usesTV.text = "사용기간:"+c_startdate+" ~ "+c_enddate+" 까지"
+                            }else if (coupon_type.equals("3")){
+                                contentsTV.visibility = View.GONE
+                                coupon3LL.visibility = View.VISIBLE
+                                coupon_orderTV.text = company_name
+                                coupon3LL.setBackgroundColor(Color.parseColor("#A12BFB"))
+                                coupon_titleTV.text = menu_name
+                                coupon_saleTV.text = sale_price
+                                coupon_sale2TV.text = "할인"
+                                coupon_TV.text = "원"
+                                coupon_startdateTV.text = ctv_startdate+"~"
+                                coupon_contentTV.text = contents
+                                coupon_enddateTV.text = ctv_enddate
+                                usesTV.visibility = View.VISIBLE
+                                usesTV.text = "사용기간:"+c_startdate+" ~ "+c_enddate+" 까지"
+                            }
 
-
-
-
-
-                        if (type ==6&&use_yn.equals("Y")){
-                            couponLL.visibility = View.GONE
-                            usesTV.visibility = View.VISIBLE
-                            usesTV.text = "사용기간:"+c_startdate+" ~ "+c_enddate+" 까지"
-                        }else if(type ==6&&save_yn.equals("Y")&&use_yn.equals("N")){
-                            couponLL.visibility = View.VISIBLE
-                            usesTV.visibility = View.VISIBLE
-                            usesTV.text = "사용기간:"+c_startdate+" ~ "+c_enddate+" 까지"
+                            if (use_yn.equals("Y")){
+                                couponLL.visibility = View.GONE
+                                usesTV.visibility = View.VISIBLE
+                                usesTV.text = "사용기간:"+c_startdate+" ~ "+c_enddate+" 까지"
+                            }else if(save_yn.equals("Y")&&use_yn.equals("N")){
+                                couponLL.visibility = View.VISIBLE
+                                usesTV.visibility = View.VISIBLE
+                                usesTV.text = "사용기간:"+c_startdate+" ~ "+c_enddate+" 까지"
+                            }
                         }
 
 
