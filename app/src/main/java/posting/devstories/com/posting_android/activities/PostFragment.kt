@@ -73,36 +73,36 @@ open class PostFragment : Fragment() {
     lateinit var mainLV: ExpandableHeightListView
     lateinit var pagerVP: NonSwipeableViewPager
 
-    lateinit var freeTV:TextView
-    lateinit var infoTV:TextView
-    lateinit var studyTV:TextView
-    lateinit var classTV:TextView
-    lateinit var meetingTV:TextView
-    lateinit var couponTV:TextView
+    lateinit var freeTV: TextView
+    lateinit var infoTV: TextView
+    lateinit var studyTV: TextView
+    lateinit var classTV: TextView
+    lateinit var meetingTV: TextView
+    lateinit var couponTV: TextView
 
-    lateinit var freeV:View
-    lateinit var infoV:View
-    lateinit var studyV:View
-    lateinit var classV:View
-    lateinit var meetingV:View
-    lateinit var couponV:View
+    lateinit var freeV: View
+    lateinit var infoV: View
+    lateinit var studyV: View
+    lateinit var classV: View
+    lateinit var meetingV: View
+    lateinit var couponV: View
 
-    lateinit var univIV:ImageView
+    lateinit var univIV: ImageView
 
-    lateinit var freeRL:RelativeLayout
-    lateinit var infoRL:RelativeLayout
-    lateinit var studyRL:RelativeLayout
-    lateinit var classRL:RelativeLayout
-    lateinit var meetingRL:RelativeLayout
-    lateinit var couponRL:RelativeLayout
+    lateinit var freeRL: RelativeLayout
+    lateinit var infoRL: RelativeLayout
+    lateinit var studyRL: RelativeLayout
+    lateinit var classRL: RelativeLayout
+    lateinit var meetingRL: RelativeLayout
+    lateinit var couponRL: RelativeLayout
 
-    lateinit var schoolLV:ListView
+    lateinit var schoolLV: ListView
 
-    lateinit var mainLL:LinearLayout
+    lateinit var mainLL: LinearLayout
 
-    lateinit var searchET:EditText
+    lateinit var searchET: EditText
 
-    lateinit var mainActivity:MainActivity
+    lateinit var mainActivity: MainActivity
 
     private var adapterData: ArrayList<JSONObject> = ArrayList<JSONObject>()
     private lateinit var adapter: SchoolAdapter
@@ -112,18 +112,18 @@ open class PostFragment : Fragment() {
             if (intent != null) {
                 var posting_id = intent.getStringExtra("posting_id")
 
-                for (i in 0 .. (mainAdapterData.size - 1)) {
+                for (i in 0..(mainAdapterData.size - 1)) {
                     var data = mainAdapterData[i]
                     var list = data.getJSONArray("list")
 
-                    for (j in 0 .. (list.length() - 1)) {
+                    for (j in 0..(list.length() - 1)) {
 
                         var p: JSONObject = list[j] as JSONObject
                         var posting = p.getJSONObject("Posting")
 
-                        if(Utils.getString(posting, "id") == posting_id) {
+                        if (Utils.getString(posting, "id") == posting_id) {
 
-                            if(Utils.getInt(posting, "leftCount") != 9999) {
+                            if (Utils.getInt(posting, "leftCount") != 9999) {
                                 var cnt = Utils.getInt(posting, "leftCount") - 1
                                 posting.put("leftCount", cnt)
                             }
@@ -148,7 +148,7 @@ open class PostFragment : Fragment() {
     internal var setViewReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent?) {
 
-            if(intent != null) {
+            if (intent != null) {
                 tabType = intent!!.getIntExtra("tabType", 1)
                 val type = tabType - 1
 
@@ -182,6 +182,7 @@ open class PostFragment : Fragment() {
 
         return inflater.inflate(R.layout.fra_post, container, false)
     }
+
     fun doSomethingWithContext(context: Context) {
         // TODO: Actually do something with the context
         this.ctx = context
@@ -232,9 +233,11 @@ open class PostFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        val image_uri =   PrefUtils.getStringPreference(context, "current_school_image_uri")
-        var univimg = Config.url +image_uri
+
+        val image_uri = PrefUtils.getStringPreference(context, "current_school_image_uri")
+        var univimg = Config.url + image_uri
         ImageLoader.getInstance().displayImage(univimg, univIV, Utils.UILoptionsUserProfile)
+
         member_id = PrefUtils.getIntPreference(context, "member_id")
 
         // 메인 데이터
@@ -275,7 +278,7 @@ open class PostFragment : Fragment() {
 
             override fun onPageSelected(position: Int) {
 
-                if(!onPageSelectedEnabled) {
+                if (!onPageSelectedEnabled) {
                     return
                 }
 
@@ -390,7 +393,7 @@ open class PostFragment : Fragment() {
 
                     keyword = Utils.getString(searchET)
 
-                    if(mainLL.visibility == View.VISIBLE) {
+                    if (mainLL.visibility == View.VISIBLE) {
                         // 메인 학교 검색
 
                     } else {
@@ -436,7 +439,7 @@ open class PostFragment : Fragment() {
         adapter.notifyDataSetChanged()
 
         schoolLV.setOnItemClickListener { adapterView, view, i, l ->
-            if(adapterData.size > i) {
+            if (adapterData.size > i) {
                 val schoolO = adapterData.get(i)
                 val school = schoolO.getJSONObject("School")
                 val school_id = Utils.getInt(school, "id")
@@ -478,10 +481,10 @@ open class PostFragment : Fragment() {
 
                     println(response)
 
-                    if("ok" == result && dbSearchKeyword == searchKeyword) {
+                    if ("ok" == result && dbSearchKeyword == searchKeyword) {
 
                         for (i in 0..(list.length() - 1)) {
-                            var data  = list.get(i) as JSONObject
+                            var data = list.get(i) as JSONObject
                             checkSchoolData(data)
                         }
 
@@ -491,7 +494,7 @@ open class PostFragment : Fragment() {
 
                     }
 
-                    if(adapterData.size == 0) {
+                    if (adapterData.size == 0) {
                         schoolLV.visibility = View.GONE
                     } else {
                         schoolLV.visibility = View.VISIBLE
@@ -516,7 +519,12 @@ open class PostFragment : Fragment() {
                 Utils.alert(context, "조회중 장애가 발생하였습니다.")
             }
 
-            override fun onFailure(statusCode: Int, headers: Array<Header>?, responseString: String?, throwable: Throwable) {
+            override fun onFailure(
+                statusCode: Int,
+                headers: Array<Header>?,
+                responseString: String?,
+                throwable: Throwable
+            ) {
                 if (progressDialog != null) {
                     progressDialog!!.dismiss()
                 }
@@ -527,7 +535,12 @@ open class PostFragment : Fragment() {
                 error()
             }
 
-            override fun onFailure(statusCode: Int, headers: Array<Header>?, throwable: Throwable, errorResponse: JSONObject?) {
+            override fun onFailure(
+                statusCode: Int,
+                headers: Array<Header>?,
+                throwable: Throwable,
+                errorResponse: JSONObject?
+            ) {
                 if (progressDialog != null) {
                     progressDialog!!.dismiss()
                 }
@@ -535,7 +548,12 @@ open class PostFragment : Fragment() {
                 error()
             }
 
-            override fun onFailure(statusCode: Int, headers: Array<Header>?, throwable: Throwable, errorResponse: JSONArray?) {
+            override fun onFailure(
+                statusCode: Int,
+                headers: Array<Header>?,
+                throwable: Throwable,
+                errorResponse: JSONArray?
+            ) {
                 if (progressDialog != null) {
                     progressDialog!!.dismiss()
                 }
@@ -559,23 +577,23 @@ open class PostFragment : Fragment() {
         })
     }
 
-    fun checkSchoolData(data:JSONObject){
+    fun checkSchoolData(data: JSONObject) {
 
         var add = true
 
         val addData = data.getJSONObject("School")
 
-        for (i in 0.. (adapterData.size - 1)) {
+        for (i in 0..(adapterData.size - 1)) {
             val json = adapterData.get(i)
             val school = json.getJSONObject("School")
 
-            if(Utils.getString(school, "id") == Utils.getString(addData, "id")) {
+            if (Utils.getString(school, "id") == Utils.getString(addData, "id")) {
                 add = false
             }
 
         }
 
-        if(add) {
+        if (add) {
             adapterData.add(data)
         }
     }
@@ -728,7 +746,7 @@ open class PostFragment : Fragment() {
         mainLL.visibility = View.GONE
         pagerVP.visibility = View.VISIBLE
 
-        if(tabType == 1) {
+        if (tabType == 1) {
             freeTV.setTextColor(Color.parseColor("#01b4ec"))
             freeV.visibility = View.VISIBLE
         } else if (tabType == 2) {
@@ -754,9 +772,9 @@ open class PostFragment : Fragment() {
 
     fun mainData() {
         val params = RequestParams()
-        params.put("member_id",member_id)
+        params.put("member_id", member_id)
         params.put("current_school_id", PrefUtils.getIntPreference(context, "current_school_id"))
-        params.put("type",type)
+        params.put("type", type)
 
         PostingAction.mainlist(params, object : JsonHttpResponseHandler() {
 
@@ -796,7 +814,7 @@ open class PostFragment : Fragment() {
 
                         var alarm_count = Utils.getInt(response, "alarm_count")
 
-                        if(alarm_count < 1) {
+                        if (alarm_count < 1) {
                             mainActivity.alarmCntTV.visibility = View.GONE
                         } else {
                             mainActivity.alarmCntTV.visibility = View.VISIBLE
@@ -806,16 +824,16 @@ open class PostFragment : Fragment() {
                         val list = response.getJSONArray("list")
                         var school = response.getJSONObject("school")
                         val schoolindex = school.getJSONObject("School")
-                        val image_uri = Utils.getString(schoolindex,"image_uri")
+                        val image_uri = Utils.getString(schoolindex, "image_uri")
 
-                        PrefUtils.setPreference(context, "current_school_image_uri ", image_uri )
+                        PrefUtils.setPreference(context, "current_school_image_uri ", image_uri)
 
-                      val current_school_image_uri=  PrefUtils.getStringPreference(context, "current_school_image_uri ")
+                        val current_school_image_uri = PrefUtils.getStringPreference(context, "current_school_image_uri ")
 
-                        var univimg = Config.url +current_school_image_uri
+                        var univimg = Config.url + current_school_image_uri
                         ImageLoader.getInstance().displayImage(univimg, univIV, Utils.UILoptionsUserProfile)
 
-                        for (i in 0..(list.length()-1)){
+                        for (i in 0..(list.length() - 1)) {
                             mainAdapterData.add(list[i] as JSONObject)
                         }
 
@@ -843,7 +861,12 @@ open class PostFragment : Fragment() {
                 Utils.alert(context, "조회중 장애가 발생하였습니다.")
             }
 
-            override fun onFailure(statusCode: Int, headers: Array<Header>?, responseString: String?, throwable: Throwable) {
+            override fun onFailure(
+                statusCode: Int,
+                headers: Array<Header>?,
+                responseString: String?,
+                throwable: Throwable
+            ) {
                 if (progressDialog != null) {
                     progressDialog!!.dismiss()
                 }
@@ -854,7 +877,12 @@ open class PostFragment : Fragment() {
                 error()
             }
 
-            override fun onFailure(statusCode: Int, headers: Array<Header>?, throwable: Throwable, errorResponse: JSONObject?) {
+            override fun onFailure(
+                statusCode: Int,
+                headers: Array<Header>?,
+                throwable: Throwable,
+                errorResponse: JSONObject?
+            ) {
                 if (progressDialog != null) {
                     progressDialog!!.dismiss()
                 }
@@ -862,7 +890,12 @@ open class PostFragment : Fragment() {
                 error()
             }
 
-            override fun onFailure(statusCode: Int, headers: Array<Header>?, throwable: Throwable, errorResponse: JSONArray?) {
+            override fun onFailure(
+                statusCode: Int,
+                headers: Array<Header>?,
+                throwable: Throwable,
+                errorResponse: JSONArray?
+            ) {
                 if (progressDialog != null) {
                     progressDialog!!.dismiss()
                 }

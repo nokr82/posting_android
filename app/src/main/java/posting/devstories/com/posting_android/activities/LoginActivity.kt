@@ -101,8 +101,10 @@ class LoginActivity : RootActivity() {
                         val school = response.getJSONObject("school")
 
                         val school_id = Utils.getInt(school, "id")
+                        val school_image_uri = Utils.getString(school, "image_uri")
 
                         PrefUtils.setPreference(context, "current_school_id", school_id)
+                        PrefUtils.setPreference(context, "current_school_image_uri", school_image_uri)
 
                         PrefUtils.setPreference(context, "loginID", loginID)
                         PrefUtils.setPreference(context, "member_id", Utils.getInt(data, "id"))
