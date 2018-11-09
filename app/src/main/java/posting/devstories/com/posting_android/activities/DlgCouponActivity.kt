@@ -1,5 +1,6 @@
 package posting.devstories.com.posting_android.activities
 
+import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.DialogInterface
@@ -40,7 +41,7 @@ class DlgCouponActivity : RootActivity() {
         intent = getIntent()
       posting_save_id =intent.getStringExtra("posting_save_id")
         couponnoTX.setOnClickListener {
-         finish()
+            finish()
         }
 
         couponyTX.setOnClickListener {
@@ -63,6 +64,8 @@ class DlgCouponActivity : RootActivity() {
                 try {
                     val result = response!!.getString("result")
                     if ("ok" == result) {
+                        var intent = Intent()
+                        setResult(Activity.RESULT_OK, intent)
 
                         finish()
                     }
