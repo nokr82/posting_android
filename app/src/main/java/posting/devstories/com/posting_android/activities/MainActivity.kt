@@ -33,7 +33,7 @@ class MainActivity : FragmentActivity() {
     private var backPressedTime: Long = 0
 
     var tabType = 1
-    var type = ""
+    var type :String?= null
     var tabWriteV: View? = null
     var member_id = -1
     var member_type = ""
@@ -76,6 +76,7 @@ class MainActivity : FragmentActivity() {
 
         posting_id = intent.getStringExtra("posting_id")
         is_push = intent.getBooleanExtra("is_push", false)
+        type = intent.getStringExtra("intent")
 
         confirm_yn = PrefUtils.getStringPreference(context, "confirm_yn")
 

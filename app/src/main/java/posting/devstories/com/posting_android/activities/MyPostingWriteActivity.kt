@@ -282,6 +282,7 @@ class MyPostingWriteActivity : RootActivity() {
 
                         Utils.hideKeyboard(context)
                         val intent = Intent(context,MainActivity::class.java)
+                        intent.putExtra("type",type)
                         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                         startActivity(intent)
 
