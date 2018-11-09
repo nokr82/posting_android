@@ -351,6 +351,7 @@ class MyPageActivity : FragmentActivity() {
     }
 
     fun edit_profile(){
+
         val params = RequestParams()
         params.put("member_id", PrefUtils.getIntPreference(context, "member_id"))
         if (gallery==null){
@@ -363,7 +364,7 @@ class MyPageActivity : FragmentActivity() {
             params.put("upload", ByteArrayInputStream(Utils.getByteArray(thumbnail)))
         }
         params.put("push_yn", push_yn)
-        print("=============push_yn"+push_yn)
+
         MemberAction.edit_info(params, object : JsonHttpResponseHandler() {
 
             override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
@@ -374,12 +375,14 @@ class MyPageActivity : FragmentActivity() {
                 try {
                     val result = response!!.getString("result")
 
-
-
-
                     if ("ok" == result) {
 
                         Toast.makeText(context, "변경되었습니다.", Toast.LENGTH_SHORT).show()
+
+                        var intent = Intent()
+                        intent.action = "EDIT_PROFILE"
+                        sendBroadcast(intent)
+
                         loadInfo()
 
                     } else {
@@ -484,10 +487,9 @@ class MyPageActivity : FragmentActivity() {
                         }
 
                         var image_uri = Utils.getString(member, "image_uri")
-                        if (!image_uri.isEmpty() && image_uri != "") {
-                            var image = Config.url + image_uri
-                            ImageLoader.getInstance().displayImage(image,myproIV, Utils.UILoptionsPosting)
-                        }
+                        var image = Config.url + image_uri
+                        ImageLoader.getInstance().displayImage(image,myproIV, Utils.UILoptionsUserProfile)
+
                         infonameTV.text = name+"/"+birth
                         nameTV.text =nick
 
