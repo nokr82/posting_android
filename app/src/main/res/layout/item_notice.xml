@@ -14,7 +14,7 @@
             android:id="@+id/createTV"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="8월31일"
+        android:text=""
         android:textSize="11.33dp"
         android:textColor="#595757"/>
         <TextView
@@ -22,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="16dp"
-        android:text="포스팅 1차 업데이트 안내"
+        android:text=""
         android:textColor="#063588"/>
 
         <View

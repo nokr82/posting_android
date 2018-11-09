@@ -89,7 +89,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="post_0904"
+                            android:text=""
                             android:textSize="15.6dp" />
 
 
@@ -99,7 +99,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="12.8dp"
                             android:gravity="center"
-                            android:text="손나은 / 연세대 13학번 "
+                            android:text=""
                             android:textColor="#8F8E8A"
                             android:textSize="14.6dp" />
 

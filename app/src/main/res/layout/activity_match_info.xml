@@ -102,7 +102,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:textSize="15.5dp"
-                    android:text="7/16" />
+                    android:text="" />
 
             </LinearLayout>
 
@@ -127,7 +127,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:textSize="15.5dp"
-                    android:text="6" />
+                    android:text="" />
 
             </LinearLayout>
 

@@ -29,7 +29,7 @@
             android:id="@+id/reTX"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="아직이에요...^^"
+            android:text=""
             android:textColor="#050000"
             android:textSize="14dp"/>
 
@@ -59,7 +59,7 @@
             android:layout_height="wrap_content"
             android:textSize="11.3dp"
             android:textColor="#595757"
-            android:text="post_0904 l 09.21 l "/>
+            android:text=""/>
 
         <TextView
             android:layout_width="wrap_content"

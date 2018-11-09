@@ -64,7 +64,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="12.4dp"
                 android:textSize="16.33dp"
-                android:text="lala_girl"/>
+                android:text=""/>
             <TextView
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -72,7 +72,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="26.2dp"
                 android:textSize="11dp"
-                android:text="8월31일"/>
+                android:text=""/>
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -113,8 +113,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="안녕하세요 이화여대 17학번 영문학과 재학생이며,\n부전공은 국어교육학 입니다.
-\n인문학 스터디 그룹원 모집중입니다.\n대상 : 고대/이대/서강대 재학생이면 누구나\n 인문학에 관심 있는 16~18 학번"
+            android:text=""
             android:textSize="13.6dp"/>
 
         <LinearLayout
@@ -124,31 +123,31 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="#스터디"
+                android:text=""
                 android:textColor="#063588"
                 android:textSize="13dp"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="#스터디"
+                android:text=""
                 android:textColor="#063588"
                 android:textSize="13dp"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="#인문학"
+                android:text=""
                 android:textColor="#063588"
                 android:textSize="13dp"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="#인문학스터디"
+                android:text=""
                 android:textColor="#063588"
                 android:textSize="13dp"/>
             <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="#STUDY"
+            android:text=""
             android:textColor="#063588"
             android:textSize="13dp"/>
 

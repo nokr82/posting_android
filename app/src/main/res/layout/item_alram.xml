@@ -31,7 +31,7 @@
                 android:id="@+id/createdTV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="8월31일"
+                android:text=""
                 android:textSize="8.5dp"
                 android:textColor="#595757"/>
 
@@ -40,7 +40,7 @@
                 android:layout_marginTop="2dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="lala_girl 회원님의 포스팅을 떼었습니다"
+                android:text=""
                 android:textSize="12.5dp"
                 android:textColor="#050000"/>
 
@@ -67,7 +67,7 @@
                 android:layout_height="wrap_content"
                 android:maxLines="2"
                 android:ellipsize="end"
-                android:text="123456479847546554645"
+                android:text=""
                 android:textSize="9dp"
                 android:layout_centerInParent="true"
                 android:layout_margin="6dp"/>

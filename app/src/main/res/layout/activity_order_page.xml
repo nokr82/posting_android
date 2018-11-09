@@ -50,7 +50,7 @@
                     android:layout_marginTop="21dp"
                     android:layout_marginLeft="38dp"
                     android:layout_marginRight="54dp"
-                    android:src="@mipmap/starbucks_img"/>
+                    android:src="@mipmap/myimg"/>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -71,7 +71,7 @@
                         android:id="@+id/couponCntTV"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="1"
+                        android:text=""
                         android:textSize="15dp"
                         android:gravity="center_horizontal"/>
 
@@ -93,7 +93,7 @@
                         android:id="@+id/reviewCntTV"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="6"
+                        android:text=""
                         android:textSize="15dp"
                         android:gravity="center_horizontal"/>
 
@@ -113,7 +113,7 @@
                         android:id="@+id/companyNameTV"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="starbucks"
+                        android:text=""
                         android:textColor="#050000"
                         android:textStyle="bold"
                         android:textSize="10.5sp"/>
