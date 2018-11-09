@@ -1,4 +1,4 @@
-package posting.devstories.com.posting_android
+package posting.devstories.com.posting_android.fcm
 
 import android.os.Handler
 import android.os.Looper

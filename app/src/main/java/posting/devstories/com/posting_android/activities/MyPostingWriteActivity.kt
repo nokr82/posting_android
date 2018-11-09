@@ -124,7 +124,6 @@ class MyPostingWriteActivity : RootActivity() {
             popupRL.visibility = View.VISIBLE
         }else if (postingType.equals("G")){
             //이미지
-            img2RL.background = Drawable.createFromPath(imgid)
             ImageLoader.getInstance().displayImage(image, captureIV, Utils.UILoptionsUserProfile)
             popupRL.visibility = View.VISIBLE
 
@@ -284,7 +283,7 @@ class MyPostingWriteActivity : RootActivity() {
 //                        val intent = Intent(context,MainActivity::class.java)
                    //브로드캐스트로 날려주기
                         val intent = Intent()
-                        intent.putExtra("type",type)
+                        intent.putExtra("tabType",type)
                         intent.action = "SET_VIEW"
                         sendBroadcast(intent)
 
