@@ -185,8 +185,6 @@ open class MyPagePostingStorageFragment : Fragment() {
                 val Posting = adapterData[position].getJSONObject("Posting")
                 val type = Utils.getInt(Posting,"type")
 
-
-
                 if (taptype ==1) {
                     if (type == 3 || type == 4 || type == 5) {
 //                        val intent = Intent(context, MyPostingActivity::class.java)

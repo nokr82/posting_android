@@ -10,6 +10,8 @@ import org.json.JSONObject
 import posting.devstories.com.posting_android.R
 import posting.devstories.com.posting_android.base.Utils
 import posting.devstories.com.posting_android.base.Config
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 open class MyPostingAdapter(context:Context, view:Int, data:ArrayList<JSONObject>) : ArrayAdapter<JSONObject>(context, view, data) {
@@ -61,42 +63,53 @@ open class MyPostingAdapter(context:Context, view:Int, data:ArrayList<JSONObject
             item.postbg2IV.setImageResource(R.mipmap.bg)
         }
 
-        if (coupon_type.equals("1")){
-            item.coupon_orderTV.text = company_name
-            item.storageTV.visibility = View.GONE
-            item.couponLL.visibility = View.VISIBLE
-            item.coupon_titleTV.text = menu_name
-            item.coupon_saleTV.text = sale_per
-            item.coupon_sale2TV.text = "할인"
-            item.coupon_startdateTV.text = uses_start_date
-            item.coupon_contentTV.text = contents
-            item.coupon_enddateTV.text = uses_end_date
-        }else if (coupon_type.equals("2")){
-            item.coupon_orderTV.text = company_name
-            item.storageTV.visibility = View.GONE
-            item.couponLL.setBackgroundColor(Color.parseColor("#FB2B70"))
-            item.couponLL.visibility = View.VISIBLE
-            item.coupon_titleTV.text = menu_name
-            item.coupon_saleTV.text = "FREE"
-            item.coupon_TV.visibility = View.GONE
-            item.coupon_sale2TV.visibility = View.GONE
-            item.coupon_contentTV.text = contents
-            item.coupon_startdateTV.text = uses_start_date
-            item.coupon_enddateTV.text = uses_end_date
-        }else if (coupon_type.equals("3")){
-            item.coupon_orderTV.text = company_name
-            item.storageTV.visibility = View.GONE
-            item.couponLL.visibility = View.VISIBLE
-            item.couponLL.setBackgroundColor(Color.parseColor("#A12BFB"))
-            item.coupon_titleTV.text = menu_name
-            item.coupon_saleTV.text = sale_price
-            item.coupon_contentTV.text = contents
-            item.coupon_TV.text = "원"
-            item.coupon_sale2TV.text = "할인"
-            item.coupon_startdateTV.text = uses_start_date
-            item.coupon_enddateTV.text = uses_end_date
-        }
-else {
+        if("" != coupon_type) {
+
+            val cymd = SimpleDateFormat("yy.MM.dd", Locale.KOREA)
+
+            val coupon_startdate = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(uses_start_date)
+            //디테일 이미지에보이는 날짜
+            val ctv_startdate = cymd.format(coupon_startdate)
+            val coupon_enddate = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(uses_end_date)
+            val ctv_enddate = cymd.format(coupon_enddate)
+
+            if (coupon_type.equals("1")){
+                item.coupon_orderTV.text = company_name
+                item.storageTV.visibility = View.GONE
+                item.couponLL.visibility = View.VISIBLE
+                item.coupon_titleTV.text = menu_name
+                item.coupon_saleTV.text = sale_per
+                item.coupon_sale2TV.text = "할인"
+                item.coupon_startdateTV.text = ctv_startdate
+                item.coupon_contentTV.text = contents
+                item.coupon_enddateTV.text = ctv_enddate
+            }else if (coupon_type.equals("2")){
+                item.coupon_orderTV.text = company_name
+                item.storageTV.visibility = View.GONE
+                item.couponLL.setBackgroundColor(Color.parseColor("#FB2B70"))
+                item.couponLL.visibility = View.VISIBLE
+                item.coupon_titleTV.text = menu_name
+                item.coupon_saleTV.text = "FREE"
+                item.coupon_TV.visibility = View.GONE
+                item.coupon_sale2TV.visibility = View.GONE
+                item.coupon_contentTV.text = contents
+                item.coupon_startdateTV.text = ctv_startdate
+                item.coupon_enddateTV.text = ctv_enddate
+            }else if (coupon_type.equals("3")){
+                item.coupon_orderTV.text = company_name
+                item.storageTV.visibility = View.GONE
+                item.couponLL.visibility = View.VISIBLE
+                item.couponLL.setBackgroundColor(Color.parseColor("#A12BFB"))
+                item.coupon_titleTV.text = menu_name
+                item.coupon_saleTV.text = sale_price
+                item.coupon_contentTV.text = contents
+                item.coupon_TV.text = "원"
+                item.coupon_sale2TV.text = "할인"
+                item.coupon_startdateTV.text = ctv_startdate
+                item.coupon_enddateTV.text = ctv_enddate
+            }
+
+        } else {
             item.couponLL.visibility = View.GONE
             if (!image_uri.isEmpty() && image_uri != "") {
                 var image = Config.url + image_uri
