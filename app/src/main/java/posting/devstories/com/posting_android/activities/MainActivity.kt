@@ -80,6 +80,7 @@ class MainActivity : FragmentActivity() {
 
     private var confirm_yn = ""
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
