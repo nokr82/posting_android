@@ -183,14 +183,19 @@ open class MainFragment : Fragment(), AbsListView.OnScrollListener {
                 try {
                     val result = response!!.getString("result")
 
-                    adapterData.clear()
-                    adapterMain.notifyDataSetChanged()
 
                     if ("ok" == result) {
                         val data = response.getJSONArray("list")
 
                         totalPage = response.getInt("totalPage");
                         page = response.getInt("page");
+
+                        if(page == 1) {
+
+                            adapterData.clear()
+                            adapterMain.notifyDataSetChanged()
+
+                        }
 
                         for (i in 0..(data.length() - 1)) {
 
@@ -241,6 +246,7 @@ open class MainFragment : Fragment(), AbsListView.OnScrollListener {
             override fun onStart() {
                 // show dialog
                 if (progressDialog != null) {
+
 
                     progressDialog!!.show()
                 }
