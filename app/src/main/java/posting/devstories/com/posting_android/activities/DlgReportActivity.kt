@@ -1,5 +1,6 @@
 package posting.devstories.com.posting_android.activities
 
+import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
@@ -45,8 +46,6 @@ class DlgReportActivity : RootActivity() {
         this.context = this
         progressDialog = ProgressDialog(context)
 
-
-
         intent = getIntent()
         member_id =intent.getIntExtra("member_id",-1)
         posting_id = intent.getStringExtra("posting_id")
@@ -62,8 +61,6 @@ class DlgReportActivity : RootActivity() {
         val delTV = findViewById<TextView>(R.id.delTV)
         val modiTV = findViewById<TextView>(R.id.modiTV)
         val recyTV = findViewById<TextView>(R.id.recyTV)
-
-
 
 
         if (dlgtype.equals("police")) {
@@ -93,9 +90,9 @@ class DlgReportActivity : RootActivity() {
             recyTV.visibility = View.GONE
             delTV.setOnClickListener {
                 del_posting()
-                val intent = Intent(context, MainActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                startActivity(intent)
+//                val intent = Intent(context, MainActivity::class.java)
+//                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+//                startActivity(intent)
 
             }
 
@@ -121,18 +118,12 @@ class DlgReportActivity : RootActivity() {
             delTV.setOnClickListener {
                 savedel_posting()
                 //이것을 어찌할꼬...
-                val intent = Intent(context, MainActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                startActivity(intent)
+//                val intent = Intent(context, MainActivity::class.java)
+//                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+//                startActivity(intent)
 
             }
         }
-
-
-
-
-
-
 
     }
 
@@ -158,6 +149,7 @@ class DlgReportActivity : RootActivity() {
                         intent.putExtra("type", type)
                         intent.action = "DEL_POSTING"
                         sendBroadcast(intent)
+                        setResult(Activity.RESULT_OK, intent)
 
                         finish()
 
@@ -200,6 +192,7 @@ class DlgReportActivity : RootActivity() {
             }
         })
     }
+
     fun report(type:String){
         val params = RequestParams()
         params.put("member_id", member_id)
@@ -286,6 +279,7 @@ class DlgReportActivity : RootActivity() {
                         intent.putExtra("type", type)
                         intent.action = "DEL_POSTING"
                         sendBroadcast(intent)
+                        setResult(RESULT_OK, intent)
 
                         finish()
 
@@ -328,6 +322,7 @@ class DlgReportActivity : RootActivity() {
             }
         })
     }
+
     override fun onDestroy() {
         super.onDestroy()
 

@@ -1,5 +1,6 @@
 package posting.devstories.com.posting_android.activities
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
@@ -61,6 +62,8 @@ class DetailActivity : RootActivity() {
 
     var dlgtype  = ""
 
+    val EDIT_POST = 101;
+    val STORAGE_POST = 201;
 
 
     var school_id = -1
@@ -563,7 +566,7 @@ class DetailActivity : RootActivity() {
 
                         count = Utils.getInt(posting, "leftCount")
 
-                        if(count < 1 || me_school_id != school_id || member_id == member_id2 || "Y" == save_yn) {
+                        if(count < 1 || me_school_id != school_id || member_id == member_id2 || "Y" == save_yn || "3" == member_type) {
 
                             println("count : " + count)
                             println("me_school_id : " + me_school_id)
@@ -768,12 +771,9 @@ class DetailActivity : RootActivity() {
         intent.putExtra("posting_id", posting_id)
         intent.putExtra("member_id", member_id)
         intent.putExtra("dlgtype", dlgtype)
-
-
-
         startActivity(intent)
-
     }
+
     fun dlgView(){
         dlgtype = "Myposting"
         var intent = Intent(context, DlgReportActivity::class.java)
@@ -783,7 +783,7 @@ class DetailActivity : RootActivity() {
         intent.putExtra("member_type",member_type)
         intent.putExtra("contents",contents)
         intent.putExtra("type",type)
-        startActivity(intent)
+        startActivityForResult(intent, EDIT_POST)
 
     }
     fun storagedlgView(){
@@ -791,7 +791,7 @@ class DetailActivity : RootActivity() {
         var intent = Intent(context, DlgReportActivity::class.java)
         intent.putExtra("save_id", save_id)
         intent.putExtra("dlgtype", dlgtype)
-        startActivity(intent)
+        startActivityForResult(intent, STORAGE_POST)
 
     }
 
@@ -802,7 +802,21 @@ class DetailActivity : RootActivity() {
         intent.putExtra("posting_save_id", posting_save_id)
         startActivity(intent)
     }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
 
+        if(resultCode == Activity.RESULT_OK) {
+            when(requestCode) {
+                EDIT_POST -> {
+                    finish()
+                }
+                STORAGE_POST -> {
+                    finish()
+                }
+            }
+        }
+
+    }
 
     override fun onDestroy() {
         super.onDestroy()
