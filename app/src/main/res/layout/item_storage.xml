@@ -37,7 +37,7 @@
                 android:layout_height="match_parent"
                 android:background="#FBCA2B"
                 android:orientation="vertical"
-                android:visibility="visible"
+                android:visibility="gone"
                 android:paddingRight="3dp"
                 android:paddingTop="2dp">
 
