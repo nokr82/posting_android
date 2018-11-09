@@ -36,6 +36,8 @@ open class OrderPageFragment : Fragment() {
     lateinit var adapterOrder: OrderAdapter
     lateinit var adapterReview: ReviewAdapter
 
+
+    var member_type = ""
     var member_id = -1
     lateinit var reviewLL: LinearLayout
     lateinit var reviewV:View
@@ -86,8 +88,9 @@ open class OrderPageFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         activity = getActivity() as MainActivity
         member_id = PrefUtils.getIntPreference(context, "member_id")
+        member_type = PrefUtils.getStringPreference(context,"member_type")
 
-
+        adapterData.clear()
        menuLL.setOnClickListener {
            val intent = Intent(context, MyPageActivity::class.java)
            startActivity(intent)
@@ -111,7 +114,11 @@ open class OrderPageFragment : Fragment() {
 
         reviewLL.setOnClickListener {
 
-            review2LL.visibility = View.VISIBLE
+            if (member_type.equals("3")){
+                review2LL.visibility = View.GONE
+            }else{
+                review2LL.visibility = View.VISIBLE
+            }
             adapterData.clear()
             reviewV.visibility = View.VISIBLE
             couponV.visibility = View.INVISIBLE
