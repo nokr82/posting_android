@@ -278,10 +278,11 @@
                                 android:gravity="center"
                                 android:layout_centerInParent="true"
                                 android:text=""
-                                android:textSize="65dp"
+                                android:textSize="42dp"
                                 android:visibility="gone"
                                 android:maxLines="3"
-                                android:ellipsize="end"/>
+                                android:ellipsize="end"
+                                android:lineSpacingExtra="23dp"/>
 
                             <LinearLayout
                                 android:id="@+id/countLL"

@@ -19,7 +19,7 @@ import org.json.JSONObject
 import posting.devstories.com.posting_android.Actions.AddressAction
 import posting.devstories.com.posting_android.Actions.JoinAction
 import posting.devstories.com.posting_android.R
-import posting.devstories.com.posting_android.R.id.*
+import posting.devstories.com.posting_android.base.Config
 import posting.devstories.com.posting_android.base.RootActivity
 import posting.devstories.com.posting_android.base.Utils
 
@@ -56,27 +56,55 @@ class OrderJoinActivity : RootActivity() {
         allCB.setOnClickListener {
             var checked = allCB.isChecked
             if (checked) {
-                serviceCB.isChecked = true
-                soloCB.isChecked = true
+                serviceCK.isChecked = true
+                soloCK.isChecked = true
+                agree3CK.isChecked = true
+                agree4CK.isChecked = true
             } else {
-                serviceCB.isChecked = false
-                soloCB.isChecked = false
+                serviceCK.isChecked = false
+                soloCK.isChecked = false
+                agree3CK.isChecked = false
+                agree4CK.isChecked = false
             }
         }
 
-        serviceCB.setOnCheckedChangeListener { compoundButton, b ->
+        serviceCK.setOnCheckedChangeListener { compoundButton, b ->
 
-            val check = soloCB.isChecked
+            val check = soloCK.isChecked
+            val check_2 = agree3CK.isChecked
+            val check_3 = agree4CK.isChecked
 
-            allCB.isChecked = b && check
+            allCB.isChecked = b && check && check_2 && check_3
 
         }
 
-        soloCB.setOnCheckedChangeListener { compoundButton, b ->
+        soloCK.setOnCheckedChangeListener { compoundButton, b ->
 
-            val check = serviceCB.isChecked
+            val check = serviceCK.isChecked
+            val check_2 = agree3CK.isChecked
+            val check_3 = agree4CK.isChecked
 
-            allCB.isChecked = b && check
+            allCB.isChecked = b && check && check_2 && check_3
+
+        }
+
+        agree3CK.setOnCheckedChangeListener { compoundButton, b ->
+
+            val check = serviceCK.isChecked
+            val check_2 = soloCK.isChecked
+            val check_3 = agree4CK.isChecked
+
+            allCB.isChecked = b && check && check_2 && check_3
+
+        }
+
+        agree4CK.setOnCheckedChangeListener { compoundButton, b ->
+
+            val check = serviceCK.isChecked
+            val check_2 = soloCK.isChecked
+            val check_3 = agree3CK.isChecked
+
+            allCB.isChecked = b && check && check_2 && check_3
 
         }
 
@@ -155,13 +183,19 @@ class OrderJoinActivity : RootActivity() {
                 dlgView( geterror)
             }
 
-            else if (serviceCB.isChecked != true) {
+            else if (serviceCK.isChecked != true) {
                 geterror = "이용약관에 동의해주세요"
 
                 dlgView( geterror)
             }
 
-            else if (soloCB.isChecked != true) {
+            else if (soloCK.isChecked != true) {
+                geterror = "이용약관에 동의해주세요"
+
+                dlgView( geterror)
+            }
+
+            else if (agree3CK.isChecked != true) {
                 geterror = "이용약관에 동의해주세요"
 
                 dlgView( geterror)
@@ -191,6 +225,47 @@ class OrderJoinActivity : RootActivity() {
 
         finishLL.setOnClickListener {
             finish()
+        }
+
+
+
+        agree1WV.loadUrl(Config.url + "/agree/agree1");
+        agree2WV.loadUrl(Config.url + "/agree/agree2");
+        agree3WV.loadUrl(Config.url + "/agree/agree3");
+        agree4WV.loadUrl(Config.url + "/agree/agree4");
+
+        agree1BtnLL.setOnClickListener {
+
+            if(agree1LL.visibility == View.VISIBLE) {
+                agree1LL.visibility = View.GONE
+            } else {
+                agree1LL.visibility = View.VISIBLE
+            }
+
+        }
+
+        agree2BtnLL.setOnClickListener {
+            if(agree2LL.visibility == View.VISIBLE) {
+                agree2LL.visibility = View.GONE
+            } else {
+                agree2LL.visibility = View.VISIBLE
+            }
+        }
+
+        agree3BtnLL.setOnClickListener {
+            if(agree3LL.visibility == View.VISIBLE) {
+                agree3LL.visibility = View.GONE
+            } else {
+                agree3LL.visibility = View.VISIBLE
+            }
+        }
+
+        agree4BtnLL.setOnClickListener {
+            if(agree4LL.visibility == View.VISIBLE) {
+                agree4LL.visibility = View.GONE
+            } else {
+                agree4LL.visibility = View.VISIBLE
+            }
         }
 
     }

@@ -32,7 +32,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:background="#01b4ec"
+                    android:background="#063588"
                     android:id="@+id/free2V"
                     android:visibility="invisible"/>
 
@@ -61,7 +61,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:id="@+id/info2V"
-                    android:background="#01b4ec"
+                    android:background="#063588"
                     android:visibility="invisible" />
 
         </RelativeLayout>
@@ -89,7 +89,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:id="@+id/Study2V"
-                    android:background="#01b4ec"
+                    android:background="#063588"
                     android:visibility="invisible" />
 
         </RelativeLayout>
@@ -117,7 +117,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:id="@+id/class2V"
-                    android:background="#01b4ec"
+                    android:background="#063588"
                     android:visibility="invisible" />
 
         </RelativeLayout>
@@ -144,7 +144,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:id="@+id/miting2V"
-                    android:background="#01b4ec"
+                    android:background="#063588"
                     android:visibility="invisible" />
 
         </RelativeLayout>
@@ -172,7 +172,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:id="@+id/coupon2V"
-                    android:background="#01b4ec"
+                    android:background="#063588"
                     android:visibility="invisible" />
 
         </RelativeLayout>

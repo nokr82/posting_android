@@ -1,13 +1,11 @@
 package posting.devstories.com.posting_android.activities
 
 import android.app.Activity
-import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ArrayAdapter
-import android.widget.TextView
 import android.widget.Toast
 import com.loopj.android.http.JsonHttpResponseHandler
 import com.loopj.android.http.RequestParams
@@ -21,16 +19,20 @@ import posting.devstories.com.posting_android.R
 import posting.devstories.com.posting_android.base.PrefUtils
 import posting.devstories.com.posting_android.base.RootActivity
 import posting.devstories.com.posting_android.base.Utils
-import android.content.DialogInterface
+import android.view.View
+import posting.devstories.com.posting_android.adapter.SpinnerAdapter
+import posting.devstories.com.posting_android.base.Config
 
 class StudentJoinActivity : RootActivity() {
     lateinit var context: Context
     private var progressDialog: ProgressDialog? = null
-    var gender = arrayOf("남", "여")
-    var years:ArrayList<Int> = ArrayList<Int>()
-    lateinit var adpater:ArrayAdapter<Int>
+    var years:ArrayList<String> = ArrayList<String>()
+    var gender:ArrayList<String> = ArrayList<String>()
+    lateinit var adpater:ArrayAdapter<String>
     lateinit var adpater2:ArrayAdapter<String>
 
+
+    lateinit var spinnerAdapter:SpinnerAdapter
 
     var gendertype =""
     var birthtype = 0
@@ -67,21 +69,41 @@ class StudentJoinActivity : RootActivity() {
             if (b==true){
                 serviceCK.isChecked=true
                 soloCK.isChecked=true
+                agree3CK.isChecked=true
+                agree4CK.isChecked=true
             }else{
                 serviceCK.isChecked=false
                 soloCK.isChecked=false
+                agree3CK.isChecked=false
+                agree4CK.isChecked=false
             }
         }
         serviceCK.setOnCheckedChangeListener { compoundButton, b ->
 
-            val check = soloCK.isChecked
-            allCK.isChecked = b&&check
+            val check_1 = soloCK.isChecked
+            val check_2 = agree3CK.isChecked
+            val check_3 = agree4CK.isChecked
+            allCK.isChecked = b&&check_1&&check_2&&check_3
 
 
         }
         soloCK.setOnCheckedChangeListener { compoundButton, b ->
-            val check = serviceCK.isChecked
-            allCK.isChecked = b&&check
+            val check_1 = serviceCK.isChecked
+            val check_2 = agree3CK.isChecked
+            val check_3 = agree4CK.isChecked
+            allCK.isChecked = b&&check_1&&check_2&&check_3
+        }
+        agree3CK.setOnCheckedChangeListener { compoundButton, b ->
+            val check_1 = serviceCK.isChecked
+            val check_2 = soloCK.isChecked
+            val check_3 = agree4CK.isChecked
+            allCK.isChecked = b&&check_1&&check_2&&check_3
+        }
+        agree4CK.setOnCheckedChangeListener { compoundButton, b ->
+            val check_1 = serviceCK.isChecked
+            val check_2 = soloCK.isChecked
+            val check_3 = agree3CK.isChecked
+            allCK.isChecked = b&&check_1&&check_2&&check_3
         }
 
 
@@ -135,7 +157,11 @@ class StudentJoinActivity : RootActivity() {
                 geterror = "이용약관에 동의해주세요"
 
                 dlgView( geterror)
-            }else {
+            }else if(agree3CK.isChecked != true) {
+                geterror = "이용약관에 동의해주세요"
+
+                dlgView( geterror)
+            } else {
                 Nick(getNick)
             }
 
@@ -150,23 +176,67 @@ class StudentJoinActivity : RootActivity() {
             finish()
         }
 
+        years.add("태어난 연도");
 
         for (i in 1968..2018) {
 
-            years.add(i)
+            years.add(i.toString())
 
         }
-        adpater = ArrayAdapter<Int>(this,android.R.layout.simple_spinner_item,years)
 
-        birthSP.adapter  = adpater
+        spinnerAdapter = SpinnerAdapter(context, R.layout.item_join, years)
+        birthSP.adapter  = spinnerAdapter
+        spinnerAdapter.setDropDownViewResource(R.layout.item_join);
+//        birthSP.setOnItemClickListener { parent, view, position, id ->
+//
+//            var years :String = years.get(position);
+//
+//        }
 
+        gender.add("성별")
+        gender.add("남")
+        gender.add("여")
 
+        spinnerAdapter = SpinnerAdapter(context, R.layout.item_join, gender)
+        genderSP.adapter = spinnerAdapter
+        spinnerAdapter.setDropDownViewResource(R.layout.item_join);
 
+        agree1WV.loadUrl(Config.url + "/agree/agree1");
+        agree2WV.loadUrl(Config.url + "/agree/agree2");
+        agree3WV.loadUrl(Config.url + "/agree/agree3");
+        agree4WV.loadUrl(Config.url + "/agree/agree4");
 
+        agree1BtnLL.setOnClickListener {
+            if(agree1LL.visibility == View.VISIBLE) {
+                agree1LL.visibility = View.GONE
+            } else {
+                agree1LL.visibility = View.VISIBLE
+            }
+        }
 
-        adpater2 = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, gender)
-        genderSP.adapter = adpater2
+        agree2BtnLL.setOnClickListener {
+            if(agree2LL.visibility == View.VISIBLE) {
+                agree2LL.visibility = View.GONE
+            } else {
+                agree2LL.visibility = View.VISIBLE
+            }
+        }
 
+        agree3BtnLL.setOnClickListener {
+            if(agree3LL.visibility == View.VISIBLE) {
+                agree3LL.visibility = View.GONE
+            } else {
+                agree3LL.visibility = View.VISIBLE
+            }
+        }
+
+        agree4BtnLL.setOnClickListener {
+            if(agree4LL.visibility == View.VISIBLE) {
+                agree4LL.visibility = View.GONE
+            } else {
+                agree4LL.visibility = View.VISIBLE
+            }
+        }
 
     }
 

@@ -325,23 +325,23 @@ open class MyPagePostingStorageFragment : Fragment() {
 
 
         if(tabType == 1) {
-            free2TV.setTextColor(Color.parseColor("#01b4ec"))
+            free2TV.setTextColor(Color.parseColor("#063588"))
             free2V.visibility = View.VISIBLE
         } else if (tabType == 2) {
             info2V.visibility = View.VISIBLE
-            info2TV.setTextColor(Color.parseColor("#01b4ec"))
+            info2TV.setTextColor(Color.parseColor("#063588"))
         } else if (tabType == 3) {
             study2V.visibility = View.VISIBLE
-            study2TV.setTextColor(Color.parseColor("#01b4ec"))
+            study2TV.setTextColor(Color.parseColor("#063588"))
         } else if (tabType == 4) {
             class2V.visibility = View.VISIBLE
-            class2TV.setTextColor(Color.parseColor("#01b4ec"))
+            class2TV.setTextColor(Color.parseColor("#063588"))
         } else if (tabType == 5) {
             meeting2V.visibility = View.VISIBLE
-            meeting2TV.setTextColor(Color.parseColor("#01b4ec"))
+            meeting2TV.setTextColor(Color.parseColor("#063588"))
         } else if (tabType == 6) {
             coupon2V.visibility = View.VISIBLE
-            coupon2TV.setTextColor(Color.parseColor("#01b4ec"))
+            coupon2TV.setTextColor(Color.parseColor("#063588"))
         }
 
     }
