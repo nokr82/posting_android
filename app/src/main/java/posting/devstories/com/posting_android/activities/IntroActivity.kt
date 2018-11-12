@@ -128,6 +128,7 @@ class IntroActivity : RootActivity() {
                         PrefUtils.setPreference(context, "member_type", Utils.getString(data, "member_type"))
                         PrefUtils.setPreference(context, "school_id", Utils.getInt(data, "school_id"))
                         PrefUtils.setPreference(context, "confirm_yn", Utils.getString(data, "confirm_yn"))
+                        PrefUtils.setPreference(context, "active_yn", Utils.getString(data, "active_yn"))
                         PrefUtils.setPreference(context, "autoLogin", true)
                         val member_type = PrefUtils.getStringPreference(context,"member_type")
 

@@ -113,6 +113,7 @@ class LoginActivity : RootActivity() {
                         PrefUtils.setPreference(context, "member_type", Utils.getString(data, "member_type"))
                         PrefUtils.setPreference(context, "school_id", Utils.getInt(data, "school_id"))
                         PrefUtils.setPreference(context, "confirm_yn", Utils.getString(data, "confirm_yn"))
+                        PrefUtils.setPreference(context, "active_yn", Utils.getString(data, "active_yn"))
                         PrefUtils.setPreference(context, "autoLogin", autoLogin)
 
                         val intent = Intent(context, MainActivity::class.java)

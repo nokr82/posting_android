@@ -6,32 +6,32 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.database.Cursor
+import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
+import android.support.v4.content.FileProvider
+import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import posting.devstories.com.posting_android.R
-import posting.devstories.com.posting_android.adapter.ImageAdapter
-import java.util.*
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
-import android.graphics.Bitmap
-import android.view.View
-import kotlinx.android.synthetic.main.activity_postwrite.*
-import android.net.Uri
-import android.os.Environment
-import android.support.v4.content.FileProvider
 import com.loopj.android.http.JsonHttpResponseHandler
 import com.loopj.android.http.RequestParams
-import posting.devstories.com.posting_android.base.*
-import java.io.File
-import java.io.IOException
 import com.nostra13.universalimageloader.core.ImageLoader
 import cz.msebera.android.httpclient.Header
+import kotlinx.android.synthetic.main.activity_postwrite.*
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 import posting.devstories.com.posting_android.Actions.PostingAction
+import posting.devstories.com.posting_android.R
+import posting.devstories.com.posting_android.adapter.ImageAdapter
+import posting.devstories.com.posting_android.base.*
+import java.io.File
+import java.io.IOException
+import java.util.*
 
 class PostWriteActivity : RootActivity() {
 
@@ -43,6 +43,7 @@ class PostWriteActivity : RootActivity() {
     private val REQUEST_CAMERA = 0
     private val CROP_FROM_CAMERA = 100
     var imageUri: Uri? = null
+    var imageUriOutput: Uri? = null
     var absolutePath: String? = null
     var mee = arrayOf("자유", "정보", "스터디", "동아리", "미팅")
     var most = arrayOf("수량", "1", "3", "5", "10", "20", "∞")
@@ -393,7 +394,13 @@ class PostWriteActivity : RootActivity() {
             //이미지가져오기
             imgid = photo.photoPath!!
 
-            imgIV2.setImageBitmap(Utils.getImage(context.contentResolver, imgid, 200))
+            imageUri = Uri.fromFile(File(imgid))
+
+            cropImage()
+
+            // val imgWidth = Utils.getScreenWidth(context) / 4
+            // imgIV2.setImageBitmap(Utils.getImage(context.contentResolver, imgid, 800))
+            // imgIV2.setImageBitmap(Utils.getImage(context.contentResolver, imgid))
             capture = null
             imageUri = null
 
@@ -429,9 +436,10 @@ class PostWriteActivity : RootActivity() {
 
             }
             CROP_FROM_CAMERA -> {
-//                    capture = Utils.getImage(context.contentResolver, absolutePath)
-                val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, imageUri)
-                capture = bitmap
+
+                capture = Utils.getImage(context.contentResolver, imageUriOutput!!.path)
+                // val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, imageUriOutput)
+                // capture = bitmap
                 postingType = "P"
                 imgIV2.setImageBitmap(capture)
 
@@ -469,8 +477,33 @@ class PostWriteActivity : RootActivity() {
             Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION
         )
         //you must setup this
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
-        startActivityForResult(intent, CROP_FROM_CAMERA)
+
+        if (intent.resolveActivity(packageManager) != null) {
+
+            val storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+
+            try {
+                val photo = File.createTempFile(
+                    System.currentTimeMillis().toString(), /* prefix */
+                    ".jpg", /* suffix */
+                    storageDir      /* directory */
+                )
+
+                absolutePath = photo.absolutePath
+                //imageUri = Uri.fromFile(photo);
+                imageUriOutput = FileProvider.getUriForFile(context, packageName + ".provider", photo)
+
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUriOutput)
+                startActivityForResult(intent, CROP_FROM_CAMERA)
+
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+
+        }
+
+
+
 
     }
 

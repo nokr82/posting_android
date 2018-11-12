@@ -8,7 +8,8 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.*
+import android.widget.TextView
+import android.widget.Toast
 import com.loopj.android.http.JsonHttpResponseHandler
 import com.loopj.android.http.RequestParams
 import cz.msebera.android.httpclient.Header
@@ -18,8 +19,9 @@ import org.json.JSONException
 import org.json.JSONObject
 import posting.devstories.com.posting_android.Actions.AddressAction
 import posting.devstories.com.posting_android.Actions.JoinAction
+import posting.devstories.com.posting_android.Actions.LoginAction
 import posting.devstories.com.posting_android.R
-import posting.devstories.com.posting_android.R.id.*
+import posting.devstories.com.posting_android.base.PrefUtils
 import posting.devstories.com.posting_android.base.RootActivity
 import posting.devstories.com.posting_android.base.Utils
 
@@ -318,6 +320,11 @@ class OrderJoinActivity : RootActivity() {
 
                     if ("ok" == result) {
 
+                        val member = response.getJSONObject("member")
+
+                        email = Utils.getString(member, "email");
+                        passwd = Utils.getString(member, "passwd");
+
                         dlgView2()
 
                     } else {
@@ -563,14 +570,129 @@ class OrderJoinActivity : RootActivity() {
         val PostingStartTX = dialogView.findViewById<TextView>(R.id.PostingStartTX)
         mPopupDlg =  builder.setView(dialogView).show()
         PostingStartTX.setOnClickListener {
-            val intent = Intent(context,LoginActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(intent)
-
+            login(email, passwd)
         }
 
     }
 
 
+
+    fun login(email:String, passwd:String){
+        val params = RequestParams()
+        params.put("email", email)
+        params.put("passwd", passwd)
+
+        LoginAction.login(params, object : JsonHttpResponseHandler() {
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+
+                try {
+                    val result = response!!.getString("result")
+
+                    if ("ok" == result) {
+                        val loginID = response.getString("loginID")
+                        val data = response.getJSONObject("member")
+                        val school = response.getJSONObject("school")
+
+                        val school_id = Utils.getInt(school, "id")
+                        val school_image_uri = Utils.getString(school, "image_uri")
+
+                        PrefUtils.setPreference(context, "current_school_id", school_id)
+                        PrefUtils.setPreference(context, "current_school_image_uri", school_image_uri)
+
+                        PrefUtils.setPreference(context, "loginID", loginID)
+                        PrefUtils.setPreference(context, "member_id", Utils.getInt(data, "id"))
+                        PrefUtils.setPreference(context, "email", Utils.getString(data, "email"))
+                        PrefUtils.setPreference(context, "passwd", Utils.getString(data, "passwd"))
+                        PrefUtils.setPreference(context, "member_type", Utils.getString(data, "member_type"))
+                        PrefUtils.setPreference(context, "school_id", Utils.getInt(data, "school_id"))
+                        PrefUtils.setPreference(context, "confirm_yn", Utils.getString(data, "confirm_yn"))
+                        PrefUtils.setPreference(context, "active_yn", Utils.getString(data, "active_yn"))
+                        PrefUtils.setPreference(context, "autoLogin", true)
+
+                        val intent = Intent(context, MainActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        startActivity(intent)
+
+                    } else if("confirm_no" == result) {
+                        Toast.makeText(context, "관리자 승인 후 로그인이 가능합니다.", Toast.LENGTH_LONG).show()
+
+                        val intent = Intent(context,LoginActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        startActivity(intent)
+
+                    } else {
+                        Toast.makeText(context, "일치하는 회원이 존재하지 않습니다.", Toast.LENGTH_LONG).show()
+
+                        val intent = Intent(context,LoginActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        startActivity(intent)
+
+                    }
+
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+
+            }
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONArray?) {
+                super.onSuccess(statusCode, headers, response)
+            }
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, responseString: String?) {
+
+                // System.out.println(responseString);
+            }
+
+            private fun error() {
+                Utils.alert(context, "조회중 장애가 발생하였습니다.")
+            }
+
+            override fun onFailure(statusCode: Int, headers: Array<Header>?, responseString: String?, throwable: Throwable) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+
+                // System.out.println(responseString);
+
+                throwable.printStackTrace()
+                error()
+            }
+
+            override fun onFailure(statusCode: Int, headers: Array<Header>?, throwable: Throwable, errorResponse: JSONObject?) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+                throwable.printStackTrace()
+                error()
+            }
+
+            override fun onFailure(statusCode: Int, headers: Array<Header>?, throwable: Throwable, errorResponse: JSONArray?) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+                throwable.printStackTrace()
+                error()
+            }
+
+            override fun onStart() {
+                // show dialog
+                if (progressDialog != null) {
+
+                    progressDialog!!.show()
+                }
+            }
+
+            override fun onFinish() {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+            }
+        })
+    }
 
 }
