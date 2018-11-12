@@ -49,8 +49,6 @@ class SchoolagreeActivity : RootActivity() {
         school_confirmed = intent.getStringExtra("school_confirmed")
         school_domain = intent.getStringExtra("school_domain")
 
-        println("school_domain : $school_domain")
-
         if(school_domain != null) {
             schoolDomainTV.text = "@$school_domain"
         }
@@ -82,6 +80,9 @@ class SchoolagreeActivity : RootActivity() {
         }
 
         finishLL.setOnClickListener {
+
+            Utils.hideKeyboard(this)
+
             finish()
         }
 
@@ -112,7 +113,10 @@ class SchoolagreeActivity : RootActivity() {
                     if ("ok" == result) {
                         Toast.makeText(context, "학생증을 발송하였습니다.", Toast.LENGTH_LONG).show()
                     } else {
-                        Toast.makeText(context, "일치하는 회원이 존재하지 않습니다.", Toast.LENGTH_LONG).show()
+
+                        val message = response!!.getString("message")
+
+                        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
                     }
 
                 } catch (e: JSONException) {
@@ -211,7 +215,12 @@ class SchoolagreeActivity : RootActivity() {
                     if ("ok" == result) {
                         Toast.makeText(context, "인증 메일을 발송하였습니다.", Toast.LENGTH_LONG).show()
                     } else {
-                        Toast.makeText(context, "일치하는 회원이 존재하지 않습니다.", Toast.LENGTH_LONG).show()
+
+                        sendSchoolConfirmBtn.isEnabled = true
+
+                        val message = response!!.getString("message")
+
+                        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
                     }
 
                 } catch (e: JSONException) {
@@ -341,6 +350,8 @@ class SchoolagreeActivity : RootActivity() {
         if (progressDialog != null) {
             progressDialog!!.dismiss()
         }
+
+        Utils.hideKeyboard(this)
 
     }
 
