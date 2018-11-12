@@ -142,22 +142,23 @@ open class OrderPageFragment : Fragment() {
             reviewV.visibility = View.INVISIBLE
             couponGV.adapter = adapterOrder
             clicktype = 1
-          loadData()
-            couponGV.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
-                try {
-                    val Posting = adapterData[position].getJSONObject("Posting")
-
-                    //                    Intent intent = new Intent(context, _StoreDetailActivity.class);
-                    val intent = Intent(context, DetailActivity::class.java)
-                    intent.putExtra("id", Utils.getString(Posting, "id"))
-                    startActivity(intent)
-
-                } catch (e: JSONException) {
-                    e.printStackTrace()
-                }
-            }
-
+            loadData()
         }
+
+        couponGV.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
+            try {
+                val Posting = adapterData[position].getJSONObject("Posting")
+
+                //                    Intent intent = new Intent(context, _StoreDetailActivity.class);
+                val intent = Intent(context, DetailActivity::class.java)
+                intent.putExtra("id", Utils.getString(Posting, "id"))
+                startActivity(intent)
+
+            } catch (e: JSONException) {
+                e.printStackTrace()
+            }
+        }
+
         loadData()
 
     }

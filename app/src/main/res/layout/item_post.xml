@@ -59,14 +59,15 @@
                     android:gravity="center_vertical">
 
                     <TextView
-                            android:id="@+id/coupon_titleTV"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="right"
-                            android:text=""
-                            android:textColor="#FFFFFF"
-                            android:textSize="11dp"
-                            android:visibility="visible" />
+                        android:id="@+id/coupon_titleTV"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="right"
+                        android:text=""
+                        android:textColor="#FFFFFF"
+                        android:textSize="11dp"
+                        android:visibility="visible"
+                        android:textStyle="bold"/>
 
                     <LinearLayout
                             android:layout_width="match_parent"
@@ -135,7 +136,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_horizontal|bottom"
+                    android:gravity="right|bottom"
                     android:orientation="horizontal"
                     android:layout_marginBottom="5dp">
 

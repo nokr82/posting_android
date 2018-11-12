@@ -622,7 +622,7 @@ class DetailActivity : RootActivity() {
                                 coupon_orderTV.text = company_name
                                 coupon_sale2TV.text = "할인"
                                 coupon_TV.text = "%"
-                                coupon_startdateTV.text = ctv_startdate+"~"
+                                coupon_startdateTV.text = ctv_startdate+" ~ "
                                 coupon_contentTV.text = contents
                                 coupon_enddateTV.text = ctv_enddate
                             }else if (coupon_type.equals("2")){
@@ -634,7 +634,7 @@ class DetailActivity : RootActivity() {
                                 coupon_saleTV.text = "FREE"
                                 coupon_TV.visibility = View.GONE
                                 coupon_sale2TV.visibility = View.GONE
-                                coupon_startdateTV.text = ctv_startdate+"~"
+                                coupon_startdateTV.text = ctv_startdate+" ~ "
                                 coupon_contentTV.text = contents
                                 coupon_enddateTV.text = ctv_enddate
                             }else if (coupon_type.equals("3")){
@@ -646,7 +646,7 @@ class DetailActivity : RootActivity() {
                                 coupon_saleTV.text = sale_price
                                 coupon_sale2TV.text = "할인"
                                 coupon_TV.text = "원"
-                                coupon_startdateTV.text = ctv_startdate+"~"
+                                coupon_startdateTV.text = ctv_startdate+" ~ "
                                 coupon_contentTV.text = contents
                                 coupon_enddateTV.text = ctv_enddate
                             }

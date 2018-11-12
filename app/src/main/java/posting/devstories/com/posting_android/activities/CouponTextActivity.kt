@@ -28,7 +28,7 @@ import java.util.*
 class CouponTextActivity : RootActivity() {
     lateinit var context: Context
     private var progressDialog: ProgressDialog? = null
-    var  most =arrayOf("수량","1","3","5","10","20","∞")
+    var  most =arrayOf("수량","1","3","5","10","20","무제한")
 //    var day = arrayOf("기간","1일","5일","7일","10일","30일","60일")
     var member_id = -1
     val type = "6"

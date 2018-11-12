@@ -109,9 +109,9 @@ class PostWriteActivity : RootActivity() {
         }
 
         if (member_type.equals("3")) {
-            meeting2LL.visibility = View.GONE
+            meeting2RL.visibility = View.GONE
         } else {
-            dayLL.visibility = View.GONE
+            dayRL.visibility = View.GONE
         }
 
         typeAdapter = ArrayAdapter<String>(this, R.layout.spinner_item, mee)
@@ -403,11 +403,11 @@ class PostWriteActivity : RootActivity() {
 
             imageUri = Uri.fromFile(File(imgid))
 
-            cropImage()
+//            cropImage()
 
-            // val imgWidth = Utils.getScreenWidth(context) / 4
-            // imgIV2.setImageBitmap(Utils.getImage(context.contentResolver, imgid, 800))
-            // imgIV2.setImageBitmap(Utils.getImage(context.contentResolver, imgid))
+             val imgWidth = Utils.getScreenWidth(context) / 4
+             imgIV2.setImageBitmap(Utils.getImage(context.contentResolver, imgid, imgWidth))
+//             imgIV2.setImageBitmap(Utils.getImage(context.contentResolver, imgid))
             capture = null
             imageUri = null
 

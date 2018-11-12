@@ -36,15 +36,16 @@
             android:orientation="horizontal"
             android:padding="16dp">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="78dp"
                 android:layout_height="wrap_content"
-                android:id="@+id/meeting2LL">
+                android:id="@+id/meeting2RL"
+                android:layout_marginRight="20dp">
 
             <Spinner
                 android:id="@+id/meetingSP2"
                 android:popupBackground="@drawable/background_border_707070"
-                android:layout_width="75dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@null">
 
@@ -53,37 +54,45 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginRight="20dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
                 android:src="@mipmap/semo" />
 
-            </LinearLayout>
+            </RelativeLayout>
 
-            <Spinner
-                android:popupBackground="@drawable/background_border_707070"
-                android:id="@+id/mostSP"
-                android:layout_width="75dp"
-                android:layout_height="wrap_content"
-                android:background="@null">
+            <RelativeLayout
+                    android:layout_width="78dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="20dp">
 
-            </Spinner>
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginRight="20dp"
-                android:src="@mipmap/semo" />
+                <Spinner
+                        android:popupBackground="@drawable/background_border_707070"
+                        android:id="@+id/mostSP"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null">
 
-            <LinearLayout
-                android:id="@+id/dayLL"
-                android:layout_width="wrap_content"
+                </Spinner>
+
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:src="@mipmap/semo" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/dayRL"
+                android:layout_width="78dp"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <Spinner
                     android:popupBackground="@drawable/background_border_707070"
                     android:id="@+id/daySP"
-                    android:layout_width="75dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@null">
 
@@ -92,10 +101,11 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
                     android:src="@mipmap/semo" />
 
-            </LinearLayout>
+            </RelativeLayout>
 
         </LinearLayout>
 

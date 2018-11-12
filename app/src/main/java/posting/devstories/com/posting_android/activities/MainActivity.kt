@@ -74,9 +74,9 @@ class MainActivity : FragmentActivity() {
         override fun onReceive(context: Context, intent: Intent?) {
             if (intent != null) {
 
-                if(fragmentFT.currentTab != 0) {
-                    fragmentFT.onTabChanged("post")
-                }
+//                if(fragmentFT.currentTab != 0) {
+//                    fragmentFT.onTabChanged("post")
+//                }
 
             }
         }

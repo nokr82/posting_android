@@ -87,7 +87,7 @@ open class OrderAdapter(context:Context, view:Int, data:ArrayList<JSONObject>) :
             item.coupon_titleTV.text = menu_name
             item.coupon_saleTV.text = "FREE"
             item.coupon_TV.visibility = View.GONE
-            item.coupon_sale2TV.visibility = View.GONE
+            item.coupon_sale2TV.text = "%"
             item.coupon_contentTV.text = contents
             item.coupon_startdateTV.text = ctv_startdate+"~"
             item.coupon_enddateTV.text = ctv_enddate

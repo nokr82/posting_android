@@ -173,11 +173,11 @@ class OrderJoinActivity : RootActivity() {
                 dlgView( geterror)
             }
 
-            else if (getPhone == "" || getPhone == null || getPhone.isEmpty()) {
-                geterror = "휴대폰번호를 입력해주세요"
-
-                dlgView( geterror)
-            }
+//            else if (getPhone == "" || getPhone == null || getPhone.isEmpty()) {
+//                geterror = "휴대폰번호를 입력해주세요"
+//
+//                dlgView( geterror)
+//            }
 
             else if (allCB.isChecked != true) {
                 geterror = "이용약관에 동의해주세요"
