@@ -136,23 +136,15 @@ class MainActivity : FragmentActivity() {
         }
         homeLL.setOnClickListener {
 
-            //탭다른거눌러도 홈으로
-            val intent = Intent(context, MainActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(intent)
-
             setTabBar()
 
             homeIV.setImageResource(R.mipmap.home)
 
-
             val school_id = PrefUtils.getIntPreference(context, "school_id")
             PrefUtils.setPreference(context, "current_school_id", school_id)
 
-            if(fragmentFT.currentTab == 0) {
-                val postFragment = supportFragmentManager.findFragmentByTag("post") as PostFragment
-                postFragment.setMainView()
-            }
+            val postFragment = supportFragmentManager.findFragmentByTag("post") as PostFragment
+            postFragment.disableOnPageSelected()
 
             fragmentFT.onTabChanged("post")
         }

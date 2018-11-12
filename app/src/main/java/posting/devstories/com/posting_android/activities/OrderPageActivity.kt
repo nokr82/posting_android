@@ -9,6 +9,7 @@ import android.content.IntentFilter
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
+import android.widget.ScrollView
 import android.widget.Toast
 import com.loopj.android.http.JsonHttpResponseHandler
 import com.loopj.android.http.RequestParams
@@ -84,6 +85,12 @@ open class OrderPageActivity : RootActivity() {
 
         company_id = intent.getIntExtra("company_id", -1)
 
+        val image_uri =   PrefUtils.getStringPreference(context, "school_image")
+        var univimg = Config.url +image_uri
+        println("이미지!!!!"+image_uri)
+        com.nostra13.universalimageloader.core.ImageLoader.getInstance().displayImage(univimg, univIV, Utils.UILoptionsProfile)
+
+
         val filter1 = IntentFilter("DEL_REVIEW")
         registerReceiver(delReviewReceiver, filter1)
 
@@ -94,7 +101,7 @@ open class OrderPageActivity : RootActivity() {
         adapterOrder = OrderAdapter(context, R.layout.item_post,adapterData)
 
         couponGV.adapter = adapterOrder
-        couponGV.isExpanded = true
+        couponGV.isExpanded = false
 
         couponLL.setOnClickListener {
             reviewWriteLL.visibility = View.GONE
@@ -169,6 +176,9 @@ open class OrderPageActivity : RootActivity() {
                 }
 
                 try {
+
+                    println(response)
+
                     val result = response!!.getString("result")
 
                     if ("ok" == result) {
@@ -180,9 +190,22 @@ open class OrderPageActivity : RootActivity() {
                         reviewCntTV.text = reviewCnt
 
                         val member = response.getJSONObject("member")
+                        val school = response.getJSONObject("school")
+
+                        val school_image_uri = Utils.getString(school, "image_uri")
+                        var univimg = Config.url + school_image_uri
+                        ImageLoader.getInstance().displayImage(univimg, univIV, Utils.UILoptionsUserProfile)
+
                         companyName = Utils.getString(member, "company_name")
                         companyNameTV.text = companyName
                         infoTV.text = Utils.getString(member, "address") + Utils.getString(member, "address_detail")
+
+                        val school = response.getJSONObject("school")
+
+                        val image = Utils.getString(school,"image_uri")
+
+                        var school_image = Config.url + image
+                        ImageLoader.getInstance().displayImage(school_image, univIV, Utils.UILoptionsUserProfile)
 
                         lat = Utils.getDouble(member, "lat")
                         lng = Utils.getDouble(member, "lng")
@@ -241,7 +264,7 @@ open class OrderPageActivity : RootActivity() {
                     progressDialog!!.dismiss()
                 }
 
-                // System.out.println(responseString);
+                System.out.println(responseString);
 
                 throwable.printStackTrace()
                 error()

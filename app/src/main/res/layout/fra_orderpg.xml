@@ -265,34 +265,34 @@
             </LinearLayout>
 
         </LinearLayout>
+        <LinearLayout
+            android:id="@+id/review2LL"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="37dp"
+            android:layout_gravity="bottom"
+            android:gravity="center"
+            android:layout_marginRight="70dp"
+            android:layout_marginLeft="70dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/background_round_ffe330">
 
+            <ImageView
+                android:paddingLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/plustalk"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="14dp"
+                android:text="Talk ＆ Review  작성하기"/>
+
+        </LinearLayout>
     </ScrollView>
 
-    <LinearLayout
-        android:id="@+id/review2LL"
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="37dp"
-        android:layout_gravity="bottom"
-        android:gravity="center"
-        android:layout_marginRight="70dp"
-        android:layout_marginLeft="70dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/background_round_ffe330">
 
-        <ImageView
-            android:paddingLeft="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/plustalk"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textSize="14dp"
-            android:text="Talk ＆ Review  작성하기"/>
-
-    </LinearLayout>
 
 </LinearLayout>
