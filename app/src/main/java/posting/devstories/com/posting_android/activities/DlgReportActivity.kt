@@ -38,6 +38,7 @@ class DlgReportActivity : RootActivity() {
     var contents:String?= null
     var type = 1
     var save_id:String?= null
+    var report_member_id:String?= null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,7 +55,7 @@ class DlgReportActivity : RootActivity() {
         image_uri  = intent.getStringExtra("image_uri")
         contents = intent.getStringExtra("contents")
         member_type = intent.getStringExtra("member_type")
-        dlgtype = intent.getStringExtra("dlgtype")
+        report_member_id = intent.getStringExtra("report_member_id")
         type =intent.getIntExtra("type",-1)
 //        this.setFinishOnTouchOutside(true)
         val titleTV = findViewById<TextView>(R.id.titleTV)
@@ -123,6 +124,28 @@ class DlgReportActivity : RootActivity() {
 //                startActivity(intent)
 
             }
+        } else if (dlgtype.equals("police_member")) {
+
+
+            titleTV.text = "이 사용자를 신고하는 이유를 선택하세요"
+            delTV.text = "불건전합니다"
+            modiTV.text = "부적절합니다"
+            recyTV.text = "스팸입니다"
+
+            delTV.setOnClickListener {
+                report("1")
+                finish()
+
+            }
+            modiTV.setOnClickListener {
+                report("2")
+                finish()
+            }
+            recyTV.setOnClickListener {
+                report("3")
+                finish()
+            }
+
         }
 
     }
@@ -197,10 +220,7 @@ class DlgReportActivity : RootActivity() {
         val params = RequestParams()
         params.put("member_id", member_id)
         params.put("posting_id", posting_id)
-
-       print("00000000000"+member_id)
-        print("00000000000"+posting_id)
-
+        params.put("report_member_id", report_member_id)
         params.put("type", type)
 
         ReviewAction.report(params, object : JsonHttpResponseHandler() {
