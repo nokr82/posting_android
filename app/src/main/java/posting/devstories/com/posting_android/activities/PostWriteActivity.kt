@@ -63,6 +63,7 @@ class PostWriteActivity : RootActivity() {
     var image_uri: String? = null
     var image: String? = null
     var capture: Bitmap? = null
+    var tabType = -1
 
     lateinit var adapter: ArrayAdapter<String>
     lateinit var typeAdapter: ArrayAdapter<String>
@@ -94,6 +95,7 @@ class PostWriteActivity : RootActivity() {
         posting_id = intent.getStringExtra("posting_id")
         contents = intent.getStringExtra("contents")
         image_uri = intent.getStringExtra("image_uri")
+        tabType = intent.getIntExtra("tabType", -1)
 
         if (current_school != school_id) {
             bgRL.background = getDrawable(R.mipmap.write_bg2)
@@ -234,6 +236,9 @@ class PostWriteActivity : RootActivity() {
 
         checkCategory()
 
+        if(tabType < 6) {
+            meetingSP2.setSelection(tabType - 1)
+        }
     }
 
     fun checkCategory() {
