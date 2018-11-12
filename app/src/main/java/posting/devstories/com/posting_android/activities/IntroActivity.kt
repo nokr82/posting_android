@@ -29,6 +29,7 @@ class IntroActivity : RootActivity() {
     private var context: Context? = null
 
     private var posting_id:String = ""
+    private var chatting_member_id:String = ""
     private var is_push:Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,6 +43,7 @@ class IntroActivity : RootActivity() {
         if (buldle != null) {
             try {
                 posting_id = buldle.getString("posting_id")
+                chatting_member_id = buldle.getString("chatting_member_id")
                 is_push = buldle.getBoolean("FROM_PUSH")
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -135,11 +137,13 @@ class IntroActivity : RootActivity() {
                             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                             intent.putExtra("is_push", is_push)
                             intent.putExtra("posting_id", posting_id)
+                            intent.putExtra("chatting_member_id", chatting_member_id)
                             startActivity(intent)
                         }else{
                             val intent = Intent(context, MainActivity::class.java)
                             intent.putExtra("is_push", is_push)
                             intent.putExtra("posting_id", posting_id)
+                            intent.putExtra("chatting_member_id", chatting_member_id)
                             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                             startActivity(intent)
                         }

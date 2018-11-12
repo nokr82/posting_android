@@ -69,8 +69,6 @@ class MatchInfoActivity : RootActivity() {
         val params = RequestParams()
         params.put("member_id", member_id)
         params.put("posting_id", posting_id)
-        print("러드"+member_id)
-        print("데드"+posting_id)
 
         PostingAction.save_members(params, object : JsonHttpResponseHandler() {
 
@@ -88,29 +86,31 @@ class MatchInfoActivity : RootActivity() {
                         val postingSaves = response.getJSONArray("postingSaves")
 
                         val posting = response.getJSONObject("posting")
-                        val member = response.getJSONObject("member")
+                        val write_member = response.getJSONObject("member")
                         val match_count = Utils.getString(response, "match_count")
+                        val savemember_id = Utils.getInt(write_member, "id")
 
                         for (i in 0..(postingSaves.length() - 1)) {
 
-                            val data:JSONObject = postingSaves.get(i) as JSONObject
+                            val data: JSONObject = postingSaves.get(i) as JSONObject
                             val member = data.getJSONObject("Member")
 
                             val profileView = View.inflate(context, R.layout.item_match_user_profile, null)
-                            var profileIV:CircleImageView = profileView.findViewById(R.id.profileIV)
-                            var alarmCntTV:TextView = profileView.findViewById(R.id.alarmCntTV)
-                            var RL:RelativeLayout = profileView.findViewById(R.id.RL)
-                            val savemember_id = Utils.getInt(member,"id")
+                            var profileIV: CircleImageView = profileView.findViewById(R.id.profileIV)
+                            var alarmCntTV: TextView = profileView.findViewById(R.id.alarmCntTV)
+                            var RL: RelativeLayout = profileView.findViewById(R.id.RL)
+                            val savemember_id = Utils.getInt(member, "id")
 
-                            if (member_id==savemember_id){
-                                    RL.visibility = View.GONE
-                            }else{
-                            var profile_uri = Config.url + Utils.getString(member,"image_uri")
-                            ImageLoader.getInstance().displayImage(profile_uri, profileIV, Utils.UILoptionsProfile)
+                            if (member_id == savemember_id) {
+                                RL.visibility = View.GONE
+                            } else {
+                                var profile_uri = Config.url + Utils.getString(member, "image_uri")
+                                ImageLoader.getInstance().displayImage(profile_uri, profileIV, Utils.UILoptionsProfile)
                             }
+
                             profileIV.setOnClickListener {
 
-                                if(Utils.getInt(member, "id") != member_id) {
+                                if (Utils.getInt(member, "id") != member_id) {
                                     var intent = Intent(context, ChattingActivity::class.java)
                                     intent.putExtra("attend_member_id", Utils.getInt(member, "id"))
                                     startActivity(intent)
@@ -123,7 +123,7 @@ class MatchInfoActivity : RootActivity() {
 
                             val new_message_count = Utils.getInt(data, "new_message_count")
 
-                            if(new_message_count < 1) {
+                            if (new_message_count < 1) {
                                 alarmCntTV.visibility = View.GONE
                             } else {
                                 alarmCntTV.visibility = View.VISIBLE
@@ -137,17 +137,20 @@ class MatchInfoActivity : RootActivity() {
                             addProfileLL.addView(profileView)
                         }
 
-                        var image_uri = Utils.getString(posting,"image_uri")
-                        if(image_uri.isEmpty() || image_uri == "") {
+                        var image_uri = Utils.getString(posting, "image_uri")
+                        if (image_uri.isEmpty() || image_uri == "") {
                             contentsTV.visibility = View.VISIBLE
                             contentsTV.text = Utils.getString(posting, "contents")
                         } else {
                             imageIV.visibility = View.VISIBLE
-                            var posting_uri = Config.url + Utils.getString(posting,"image_uri")
+                            var posting_uri = Config.url + Utils.getString(posting, "image_uri")
                             ImageLoader.getInstance().displayImage(posting_uri, imageIV, Utils.UILoptionsPosting)
 
                         }
-                        postingCntTV.text = postingSaves.length().toString() + "/" + Utils.getString(posting, "count")
+
+                        // 나 자신은 빼야되기 때문!
+                        var cnt = postingSaves.length() - 1
+                        postingCntTV.text = cnt.toString() + "/" + Utils.getString(posting, "count")
 
                         matchCntTV.text = match_count
 
@@ -172,10 +175,10 @@ class MatchInfoActivity : RootActivity() {
             }
 
             override fun onFailure(
-                    statusCode: Int,
-                    headers: Array<Header>?,
-                    responseString: String?,
-                    throwable: Throwable
+                statusCode: Int,
+                headers: Array<Header>?,
+                responseString: String?,
+                throwable: Throwable
             ) {
                 if (progressDialog != null) {
                     progressDialog!!.dismiss()

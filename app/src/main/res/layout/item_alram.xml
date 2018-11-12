@@ -72,13 +72,6 @@
                 android:layout_centerInParent="true"
                 android:layout_margin="6dp"/>
 
-            <ImageView
-                android:layout_width="5dp"
-                android:layout_height="5dp"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:src="@mipmap/green"/>
-
         </RelativeLayout>
 
     </LinearLayout>

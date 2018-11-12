@@ -39,7 +39,7 @@ class MainActivity : FragmentActivity() {
     var member_type = ""
     var is_push = false
     var posting_id:String?=null
-
+    var chatting_member_id:String = "-1"
 
     internal var editPostingReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent?) {
@@ -96,10 +96,18 @@ class MainActivity : FragmentActivity() {
         if(is_push) {
 
             posting_id = intent.getStringExtra("posting_id")
+            chatting_member_id = intent.getStringExtra("chatting_member_id")
 
-            var intent = Intent(context, DetailActivity::class.java)
-            intent.putExtra("id", posting_id)
-            startActivity(intent)
+            if(posting_id != "" && posting_id != null && posting_id != "-1") {
+                var intent = Intent(context, DetailActivity::class.java)
+                intent.putExtra("id", posting_id)
+                startActivity(intent)
+            } else {
+                var intent = Intent(context, ChattingActivity::class.java)
+                intent.putExtra("attend_member_id", chatting_member_id.toInt())
+                startActivity(intent)
+            }
+
         }
 
         val filter3 = IntentFilter("EDIT_POSTING")

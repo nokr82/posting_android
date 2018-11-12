@@ -43,7 +43,7 @@
                 android:textColor="#FFFFFF"
                 android:layout_marginLeft="27dp"
                 android:layout_marginTop="3.5dp"
-                android:background="@drawable/circle_red"
+                android:background="@drawable/background_radius_e60012"
                 android:layout_marginBottom="1dp"
                 android:gravity="center"
                 android:paddingLeft="2.5dp"

@@ -47,6 +47,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         val intent = Intent(this, IntroActivity::class.java)
         // intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra("posting_id", data["posting_id"])
+        intent.putExtra("chatting_member_id", data["chatting_member_id"])
         intent.putExtra("FROM_PUSH", true)
 
         val pendingIntent = PendingIntent.getActivity(this, System.currentTimeMillis().toInt(), intent, 0)
