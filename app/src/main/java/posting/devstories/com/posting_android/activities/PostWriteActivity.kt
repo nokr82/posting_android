@@ -46,7 +46,7 @@ class PostWriteActivity : RootActivity() {
     var imageUriOutput: Uri? = null
     var absolutePath: String? = null
     var mee = arrayOf("자유", "정보", "스터디", "동아리", "미팅")
-    var most = arrayOf("수량", "1", "3", "5", "10", "20", "∞")
+    var most = arrayOf("수량", "1", "3", "5", "10", "20", "무제한")
     var day = arrayOf("기간", "1일", "5일", "7일", "10일", "30일", "60일")
     var getmee: String? = null
     var getmost = ""

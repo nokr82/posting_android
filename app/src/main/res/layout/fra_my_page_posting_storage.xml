@@ -24,7 +24,7 @@
                 android:layout_centerVertical="true"
                 android:text="자유"
                 android:textColor="#99a0a0"
-                android:textSize="12.95dp" />
+                android:textSize="14dp" />
 
             <View
                     android:layout_width="match_parent"
@@ -52,7 +52,7 @@
                     android:text="정보"
                     android:id="@+id/info2TX"
                     android:textColor="#99a0a0"
-                    android:textSize="12.95dp" />
+                    android:textSize="14dp" />
 
             <View
                     android:layout_width="match_parent"
@@ -80,7 +80,7 @@
                     android:text="스터디"
                     android:id="@+id/Study2TX"
                     android:textColor="#99a0a0"
-                    android:textSize="12.95dp" />
+                    android:textSize="14dp" />
 
             <View
                     android:layout_width="match_parent"
@@ -108,7 +108,7 @@
                     android:text="동아리"
                     android:id="@+id/class2TX"
                     android:textColor="#99a0a0"
-                    android:textSize="12.95dp" />
+                    android:textSize="14dp" />
 
             <View
                     android:layout_width="match_parent"
@@ -135,7 +135,7 @@
                     android:text="미팅"
                     android:id="@+id/Miting2TX"
                     android:textColor="#99a0a0"
-                    android:textSize="12.95dp" />
+                    android:textSize="14dp" />
 
             <View
                     android:layout_width="match_parent"
@@ -163,7 +163,7 @@
                     android:text="쿠폰"
                     android:id="@+id/Coupon2TX"
                     android:textColor="#99a0a0"
-                    android:textSize="12.95dp" />
+                    android:textSize="14dp" />
 
             <View
                     android:layout_width="match_parent"

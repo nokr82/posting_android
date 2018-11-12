@@ -195,34 +195,42 @@ class ChattingActivity : RootActivity(), AbsListView.OnScrollListener {
     }
 
     fun policedlgView(){
-        var mPopupDlg: DialogInterface? = null
 
-        val builder = AlertDialog.Builder(this)
-        val dialogView = layoutInflater.inflate(R.layout.myposting_dlg, null)
-        val titleTV = dialogView.findViewById<TextView>(R.id.titleTV)
-        val delTV = dialogView.findViewById<TextView>(R.id.delTV)
-        val modiTV = dialogView.findViewById<TextView>(R.id.modiTV)
-        val recyTV = dialogView.findViewById<TextView>(R.id.recyTV)
-        titleTV.text = "이 사용자를 신고하는 이유를 선택하세요"
-        delTV.text = "불건전합니다"
-        modiTV.text = "부적절합니다"
-        recyTV.text = "스팸입니다"
 
-        mPopupDlg =  builder.setView(dialogView).show()
+        var intent = Intent(context, DlgReportActivity::class.java)
+        intent.putExtra("dlgtype", "police_member")
+        intent.putExtra("report_member_id", attend_member_id)
+        startActivity(intent)
 
-        delTV.setOnClickListener {
-            report("1")
-            mPopupDlg.dismiss()
 
-        }
-        modiTV.setOnClickListener {
-            report("2")
-            mPopupDlg.dismiss()
-        }
-        recyTV.setOnClickListener {
-            report("3")
-            mPopupDlg.dismiss()
-        }
+//        var mPopupDlg: DialogInterface? = null
+//
+//        val builder = AlertDialog.Builder(this)
+//        val dialogView = layoutInflater.inflate(R.layout.myposting_dlg, null)
+//        val titleTV = dialogView.findViewById<TextView>(R.id.titleTV)
+//        val delTV = dialogView.findViewById<TextView>(R.id.delTV)
+//        val modiTV = dialogView.findViewById<TextView>(R.id.modiTV)
+//        val recyTV = dialogView.findViewById<TextView>(R.id.recyTV)
+//        titleTV.text = "이 사용자를 신고하는 이유를 선택하세요"
+//        delTV.text = "불건전합니다"
+//        modiTV.text = "부적절합니다"
+//        recyTV.text = "스팸입니다"
+//
+//        mPopupDlg =  builder.setView(dialogView).show()
+//
+//        delTV.setOnClickListener {
+//            report("1")
+//            mPopupDlg.dismiss()
+//
+//        }
+//        modiTV.setOnClickListener {
+//            report("2")
+//            mPopupDlg.dismiss()
+//        }
+//        recyTV.setOnClickListener {
+//            report("3")
+//            mPopupDlg.dismiss()
+//        }
 
     }
 
