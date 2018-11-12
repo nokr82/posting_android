@@ -188,14 +188,14 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:background="@mipmap/nemocount"
-                android:gravity="center_vertical"
+                android:gravity="center"
+                android:padding="1dp"
                 android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/leftCntTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="4.9dp"
                     android:text="0"
                     android:textColor="#FFFFFF"
                     android:textSize="17.67dp" />

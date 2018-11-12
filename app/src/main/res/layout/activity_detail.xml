@@ -100,11 +100,13 @@
 
                     <posting.devstories.com.posting_android.base.RationalRelativeLayout
                         android:id="@+id/postingLL"
-                        android:layout_width="286.02dp"
-                        android:layout_height="292.67dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
                         android:layout_gravity="center"
                         android:background="@mipmap/wtite_bg"
-                        app:ratio="1:1">
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginRight="30dp"
+                        app:ratio="1195.5:1223.5">
 
                         <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
                             android:id="@+id/recycler_view"
@@ -124,8 +126,8 @@
 
                         <posting.devstories.com.posting_android.base.RationalRelativeLayout
                             android:id="@+id/coupon3RL"
-                            android:layout_width="247.23dp"
-                            android:layout_height="261.21dp"
+                            android:layout_width="264dp"
+                            android:layout_height="272.5dp"
                             android:layout_centerInParent="true">
 
                             <LinearLayout
@@ -278,6 +280,26 @@
                                 android:maxLines="3"
                                 android:ellipsize="end"/>
 
+                            <LinearLayout
+                                android:id="@+id/countLL"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentBottom="true"
+                                android:background="@mipmap/nemocount"
+                                android:gravity="center"
+                                android:padding="1dp"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/leftCntTV"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="0"
+                                    android:textColor="#FFFFFF"
+                                    android:textSize="17.67dp" />
+
+                            </LinearLayout>
+
                         </posting.devstories.com.posting_android.base.RationalRelativeLayout>
 
                         <ImageView
@@ -286,26 +308,6 @@
                             android:layout_height="100dp"
                             android:scaleType="centerCrop" />
 
-                        <LinearLayout
-                            android:id="@+id/countLL"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentBottom="true"
-                            android:layout_margin="10dp"
-                            android:background="@mipmap/nemocount"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:id="@+id/leftCntTV"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="4.5dp"
-                                android:text="0"
-                                android:textColor="#FFFFFF"
-                                android:textSize="17.67dp" />
-
-                        </LinearLayout>
                     </posting.devstories.com.posting_android.base.RationalRelativeLayout>
 
                 </LinearLayout>
@@ -513,9 +515,9 @@
         <LinearLayout
             android:id="@+id/saveLL"
             android:layout_width="match_parent"
-            android:layout_height="43dp"
-            android:layout_marginLeft="30.8dp"
-            android:layout_marginRight="30.8dp"
+            android:layout_height="32.5dp"
+            android:layout_marginLeft="57dp"
+            android:layout_marginRight="57dp"
             android:layout_marginBottom="16dp"
             android:background="#FAC841"
             android:gravity="center"
@@ -533,8 +535,7 @@
                 android:layout_height="wrap_content"
                 android:text="My Storage로 떼어가기"
                 android:textColor="#063588"
-                android:textSize="17dp" />
-
+                android:textSize="15dp" />
 
         </LinearLayout>
     </LinearLayout>

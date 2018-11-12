@@ -89,17 +89,18 @@
 
                     <posting.devstories.com.posting_android.base.RationalRelativeLayout
                         android:id="@+id/postingLL"
-                        android:layout_width="286.02dp"
-                        android:layout_height="292.67dp"
-                        app:ratio="1:1"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
                         android:layout_gravity="center"
-                        android:background="@mipmap/wtite_bg">
+                        android:background="@mipmap/wtite_bg"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginRight="30dp"
+                        app:ratio="1195.5:1223.5">
 
                         <posting.devstories.com.posting_android.base.RationalRelativeLayout
-                            android:layout_width="247.23dp"
-                            android:layout_height="261.21dp"
-                            android:layout_centerInParent="true"
-                            app:ratio="1:1">
+                            android:layout_width="264dp"
+                            android:layout_height="272.5dp"
+                            android:layout_centerInParent="true">
 
                             <ImageView
                                 android:id="@+id/imgIV"

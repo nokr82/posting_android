@@ -129,11 +129,13 @@ class MainActivity : FragmentActivity() {
         }else{
             fragmentFT.addTab(fragmentFT.newTabSpec("myPage").setIndicator(tabMypageV), MyPageFragment::class.java, null)
         }
+
         if(member_type.equals("3")) {
             setTabBar()
             myPageIV.setImageResource(R.mipmap.clickmy)
             fragmentFT.currentTab = 2
         }
+
         homeLL.setOnClickListener {
 
             setTabBar()
@@ -150,8 +152,6 @@ class MainActivity : FragmentActivity() {
         }
 
         writeLL.setOnClickListener {
-
-            println("confirm_yn : " + confirm_yn)
 
             if("N" == confirm_yn) {
                 Toast.makeText(context, "학교 인증 후 이용하실 수 있습니다.", Toast.LENGTH_LONG).show()

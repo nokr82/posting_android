@@ -26,7 +26,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@mipmap/whitebar"
+            android:background="@drawable/background_radius_15_border_dededd"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingLeft="10dp"
@@ -104,7 +104,7 @@
                         android:layout_alignParentBottom="true"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
-                        android:background="#01b4ec"
+                        android:background="#063588"
                         android:id="@+id/freeV"
                         android:visibility="invisible"/>
 
@@ -133,7 +133,7 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:id="@+id/infoV"
-                        android:background="#01b4ec"
+                        android:background="#063588"
                         android:visibility="invisible" />
 
                 </RelativeLayout>
@@ -161,7 +161,7 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:id="@+id/studyV"
-                        android:background="#01b4ec"
+                        android:background="#063588"
                         android:visibility="invisible" />
 
                 </RelativeLayout>
@@ -189,7 +189,7 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:id="@+id/classV"
-                        android:background="#01b4ec"
+                        android:background="#063588"
                         android:visibility="invisible" />
 
                 </RelativeLayout>
@@ -216,7 +216,7 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:id="@+id/meetingV"
-                        android:background="#01b4ec"
+                        android:background="#063588"
                         android:visibility="invisible" />
 
                 </RelativeLayout>
@@ -244,7 +244,7 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:id="@+id/couponV"
-                        android:background="#01b4ec"
+                        android:background="#063588"
                         android:visibility="invisible" />
 
                 </RelativeLayout>
