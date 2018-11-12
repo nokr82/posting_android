@@ -9,7 +9,6 @@ import android.os.Bundle
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.View
-import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import com.loopj.android.http.JsonHttpResponseHandler
 import com.loopj.android.http.RequestParams
@@ -189,6 +188,7 @@ class DetailActivity : RootActivity() {
             }
         }
 
+        /*
         commentsET.setOnEditorActionListener { textView, i, keyEvent ->
             commentsET.hint = "댓글쓰기"
             when (i) {
@@ -202,7 +202,15 @@ class DetailActivity : RootActivity() {
                 }
             }
             return@setOnEditorActionListener true
+        }
+        */
 
+        submitTV.setOnClickListener {
+            var comments = Utils.getString(commentsET)
+
+            if(!comments.isEmpty() && comments != "") {
+                writeComments(comments)
+            }
         }
 
         /*
