@@ -25,7 +25,6 @@ class backMainActivity : FragmentActivity() {
 
     var member_id = -1
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_back_main)
