@@ -795,24 +795,43 @@ open class PostFragment : Fragment() {
                     adverAdapterData.clear()
                     mainAdapterData.clear()
 
-                    var path = "http://13.124.13.37/data/ad/5ba1ebab-0018-486f-ace1-624cac1f0bcc";
-
-                    adverImagePaths.add(path);
-                    adverImagePaths.add(path);
-                    adverImagePaths.add(path);
-                    adverImagePaths.add(path);
-                    adverImagePaths.add(path);
-                    adverImagePaths.add(path);
+                    adverImagePaths.add("https://cdn.univ20.com/wp-content/uploads/2018/10/1df12918c2612c1d0266e0413274642b-700x420.png");
+                    adverImagePaths.add("https://cdn.univ20.com/wp-content/uploads/2018/11/ac7fce2187dd3cc836186ab2c48a22ed-700x420.png");
+                    adverImagePaths.add("https://cdn.univ20.com/wp-content/uploads/2018/11/a44a8155c4718dcbaaccb3a77ed45935-700x420.png");
+                    adverImagePaths.add("https://cdn.univ20.com/wp-content/uploads/2018/11/b83cab21eb5ebce78b530a2a87102759-700x420.png");
+                    adverImagePaths.add("https://cdn.univ20.com/wp-content/uploads/2018/11/bb57547a28613e673e38faa794bd1aca-700x420.png");
+                    adverImagePaths.add("https://cdn.univ20.com/wp-content/uploads/2018/11/dad173b873ec90cfa04acd1d8ceee0cd-700x420.png");
 
                     var data = JSONObject();
-                    data.put("path", path)
+                    data.put("path", "https://cdn.univ20.com/wp-content/uploads/2018/10/1df12918c2612c1d0266e0413274642b-700x420.png")
 
                     adverAdapterData.add(data)
+
+                    data = JSONObject();
+                    data.put("path", "https://cdn.univ20.com/wp-content/uploads/2018/11/ac7fce2187dd3cc836186ab2c48a22ed-700x420.png")
+
                     adverAdapterData.add(data)
+
+                    data = JSONObject();
+                    data.put("path", "https://cdn.univ20.com/wp-content/uploads/2018/11/a44a8155c4718dcbaaccb3a77ed45935-700x420.png")
+
                     adverAdapterData.add(data)
+
+                    data = JSONObject();
+                    data.put("path", "https://cdn.univ20.com/wp-content/uploads/2018/11/b83cab21eb5ebce78b530a2a87102759-700x420.png")
+
                     adverAdapterData.add(data)
+
+                    data = JSONObject();
+                    data.put("path", "https://cdn.univ20.com/wp-content/uploads/2018/11/bb57547a28613e673e38faa794bd1aca-700x420.png")
+
                     adverAdapterData.add(data)
+
+                    data = JSONObject();
+                    data.put("path", "https://cdn.univ20.com/wp-content/uploads/2018/11/dad173b873ec90cfa04acd1d8ceee0cd-700x420.png")
+
                     adverAdapterData.add(data)
+
 
                     val result = response!!.getString("result")
 
