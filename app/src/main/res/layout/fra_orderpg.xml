@@ -91,20 +91,20 @@
                     android:orientation="vertical">
 
                     <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="쿠폰"
-                            android:textSize="15dp"
-                            android:textColor="#8F8E8A"
-                            android:gravity="center_horizontal"/>
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="쿠폰"
+                        android:textSize="15dp"
+                        android:textColor="#8F8E8A"
+                        android:gravity="center_horizontal"/>
+
                     <TextView
-                            android:id="@+id/postCntTV"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text=""
-                            android:textSize="15dp"
-                            android:gravity="center_horizontal"
-                        />
+                        android:id="@+id/postCntTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textSize="15dp"
+                        android:gravity="center_horizontal" />
 
                 </LinearLayout>
 
@@ -150,7 +150,7 @@
                     android:text=""
                     android:textColor="#050000"
                     android:textStyle="bold"
-                    android:textSize="10.5sp"/>
+                    android:textSize="13sp"/>
 
                     <LinearLayout
                         android:id="@+id/gpsLL"
@@ -169,7 +169,7 @@
                             android:layout_marginLeft="8dp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textSize="9.5dp"
+                            android:textSize="13dp"
                             android:text=""/>
 
                     </LinearLayout>
@@ -207,7 +207,7 @@
                         <View
                             android:id="@+id/couponV"
                             android:layout_width="match_parent"
-                            android:layout_height="0.3dp"
+                            android:layout_height="3dp"
                             android:background="#063588"
                             android:visibility="visible"/>
 
@@ -231,7 +231,7 @@
                         <View
                                 android:id="@+id/reviewV"
                                 android:layout_width="match_parent"
-                                android:layout_height="0.3dp"
+                                android:layout_height="3dp"
                                 android:background="#063588"
                                 android:visibility="invisible"
                         />
@@ -249,7 +249,8 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="0.3dp"
-                        android:background="#A19F9B"/>
+                        android:background="#A19F9B"
+                        android:layout_marginBottom="12dp"/>
 
                     <com.github.paolorotolo.expandableheightlistview.ExpandableHeightGridView
                         android:id="@+id/couponGV"
