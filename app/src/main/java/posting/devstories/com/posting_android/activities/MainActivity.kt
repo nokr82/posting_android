@@ -1,5 +1,6 @@
 package posting.devstories.com.posting_android.activities
 
+import android.app.Activity
 import android.app.ProgressDialog
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -27,10 +28,13 @@ import posting.devstories.com.posting_android.base.PrefUtils
 import posting.devstories.com.posting_android.base.Utils
 
 class MainActivity : FragmentActivity() {
+
     private var progressDialog: ProgressDialog? = null
     lateinit var context: Context
     private val BACK_PRESSED_TERM = (1000 * 2).toLong()
     private var backPressedTime: Long = 0
+
+    val CONFRIM_SCHOOL = 301;
 
     var tabType = 1
     var type :String?= null
@@ -162,7 +166,11 @@ class MainActivity : FragmentActivity() {
         writeLL.setOnClickListener {
 
             if("N" == confirm_yn) {
-                Toast.makeText(context, "학교 인증 후 이용하실 수 있습니다.", Toast.LENGTH_LONG).show()
+
+                var intent = Intent(context, DlgCommonActivity::class.java)
+                intent.putExtra("contents", "학교 인증 후 이용하실 수 있습니다")
+                startActivityForResult(intent, CONFRIM_SCHOOL)
+
                 return@setOnClickListener
             }
 
@@ -325,6 +333,25 @@ class MainActivity : FragmentActivity() {
             }
         } catch (e: IllegalArgumentException) {
         }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        when(requestCode) {
+            CONFRIM_SCHOOL -> {
+                if(Activity.RESULT_OK == resultCode) {
+
+                    var intent = Intent(context, SchoolagreeActivity::class.java)
+                    intent.putExtra("has_branch_yn", "N")
+                    intent.putExtra("school_email_confirmed", "N")
+                    intent.putExtra("school_confirmed", "N")
+                    startActivity(intent)
+
+                }
+            }
+        }
+
     }
 
 }

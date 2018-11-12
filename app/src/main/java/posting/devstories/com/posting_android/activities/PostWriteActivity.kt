@@ -21,10 +21,17 @@ import kotlinx.android.synthetic.main.activity_postwrite.*
 import android.net.Uri
 import android.os.Environment
 import android.support.v4.content.FileProvider
+import com.loopj.android.http.JsonHttpResponseHandler
+import com.loopj.android.http.RequestParams
 import posting.devstories.com.posting_android.base.*
 import java.io.File
 import java.io.IOException
 import com.nostra13.universalimageloader.core.ImageLoader
+import cz.msebera.android.httpclient.Header
+import org.json.JSONArray
+import org.json.JSONException
+import org.json.JSONObject
+import posting.devstories.com.posting_android.Actions.PostingAction
 
 class PostWriteActivity : RootActivity() {
 
@@ -61,7 +68,7 @@ class PostWriteActivity : RootActivity() {
     //mypostwrite에서 브로드캐스트로 인텐트를 받는다
     internal var setViewReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent?) {
-            if(intent != null) {
+            if (intent != null) {
                 finish()
             }
         }
@@ -223,9 +230,94 @@ class PostWriteActivity : RootActivity() {
 
         loadPhoto()
 
+        checkCategory()
+
     }
 
-    fun loadPhoto(){
+    fun checkCategory() {
+        val params = RequestParams()
+        params.put("member_id", PrefUtils.getIntPreference(context, "member_id"));
+        params.put("member_type", member_type);
+
+        PostingAction.savedel_posting(params, object : JsonHttpResponseHandler() {
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+
+                try {
+
+                    val result = response!!.getString("result")
+
+                    if ("ok" == result) {
+
+                        if(member_type == "2") {
+
+                            var study = Utils.getString(response, "study")
+                            var classStr = Utils.getString(response, "class")
+                            var meeting = Utils.getString(response, "study")
+
+                            if(meeting == "fail") {
+                                mee.drop(4)
+                            }
+
+                            if(classStr == "fail") {
+                                mee.drop(3)
+                            }
+
+                            if(study == "fail") {
+                                mee.drop(2)
+                            }
+
+                        }
+
+                    }
+
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+
+            }
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONArray?) {
+                super.onSuccess(statusCode, headers, response)
+            }
+
+            private fun error() {
+                Utils.alert(context, "조회중 장애가 발생하였습니다.")
+            }
+
+            override fun onFailure(
+                statusCode: Int,
+                headers: Array<Header>?,
+                throwable: Throwable,
+                errorResponse: JSONArray?
+            ) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+                throwable.printStackTrace()
+                error()
+            }
+
+            override fun onStart() {
+                // show dialog
+                if (progressDialog != null) {
+
+                    progressDialog!!.show()
+                }
+            }
+
+            override fun onFinish() {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+            }
+        })
+    }
+
+    fun loadPhoto() {
         var cursor: Cursor? = null
         val resolver = contentResolver
 
@@ -338,10 +430,10 @@ class PostWriteActivity : RootActivity() {
             }
             CROP_FROM_CAMERA -> {
 //                    capture = Utils.getImage(context.contentResolver, absolutePath)
-                    val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, imageUri)
-                    capture = bitmap
-                    postingType = "P"
-                    imgIV2.setImageBitmap(capture)
+                val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, imageUri)
+                capture = bitmap
+                postingType = "P"
+                imgIV2.setImageBitmap(capture)
 
             }
             else -> {

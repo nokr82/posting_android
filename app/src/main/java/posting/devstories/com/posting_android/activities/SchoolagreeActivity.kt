@@ -33,7 +33,6 @@ class SchoolagreeActivity : RootActivity() {
     lateinit var context: Context
     private var progressDialog: ProgressDialog? = null
 
-
     private var has_branch_yn = "N"
     private var school_email_confirmed = "N"
     private var school_confirmed = "N"

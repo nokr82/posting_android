@@ -184,6 +184,12 @@
             android:screenOrientation="portrait"
             android:theme="@style/full_screen_dialog1"/>
 
+        <!-- 팝업 -->
+        <activity
+            android:name=".activities.DlgCommonActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/full_screen_dialog1"/>
+
         <activity
             android:name=".activities.DlgCouponActivity"
             android:screenOrientation="portrait"
