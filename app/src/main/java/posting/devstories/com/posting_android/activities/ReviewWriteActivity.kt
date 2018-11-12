@@ -82,54 +82,6 @@ class ReviewWriteActivity : RootActivity() {
 
         }
 
-        var cursor: Cursor? = null
-        val resolver = contentResolver
-
-        try {
-            val proj = arrayOf(MediaStore.Images.Media._ID, MediaStore.Images.Media.DATA, MediaStore.Images.Media.DISPLAY_NAME, MediaStore.Images.Media.ORIENTATION, MediaStore.Images.Media.BUCKET_DISPLAY_NAME)
-            val idx = IntArray(proj.size)
-
-            cursor = MediaStore.Images.Media.query(resolver, MediaStore.Images.Media.EXTERNAL_CONTENT_URI, null, null, MediaStore.Images.Media.DATE_ADDED + " DESC")
-            if (cursor != null && cursor.moveToFirst()) {
-                idx[0] = cursor.getColumnIndex(proj[0])
-                idx[1] = cursor.getColumnIndex(proj[1])
-                idx[2] = cursor.getColumnIndex(proj[2])
-                idx[3] = cursor.getColumnIndex(proj[3])
-                idx[4] = cursor.getColumnIndex(proj[4])
-
-                var photo = ImageAdapter.PhotoData()
-
-                do {
-                    val photoID = cursor.getInt(idx[0])
-                    val photoPath = cursor.getString(idx[1])
-                    val displayName = cursor.getString(idx[2])
-                    val orientation = cursor.getInt(idx[3])
-                    val bucketDisplayName = cursor.getString(idx[4])
-                    if (displayName != null) {
-                        photo = ImageAdapter.PhotoData()
-                        photo.photoID = photoID
-                        photo.photoPath = photoPath
-                        photo.orientation = orientation
-                        photo.bucketPhotoName = bucketDisplayName
-                        photoList.add(photo)
-                    }
-
-                } while (cursor.moveToNext())
-
-                cursor.close()
-            }
-        } catch (ex: Exception) {
-            // Log the exception's message or whatever you like
-        } finally {
-            try {
-                if (cursor != null && !cursor.isClosed()) {
-                    cursor.close()
-                }
-            } catch (ex: Exception) {
-            }
-
-        }
-
         finishLL.setOnClickListener {
             finish()
         }
@@ -233,25 +185,9 @@ class ReviewWriteActivity : RootActivity() {
 
         }
 
-        val imageLoader = ImageLoader(resolver)
-
-        val adapter = ImageAdapter(context, photoList, imageLoader, selected)
-        listGV.adapter = adapter
-        listGV.setOnItemClickListener { parent, view, position, id ->
-            image = ""
-            postingType="G"
-
-            val photo = photoList[position]
-
-            imgid = photo.photoPath!!
-            imgIV2.setImageBitmap(Utils.getImage(context.contentResolver, imgid))
-
-        }
-
-        imageLoader.setListener(adapter)
-
         val permissionlistener = object : PermissionListener {
             override fun onPermissionGranted() {
+                loadPhoto()
             }
 
             override fun onPermissionDenied(deniedPermissions: List<String>) {
@@ -269,6 +205,76 @@ class ReviewWriteActivity : RootActivity() {
 
         }
 
+        loadPhoto()
+
+    }
+
+    fun loadPhoto(){
+
+        var cursor: Cursor? = null
+        val resolver = contentResolver
+
+        try {
+            val proj = arrayOf(MediaStore.Images.Media._ID, MediaStore.Images.Media.DATA, MediaStore.Images.Media.DISPLAY_NAME, MediaStore.Images.Media.ORIENTATION, MediaStore.Images.Media.BUCKET_DISPLAY_NAME)
+            val idx = IntArray(proj.size)
+
+            cursor = MediaStore.Images.Media.query(resolver, MediaStore.Images.Media.EXTERNAL_CONTENT_URI, null, null, MediaStore.Images.Media.DATE_ADDED + " DESC")
+            if (cursor != null && cursor.moveToFirst()) {
+                idx[0] = cursor.getColumnIndex(proj[0])
+                idx[1] = cursor.getColumnIndex(proj[1])
+                idx[2] = cursor.getColumnIndex(proj[2])
+                idx[3] = cursor.getColumnIndex(proj[3])
+                idx[4] = cursor.getColumnIndex(proj[4])
+
+                var photo = ImageAdapter.PhotoData()
+
+                do {
+                    val photoID = cursor.getInt(idx[0])
+                    val photoPath = cursor.getString(idx[1])
+                    val displayName = cursor.getString(idx[2])
+                    val orientation = cursor.getInt(idx[3])
+                    val bucketDisplayName = cursor.getString(idx[4])
+                    if (displayName != null) {
+                        photo = ImageAdapter.PhotoData()
+                        photo.photoID = photoID
+                        photo.photoPath = photoPath
+                        photo.orientation = orientation
+                        photo.bucketPhotoName = bucketDisplayName
+                        photoList.add(photo)
+                    }
+
+                } while (cursor.moveToNext())
+
+                cursor.close()
+            }
+        } catch (ex: Exception) {
+            // Log the exception's message or whatever you like
+        } finally {
+            try {
+                if (cursor != null && !cursor.isClosed()) {
+                    cursor.close()
+                }
+            } catch (ex: Exception) {
+            }
+
+        }
+
+        val imageLoader = ImageLoader(resolver)
+
+        val adapter = ImageAdapter(context, photoList, imageLoader, selected)
+        listGV.adapter = adapter
+        listGV.setOnItemClickListener { parent, view, position, id ->
+            image = ""
+            postingType="G"
+
+            val photo = photoList[position]
+
+            imgid = photo.photoPath!!
+            imgIV2.setImageBitmap(Utils.getImage(context.contentResolver, imgid))
+
+        }
+
+        imageLoader.setListener(adapter)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

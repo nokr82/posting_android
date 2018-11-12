@@ -200,8 +200,6 @@ open class OrderPageActivity : RootActivity() {
                         companyNameTV.text = companyName
                         infoTV.text = Utils.getString(member, "address") + Utils.getString(member, "address_detail")
 
-                        val school = response.getJSONObject("school")
-
                         val image = Utils.getString(school,"image_uri")
 
                         var school_image = Config.url + image
