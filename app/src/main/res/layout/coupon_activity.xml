@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
+              xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical">
 
@@ -172,6 +172,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:text=""
+                        android:inputType="number"
                         android:background="@null"
                         android:textSize="14dp" />
 
@@ -338,7 +339,8 @@
                             android:id="@+id/title2ET"
                             android:textSize="14dp"
                             android:background="@null"
-                            android:paddingLeft="7dp"/>
+                            android:paddingLeft="7dp"
+                        android:gravity="right|center_vertical"/>
 
                 </LinearLayout>
 
@@ -481,25 +483,26 @@
                         android:layout_height="40dp">
 
                     <TextView
-                            android:gravity="center_vertical"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:text="상품명(10자 이내)"
-                            android:textSize="14dp"
-                            android:textColor="#8F8E8A"
-                            android:background="@null"
-                            android:paddingLeft="7dp"
-                            android:layout_marginRight="5dp"/>
+                        android:gravity="center_vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="상품명(10자 이내)"
+                        android:textSize="14dp"
+                        android:textColor="#8F8E8A"
+                        android:background="@null"
+                        android:paddingLeft="7dp"
+                        android:layout_marginRight="5dp"/>
 
                     <EditText
-                            android:id="@+id/title3ET"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="match_parent"
-                            android:hint=""
-                            android:textSize="14dp"
-                            android:background="@null"
-                            android:paddingLeft="7dp"/>
+                        android:id="@+id/title3ET"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:hint=""
+                        android:textSize="14dp"
+                        android:background="@null"
+                        android:paddingLeft="7dp"
+                        android:gravity="right|center_vertical"/>
 
                 </LinearLayout>
                 <View
@@ -533,14 +536,15 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:gravity="right"
+                        android:gravity="right|center_vertical"
                         android:textSize="14dp"
                         android:background="@null"
-                        android:id="@+id/moneyET" />
+                        android:id="@+id/moneyET"/>
 
                     <TextView
                             android:layout_width="wrap_content"
                             android:gravity="center_vertical"
+                            android:inputType="number"
                             android:layout_height="match_parent"
                             android:textColor="#8F8E8A"
                             android:text="원"

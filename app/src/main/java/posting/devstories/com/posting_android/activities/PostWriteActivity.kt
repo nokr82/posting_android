@@ -131,9 +131,13 @@ class PostWriteActivity : RootActivity() {
 
         textRL.setOnClickListener {
 
-            getmee = meetingSP2.selectedItem.toString()
+            if(member_type == "3") {
+                getday = daySP.selectedItem.toString()
+            } else {
+                getmee = meetingSP2.selectedItem.toString()
+            }
+
             getmost = mostSP.selectedItem.toString()
-            getday = daySP.selectedItem.toString()
 
             if (member_type.equals("3")) {
                 var intent = Intent(context, CouponTextActivity::class.java)
@@ -156,10 +160,13 @@ class PostWriteActivity : RootActivity() {
 
         nextLL.setOnClickListener {
 
-            getmee = meetingSP2.selectedItem.toString()
-            getmost = mostSP.selectedItem.toString()
-            getday = daySP.selectedItem.toString()
+            if(member_type == "3") {
+                getday = daySP.selectedItem.toString()
+            } else {
+                getmee = meetingSP2.selectedItem.toString()
+            }
 
+            getmost = mostSP.selectedItem.toString()
 
             if (getmost.equals("수량")) {
                 Toast.makeText(context, "수량을 선택해주세요", Toast.LENGTH_SHORT).show()

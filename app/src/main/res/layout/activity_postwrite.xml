@@ -3,8 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     >
-
 
     <View
         android:layout_width="match_parent"
@@ -132,48 +132,49 @@
         android:layout_height="0dp"
         android:layout_weight="1.5"
         android:orientation="vertical"
-        android:gravity="center"
-        >
+        android:layout_marginBottom="5dp" >
 
-
-        <RelativeLayout
-            android:id="@+id/bgRL"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@mipmap/wtite_bg"
-            android:gravity="center">
+        <posting.devstories.com.posting_android.base.RationalRelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                app:ratio="1195.5:1223.5">
 
             <RelativeLayout
-                android:id="@+id/imgRL"
-                android:layout_margin="20dp"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <ImageView
-                    android:id="@+id/imgIV2"
+                    android:id="@+id/bgRL"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:scaleType="centerCrop" />
+                    android:background="@mipmap/wtite_bg">
 
+                <posting.devstories.com.posting_android.base.RationalRelativeLayout
+                        android:id="@+id/coupon3RL"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_centerInParent="true"
+                        android:layout_marginLeft="18dp"
+                        android:layout_marginRight="19dp"
+                        app:ratio="1055.5:1089.5">
+
+                    <ImageView
+                            android:id="@+id/imgIV2"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop" />
+
+                </posting.devstories.com.posting_android.base.RationalRelativeLayout>
 
             </RelativeLayout>
 
 
-        </RelativeLayout>
-
-
-
-
-
-
+        </posting.devstories.com.posting_android.base.RationalRelativeLayout>
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.7"
+        android:layout_weight="0.6"
         android:orientation="vertical">
 
 
@@ -192,7 +193,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.2"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginBottom="3dp">
 
         <RelativeLayout
             android:layout_width="0dp"
@@ -213,7 +215,7 @@
             android:layout_width="match_parent"
             android:layout_height="3dp"
             android:layout_alignParentBottom="true"
-            android:background="#D0D0D0"
+            android:background="#063588"
           />
 
         </RelativeLayout>
