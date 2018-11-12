@@ -26,7 +26,10 @@ import posting.devstories.com.posting_android.Actions.PostingAction.write_commen
 import posting.devstories.com.posting_android.R
 import posting.devstories.com.posting_android.adapter.DetailAnimationRecyclerAdapter
 import posting.devstories.com.posting_android.adapter.ReAdapter
-import posting.devstories.com.posting_android.base.*
+import posting.devstories.com.posting_android.base.Config
+import posting.devstories.com.posting_android.base.PrefUtils
+import posting.devstories.com.posting_android.base.RootActivity
+import posting.devstories.com.posting_android.base.Utils
 import swipeable.com.layoutmanager.OnItemSwiped
 import swipeable.com.layoutmanager.SwipeableLayoutManager
 import swipeable.com.layoutmanager.SwipeableTouchHelperCallback
@@ -236,7 +239,7 @@ class DetailActivity : RootActivity() {
                 return@setOnClickListener
             }
 
-
+            /*
             val pageCurlView = PageCurlView(context)
 
             // val bm = ImageLoader.getInstance().loadImageSync(Config.url + image_uri)
@@ -257,6 +260,7 @@ class DetailActivity : RootActivity() {
 
             pageCurlView.setbFlipping(true)
             pageCurlView.FlipAnimationStep()
+            */
 
             savePosting()
 
@@ -676,6 +680,12 @@ class DetailActivity : RootActivity() {
 
                         if("3" == Utils.getString(member, "member_type")) {
                             writerIV.setOnClickListener {
+                                var intent = Intent(context, OrderPageActivity::class.java)
+                                intent.putExtra("company_id", Utils.getInt(member, "id"))
+                                startActivity(intent)
+                            }
+
+                            wnameTX.setOnClickListener {
                                 var intent = Intent(context, OrderPageActivity::class.java)
                                 intent.putExtra("company_id", Utils.getInt(member, "id"))
                                 startActivity(intent)

@@ -83,6 +83,7 @@ class MainActivity : FragmentActivity() {
     }
 
     private var confirm_yn = ""
+    private var active_yn = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -96,6 +97,7 @@ class MainActivity : FragmentActivity() {
         type = intent.getStringExtra("intent")
 
         confirm_yn = PrefUtils.getStringPreference(context, "confirm_yn")
+        active_yn = PrefUtils.getStringPreference(context, "active_yn")
 
         if(is_push) {
 
@@ -157,22 +159,40 @@ class MainActivity : FragmentActivity() {
             val school_id = PrefUtils.getIntPreference(context, "school_id")
             PrefUtils.setPreference(context, "current_school_id", school_id)
 
-            val postFragment = supportFragmentManager.findFragmentByTag("post") as PostFragment
-            postFragment.disableOnPageSelected()
+            val postFragment = supportFragmentManager.findFragmentByTag("post") as? PostFragment
+
+            if(postFragment != null) {
+                if(fragmentFT.currentTab == 0) {
+                    postFragment.setMainView()
+                } else {
+                    postFragment.disableOnPageSelected()
+                }
+            }
 
             fragmentFT.onTabChanged("post")
         }
 
         writeLL.setOnClickListener {
 
-            if("N" == confirm_yn) {
+            if(member_type.equals("2")) {
+                if("N" == confirm_yn) {
+                    var intent = Intent(context, DlgCommonActivity::class.java)
+                    intent.putExtra("contents", "학교 인증 후 이용하실 수 있습니다")
+                    startActivityForResult(intent, CONFRIM_SCHOOL)
 
-                var intent = Intent(context, DlgCommonActivity::class.java)
-                intent.putExtra("contents", "학교 인증 후 이용하실 수 있습니다")
-                startActivityForResult(intent, CONFRIM_SCHOOL)
+                    return@setOnClickListener
+                }
+            } else {
+                if(active_yn == "N") {
+                    var intent = Intent(context, DlgCommonActivity::class.java)
+                    intent.putExtra("contents", "사업자 인증 후 이용하실 수 있습니다")
+                    startActivity(intent)
 
-                return@setOnClickListener
+                    return@setOnClickListener
+                }
             }
+
+
 
             val current_school = PrefUtils.getIntPreference(context, "current_school_id")
             val school_id = PrefUtils.getIntPreference(context, "school_id")

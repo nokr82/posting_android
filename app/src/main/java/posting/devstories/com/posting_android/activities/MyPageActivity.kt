@@ -49,6 +49,7 @@ class MyPageActivity : FragmentActivity() {
     var autoLogin = false
 
     private var has_branch_yn = "N"
+    private var school_domain = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,6 +67,7 @@ class MyPageActivity : FragmentActivity() {
             intent.putExtra("has_branch_yn", has_branch_yn)
             intent.putExtra("school_email_confirmed", school_email_confirmed)
             intent.putExtra("school_confirmed", school_confirmed)
+            intent.putExtra("school_domain", school_domain)
             startActivity(intent)
 
         }
@@ -459,6 +461,7 @@ class MyPageActivity : FragmentActivity() {
 
     private var school_email_confirmed = "N"
     private var school_confirmed = "N"
+    private var school_email = ""
 
     //회원정보
     fun loadInfo() {
@@ -501,7 +504,9 @@ class MyPageActivity : FragmentActivity() {
                         // school
                         val school = response.getJSONObject("school")
                         has_branch_yn = Utils.getString(school, "has_branch_yn")
+                        school_domain = Utils.getString(school, "domain")
 
+                        school_email = Utils.getString(member, "school_email")
                         school_email_confirmed = Utils.getString(member, "school_email_confirmed")
                         school_confirmed = Utils.getString(member, "school_confirmed")
 
