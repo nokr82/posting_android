@@ -54,7 +54,7 @@ class SchoolagreeActivity : RootActivity() {
         }
 
         if("Y" == has_branch_yn) {
-            studentIdLL.visibility = View.VISIBLE
+            // studentIdLL.visibility = View.VISIBLE
         } else {
             studentIdLL.visibility = View.GONE
         }

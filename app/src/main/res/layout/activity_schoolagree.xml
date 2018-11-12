@@ -120,7 +120,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15.13dp"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
                     <View
                         android:layout_width="3.25dp"
@@ -147,7 +148,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="3dp"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -163,7 +165,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15.13dp"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
                     <View
                         android:layout_width="3.25dp"
@@ -190,7 +193,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="3dp"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -366,7 +370,7 @@
                 android:layout_marginTop="31dp"
                 android:layout_marginBottom="8.2dp"
                 android:paddingLeft="15.33dp"
-                android:text="(수동)증명서로 인증하기"
+                android:text="메일 인증하기"
                 android:textColor="#063588"
                 android:textSize="11.67dp"/>
 
@@ -391,7 +395,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="1)대학 메일 인증"
+                        android:text="대학 메일 인증"
                         android:textColor="#888888"
                         android:textSize="13dp"/>
 
@@ -747,20 +751,22 @@
                 android:paddingLeft="15.33dp"
                 android:text="안내사항"
                 android:textColor="#063588"
-                android:textSize="11.67dp"/>
+                android:textSize="11.67dp"
+                android:visibility="gone" />
 
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.3dp"
-                android:background="#D0D0D0"/>
+                android:background="#D0D0D0"
+                android:visibility="gone" />
 
             <LinearLayout
-
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="32.33dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone" >
 
 
                 <LinearLayout
@@ -934,7 +940,8 @@
                 android:layout_marginTop="67.9dp"
                 android:layout_marginBottom="30dp"
                 android:gravity="center"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone" >
 
                 <TextView
                     android:layout_width="wrap_content"
