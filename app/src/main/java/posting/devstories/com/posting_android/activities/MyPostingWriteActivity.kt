@@ -269,7 +269,8 @@ class MyPostingWriteActivity : RootActivity() {
 
                         Utils.hideKeyboard(context)
 //                        val intent = Intent(context,MainActivity::class.java)
-                   //브로드캐스트로 날려주기
+
+                        //브로드캐스트로 날려주기
                         val intent = Intent()
                         intent.putExtra("tabType",type)
                         intent.action = "SET_VIEW"
