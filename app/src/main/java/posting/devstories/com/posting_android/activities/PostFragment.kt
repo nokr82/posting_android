@@ -753,23 +753,23 @@ open class PostFragment : Fragment() {
         pagerVP.visibility = View.VISIBLE
 
         if (tabType == 1) {
-            freeTV.setTextColor(Color.parseColor("#01b4ec"))
+            freeTV.setTextColor(Color.parseColor("#063588"))
             freeV.visibility = View.VISIBLE
         } else if (tabType == 2) {
             infoV.visibility = View.VISIBLE
-            infoTV.setTextColor(Color.parseColor("#01b4ec"))
+            infoTV.setTextColor(Color.parseColor("#063588"))
         } else if (tabType == 3) {
             studyV.visibility = View.VISIBLE
-            studyTV.setTextColor(Color.parseColor("#01b4ec"))
+            studyTV.setTextColor(Color.parseColor("#063588"))
         } else if (tabType == 4) {
             classV.visibility = View.VISIBLE
-            classTV.setTextColor(Color.parseColor("#01b4ec"))
+            classTV.setTextColor(Color.parseColor("#063588"))
         } else if (tabType == 5) {
             meetingV.visibility = View.VISIBLE
-            meetingTV.setTextColor(Color.parseColor("#01b4ec"))
+            meetingTV.setTextColor(Color.parseColor("#063588"))
         } else if (tabType == 6) {
             couponV.visibility = View.VISIBLE
-            couponTV.setTextColor(Color.parseColor("#01b4ec"))
+            couponTV.setTextColor(Color.parseColor("#063588"))
         }
 
         searchET.setText("")
