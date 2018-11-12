@@ -60,7 +60,13 @@ open class MainFragment : Fragment(), AbsListView.OnScrollListener {
 
                         if(Utils.getInt(posting, "leftCount") != 9999) {
                             var cnt = Utils.getInt(posting, "leftCount") - 1
-                            posting.put("leftCount", cnt)
+
+                            if(cnt < 1) {
+                                adapterData.removeAt(i)
+                            } else {
+                                posting.put("leftCount", cnt)
+                            }
+
                         }
 
                     }

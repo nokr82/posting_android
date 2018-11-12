@@ -125,7 +125,13 @@ open class PostFragment : Fragment() {
 
                             if (Utils.getInt(posting, "leftCount") != 9999) {
                                 var cnt = Utils.getInt(posting, "leftCount") - 1
-                                posting.put("leftCount", cnt)
+
+                                if(cnt < 1) {
+                                    list.remove(i)
+                                } else {
+                                    posting.put("leftCount", cnt)
+                                }
+
                             }
 
                         }

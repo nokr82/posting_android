@@ -126,9 +126,12 @@
 
                         <posting.devstories.com.posting_android.base.RationalRelativeLayout
                             android:id="@+id/coupon3RL"
-                            android:layout_width="264dp"
-                            android:layout_height="272.5dp"
-                            android:layout_centerInParent="true">
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_centerInParent="true"
+                            android:layout_marginLeft="18dp"
+                            android:layout_marginRight="19dp"
+                            app:ratio="1055.5:1089.5">
 
                             <LinearLayout
                                 android:id="@+id/coupon3LL"
@@ -261,7 +264,6 @@
 
                             </LinearLayout>
 
-
                             <ImageView
                                 android:id="@+id/imgIV"
                                 android:layout_width="match_parent"
@@ -276,6 +278,7 @@
                                 android:gravity="center"
                                 android:layout_centerInParent="true"
                                 android:text=""
+                                android:textSize="75dp"
                                 android:visibility="gone"
                                 android:maxLines="3"
                                 android:ellipsize="end"/>
