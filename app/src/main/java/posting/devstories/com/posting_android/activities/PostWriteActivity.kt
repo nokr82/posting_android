@@ -239,7 +239,7 @@ class PostWriteActivity : RootActivity() {
         params.put("member_id", PrefUtils.getIntPreference(context, "member_id"));
         params.put("member_type", member_type);
 
-        PostingAction.savedel_posting(params, object : JsonHttpResponseHandler() {
+        PostingAction.today_posting(params, object : JsonHttpResponseHandler() {
 
             override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
                 if (progressDialog != null) {
