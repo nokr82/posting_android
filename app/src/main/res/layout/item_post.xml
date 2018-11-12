@@ -25,10 +25,10 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="7dp"
-            android:layout_marginRight="9dp"
-            android:layout_marginBottom="9dp"
+            android:layout_marginLeft="7dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp"
             android:adjustViewBounds="true">
 
             <LinearLayout
@@ -173,7 +173,6 @@
 
             </ImageView>
 
-
             <TextView
                 android:id="@+id/contentsTV"
                 android:layout_width="match_parent"
@@ -197,7 +196,6 @@
                         android:id="@+id/countLL"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:padding="1dp"
                         android:gravity="center"
                         android:orientation="horizontal">
 
