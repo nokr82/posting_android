@@ -160,11 +160,10 @@ class SchoolActivity : RootActivity() {
                     adapter.notifyDataSetChanged()
 
                     val result = response!!.getString("result")
+                    val dbSearchKeyword = response!!.getString("searchKeyword")
                     val list = response!!.getJSONArray("list")
 
-                    println(response)
-
-                    if("ok" == result) {
+                    if("ok" == result && dbSearchKeyword == searchKeyword) {
 
                         for (i in 0..(list.length() - 1)) {
 
