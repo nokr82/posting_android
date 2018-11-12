@@ -259,6 +259,10 @@ class PostWriteActivity : RootActivity() {
                             var classStr = Utils.getString(response, "class")
                             var meeting = Utils.getString(response, "study")
 
+                            println("study : " + study)
+                            println("classStr : " + classStr)
+                            println("meeting : " + meeting)
+
                             if(meeting == "fail") {
                                 mee.drop(4)
                             }
@@ -483,6 +487,14 @@ class PostWriteActivity : RootActivity() {
             progressDialog!!.dismiss()
         }
 
+
+        try {
+            if (setViewReceiver != null) {
+                context.unregisterReceiver(setViewReceiver)
+            }
+
+        } catch (e: IllegalArgumentException) {
+        }
     }
 
 }
