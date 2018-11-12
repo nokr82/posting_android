@@ -25,10 +25,10 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="7dp"
-            android:layout_marginRight="9dp"
-            android:layout_marginBottom="9dp"
+            android:layout_marginLeft="7dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp"
             android:adjustViewBounds="true">
 
             <LinearLayout
@@ -173,7 +173,6 @@
 
             </ImageView>
 
-
             <TextView
                 android:id="@+id/contentsTV"
                 android:layout_width="match_parent"
@@ -181,29 +180,37 @@
                 android:maxLines="3"
                 android:ellipsize="end"
                 android:textColor="#3E3A39"
-                android:textSize="13dp"
+                android:textSize="16dp"
                 android:visibility="visible"
-                android:gravity="center"/>
-
-            <LinearLayout
-                android:id="@+id/countLL"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:background="@mipmap/nemocount"
-                android:padding="1dp"
                 android:gravity="center"
-                android:orientation="horizontal">
+                android:lineSpacingExtra="8dp"/>
 
-                <TextView
-                    android:id="@+id/leftCntTV"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0"
-                    android:textColor="#FFFFFF"
-                    android:textSize="17.67dp" />
+            <posting.devstories.com.posting_android.base.RationalRelativeLayout
+                    android:layout_width="18.5dp"
+                    android:layout_height="0dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@mipmap/nemocount"
+                    app:ratio="1:1">
 
-            </LinearLayout>
+                <LinearLayout
+                        android:id="@+id/countLL"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                    <TextView
+                            android:id="@+id/leftCntTV"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:textColor="#FFFFFF"
+                            android:textSize="14dp" />
+
+                </LinearLayout>
+
+
+            </posting.devstories.com.posting_android.base.RationalRelativeLayout>
 
         </RelativeLayout>
 

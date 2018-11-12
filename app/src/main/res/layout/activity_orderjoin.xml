@@ -46,6 +46,7 @@
                 android:layout_marginTop="41.87dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="16dp"
                 android:text="사업자 회원정보입력"
                 android:textColor="#888888"/>
 
@@ -62,7 +63,7 @@
                     android:background="@null"
                     android:hint="이메일"
                     android:paddingLeft="7dp"
-                    android:textSize="11.33sp"
+                    android:textSize="14dp"
                     android:inputType="textEmailAddress"
                     android:textColorHint="#BCBEC0" />
 
@@ -79,7 +80,7 @@
                     android:hint="비밀번호"
                     android:paddingLeft="7dp"
                     android:inputType="textPassword"
-                    android:textSize="11.33sp"
+                    android:textSize="14dp"
                     android:textColorHint="#BCBEC0" />
 
                 <View
@@ -95,7 +96,7 @@
                     android:inputType="textPassword"
                     android:hint="비밀번호 확인"
                     android:paddingLeft="7dp"
-                    android:textSize="11.33sp"
+                    android:textSize="14dp"
                     android:textColorHint="#BCBEC0" />
 
                 <View
@@ -111,7 +112,7 @@
                     android:hint="상호명(8자이하)"
                     android:maxLength="8"
                     android:paddingLeft="7dp"
-                    android:textSize="11.33sp"
+                    android:textSize="14dp"
                     android:textColorHint="#BCBEC0" />
 
                 <View
@@ -127,6 +128,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="사업자 정보입력"
+                android:textSize="16dp"
                 android:textColor="#888888"/>
 
             <LinearLayout
@@ -144,7 +146,7 @@
                     android:background="@null"
                     android:hint="대표자 성명"
                     android:textColorHint="#BCBEC0"
-                    android:textSize="11.33sp" />
+                    android:textSize="14dp" />
 
                 <View
                     android:layout_width="match_parent"
@@ -157,7 +159,7 @@
                     android:hint="사업자번호"
                     android:inputType="number"
                     android:paddingLeft="7dp"
-                    android:textSize="11.33sp"
+                    android:textSize="14dp"
                     android:textColorHint="#BCBEC0"
                     android:background="@null"
                     android:gravity="center_vertical"/>
@@ -179,7 +181,7 @@
                     android:layout_height="40dp"
                     android:paddingLeft="7dp"
                     android:hint="사업장 주소"
-                    android:textSize="11.33sp"
+                    android:textSize="14dp"
                     android:textColorHint="#BCBEC0"
                     android:gravity="center_vertical"/>
 
@@ -211,7 +213,7 @@
                     android:paddingLeft="7dp"
                     android:hint="상권내 학교 검색(1개 선택)"
                     android:textColorHint="#BCBEC0"
-                    android:textSize="11.33sp" />
+                    android:textSize="14dp" />
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -229,7 +231,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
                     <EditText
                         android:id="@+id/phoneET"
@@ -260,7 +263,8 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
-                    android:background="#888888" />
+                    android:background="#888888"
+                    android:visibility="gone"/>
 
                 <LinearLayout
                     android:id="@+id/smsCodeLL"
@@ -284,7 +288,8 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
-                    android:background="#888888" />
+                    android:background="#888888"
+                    android:visibility="gone"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -292,7 +297,8 @@
                     android:layout_marginTop="6dp"
                     android:textColor="#BCBEC0"
                     android:textSize="8dp"
-                    android:text="*인증번호 전송은 통신사 사정에따라 최대 1분까지 소요될 수 있습니다."/>
+                    android:text="*인증번호 전송은 통신사 사정에따라 최대 1분까지 소요될 수 있습니다."
+                    android:visibility="gone"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -300,7 +306,8 @@
                     android:layout_marginTop="1dp"
                     android:textColor="#BCBEC0"
                     android:textSize="8dp"
-                    android:text="*인증번호가 도착하지 않을 경우 '인증번호 재전송'을 눌러주세요."/>
+                    android:text="*인증번호가 도착하지 않을 경우 '인증번호 재전송'을 눌러주세요."
+                    android:visibility="gone"/>
 
             </LinearLayout>
 
@@ -320,7 +327,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:gravity="right">
+                    android:gravity="right|center_vertical">
 
                 <CheckBox
                     android:id="@+id/allCB"
@@ -338,83 +345,213 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <CheckBox
-                    android:id="@+id/serviceCB"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
-                <TextView
+                    android:id="@+id/agree1BtnLL"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="서비스 이용 약관 동의"
-                    android:textSize="9.5dp" />
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                <CheckBox
+                        android:id="@+id/serviceCK"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="서비스 이용약관 동의"
+                        android:textSize="9.5dp" />
+
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/semo"/>
 
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="포스팅 이용약관"
-                    android:textSize="11.67dp" />
-
-                <WebView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-
-                </WebView>
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="31.66dp"
-                    android:orientation="horizontal">
-
-                    <CheckBox
-                        android:id="@+id/soloCB"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:id="@+id/agree1LL"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        tools:ignore="WebViewLayout"
+                        android:visibility="gone">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="포스팅 이용약관"
+                            android:textSize="11.67dp" />
+
+
+                    <WebView
+                            android:id="@+id/agree1WV"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+
+                    </WebView>
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                        android:id="@+id/agree2BtnLL"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="개인정보 수집 및 이용동의"
-                        android:textSize="9.75dp" />
+                        android:layout_marginTop="31.66dp"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                    <CheckBox
+                            android:id="@+id/soloCK"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                    />
+
+                    <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="포스팅 통합개인정보처리방침 동의(필수)"
+                            android:textSize="9.5dp" />
+
+                    <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/semo"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                        android:id="@+id/agree2LL"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        tools:ignore="WebViewLayout"
+                        android:visibility="gone">
+
+                    <WebView
+                            android:id="@+id/agree2WV"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center">
+
+                    </WebView>
+
+                </LinearLayout>
+
+                <LinearLayout
+                        android:id="@+id/agree3BtnLL"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="31.66dp"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                    <CheckBox
+                            android:id="@+id/agree3CK"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                    />
+
+                    <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="포스팅 통합커뮤니티 이용규칙 확인(필수)"
+                            android:textSize="9.5dp" />
+
+                    <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/semo"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                        android:id="@+id/agree3LL"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        tools:ignore="WebViewLayout"
+                        android:visibility="gone">
+
+                    <WebView
+                            android:id="@+id/agree3WV"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center">
+
+                    </WebView>
+
+                </LinearLayout>
+
+                <LinearLayout
+                        android:id="@+id/agree4BtnLL"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="31.66dp"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                    <CheckBox
+                            android:id="@+id/agree4CK"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                    />
+
+                    <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="대학생 우대 이벤트 등 광고성 정보 수신 동의(선택)"
+                            android:textSize="9.5dp" />
+
+                    <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/semo"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                        android:id="@+id/agree4LL"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        tools:ignore="WebViewLayout"
+                        android:visibility="gone">
+
+                    <WebView
+                            android:id="@+id/agree4WV"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center">
+
+                    </WebView>
 
                 </LinearLayout>
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="개인정보취급방침"
-                    android:textSize="13dp" />
+                        android:id="@+id/PostingStartTX"
+                        android:layout_width="match_parent"
+                        android:layout_height="37.51dp"
+                        android:gravity="center"
+                        android:text="POSTING 시작하기"
+                        android:textSize="15.33dp"
+                        android:textColor="#20408C"
+                        android:background="#FEDA44"
+                        android:layout_marginTop="52.93dp"
+                        android:layout_marginBottom="50dp"
+                />
 
-                <WebView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center">
-
-                </WebView>
-
-                <TextView
-                    android:id="@+id/PostingStartTX"
-                    android:layout_width="match_parent"
-                    android:layout_height="37.51dp"
-                    android:gravity="center"
-                    android:text="POSTING 시작하기"
-                    android:textSize="15.33dp"
-                    android:textColor="#FFFFFF"
-                    android:background="@drawable/background_round_01b0b9"
-                    android:layout_marginTop="52.93dp"
-                    android:layout_marginBottom="50dp"/>
 
             </LinearLayout>
 

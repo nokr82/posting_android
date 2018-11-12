@@ -19,4 +19,5 @@ object LoginAction {
     fun find_passwd(params: RequestParams, handler: JsonHttpResponseHandler) {
         HttpClient.post("/login/find_passwd.json", params, handler)
     }
+
 }
