@@ -19,7 +19,7 @@
             android:id="@+id/univIV"
             android:layout_width="97.5dp"
             android:layout_height="29dp"
-            android:scaleType="fitCenter"
+            android:scaleType="centerCrop"
             android:src="@mipmap/school"/>
 
         <LinearLayout

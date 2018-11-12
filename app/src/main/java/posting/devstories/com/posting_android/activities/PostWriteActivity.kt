@@ -65,6 +65,7 @@ class PostWriteActivity : RootActivity() {
     var capture: Bitmap? = null
 
     lateinit var adapter: ArrayAdapter<String>
+    lateinit var typeAdapter: ArrayAdapter<String>
 
     //mypostwrite에서 브로드캐스트로 인텐트를 받는다
     internal var setViewReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
@@ -113,8 +114,8 @@ class PostWriteActivity : RootActivity() {
             dayLL.visibility = View.GONE
         }
 
-        adapter = ArrayAdapter<String>(this, R.layout.spinner_item, mee)
-        meetingSP2.adapter = adapter
+        typeAdapter = ArrayAdapter<String>(this, R.layout.spinner_item, mee)
+        meetingSP2.adapter = typeAdapter
 
         adapter = ArrayAdapter<String>(this, R.layout.spinner_item, day)
         daySP.adapter = adapter
@@ -259,6 +260,10 @@ class PostWriteActivity : RootActivity() {
                             var classStr = Utils.getString(response, "class")
                             var meeting = Utils.getString(response, "study")
 
+                            println("study : " + study)
+                            println("classStr : " + classStr)
+                            println("meeting : " + meeting)
+
                             if(meeting == "fail") {
                                 mee.drop(4)
                             }
@@ -270,6 +275,8 @@ class PostWriteActivity : RootActivity() {
                             if(study == "fail") {
                                 mee.drop(2)
                             }
+
+                            typeAdapter.notifyDataSetChanged()
 
                         }
 
@@ -513,6 +520,14 @@ class PostWriteActivity : RootActivity() {
             progressDialog!!.dismiss()
         }
 
+
+        try {
+            if (setViewReceiver != null) {
+                context.unregisterReceiver(setViewReceiver)
+            }
+
+        } catch (e: IllegalArgumentException) {
+        }
     }
 
 }

@@ -483,7 +483,7 @@
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_weight="1"
-                android:background="@mipmap/chat_bg">
+                android:background="@drawable/background_radius_15_border_dededd">
 
                 <EditText
                     android:id="@+id/commentsET"
@@ -518,7 +518,7 @@
         <LinearLayout
             android:id="@+id/saveLL"
             android:layout_width="match_parent"
-            android:layout_height="32.5dp"
+            android:layout_height="35dp"
             android:layout_marginLeft="57dp"
             android:layout_marginRight="57dp"
             android:layout_marginBottom="16dp"
