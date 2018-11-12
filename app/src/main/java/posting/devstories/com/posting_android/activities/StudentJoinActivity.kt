@@ -1,5 +1,6 @@
 package posting.devstories.com.posting_android.activities
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
@@ -46,6 +47,9 @@ class StudentJoinActivity : RootActivity() {
     var geterror = ""
     var email = ""
     var passwd = ""
+
+    val JOIN_OK = 101
+    val JOIN_ERROR = 201
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -175,7 +179,7 @@ class StudentJoinActivity : RootActivity() {
         params.put("member_type", membertype)
         params.put("birth", getBirth)
         params.put("gender", gendertype)
-        params.put("school_id",schoolid )
+        params.put("school_id",schoolid)
 
 
         JoinAction.join(params, object : JsonHttpResponseHandler() {
@@ -187,6 +191,7 @@ class StudentJoinActivity : RootActivity() {
 
                 try {
                     val result = response!!.getString("result")
+                    geterror = Utils.getString(response, "message")
 
                     if ("ok" == result) {
                         val member = response.getJSONObject("member")
@@ -194,11 +199,11 @@ class StudentJoinActivity : RootActivity() {
                         email = Utils.getString(member, "email");
                         passwd = Utils.getString(member, "passwd");
 
-                        joinDlg()
+                        var intent = Intent(context, DlgJoinActivity::class.java);
+                        intent.putExtra("type", "join_ok")
+                        startActivityForResult(intent, JOIN_OK)
 
                     } else {
-                        geterror = "가입실패"
-
                         dlgView( geterror)
                     }
 
@@ -364,44 +369,25 @@ class StudentJoinActivity : RootActivity() {
 
     }
 
-
     fun dlgView(error:String){
-        var mPopupDlg: DialogInterface? = null
+//        var mPopupDlg: DialogInterface? = null
+//
+//        val builder = AlertDialog.Builder(this)
+//        val dialogView = layoutInflater.inflate(R.layout.joinerror_dlg, null)
+//        val errorTX = dialogView.findViewById<TextView>(R.id.errorTX)
+//        val PostingStartTX = dialogView.findViewById<TextView>(R.id.PostingStartTX)
+//        errorTX.setText(error)
+//        mPopupDlg =  builder.setView(dialogView).show()
+//        PostingStartTX.setOnClickListener {
+//            mPopupDlg.dismiss()
+//        }
 
-        val builder = AlertDialog.Builder(this)
-        val dialogView = layoutInflater.inflate(R.layout.joinerror_dlg, null)
-        val errorTX = dialogView.findViewById<TextView>(R.id.errorTX)
-        val PostingStartTX = dialogView.findViewById<TextView>(R.id.PostingStartTX)
-        errorTX.setText(error)
-        mPopupDlg =  builder.setView(dialogView).show()
-        PostingStartTX.setOnClickListener {
-
-            mPopupDlg.dismiss()
-        }
-
-    }
-
-    fun joinDlg(){
-        var mPopupDlg: DialogInterface? = null
-
-        val builder = AlertDialog.Builder(this)
-        val dialogView = layoutInflater.inflate(R.layout.join_dlg, null)
-        val PostingStartTX = dialogView.findViewById<TextView>(R.id.PostingStartTX)
-        mPopupDlg =  builder.setView(dialogView).show()
-        PostingStartTX.setOnClickListener {
-
-
-            login(email, passwd);
-
-
-//            val intent = Intent(context,LoginActivity::class.java)
-//            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-//            startActivity(intent)
-
-        }
+        var intent = Intent(context, DlgJoinActivity::class.java);
+        intent.putExtra("type", "join_error")
+        intent.putExtra("message", error)
+        startActivityForResult(intent, JOIN_ERROR)
 
     }
-
 
     fun login(email:String, passwd:String){
         val params = RequestParams()
@@ -518,6 +504,24 @@ class StudentJoinActivity : RootActivity() {
                 }
             }
         })
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        when(requestCode) {
+            JOIN_OK -> {
+
+                if(resultCode == Activity.RESULT_OK) {
+                    login(email, passwd)
+                }
+
+            }
+            JOIN_ERROR -> {
+
+            }
+        }
+
     }
 
 }

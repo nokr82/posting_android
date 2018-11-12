@@ -74,6 +74,9 @@ class SchoolagreeActivity : RootActivity() {
             uploadStudentId()
         }
 
+        finishLL.setOnClickListener {
+            finish()
+        }
 
     }
 
