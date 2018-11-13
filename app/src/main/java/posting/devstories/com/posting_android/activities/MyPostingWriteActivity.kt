@@ -206,10 +206,10 @@ class MyPostingWriteActivity : RootActivity() {
 //                type = meetingSP3.selectedItem.toString()
 //                count = mostSP3.selectedItem.toString()
 
-                if(postingType == "T") {
+//                if(postingType == "T") {
                     getmee = meetingSP2.selectedItem.toString()
                     count = mostSP.selectedItem.toString()
-                }
+//                }
 
                 if (getmee.equals("자유")) {
                     type = 1
@@ -220,10 +220,11 @@ class MyPostingWriteActivity : RootActivity() {
                 } else if (getmee.equals("동아리")) {
                     type = 4
                 } else if (getmee.equals("미팅")) {
-                    type =5
+                    type = 5
                 } else if (getmee.equals("쿠폰")) {
                     type = 6
                 }
+
                 if(count.equals("수량")){
 
                     Toast.makeText(context,"수량을 선택해주세요",Toast.LENGTH_SHORT).show()
@@ -485,7 +486,6 @@ class MyPostingWriteActivity : RootActivity() {
     fun edit_posting(){
 
         val params = RequestParams()
-
         params.put("posting_id", posting_id)
         params.put("member_id", member_id)
         params.put("type", type)

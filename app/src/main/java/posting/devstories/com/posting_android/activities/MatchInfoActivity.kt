@@ -171,9 +171,17 @@ class MatchInfoActivity : RootActivity() {
 
                         }
 
+                        var postingCnt = ""
+                        val count = Utils.getInt(posting, "count")
+                        if(count < 1) {
+                            postingCnt = "∞"
+                        } else {
+                            postingCnt = count.toString()
+                        }
+
                         // 나 자신은 빼야되기 때문!
                         var cnt = postingSaves.length() - 1
-                        postingCntTV.text = cnt.toString() + "/" + Utils.getString(posting, "count")
+                        postingCntTV.text = cnt.toString() + "/" + postingCnt
 
                         matchCntTV.text = match_count.toString()
 

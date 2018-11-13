@@ -102,7 +102,6 @@ class ReviewWriteActivity : RootActivity() {
             intent.putExtra("image", image)
             intent.putExtra("imgid", imgid)
             intent.putExtra("contents", contents)
-            // intent.putExtra("capture", capture)
             intent.putExtra("image_uri",image_uri)
             intent.putExtra("company_member_id",company_member_id)
             intent.putExtra("postingType",postingType)
