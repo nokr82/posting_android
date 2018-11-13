@@ -33,7 +33,7 @@
                     android:textSize="12dp"
                     android:textColor="#FFFFFF"
                     android:gravity="center"
-                    android:visibility="visible"
+                    android:visibility="gone"
                     android:background="@drawable/circle_red"/>
 
         </posting.devstories.com.posting_android.base.RationalRelativeLayout>
