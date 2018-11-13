@@ -156,6 +156,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="9dp"
+                        android:textStyle="bold"
                         android:textSize="13.5dp"
                         android:text=""
                         android:id="@+id/wnameTX"/>
@@ -171,14 +172,14 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginLeft="20dp"
-                                android:textSize="9.5dp"
+                                android:textSize="13.5dp"
                                 android:text=""/>
                         <TextView
                                 android:id="@+id/policeTV"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text=" | 신고"
-                                android:textSize="9.5dp"
+                                android:textSize="13.5dp"
                                 android:textColor="#BDBBB8"/>
 
                     </LinearLayout>
@@ -236,7 +237,7 @@
                         android:layout_marginLeft="25.5dp"
                         android:layout_marginRight="25.5dp"
                         android:text=""
-                        android:textSize="10dp"
+                        android:textSize="14dp"
                         android:layout_marginTop="14dp"/>
 
                 </LinearLayout>

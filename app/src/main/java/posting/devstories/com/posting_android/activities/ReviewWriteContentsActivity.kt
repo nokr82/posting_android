@@ -5,7 +5,6 @@ import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
@@ -80,10 +79,6 @@ class ReviewWriteContentsActivity : RootActivity() {
 
             contentET.setText(contents)
         } else if (postingType.equals("P")){
-
-            println("postingType : $postingType")
-            println("absolutePath : $absolutePath")
-
             capture = Utils.getImage(context.contentResolver, absolutePath)
             captureIV.setImageBitmap(capture)
             popupRL.visibility = View.VISIBLE
@@ -101,13 +96,6 @@ class ReviewWriteContentsActivity : RootActivity() {
         backLL.setOnClickListener {
             finish()
         }
-
-        val options = BitmapFactory.Options()
-        options.inJustDecodeBounds = true
-        BitmapFactory.decodeFile(str, options)
-        options.inJustDecodeBounds = false
-
-
 
         if (imgid != null && "" != imgid && imgid!!.length> 1&&capture != null&&image != null){
             popupRL.visibility = View.VISIBLE
