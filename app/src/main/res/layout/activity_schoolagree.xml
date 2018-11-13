@@ -44,7 +44,7 @@
                 android:gravity="center"
                 android:text="학교인증"
                 android:textColor="#063588"
-                android:textSize="15.67dp"/>
+                android:textSize="17.67dp"/>
 
 
             <TextView
@@ -55,7 +55,7 @@
                 android:paddingLeft="15.33dp"
                 android:text="학교 인증 안내"
                 android:textColor="#063588"
-                android:textSize="11.67dp"/>
+                android:textSize="13dp"/>
 
 
             <View
@@ -94,7 +94,7 @@
                             android:layout_marginLeft="12dp"
                             android:text="학교 인증 시 해당학교 포스팅 커뮤니티에 참여하여 대화를 나눌 수 있습"
                             android:textColor="#8F8E8A"
-                            android:textSize="9.5dp"/>
+                            android:textSize="11dp"/>
                     </LinearLayout>
 
                 </LinearLayout>
@@ -111,7 +111,7 @@
                         android:layout_marginLeft="12dp"
                         android:text="니다. 인증을 하지 않아도 각종 서비스를 이용하실 수 있습니다. 학교 인증은 사용자의 선택사랑이며, 서비스 이용을 위한 필수 절차가 아닙니다."
                         android:textColor="#8F8E8A"
-                        android:textSize="9.5dp"/>
+                        android:textSize="11dp"/>
                 </LinearLayout>
 
 
@@ -139,7 +139,7 @@
                             android:layout_marginLeft="12dp"
                             android:text="학번, 웹메일 도용 등 올바르지 않은 경로를 통해 인증을 시고할 경우, 관련"
                             android:textColor="#8F8E8A"
-                            android:textSize="9.5dp"/>
+                            android:textSize="11dp"/>
                     </LinearLayout>
 
                 </LinearLayout>
@@ -157,7 +157,7 @@
                         android:layout_marginLeft="12dp"
                         android:text="법에 따라 법적 책임이 따를 수 있습니다."
                         android:textColor="#8F8E8A"
-                        android:textSize="9.5dp"/>
+                        android:textSize="11dp"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -184,7 +184,7 @@
                             android:layout_marginLeft="12dp"
                             android:text="아래 방법 중 하나를 선택하여 인증할 수 있습니다. 학교 포털 스크린을 "
                             android:textColor="#8F8E8A"
-                            android:textSize="9.5dp"/>
+                            android:textSize="11dp"/>
                     </LinearLayout>
 
                 </LinearLayout>
@@ -202,7 +202,7 @@
                         android:layout_marginLeft="12dp"
                         android:text="이용한 인증은 포토샵으로 손쉽게 위조가 가능하기 때문에 인증 수단으로사용하지 않습니다."
                         android:textColor="#8F8E8A"
-                        android:textSize="9.5dp"/>
+                        android:textSize="11dp"/>
                 </LinearLayout>
 
 
@@ -216,7 +216,7 @@
                 android:paddingLeft="15.33dp"
                 android:text="포스팅 이용규칙"
                 android:textColor="#063588"
-                android:textSize="11.67dp"/>
+                android:textSize="13dp"/>
 
 
             <View
@@ -255,7 +255,7 @@
                             android:layout_marginLeft="12dp"
                             android:text="인증 후 사용할 수 있는 모든 포스팅관련 게시물 일체를 임의로 내용 복사,"
                             android:textColor="#8F8E8A"
-                            android:textSize="9.5dp"/>
+                            android:textSize="11dp"/>
                     </LinearLayout>
 
                 </LinearLayout>
@@ -272,7 +272,7 @@
                         android:layout_marginLeft="12dp"
                         android:text="스크린샷 등을 통해 외부로 유출해서는 안 됩니다."
                         android:textColor="#8F8E8A"
-                        android:textSize="9.5dp"/>
+                        android:textSize="11dp"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -298,7 +298,7 @@
                             android:layout_marginLeft="12dp"
                             android:text="정보통신망법에 의해 허가받지 않은 홍보물을 게시해서는 안 됩니다."
                             android:textColor="#8F8E8A"
-                            android:textSize="9.5dp"/>
+                            android:textSize="11dp"/>
                     </LinearLayout>
 
                 </LinearLayout>
@@ -315,7 +315,7 @@
                         android:layout_marginLeft="12dp"
                         android:text="-쇼핑몰, 오픈마켓, 소셜커머스 등의 홍보\n-광고가 있는 카페, 블로그, 커뮤니티, 앱의 추천, 홍보, 방문 유도 등\n-사업자 회원가입이 되지 않은 사업자의 임의 홍보"
                         android:textColor="#8F8E8A"
-                        android:textSize="9.5dp"/>
+                        android:textSize="11dp"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -341,7 +341,7 @@
                             android:layout_marginLeft="12dp"
                             android:text="포스팅 이용규칙을 어길 시 접근 제한 또는 법적조치가 취해질 수 있습니다."
                             android:textColor="#8F8E8A"
-                            android:textSize="9.5dp"/>
+                            android:textSize="11dp"/>
                     </LinearLayout>
 
                 </LinearLayout>
@@ -358,7 +358,7 @@
                         android:layout_marginLeft="12dp"
                         android:text="자세한 사항은 포스팅내 각 카테고리 이용규칙을 참고해주시기 바랍니다."
                         android:textColor="#8F8E8A"
-                        android:textSize="9.5dp"/>
+                        android:textSize="11dp"/>
                 </LinearLayout>
 
 
@@ -372,7 +372,7 @@
                 android:paddingLeft="15.33dp"
                 android:text="메일 인증하기"
                 android:textColor="#063588"
-                android:textSize="11.67dp"/>
+                android:textSize="13dp"/>
 
 
             <View
@@ -381,7 +381,6 @@
                 android:background="#D0D0D0"/>
 
             <LinearLayout
-
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="32.33dp"
@@ -390,7 +389,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:layout_marginTop="14dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -426,7 +426,7 @@
                             android:layout_marginLeft="12dp"
                             android:text="재학중인 대학의 메일로 인증번호 전송"
                             android:textColor="#20408C"
-                            android:textSize="9.5dp"/>
+                            android:textSize="11dp"/>
                     </LinearLayout>
 
                 </LinearLayout>
