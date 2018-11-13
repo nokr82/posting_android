@@ -11,6 +11,7 @@ import posting.devstories.com.posting_android.R
 import posting.devstories.com.posting_android.activities.ReviewDetailActivity
 import posting.devstories.com.posting_android.base.Utils
 import posting.devstories.com.posting_android.base.Config
+import posting.devstories.com.posting_android.base.RationalRelativeLayout
 
 
 open class ReviewAdapter(context:Context, view:Int, data:ArrayList<JSONObject>) : ArrayAdapter<JSONObject>(context, view, data) {
@@ -55,7 +56,7 @@ open class ReviewAdapter(context:Context, view:Int, data:ArrayList<JSONObject>) 
             item.contentsTV.text = contents
             item.contentsTV.visibility = View.VISIBLE
         }
-        item.countLL.visibility = View.GONE
+        item.countRL.visibility = View.GONE
 
         item.postRL.setOnClickListener {
             var intent = Intent(context, ReviewDetailActivity::class.java)
@@ -92,11 +93,11 @@ open class ReviewAdapter(context:Context, view:Int, data:ArrayList<JSONObject>) 
         var postIV :ImageView
         var contentsTV :TextView
         var leftCntTV :TextView
-        var countLL : LinearLayout
+        var countRL : RationalRelativeLayout
         var postRL : RelativeLayout
 
         init {
-            countLL = v.findViewById(R.id.countLL)as LinearLayout
+            countRL = v.findViewById(R.id.countRL)as RationalRelativeLayout
             postIV = v.findViewById(R.id.postIV) as ImageView
             contentsTV = v.findViewById(R.id.contentsTV) as TextView
             leftCntTV = v.findViewById(R.id.leftCntTV) as TextView

@@ -1,8 +1,10 @@
 package posting.devstories.com.posting_android.activities
 
 import android.app.ProgressDialog
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -14,6 +16,7 @@ import com.loopj.android.http.JsonHttpResponseHandler
 import com.loopj.android.http.RequestParams
 import cz.msebera.android.httpclient.Header
 import kotlinx.android.synthetic.main.fra_orderpg.*
+import kotlinx.android.synthetic.main.tab_my_page_noti_view.*
 import org.json.JSONException
 import org.json.JSONObject
 import posting.devstories.com.posting_android.Actions.MemberAction
@@ -54,22 +57,26 @@ open class OrderPageFragment : Fragment() {
     var lng = 0.0
     var lat = 0.0
 
+    internal var editProfileReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent?) {
+            if (intent != null) {
+
+                loadData()
+
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val ctx = context
-        if (null != ctx) {
-            doSomethingWithContext(ctx)
-        }
+
+        val filter1 = IntentFilter("EDIT_PROFILE")
+        context!!.registerReceiver(editProfileReceiver, filter1)
 
         return inflater.inflate(R.layout.fra_orderpg, container, false)
-    }
-    fun doSomethingWithContext(context: Context) {
-        // TODO: Actually do something with the context
-        this.ctx = context
-        progressDialog = ProgressDialog(ctx)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -101,7 +108,6 @@ open class OrderPageFragment : Fragment() {
            val intent = Intent(context, MyPageActivity::class.java)
            startActivity(intent)
        }
-
 
         gpsLL.setOnClickListener {
             val intent = Intent(context, OrderMapActivity::class.java)
@@ -197,7 +203,7 @@ open class OrderPageFragment : Fragment() {
                         com.nostra13.universalimageloader.core.ImageLoader.getInstance().displayImage(profile_uri, profileIV, Utils.UILoptionsProfile)
                         val image_uri =   PrefUtils.getStringPreference(context, "school_image")
                         var univimg = Config.url +image_uri
-                        println("이미지!!!!"+image_uri)
+
                         com.nostra13.universalimageloader.core.ImageLoader.getInstance().displayImage(univimg, univIV, Utils.UILoptionsProfile)
                         adapterData.clear()
 
@@ -265,6 +271,19 @@ open class OrderPageFragment : Fragment() {
                 }
             }
         })
+    }
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        try {
+            if (editProfileReceiver != null) {
+                context!!.unregisterReceiver(editProfileReceiver)
+            }
+        } catch (e: IllegalArgumentException) {
+        }
+
     }
 
 }

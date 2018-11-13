@@ -365,11 +365,6 @@ class MyPageActivity : FragmentActivity() {
             print(thumbnail)
             params.put("upload", ByteArrayInputStream(Utils.getByteArray(thumbnail)))
         }
-
-        println(" gallery $gallery")
-        println(" thumbnail $thumbnail")
-
-
         params.put("push_yn", push_yn)
 
         MemberAction.edit_info(params, object : JsonHttpResponseHandler() {
@@ -386,9 +381,12 @@ class MyPageActivity : FragmentActivity() {
 
                         Toast.makeText(context, "변경되었습니다.", Toast.LENGTH_SHORT).show()
 
-//                        var intent = Intent()
-//                        intent.action = "EDIT_PROFILE"
-//                        sendBroadcast(intent)
+//                        var member = response.getJSONObject("member");
+
+                        var intent = Intent()
+//                        intent.putExtra("profile_uri", Utils.getString(member, "image_uri"))
+                        intent.action = "EDIT_PROFILE"
+                        sendBroadcast(intent)
 
                         loadInfo()
 
@@ -536,6 +534,12 @@ class MyPageActivity : FragmentActivity() {
 
                         val today = Utils.getString(response, "today")
                         todayTV.text = today
+
+
+                        // 닉네임 변경
+                        if(Utils.getString(member, "member_type") == "3") {
+                            nickTV.visibility = View.GONE
+                        }
 
                     } else {
 //                        Toast.makeText(context, "일치하는 회원이 존재하지 않습니다.", Toast.LENGTH_LONG).show()
