@@ -5,7 +5,9 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
@@ -24,18 +26,17 @@ import posting.devstories.com.posting_android.base.PrefUtils
 import posting.devstories.com.posting_android.base.RootActivity
 import posting.devstories.com.posting_android.base.Utils
 import java.io.ByteArrayInputStream
-import kotlin.collections.ArrayList
 
 
 class MyPostingWriteActivity : RootActivity() {
 
     lateinit var context:Context
     private var progressDialog: ProgressDialog? = null
-    var imgid:String? = null
+    // var imgid:String? = null
     var capture: Bitmap?= null
     var member_type = ""
     var image_uri:String? = null
-    var image:String? = null
+    var imageUri:Uri? = null
     var str:String? = null
     var posting_id :String?=null
     var member_id = -1
@@ -47,7 +48,7 @@ class MyPostingWriteActivity : RootActivity() {
     var startd:String?=null
     var last:String?=null
     var mount:Int? = 0
-    var absolutePath:String? =null
+    // var absolutePath:String? =null
     var getmee:String?= null
     var getmost = ""
     var getday:String?= null
@@ -74,17 +75,18 @@ class MyPostingWriteActivity : RootActivity() {
 
         intent = getIntent()
         // 카메라 사진
-        absolutePath = intent.getStringExtra("absolutePath")
+        // absolutePath = intent.getStringExtra("absolutePath")
         // 포스팅 타입 G-갤러리 P-포토 T-텍스트
         postingType = intent.getStringExtra("postingType")
         getmee = intent.getStringExtra("getmee")
         getmost = intent.getStringExtra("getmost")
+        image_uri = intent.getStringExtra("image_uri")
 
         if("3" == member_type){
             getday = intent.getStringExtra("getday")
         }
 
-        imgid = intent.getStringExtra("imgid")
+        // imgid = intent.getStringExtra("imgid")
         // 수정 contents
         contents2 = intent.getStringExtra("contents")
         startd = intent.getStringExtra("startd")
@@ -93,7 +95,11 @@ class MyPostingWriteActivity : RootActivity() {
 
         last = intent.getStringExtra("last")
         posting_id = intent.getStringExtra("posting_id")
-        image = intent.getStringExtra("image")
+
+        val h = intent.getStringExtra("imageUri")
+        if(h != null) {
+            imageUri = Uri.parse(h)
+        }
         mount = intent.getIntExtra("mount",0)
 
         // 이미지 uri 로드
@@ -142,19 +148,22 @@ class MyPostingWriteActivity : RootActivity() {
             finish()
         }
 
-        if (postingType.equals("P")){
-            capture = Utils.getImage(context.contentResolver, absolutePath)
+        if (postingType.equals("P") && imageUri != null){
+            capture = MediaStore.Images.Media.getBitmap(this.contentResolver, imageUri)
             captureIV.setImageBitmap(capture)
             popupRL.visibility = View.VISIBLE
 
-        }else if (postingType.equals("G")){
-            //이미지
-            ImageLoader.getInstance().displayImage(image, captureIV, Utils.UILoptionsUserProfile)
+        }else if (postingType.equals("G") && imageUri != null){
+            capture = MediaStore.Images.Media.getBitmap(this.contentResolver, imageUri)
+            captureIV.setImageBitmap(capture)
+            // ImageLoader.getInstance().displayImage(image, captureIV, Utils.UILoptionsUserProfile)
             popupRL.visibility = View.VISIBLE
 
-            captureIV.setImageBitmap(Utils.getImage(context.contentResolver, imgid))
-        }else if (postingType.equals("M")){
-            com.nostra13.universalimageloader.core.ImageLoader.getInstance().displayImage(image, captureIV, Utils.UILoptionsUserProfile)
+            // captureIV.setImageBitmap(Utils.getImage(context.contentResolver, imgid))
+        }else if (postingType.equals("M") && imageUri != null){
+            capture = MediaStore.Images.Media.getBitmap(this.contentResolver, imageUri)
+            captureIV.setImageBitmap(capture)
+            // com.nostra13.universalimageloader.core.ImageLoader.getInstance().displayImage(image, captureIV, Utils.UILoptionsUserProfile)
             captureIV.visibility = View.VISIBLE
         }
 
@@ -352,7 +361,7 @@ class MyPostingWriteActivity : RootActivity() {
         params.put("current_school_id", PrefUtils.getIntPreference(context, "current_school_id"))
         params.put("days",getday)
 
-
+        /*
         if (capture==null){
 
         }else{
@@ -361,17 +370,13 @@ class MyPostingWriteActivity : RootActivity() {
 
 //            params.put("upload",capture)
         }
+        */
 
 
-
-        if (imgid.equals("")||imgid==null){
-
-        }else{
-
-
-            val add_file = Utils.getImage(context.contentResolver, imgid)
+        if (imageUri != null) {
+            val add_file = MediaStore.Images.Media.getBitmap(this.contentResolver, imageUri)
+            // val add_file = Utils.getImage(context.contentResolver, imgid)
             params.put("upload",ByteArrayInputStream(Utils.getByteArray(add_file)))
-
         }
 
 
@@ -492,18 +497,19 @@ class MyPostingWriteActivity : RootActivity() {
             params.put("image_uri", "")
         } else {
 
-            if (capture==null){
-
-            }else{
-                params.put("upload",ByteArrayInputStream(Utils.getByteArray(capture)))
-
-            }
-            if (imgid.equals("")||imgid==null){
-
-            }else{
-                val add_file = Utils.getImage(context.contentResolver, imgid)
+            if (imageUri != null) {
+                val add_file = MediaStore.Images.Media.getBitmap(this.contentResolver, imageUri)
+                // val add_file = Utils.getImage(context.contentResolver, imgid)
                 params.put("upload",ByteArrayInputStream(Utils.getByteArray(add_file)))
             }
+
+            /*
+            if (capture != null) {
+                val add_file = Utils.getImage(context.contentResolver, image_uri)
+                // val add_file = Utils.getImage(context.contentResolver, imgid)
+                params.put("upload",ByteArrayInputStream(Utils.getByteArray(add_file)))
+            }
+            */
 
         }
 

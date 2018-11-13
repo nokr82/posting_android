@@ -229,12 +229,18 @@ class PostWriteActivity : RootActivity() {
 //                Toast.makeText(context, "기간을 선택해주세요", Toast.LENGTH_SHORT).show()
             } else {
                 var intent = Intent(context, MyPostingWriteActivity::class.java)
-                intent.putExtra("image", image)
+
+                if (imageUri != null) {
+                    intent.putExtra("imageUri",  imageUri.toString())
+                } else {
+                    // intent.putExtra("imageUri",  imageUri.toString())
+                }
+
                 intent.putExtra("current_school", current_school)
                 intent.putExtra("school_id", school_id)
-                intent.putExtra("imgid", imgid)
+                // intent.putExtra("imgid", imgid)
                 intent.putExtra("postingType", postingType)
-                intent.putExtra("absolutePath", absolutePath)
+                // intent.putExtra("absolutePath", absolutePath)
                 intent.putExtra("contents", contents)
                 intent.putExtra("posting_id", posting_id)
                 intent.putExtra("image_uri", image_uri)
@@ -492,13 +498,13 @@ class PostWriteActivity : RootActivity() {
 
             imageUri = Uri.fromFile(File(imgid))
 
-//            cropImage()
+            cropImage()
 
-             val imgWidth = Utils.getScreenWidth(context) / 4
-             imgIV2.setImageBitmap(Utils.getImage(context.contentResolver, imgid, imgWidth))
-//             imgIV2.setImageBitmap(Utils.getImage(context.contentResolver, imgid))
+             // val imgWidth = Utils.getScreenWidth(context) / 4
+             // imgIV2.setImageBitmap(Utils.getImage(context.contentResolver, imgid, imgWidth))
+             // imgIV2.setImageBitmap(Utils.getImage(context.contentResolver, imgid))
             capture = null
-            imageUri = null
+            // imageUri = null
 
         }
 
@@ -532,11 +538,7 @@ class PostWriteActivity : RootActivity() {
 
             }
             CROP_FROM_CAMERA -> {
-
-                capture = Utils.getImage(context.contentResolver, imageUriOutput!!.path)
-                // val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, imageUriOutput)
-                // capture = bitmap
-                postingType = "P"
+                capture = MediaStore.Images.Media.getBitmap(this.contentResolver, imageUri)
                 imgIV2.setImageBitmap(capture)
 
             }
@@ -574,6 +576,7 @@ class PostWriteActivity : RootActivity() {
         )
         //you must setup this
 
+        /*
         if (intent.resolveActivity(packageManager) != null) {
 
             val storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
@@ -589,7 +592,8 @@ class PostWriteActivity : RootActivity() {
                 //imageUri = Uri.fromFile(photo);
                 imageUriOutput = FileProvider.getUriForFile(context, packageName + ".provider", photo)
 
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUriOutput)
+                // intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUriOutput)
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
                 startActivityForResult(intent, CROP_FROM_CAMERA)
 
             } catch (e: IOException) {
@@ -597,8 +601,10 @@ class PostWriteActivity : RootActivity() {
             }
 
         }
+        */
 
-
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
+        startActivityForResult(intent, CROP_FROM_CAMERA)
 
 
     }
