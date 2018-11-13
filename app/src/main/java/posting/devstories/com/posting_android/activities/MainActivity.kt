@@ -159,17 +159,21 @@ class MainActivity : FragmentActivity() {
             val school_id = PrefUtils.getIntPreference(context, "school_id")
             PrefUtils.setPreference(context, "current_school_id", school_id)
 
+
             val postFragment = supportFragmentManager.findFragmentByTag("post") as? PostFragment
 
-            if(postFragment != null) {
-                if(fragmentFT.currentTab == 0) {
+            if(fragmentFT.currentTab == 0) {
+                if(postFragment != null) {
                     postFragment.setMainView()
-                } else {
+                }
+            } else {
+                if(postFragment != null) {
                     postFragment.disableOnPageSelected()
                 }
-            }
 
-            fragmentFT.onTabChanged("post")
+                // fragmentFT.onTabChanged("post")
+                fragmentFT.currentTab = 0
+            }
         }
 
         writeLL.setOnClickListener {
@@ -226,7 +230,9 @@ class MainActivity : FragmentActivity() {
             setTabBar()
 
             myPageIV.setImageResource(R.mipmap.clickmy)
-            fragmentFT.onTabChanged("myPage")
+            // fragmentFT.onTabChanged("myPage")
+
+            fragmentFT.currentTab = 2
 
         }
 
