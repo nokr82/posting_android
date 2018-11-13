@@ -153,7 +153,7 @@ class ChattingActivity : RootActivity(), AbsListView.OnScrollListener {
 
         exitLL.setOnClickListener {
 
-            if(chatting_group_id < 1) {
+            if(chatting_group_id < 1 || emptyLL.visibility == View.VISIBLE) {
                 finish()
                 return@setOnClickListener
             }
@@ -285,6 +285,11 @@ class ChattingActivity : RootActivity(), AbsListView.OnScrollListener {
                     val result = response!!.getString("result")
 
                     if ("ok" == result) {
+
+                        var intent = Intent();
+                        intent.putExtra("type", "minus")
+                        intent.action = "MATCH_UPDATE"
+                        sendBroadcast(intent)
 
                         finish()
 
@@ -727,6 +732,11 @@ class ChattingActivity : RootActivity(), AbsListView.OnScrollListener {
 
                         emptyLL.visibility = View.GONE
                         chatLV.visibility = View.VISIBLE
+
+                        var intent = Intent();
+                        intent.putExtra("type", "plus")
+                        intent.action = "MATCH_UPDATE"
+                        sendBroadcast(intent)
 
                         timerStart()
 

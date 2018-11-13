@@ -1,8 +1,10 @@
 package posting.devstories.com.posting_android.activities
 
 import android.app.ProgressDialog
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
@@ -39,6 +41,25 @@ class MatchInfoActivity : RootActivity() {
 
     var posting_id = ""
     var member_id = -1
+    var match_count = 0
+
+    internal var matchCntUpdate: BroadcastReceiver? = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent?) {
+            if (intent != null) {
+                var type = intent.getStringExtra("type")
+
+                if(type == "plus") {
+                    match_count = match_count + 1;
+                } else {
+                    match_count = match_count - 1;
+                }
+
+                matchCntTV.text = match_count.toString()
+
+            }
+        }
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +67,9 @@ class MatchInfoActivity : RootActivity() {
 
         this.context = this
         progressDialog = ProgressDialog(context)
+
+        var filter1 = IntentFilter("MATCH_UPDATE")
+        registerReceiver(matchCntUpdate, filter1)
 
         posting_id = intent.getStringExtra("posting_id")
 
@@ -87,7 +111,7 @@ class MatchInfoActivity : RootActivity() {
 
                         val posting = response.getJSONObject("posting")
                         val write_member = response.getJSONObject("member")
-                        val match_count = Utils.getString(response, "match_count")
+                        match_count = Utils.getInt(response, "match_count")
                         val savemember_id = Utils.getInt(write_member, "id")
 
                         for (i in 0..(postingSaves.length() - 1)) {
@@ -152,7 +176,7 @@ class MatchInfoActivity : RootActivity() {
                         var cnt = postingSaves.length() - 1
                         postingCntTV.text = cnt.toString() + "/" + Utils.getString(posting, "count")
 
-                        matchCntTV.text = match_count
+                        matchCntTV.text = match_count.toString()
 
                     } else {
 
@@ -217,10 +241,17 @@ class MatchInfoActivity : RootActivity() {
     }
 
     override fun onDestroy() {
+        super.onDestroy()
 
         progressDialog = null
 
-        super.onDestroy()
+        try {
+            if (matchCntUpdate != null) {
+                context!!.unregisterReceiver(matchCntUpdate)
+            }
+
+        } catch (e: IllegalArgumentException) {
+        }
     }
 
 
