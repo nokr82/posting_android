@@ -144,8 +144,7 @@
             <RelativeLayout
                     android:id="@+id/bgRL"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@mipmap/wtite_bg">
+                    android:layout_height="match_parent">
 
                 <posting.devstories.com.posting_android.base.RationalRelativeLayout
                         android:id="@+id/coupon3RL"

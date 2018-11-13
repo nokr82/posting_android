@@ -296,6 +296,10 @@ class PostWriteActivity : RootActivity() {
 
         loadPhoto()
 
+        if(tabType > 0) {
+            meetingSP2.setSelection(tabType - 1)
+        }
+
 //        checkCategory()
 
     }
@@ -344,6 +348,25 @@ class PostWriteActivity : RootActivity() {
                             meetingSP2.adapter = typeAdapter
                             typeAdapter.notifyDataSetChanged()
 
+                            if(tabType < 3) {
+                                meetingSP2.setSelection(tabType - 1)
+                            } else if(tabType == 3 && study == "ok") {
+                                meetingSP2.setSelection(2)
+                            } else if(tabType == 4) {
+                                if(study == "ok" && classStr == "ok") {
+                                    meetingSP2.setSelection(3)
+                                } else if(study != "ok" && classStr == "ok") {
+                                    meetingSP2.setSelection(2)
+                                }
+                            } else if(tabType == 5) {
+                                if(study == "ok" && classStr == "ok" && meeting == "ok") {
+                                    meetingSP2.setSelection(4)
+                                } else if(study != "ok" && classStr == "ok" && meeting == "ok") {
+                                    meetingSP2.setSelection(3)
+                                } else if(study != "ok" && classStr != "ok" && meeting == "ok") {
+                                    meetingSP2.setSelection(2)
+                                }
+                            }
                         }
 
                     }
