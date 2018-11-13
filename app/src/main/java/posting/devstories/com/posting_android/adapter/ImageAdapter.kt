@@ -4,9 +4,10 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.BaseAdapter
+import android.widget.ImageView
+import android.widget.LinearLayout
 import posting.devstories.com.posting_android.R
-import posting.devstories.com.posting_android.activities.WriteFragment
 import posting.devstories.com.posting_android.base.ImageLoader
 import java.util.*
 

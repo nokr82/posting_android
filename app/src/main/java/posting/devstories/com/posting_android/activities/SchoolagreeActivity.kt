@@ -36,7 +36,7 @@ class SchoolagreeActivity : RootActivity() {
     private var has_branch_yn = "N"
     private var school_email_confirmed = "N"
     private var school_confirmed = "N"
-    private var school_domain = null
+    private var school_domain:String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +47,7 @@ class SchoolagreeActivity : RootActivity() {
         has_branch_yn = intent.getStringExtra("has_branch_yn")
         school_email_confirmed = intent.getStringExtra("school_email_confirmed")
         school_confirmed = intent.getStringExtra("school_confirmed")
-        school_domain = intent.getStringExtra("school_domain") as Nothing?
+        school_domain = intent.getStringExtra("school_domain")
 
         if(school_domain != null) {
             schoolDomainTV.text = "@$school_domain"

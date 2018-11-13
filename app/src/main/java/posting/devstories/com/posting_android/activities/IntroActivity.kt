@@ -1,5 +1,6 @@
 package posting.devstories.com.posting_android.activities
 
+import android.app.NotificationManager
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
@@ -17,6 +18,8 @@ import posting.devstories.com.posting_android.R
 import posting.devstories.com.posting_android.base.PrefUtils
 import posting.devstories.com.posting_android.base.RootActivity
 import posting.devstories.com.posting_android.base.Utils
+
+
 
 class IntroActivity : RootActivity() {
 
@@ -38,6 +41,10 @@ class IntroActivity : RootActivity() {
 
         this.context = this
         progressDialog = ProgressDialog(context)
+
+        // clear all notification
+        val nm = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        nm.cancelAll()
 
         val buldle = intent.extras
         if (buldle != null) {
