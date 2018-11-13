@@ -96,27 +96,43 @@ class ChattingActivity : RootActivity(), AbsListView.OnScrollListener {
         chatLV.adapter = adapter
         chatLV.setOnScrollListener(this)
 
-        messageET.setOnEditorActionListener { v, actionId, event ->
+//        messageET.setOnEditorActionListener { v, actionId, event ->
+//
+//            when(actionId) {
+//                EditorInfo.IME_ACTION_SEND -> {
+//
+//                    val message = Utils.getString(messageET)
+//
+//                    if(message == "" || message.isEmpty()) {
+//                        return@setOnEditorActionListener true
+//                    }
+//
+//                    if(emptyLL.visibility == View.VISIBLE) {
+//                        chattingAdd("t", message)
+//                    } else {
+//                        sendMessage("t", message)
+//                    }
+//
+//                }
+//            }
+//
+//            return@setOnEditorActionListener true
+//        }
 
-            when(actionId) {
-                EditorInfo.IME_ACTION_SEND -> {
+        submitTV.setOnClickListener {
 
-                    val message = Utils.getString(messageET)
+            val message = Utils.getString(messageET)
 
-                    if(message == "" || message.isEmpty()) {
-                        return@setOnEditorActionListener true
-                    }
-
-                    if(emptyLL.visibility == View.VISIBLE) {
-                        chattingAdd("t", message)
-                    } else {
-                        sendMessage("t", message)
-                    }
-
-                }
+            if(message == "" || message.isEmpty()) {
+                return@setOnClickListener
             }
 
-            return@setOnEditorActionListener true
+            if(emptyLL.visibility == View.VISIBLE) {
+                chattingAdd("t", message)
+            } else {
+                sendMessage("t", message)
+            }
+
         }
 
         reportLL.setOnClickListener {
