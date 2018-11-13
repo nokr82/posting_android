@@ -12,7 +12,6 @@ class FreeFragment : MainFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var view = super.onCreateView(inflater, container, savedInstanceState)
 
-
         return view
     }
 

@@ -23,7 +23,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:text="자유"
-                android:textColor="#99a0a0"
+                android:textColor="#063588"
                 android:textSize="14dp" />
 
             <View
@@ -34,7 +34,7 @@
                     android:layout_marginRight="10dp"
                     android:background="#063588"
                     android:id="@+id/free2V"
-                    android:visibility="invisible"/>
+                    android:visibility="visible"/>
 
         </RelativeLayout>
 
@@ -121,6 +121,7 @@
                     android:visibility="invisible" />
 
         </RelativeLayout>
+
         <RelativeLayout
                 android:id="@+id/meeting2RL"
                 android:layout_width="0dp"
@@ -180,17 +181,21 @@
 
     </LinearLayout>
 
+    <posting.devstories.com.posting_android.base.NonSwipeableViewPager
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/pagerVP"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+    </posting.devstories.com.posting_android.base.NonSwipeableViewPager>
+
     <GridView
         android:id="@+id/storageGV"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:numColumns="3">
 
-
-
-
     </GridView>
-
-
 
 </LinearLayout>

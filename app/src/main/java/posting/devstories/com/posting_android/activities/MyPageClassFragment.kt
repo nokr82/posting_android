@@ -1,26 +1,21 @@
 package posting.devstories.com.posting_android.activities
 
-import android.app.ProgressDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.GridView
-import posting.devstories.com.posting_android.R
-import posting.devstories.com.posting_android.adapter.PostAdapter
 
-class MyPagePostingFragment : MyPagePostingStorageFragment() {
+class MyPageClassFragment : MyPageParentFragment() {
 
-    private var progressDialog: ProgressDialog? = null
+    var getImage=""
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    override var tab = 1
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var view = super.onCreateView(inflater, container, savedInstanceState)
 
-        tab = 1
+        var bundle: Bundle = this.arguments!!
+        tab = bundle.getInt("tab")
 
         return view
     }
@@ -28,11 +23,8 @@ class MyPagePostingFragment : MyPagePostingStorageFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        pagerAdapter.setTabType(tab)
-
+        loadData(4)
     }
 
 
 }
-
-
