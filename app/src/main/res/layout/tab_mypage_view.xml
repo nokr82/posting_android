@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -11,12 +12,10 @@
 
         <LinearLayout
             android:id="@+id/myPageLL"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="알림"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:textSize="11.75dp">
+            android:layout_centerInParent="true"
+            android:gravity="center">
 
             <ImageView
                 android:id="@+id/myPageIV"
@@ -29,27 +28,31 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
             android:layout_centerInParent="true"
             android:layout_alignParentTop="true">
 
-            <TextView
-                android:id="@+id/alarmCntTV"
-                android:layout_width="wrap_content"
+            <posting.devstories.com.posting_android.base.RationalRelativeLayout
+                android:layout_width="16dp"
                 android:layout_height="wrap_content"
-                android:text="32"
-                android:textSize="10dp"
-                android:textColor="#FFFFFF"
-                android:layout_marginLeft="27dp"
-                android:layout_marginTop="3.5dp"
-                android:background="@drawable/background_radius_e60012"
-                android:layout_marginBottom="1dp"
                 android:gravity="center"
-                android:paddingLeft="2.5dp"
-                android:paddingRight="2.5dp"
-                android:visibility="gone"/>
+                app:ratio="1:1"
+                android:layout_marginLeft="27dp">
+
+                <TextView
+                        android:id="@+id/alarmCntTV"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="0"
+                        android:textSize="12dp"
+                        android:textColor="#FFFFFF"
+                        android:gravity="center"
+                        android:visibility="visible"
+                        android:background="@drawable/circle_red"/>
+
+            </posting.devstories.com.posting_android.base.RationalRelativeLayout>
+
         </LinearLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="3dp"
