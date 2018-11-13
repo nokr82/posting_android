@@ -103,7 +103,7 @@ class ReviewDetailActivity : RootActivity() {
                        image_uri = Utils.getString(review, "image_uri")
 //                        var created =   Utils.getString(posting, "created")
                         if (member_id == Utils.getInt(member, "id")){
-                            myLL.visibility = View.VISIBLE
+//                            myLL.visibility = View.VISIBLE
                             menuIV.visibility = View.VISIBLE
                         }
 
