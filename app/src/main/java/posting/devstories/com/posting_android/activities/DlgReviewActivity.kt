@@ -92,7 +92,6 @@ class DlgReviewActivity : RootActivity() {
                 intent.putExtra("contents",contents)
                 intent.putExtra("company_member_id", company_member_id)
                 startActivityForResult(intent, EIDT_RIVEW)
-                finish()
 
             }
 
