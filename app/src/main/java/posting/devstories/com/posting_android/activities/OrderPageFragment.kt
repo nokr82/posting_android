@@ -16,7 +16,6 @@ import com.loopj.android.http.JsonHttpResponseHandler
 import com.loopj.android.http.RequestParams
 import cz.msebera.android.httpclient.Header
 import kotlinx.android.synthetic.main.fra_orderpg.*
-import kotlinx.android.synthetic.main.tab_my_page_noti_view.*
 import org.json.JSONException
 import org.json.JSONObject
 import posting.devstories.com.posting_android.Actions.MemberAction
@@ -191,6 +190,7 @@ open class OrderPageFragment : Fragment() {
                         postCntTV.text = Utils.getString(response, "postCnt");
 
                         val member = response.getJSONObject("member")
+                        val school = response.getJSONObject("school")
 
                         name = Utils.getString(member, "company_name")
                         lng = Utils.getDouble(member, "lat")
@@ -201,9 +201,8 @@ open class OrderPageFragment : Fragment() {
 
                         var profile_uri = Config.url + Utils.getString(member,"image_uri")
                         com.nostra13.universalimageloader.core.ImageLoader.getInstance().displayImage(profile_uri, profileIV, Utils.UILoptionsProfile)
-                        val image_uri =   PrefUtils.getStringPreference(context, "school_image")
-                        var univimg = Config.url +image_uri
 
+                        var univimg = Config.url +Utils.getString(school, "image_uri")
                         com.nostra13.universalimageloader.core.ImageLoader.getInstance().displayImage(univimg, univIV, Utils.UILoptionsProfile)
                         adapterData.clear()
 

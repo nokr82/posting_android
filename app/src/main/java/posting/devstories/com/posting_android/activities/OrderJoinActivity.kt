@@ -32,10 +32,11 @@ class OrderJoinActivity : RootActivity() {
 
     val SELECT_SCHOOL = 101
     val ADDRESS = 102
+    val JOIN_ERROR = 201
+    val JOIN_OK = 301
 
     var school_id = -1
     var sms_code = ""
-
 
     var email = ""
     var company_num = ""
@@ -146,7 +147,7 @@ class OrderJoinActivity : RootActivity() {
             if (company_num == "" || company_num == null || company_num.isEmpty()) {
                 geterror = "사업자등록번호를 입력해주세요"
 
-                dlgView( geterror)
+                dlgView(geterror)
             }
 
            else if (getPW == "" || getPW == null || getPW.isEmpty()) {
@@ -400,11 +401,15 @@ class OrderJoinActivity : RootActivity() {
                         email = Utils.getString(member, "email");
                         passwd = Utils.getString(member, "passwd");
 
-                        dlgView2()
+                        var intent = Intent(context, DlgJoinActivity::class.java);
+                        intent.putExtra("type", "company_join_ok")
+                        startActivityForResult(intent, JOIN_OK)
 
                     } else {
 
-                        Toast.makeText(context, response!!.getString("message"), Toast.LENGTH_LONG).show()
+                        dlgView(Utils.getString(response, "message"))
+
+//                        Toast.makeText(context, response!!.getString("message"), Toast.LENGTH_LONG).show()
 
                     }
 
@@ -507,6 +512,14 @@ class OrderJoinActivity : RootActivity() {
                         find_location(address)
                     }
 
+                }
+
+                JOIN_ERROR -> {
+
+                }
+
+                JOIN_OK -> {
+                    login(email, passwd)
                 }
 
             }
@@ -623,33 +636,25 @@ class OrderJoinActivity : RootActivity() {
 
     //다이얼로그
     fun dlgView(error:String){
-        var mPopupDlg: DialogInterface? = null
+//        var mPopupDlg: DialogInterface? = null
+//
+//        val builder = AlertDialog.Builder(this)
+//        val dialogView = layoutInflater.inflate(R.layout.joinerror_dlg, null)
+//        val errorTX = dialogView.findViewById<TextView>(R.id.errorTX)
+//        val PostingStartTX = dialogView.findViewById<TextView>(R.id.PostingStartTX)
+//        errorTX.setText(error)
+//        mPopupDlg =  builder.setView(dialogView).show()
+//        PostingStartTX.setOnClickListener {
+//
+//            mPopupDlg.dismiss()
+//        }
 
-        val builder = AlertDialog.Builder(this)
-        val dialogView = layoutInflater.inflate(R.layout.joinerror_dlg, null)
-        val errorTX = dialogView.findViewById<TextView>(R.id.errorTX)
-        val PostingStartTX = dialogView.findViewById<TextView>(R.id.PostingStartTX)
-        errorTX.setText(error)
-        mPopupDlg =  builder.setView(dialogView).show()
-        PostingStartTX.setOnClickListener {
-
-            mPopupDlg.dismiss()
-        }
-
-    }
-    fun dlgView2(){
-        var mPopupDlg: DialogInterface? = null
-
-        val builder = AlertDialog.Builder(this)
-        val dialogView = layoutInflater.inflate(R.layout.join_dlg, null)
-        val PostingStartTX = dialogView.findViewById<TextView>(R.id.PostingStartTX)
-        mPopupDlg =  builder.setView(dialogView).show()
-        PostingStartTX.setOnClickListener {
-            login(email, passwd)
-        }
+        var intent = Intent(context, DlgJoinActivity::class.java);
+        intent.putExtra("type", "join_error")
+        intent.putExtra("message", error)
+        startActivityForResult(intent, JOIN_ERROR)
 
     }
-
 
 
     fun login(email:String, passwd:String){

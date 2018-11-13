@@ -29,6 +29,11 @@ class DlgJoinActivity : RootActivity() {
 
         if(type == "join_ok") {
             PostingStartTX.text = "POSTING 시작하기"
+        } else if (type == "company_join_ok") {
+
+            messageTV.text = "사업자회원 가입 승인은\n24시간 이내 푸쉬 알림으로\n알려드립니다."
+
+            PostingStartTX.text = "확인"
         } else {
 
             message = intent.getStringExtra("message")

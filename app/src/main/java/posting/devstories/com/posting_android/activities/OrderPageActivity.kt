@@ -87,9 +87,7 @@ open class OrderPageActivity : RootActivity() {
 
         val image_uri =   PrefUtils.getStringPreference(context, "school_image")
         var univimg = Config.url +image_uri
-        println("이미지!!!!"+image_uri)
         com.nostra13.universalimageloader.core.ImageLoader.getInstance().displayImage(univimg, univIV, Utils.UILoptionsProfile)
-
 
         val filter1 = IntentFilter("DEL_REVIEW")
         registerReceiver(delReviewReceiver, filter1)
