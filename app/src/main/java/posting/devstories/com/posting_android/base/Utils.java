@@ -27,13 +27,10 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-
-import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
-import posting.devstories.com.posting_android.R;
-import posting.devstories.com.posting_android.activities.LoginActivity;
-
 import org.json.JSONException;
 import org.json.JSONObject;
+import posting.devstories.com.posting_android.R;
+import posting.devstories.com.posting_android.activities.LoginActivity;
 
 import java.io.*;
 import java.lang.reflect.InvocationTargetException;
@@ -1405,5 +1402,29 @@ public class Utils {
         paint.setAlpha(155);
         canvas.drawRect(0F, 0F, (float) width, (float) height, paint);
         return bitmap;
+    }
+
+
+    // 리스트 뷰 아이템 높이만큼 크기 늘리기
+    public static int getListViewHeightBasedOnItems(ListView listView) {
+
+        // Get list adpter of listview;
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null)  return 0;
+
+        int numberOfItems = listAdapter.getCount();
+
+        // Get total height of all items.
+        int totalItemsHeight = 0;
+        for (int itemPos = 0; itemPos < numberOfItems; itemPos++) {
+            View item = listAdapter.getView(itemPos, null, listView);
+            item.measure(0, 0);
+            totalItemsHeight += item.getMeasuredHeight();
+        }
+
+        // Get total height of all item dividers.
+        int totalDividersHeight = listView.getDividerHeight() *  (numberOfItems - 1);
+
+        return totalItemsHeight + totalDividersHeight;
     }
 }

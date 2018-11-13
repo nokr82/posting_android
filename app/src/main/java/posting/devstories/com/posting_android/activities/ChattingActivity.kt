@@ -1,14 +1,11 @@
 package posting.devstories.com.posting_android.activities
 
 import android.Manifest
-import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -16,10 +13,8 @@ import android.provider.MediaStore
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.view.View
-import android.view.inputmethod.EditorInfo
 import android.widget.AbsListView
 import android.widget.BaseAdapter
-import android.widget.TextView
 import android.widget.Toast
 import com.loopj.android.http.JsonHttpResponseHandler
 import com.loopj.android.http.RequestParams
@@ -33,11 +28,7 @@ import posting.devstories.com.posting_android.Actions.ChattingAction
 import posting.devstories.com.posting_android.Actions.ReviewAction
 import posting.devstories.com.posting_android.R
 import posting.devstories.com.posting_android.adapter.ChattingAdapter
-import posting.devstories.com.posting_android.base.BackPressCloseHandler
-import posting.devstories.com.posting_android.base.PrefUtils
-import posting.devstories.com.posting_android.base.RootActivity
-import posting.devstories.com.posting_android.base.Utils
-import posting.devstories.com.posting_android.base.Config
+import posting.devstories.com.posting_android.base.*
 import java.io.ByteArrayInputStream
 import java.util.*
 
@@ -572,6 +563,13 @@ class ChattingActivity : RootActivity(), AbsListView.OnScrollListener {
                     e.printStackTrace()
                 }
 
+                val listViewHeight = Utils.getListViewHeightBasedOnItems(chatLV)
+
+                if (chatLV.height < listViewHeight) {
+                    chatLV.transcriptMode = AbsListView.TRANSCRIPT_MODE_ALWAYS_SCROLL
+                } else {
+                    chatLV.transcriptMode = AbsListView.TRANSCRIPT_MODE_NORMAL
+                }
             }
 
 
