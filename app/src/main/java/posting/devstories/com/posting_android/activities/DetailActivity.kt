@@ -565,7 +565,7 @@ class DetailActivity : RootActivity() {
                         var menu_name:String =  Utils.getString(posting, "menu_name")
                         var sale_per:String =  Utils.getString(posting, "sale_per")
                         var sale_price:String =  Utils.getString(posting, "sale_price")
-                        var contents =   Utils.getString(posting, "contents")
+                        contents =   Utils.getString(posting, "contents")
 
                         image_uri = Utils.getString(posting, "image_uri")
                         var leftCount = Utils.getString(posting, "leftCount")
@@ -808,6 +808,7 @@ class DetailActivity : RootActivity() {
         intent.putExtra("member_type",member_type)
         intent.putExtra("contents",contents)
         intent.putExtra("type",type)
+        intent.putExtra("count",posting_count)
         startActivityForResult(intent, EDIT_POST)
 
     }

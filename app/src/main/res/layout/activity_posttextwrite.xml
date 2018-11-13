@@ -32,10 +32,11 @@
             android:padding="16dp">
 
             <RelativeLayout
-                    android:layout_width="78dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/meeting2RL"
-                    android:layout_marginRight="20dp">
+                android:layout_width="78dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/meeting2RL"
+                android:layout_marginRight="20dp"
+                android:visibility="gone">
 
                 <Spinner
                         android:id="@+id/meetingSP2"
@@ -56,9 +57,11 @@
             </RelativeLayout>
 
             <RelativeLayout
-                    android:layout_width="78dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="20dp">
+                android:id="@+id/mostRL"
+                android:layout_width="78dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:visibility="gone">
 
                 <Spinner
                         android:popupBackground="@drawable/background_border_707070"

@@ -430,9 +430,11 @@ open class PostFragment : Fragment() {
 
                 // yourEditText...
 
-                val keyword = Utils.getString(searchET)
+                if(mainLL.visibility == View.VISIBLE) {
+                    val keyword = Utils.getString(searchET)
 
-                searchSchool(keyword)
+                    searchSchool(keyword)
+                }
 
             }
 
