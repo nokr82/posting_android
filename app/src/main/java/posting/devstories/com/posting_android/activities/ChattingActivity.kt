@@ -60,6 +60,8 @@ class ChattingActivity : RootActivity(), AbsListView.OnScrollListener {
     var first_id = -1
     var last_id = -1
 
+    val CHATTING_EXIT = 301
+
     var adapterData: ArrayList<JSONObject> = ArrayList<JSONObject>()
     private lateinit var adapter: ChattingAdapter
 
@@ -149,6 +151,17 @@ class ChattingActivity : RootActivity(), AbsListView.OnScrollListener {
 
         }
 
+        exitLL.setOnClickListener {
+
+            if(chatting_group_id < 1) {
+                finish()
+                return@setOnClickListener
+            }
+
+            var intent = Intent(context, DlgChattingExitActivity::class.java)
+            startActivityForResult(intent, CHATTING_EXIT)
+        }
+
         chattingCheck()
 
     }
@@ -206,16 +219,22 @@ class ChattingActivity : RootActivity(), AbsListView.OnScrollListener {
 
                     }
                 }
+
+                CHATTING_EXIT -> {
+                    exitChatting()
+                }
+
             }
         }
     }
 
-    fun policedlgView(){
 
+
+    fun policedlgView(){
 
         var intent = Intent(context, DlgReportActivity::class.java)
         intent.putExtra("dlgtype", "police_member")
-        intent.putExtra("report_member_id", attend_member_id)
+        intent.putExtra("report_member_id", attend_member_id.toString())
         startActivity(intent)
 
 
@@ -248,6 +267,65 @@ class ChattingActivity : RootActivity(), AbsListView.OnScrollListener {
 //            mPopupDlg.dismiss()
 //        }
 
+    }
+
+    fun exitChatting(){
+        val params = RequestParams()
+        params.put("member_id", member_id)
+        params.put("chatting_group_id", chatting_group_id)
+
+        ChattingAction.exitChatting(params, object : JsonHttpResponseHandler() {
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+
+                try {
+                    val result = response!!.getString("result")
+
+                    if ("ok" == result) {
+
+                        finish()
+
+                    }
+
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+
+            }
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONArray?) {
+                super.onSuccess(statusCode, headers, response)
+            }
+
+            private fun error() {
+                Utils.alert(context, "조회중 장애가 발생하였습니다.")
+            }
+
+            override fun onFailure(statusCode: Int, headers: Array<Header>?, throwable: Throwable, errorResponse: JSONArray?) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+                throwable.printStackTrace()
+                error()
+            }
+
+            override fun onStart() {
+                // show dialog
+                if (progressDialog != null) {
+
+                    progressDialog!!.show()
+                }
+            }
+
+            override fun onFinish() {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+            }
+        })
     }
 
     fun report(type:String){
@@ -329,6 +407,8 @@ class ChattingActivity : RootActivity(), AbsListView.OnScrollListener {
 
                     if ("ok" == result || "empty" == result) {
 
+                        chatting_group_id = Utils.getInt(response, "chatting_group_id")
+
                         val att_member = response.getJSONObject("att_member")
 
                         nickNameTV.text = Utils.getString(att_member, "nick_name")
@@ -341,8 +421,6 @@ class ChattingActivity : RootActivity(), AbsListView.OnScrollListener {
                         ImageLoader.getInstance().displayImage(profile_uri, profile2IV, Utils.UILoptionsProfile)
 
                         if("ok" == result) {
-
-                            chatting_group_id = Utils.getInt(response, "chatting_group_id")
 
                             chatLV.visibility = View.VISIBLE
 

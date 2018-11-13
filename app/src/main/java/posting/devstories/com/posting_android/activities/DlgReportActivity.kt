@@ -238,7 +238,13 @@ class DlgReportActivity : RootActivity() {
                         startActivity(intent)
 
                     } else if("already" == result) {
-                        Toast.makeText(context, "신고한 게시물입니다.", Toast.LENGTH_LONG).show()
+
+                        if("M" == Utils.getString(response, "report_type")) {
+                            Toast.makeText(context, "신고한 회원입니다.", Toast.LENGTH_LONG).show()
+                        } else {
+                            Toast.makeText(context, "신고한 게시물입니다.", Toast.LENGTH_LONG).show()
+                        }
+
                     }
 
                 } catch (e: JSONException) {

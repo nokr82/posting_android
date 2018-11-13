@@ -25,5 +25,9 @@ object ChattingAction {
     fun sendMessage(params: RequestParams, handler: JsonHttpResponseHandler) {
         HttpClient.post("/chatting/sendMessage.json", params, handler)
     }
+    // 나가기
+    fun exitChatting(params: RequestParams, handler: JsonHttpResponseHandler) {
+        HttpClient.post("/chatting/exitChatting.json", params, handler)
+    }
 
 }

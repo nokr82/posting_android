@@ -34,8 +34,9 @@
         <TextView
             android:id="@+id/nickNameTV"
             android:layout_marginLeft="8dp"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text=""
             android:textSize="13dp"
             android:textColor="#050000"
@@ -47,6 +48,19 @@
             android:layout_height="wrap_content"
             android:src="@mipmap/menu"
             android:visibility="gone"/>
+
+        <LinearLayout
+            android:id="@+id/exitLL"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/chatting_exit"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 
