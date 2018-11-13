@@ -98,9 +98,12 @@
                         app:ratio="1195.5:1223.5">
 
                         <posting.devstories.com.posting_android.base.RationalRelativeLayout
-                            android:layout_width="264dp"
-                            android:layout_height="272.5dp"
-                            android:layout_centerInParent="true">
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_centerInParent="true"
+                            android:layout_marginLeft="18dp"
+                            android:layout_marginRight="19dp"
+                            app:ratio="1055.5:1089.5">
 
                             <ImageView
                                 android:id="@+id/imgIV"
@@ -113,12 +116,14 @@
                                 android:id="@+id/contentsTV"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
+                                android:gravity="center"
                                 android:layout_centerInParent="true"
+                                android:text=""
+                                android:textSize="42dp"
+                                android:visibility="gone"
                                 android:maxLines="3"
                                 android:ellipsize="end"
-                                android:gravity="center"
-                                android:text=""
-                                android:visibility="gone"/>
+                                android:lineSpacingExtra="23dp"/>
 
                         </posting.devstories.com.posting_android.base.RationalRelativeLayout>
 
@@ -127,7 +132,8 @@
                             android:layout_height="40.2dp"
                             android:src="@mipmap/blue"
                             android:layout_alignParentTop="true"
-                            android:layout_centerInParent="true"/>
+                            android:layout_centerInParent="true"
+                            android:visibility="gone"/>
 
                     </posting.devstories.com.posting_android.base.RationalRelativeLayout>
 
@@ -175,7 +181,6 @@
                                 android:textSize="9.5dp"
                                 android:textColor="#BDBBB8"/>
 
-
                     </LinearLayout>
 
                     <LinearLayout
@@ -184,8 +189,8 @@
                             android:gravity="center"
                             android:visibility="gone"
                             android:id="@+id/couponLL">
-                        <TextView
 
+                        <TextView
                                 android:id="@id/couponTV"
                                 android:layout_marginRight="19dp"
                                 android:layout_marginBottom="8.5dp"

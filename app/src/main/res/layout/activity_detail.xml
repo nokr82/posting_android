@@ -314,12 +314,6 @@
 
                         </posting.devstories.com.posting_android.base.RationalRelativeLayout>
 
-                        <ImageView
-                            android:id="@+id/img2IV"
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:scaleType="centerCrop" />
-
                     </posting.devstories.com.posting_android.base.RationalRelativeLayout>
 
                 </LinearLayout>
