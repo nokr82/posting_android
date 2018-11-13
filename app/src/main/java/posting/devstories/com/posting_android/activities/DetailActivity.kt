@@ -67,7 +67,7 @@ class DetailActivity : RootActivity() {
 
     var school_id = -1
     var me_school_id =-1
-    var posting_count = 9999
+    var posting_count = -1
 
     var confirm_yn = ""
     lateinit var adapterRe: ReAdapter
