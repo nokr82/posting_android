@@ -7,6 +7,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.View
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import com.loopj.android.http.JsonHttpResponseHandler
 import com.loopj.android.http.RequestParams
@@ -53,6 +54,13 @@ class MyPostingWriteActivity : RootActivity() {
 
     var current_school = -1
     var school_id = -1
+
+    var mee = arrayOf("자유", "정보", "스터디", "동아리", "미팅")
+    var most = arrayOf("수량", "1", "3", "5", "10", "20", "무제한")
+
+    lateinit var adapter: ArrayAdapter<String>
+    lateinit var typeAdapter: ArrayAdapter<String>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_posttextwrite)
@@ -95,6 +103,11 @@ class MyPostingWriteActivity : RootActivity() {
             popupRL.visibility = View.VISIBLE
         } else if ("T" == postingType) {
             popupRL.visibility = View.GONE
+
+            getmee
+
+            meetingSP2.setSelection(1)
+
         }
 
         // 배경 포스트잇
@@ -115,7 +128,11 @@ class MyPostingWriteActivity : RootActivity() {
             finish()
         }
 
+        typeAdapter = ArrayAdapter<String>(this, R.layout.spinner_item, mee)
+        meetingSP2.adapter = typeAdapter
 
+        adapter = ArrayAdapter<String>(this, R.layout.spinner_item, most)
+        mostSP.adapter = adapter
 
 
         if (postingType.equals("P")){
