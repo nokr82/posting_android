@@ -88,16 +88,6 @@ open class MainFragment : Fragment(), AbsListView.OnScrollListener {
         }
     }
 
-    internal var searchKeywordReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
-        override fun onReceive(context: Context, intent: Intent?) {
-            if (intent != null) {
-                type = intent.getIntExtra("type", 1)
-                keyword = intent.getStringExtra("keyword")
-                loadData(type)
-            }
-        }
-    }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -130,11 +120,6 @@ open class MainFragment : Fragment(), AbsListView.OnScrollListener {
 
         val filter2 = IntentFilter("DEL_POSTING")
         activity.registerReceiver(delPostingReceiver, filter2)
-
-
-        val filter3 = IntentFilter("SEARCH_KEYWORD")
-        activity.registerReceiver(searchKeywordReceiver, filter3)
-
 
         adapterMain = PostAdapter(activity, R.layout.item_post, adapterData)
         gideGV.adapter = adapterMain
@@ -310,13 +295,6 @@ open class MainFragment : Fragment(), AbsListView.OnScrollListener {
         try {
             if (savePostingReceiver != null) {
                 context!!.unregisterReceiver(savePostingReceiver)
-            }
-        } catch (e: IllegalArgumentException) {
-        }
-
-        try {
-            if (searchKeywordReceiver != null) {
-                context!!.unregisterReceiver(searchKeywordReceiver)
             }
         } catch (e: IllegalArgumentException) {
         }

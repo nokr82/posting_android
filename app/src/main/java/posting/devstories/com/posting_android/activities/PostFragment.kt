@@ -274,7 +274,7 @@ open class PostFragment : Fragment() {
         })
 
         // 뷰페이저
-        pagerAdapter = PagerAdapter(getChildFragmentManager())
+        pagerAdapter = PagerAdapter(getChildFragmentManager(), searchET)
         pagerVP.adapter = pagerAdapter
         pagerAdapter.notifyDataSetChanged()
         pagerVP.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
@@ -400,13 +400,9 @@ open class PostFragment : Fragment() {
 
                     keyword = Utils.getString(searchET)
 
-                    if (mainLL.visibility == View.VISIBLE) {
-                        // 메인 학교 검색
-
-                    } else {
+                    if (mainLL.visibility == View.GONE) {
                         var intent = Intent()
                         intent.putExtra("keyword", keyword)
-                        intent.putExtra("type", (pagerVP.currentItem + 1))
                         intent.action = "SEARCH_KEYWORD"
                         context!!.sendBroadcast(intent)
                     }
@@ -652,61 +648,52 @@ open class PostFragment : Fragment() {
         circleLL.addView(iv)
     }
 
-    class PagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
+    class PagerAdapter(fm: FragmentManager, searchET: EditText) : FragmentStatePagerAdapter(fm) {
 
-        var keyword:String = ""
-
-        fun setSearchKeyword(searchKeyword:String){
-            keyword = searchKeyword
-        }
+        var searchET = searchET
 
         override fun getItem(i: Int): Fragment {
 
             var fragment: Fragment
 
             val args = Bundle()
+            args.putString("keyword", Utils.getString(searchET))
+
             when (i) {
                 0 -> {
                     fragment = FreeFragment()
-                    args.putString("keyword", keyword)
                     fragment.arguments = args
 
                     return fragment
                 }
                 1 -> {
                     fragment = InfoFragment()
-                    args.putString("keyword", keyword)
                     fragment.arguments = args
 
                     return fragment
                 }
                 2 -> {
                     fragment = StudyFragment()
-                    args.putString("keyword", keyword)
                     fragment.arguments = args
                     return fragment
                 }
                 3 -> {
                     fragment = ClassFragment()
-                    args.putString("keyword", keyword)
                     fragment.arguments = args
                     return fragment
                 }
                 4 -> {
                     fragment = MeetingFragment()
-                    args.putString("keyword", keyword)
                     fragment.arguments = args
                     return fragment
                 }
                 5 -> {
                     fragment = CouponFragment()
-                    args.putString("keyword", keyword)
                     fragment.arguments = args
                     return fragment
                 }
                 else -> {
                     fragment = FreeFragment()
-                    args.putString("keyword", keyword)
                     fragment.arguments = args
                     return fragment
                 }
@@ -787,8 +774,6 @@ open class PostFragment : Fragment() {
             couponV.visibility = View.VISIBLE
             couponTV.setTextColor(Color.parseColor("#063588"))
         }
-
-        searchET.setText("")
 
     }
 
