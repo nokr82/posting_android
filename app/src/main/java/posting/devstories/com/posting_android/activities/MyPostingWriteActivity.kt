@@ -24,6 +24,7 @@ import posting.devstories.com.posting_android.base.PrefUtils
 import posting.devstories.com.posting_android.base.RootActivity
 import posting.devstories.com.posting_android.base.Utils
 import java.io.ByteArrayInputStream
+import kotlin.collections.ArrayList
 
 
 class MyPostingWriteActivity : RootActivity() {
@@ -95,18 +96,18 @@ class MyPostingWriteActivity : RootActivity() {
         image = intent.getStringExtra("image")
         mount = intent.getIntExtra("mount",0)
 
-
         // 이미지 uri 로드
         if (!posting_id.equals("") && "M" == postingType) {
             var image = Config.url + image_uri
             ImageLoader.getInstance().displayImage(image, captureIV, Utils.UILoptionsPosting)
             popupRL.visibility = View.VISIBLE
+
         } else if ("T" == postingType) {
             popupRL.visibility = View.GONE
+            meeting2RL.visibility = View.VISIBLE
+            mostRL.visibility = View.VISIBLE
 
-            getmee
-
-            meetingSP2.setSelection(1)
+            checkCategory()
 
         }
 
@@ -134,11 +135,11 @@ class MyPostingWriteActivity : RootActivity() {
         adapter = ArrayAdapter<String>(this, R.layout.spinner_item, most)
         mostSP.adapter = adapter
 
-
         if (postingType.equals("P")){
             capture = Utils.getImage(context.contentResolver, absolutePath)
             captureIV.setImageBitmap(capture)
             popupRL.visibility = View.VISIBLE
+
         }else if (postingType.equals("G")){
             //이미지
             ImageLoader.getInstance().displayImage(image, captureIV, Utils.UILoptionsUserProfile)
@@ -188,6 +189,12 @@ class MyPostingWriteActivity : RootActivity() {
             }else {
 //                type = meetingSP3.selectedItem.toString()
 //                count = mostSP3.selectedItem.toString()
+
+                if(postingType == "T") {
+                    getmee = meetingSP2.selectedItem.toString()
+                    count = mostSP.selectedItem.toString()
+                }
+
                 if (getmee.equals("자유")) {
                     type = 1
                 } else if (getmee.equals("정보")) {
@@ -227,8 +234,102 @@ class MyPostingWriteActivity : RootActivity() {
 
     }
 
+    fun checkCategory() {
+        val params = RequestParams()
+        params.put("member_id", PrefUtils.getIntPreference(context, "member_id"));
+        params.put("member_type", member_type);
 
+        PostingAction.today_posting(params, object : JsonHttpResponseHandler() {
 
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+
+                try {
+
+                    val result = response!!.getString("result")
+
+                    if ("ok" == result) {
+
+                        if(member_type == "2") {
+
+                            var study = Utils.getString(response, "study")
+                            var classStr = Utils.getString(response, "class")
+                            var meeting = Utils.getString(response, "meeting")
+
+                            var setMee:ArrayList<String> = ArrayList()
+                            setMee.add("자유")
+                            setMee.add("정보")
+
+                            if(study == "ok") {
+                                setMee.add("스터디")
+                            }
+
+                            if(classStr == "ok") {
+                                setMee.add("동아리")
+                            }
+
+                            if(meeting == "ok") {
+                                setMee.add("미팅")
+                            }
+
+                            typeAdapter = ArrayAdapter<String>(context, R.layout.spinner_item, setMee)
+                            meetingSP2.adapter = typeAdapter
+                            typeAdapter.notifyDataSetChanged()
+
+                            var typePosition = typeAdapter.getPosition(getmee)
+                            meetingSP2.setSelection(typePosition)
+
+                            var countPosition = adapter.getPosition(getmost)
+                            mostSP.setSelection(countPosition)
+
+                        }
+
+                    }
+
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+
+            }
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONArray?) {
+                super.onSuccess(statusCode, headers, response)
+            }
+
+            private fun error() {
+                Utils.alert(context, "조회중 장애가 발생하였습니다.")
+            }
+
+            override fun onFailure(
+                statusCode: Int,
+                headers: Array<Header>?,
+                throwable: Throwable,
+                errorResponse: JSONArray?
+            ) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+                throwable.printStackTrace()
+                error()
+            }
+
+            override fun onStart() {
+                // show dialog
+                if (progressDialog != null) {
+
+                    progressDialog!!.show()
+                }
+            }
+
+            override fun onFinish() {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+            }
+        })
+    }
 
     fun write(){
 
@@ -480,7 +581,6 @@ class MyPostingWriteActivity : RootActivity() {
             }
         })
     }
-
 
     override fun finish() {
         super.finish()

@@ -69,6 +69,7 @@ class PostWriteActivity : RootActivity() {
 
     lateinit var adapter: ArrayAdapter<String>
     lateinit var typeAdapter: ArrayAdapter<String>
+    var setMee: ArrayList<String> = ArrayList<String>()
 
     //mypostwrite에서 브로드캐스트로 인텐트를 받는다
     internal var setViewReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
@@ -156,6 +157,7 @@ class PostWriteActivity : RootActivity() {
                     intent.putExtra("getmost", getmost)
 //                    intent.putExtra("getday", getday)
                     intent.putExtra("postingType", "T")
+                    intent.putExtra("type_list", setMee.toString())
                     startActivity(intent)
 //                }
             }
@@ -275,27 +277,25 @@ class PostWriteActivity : RootActivity() {
                             var classStr = Utils.getString(response, "class")
                             var meeting = Utils.getString(response, "meeting")
 
-                            var mee: ArrayList<String> = ArrayList()
-                            mee.add("자유")
-                            mee.add("정보")
+                            setMee = ArrayList()
+                            setMee.add("자유")
+                            setMee.add("정보")
 
                             if(study == "ok") {
-                                mee.add("스터디")
+                                setMee.add("스터디")
                             }
 
                             if(classStr == "ok") {
-                                mee.add("동아리")
+                                setMee.add("동아리")
                             }
 
                             if(meeting == "ok") {
-                                mee.add("미팅")
+                                setMee.add("미팅")
                             }
 
-                            typeAdapter = ArrayAdapter<String>(context, R.layout.spinner_item, mee)
+                            typeAdapter = ArrayAdapter<String>(context, R.layout.spinner_item, setMee)
                             meetingSP2.adapter = typeAdapter
                             typeAdapter.notifyDataSetChanged()
-
-                            println("mee : " + mee.toString())
 
                         }
 
