@@ -57,7 +57,6 @@ class AddressActivity : RootActivity(), AbsListView.OnScrollListener {
         handler = Handler()
     }
 
-
     fun init_webView() {
         // JavaScript 허용
         webViewWV!!.settings.javaScriptEnabled = true
