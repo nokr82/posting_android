@@ -216,6 +216,13 @@
             android:theme="@style/NoTitleDialog"
             android:windowSoftInputMode="adjustResize|stateHidden"/>
 
+        <!-- 이미지 확대 -->
+        <activity
+            android:name=".activities.FullScreenImageActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleDialog"
+            android:windowSoftInputMode="adjustResize|stateHidden"/>
+
         <!-- 주소찾기 -->
         <activity
             android:name=".activities.MyPostingActivity"
