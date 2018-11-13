@@ -9,7 +9,7 @@ import kotlinx.android.synthetic.main.dlg_chatting_exit.*
 import posting.devstories.com.posting_android.R
 import posting.devstories.com.posting_android.base.RootActivity
 
-class DlgChattingExitActivity : RootActivity() {
+class DlgYesOrNoCommonActivity : RootActivity() {
 
     lateinit var context: Context
     private var progressDialog: ProgressDialog? = null
@@ -23,6 +23,8 @@ class DlgChattingExitActivity : RootActivity() {
 
         this.context = this
         progressDialog = ProgressDialog(context)
+
+        contentsTV.text = intent.getStringExtra("contents")
 
         cancelTV.setOnClickListener {
             var intent = Intent();

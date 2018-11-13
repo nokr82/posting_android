@@ -186,7 +186,7 @@
 
         <!-- 채팅 종료 팝업 -->
         <activity
-            android:name=".activities.DlgChattingExitActivity"
+            android:name=".activities.DlgYesOrNoCommonActivity"
             android:screenOrientation="portrait"
             android:theme="@style/full_screen_dialog1"/>
 
@@ -202,6 +202,10 @@
             android:theme="@style/full_screen_dialog1"/>
         <activity
                 android:name=".activities.DlgReportActivity"
+                android:screenOrientation="portrait"
+                android:theme="@style/full_screen_dialog1"/>
+        <activity
+                android:name=".activities.DlgReviewActivity"
                 android:screenOrientation="portrait"
                 android:theme="@style/full_screen_dialog1"/>
         <activity

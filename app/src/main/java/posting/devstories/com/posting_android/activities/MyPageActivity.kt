@@ -1,5 +1,6 @@
 package posting.devstories.com.posting_android.activities
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
@@ -10,7 +11,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.support.v4.app.FragmentActivity
-import android.view.ContextThemeWrapper
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
@@ -50,6 +50,9 @@ class MyPageActivity : FragmentActivity() {
 
     private var has_branch_yn = "N"
     private var school_domain = ""
+
+    val SECESSION = 301
+    val LOGOUT = 401
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -223,50 +226,61 @@ class MyPageActivity : FragmentActivity() {
     }
 
     fun dlgView(){
-        val builder = AlertDialog.Builder(ContextThemeWrapper(this, R.style.Theme_AppCompat_Light_Dialog))
-        builder.setTitle("회원탈퇴")
-        builder.setMessage("정말 탈퇴하시겠습니까?")
 
-        builder.setPositiveButton("확인") { _, _ ->
-            PrefUtils.setPreference(context, "autoLogin", autoLogin)
-            redout()
-        }
-        builder.setNegativeButton("취소") { _, _ ->
+        var intent = Intent(context, DlgYesOrNoCommonActivity::class.java)
+        intent.putExtra("contents", "정말 탈퇴하시겠습니까?")
+        startActivityForResult(intent, SECESSION)
 
-
-
-        }
-
-        builder.show()
+//        val builder = AlertDialog.Builder(ContextThemeWrapper(this, R.style.Theme_AppCompat_Light_Dialog))
+//        builder.setTitle("회원탈퇴")
+//        builder.setMessage("정말 탈퇴하시겠습니까?")
+//
+//        builder.setPositiveButton("확인") { _, _ ->
+//            PrefUtils.setPreference(context, "autoLogin", autoLogin)
+//            redout()
+//        }
+//        builder.setNegativeButton("취소") { _, _ ->
+//
+//
+//
+//        }
+//
+//        builder.show()
     }
 
     fun joinoutdlgView(){
-        var mPopupDlg: DialogInterface? = null
 
-        val builder = AlertDialog.Builder(this)
-        val dialogView = layoutInflater.inflate(R.layout.coupon_dlg, null)
-        val couponnoTX = dialogView.findViewById<TextView>(R.id.couponnoTX)
-        val couponyTX = dialogView.findViewById<TextView>(R.id.couponyTX)
-        val couponTV :TextView = dialogView.findViewById<TextView>(R.id.couponTV)
-        couponTV.text = "로그아웃 하시겠습니까?"
-        couponnoTX.text = "NO"
-        couponyTX.text = "YES"
+        var intent = Intent(context, DlgYesOrNoCommonActivity::class.java)
+        intent.putExtra("contents", "로그아웃 하시겠습니까?")
+        startActivityForResult(intent, LOGOUT)
 
-        couponnoTX.setOnClickListener {
-            mPopupDlg!!.cancel()
-        }
 
-        couponyTX.setOnClickListener {
-
-            PrefUtils.setPreference(context, "autoLogin", autoLogin)
-            val intent = Intent(this, LoginActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(intent)
-            mPopupDlg!!.cancel()
-
-        }
-
-        mPopupDlg =  builder.setView(dialogView).show()
+//        var mPopupDlg: DialogInterface? = null
+//
+//        val builder = AlertDialog.Builder(this)
+//        val dialogView = layoutInflater.inflate(R.layout.coupon_dlg, null)
+//        val couponnoTX = dialogView.findViewById<TextView>(R.id.couponnoTX)
+//        val couponyTX = dialogView.findViewById<TextView>(R.id.couponyTX)
+//        val couponTV :TextView = dialogView.findViewById<TextView>(R.id.couponTV)
+//        couponTV.text = "로그아웃 하시겠습니까?"
+//        couponnoTX.text = "NO"
+//        couponyTX.text = "YES"
+//
+//        couponnoTX.setOnClickListener {
+//            mPopupDlg!!.cancel()
+//        }
+//
+//        couponyTX.setOnClickListener {
+//
+//            PrefUtils.setPreference(context, "autoLogin", autoLogin)
+//            val intent = Intent(this, LoginActivity::class.java)
+//            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+//            startActivity(intent)
+//            mPopupDlg!!.cancel()
+//
+//        }
+//
+//        mPopupDlg =  builder.setView(dialogView).show()
 
     }
     //회원탈퇴
@@ -653,6 +667,17 @@ class MyPageActivity : FragmentActivity() {
         else if (requestCode == VERSION_UPDATE)
         {
 
+        } else if (requestCode == SECESSION) {
+            if(resultCode == Activity.RESULT_OK) {
+                redout()
+            }
+        } else if (requestCode == LOGOUT) {
+            if(resultCode == Activity.RESULT_OK) {
+                PrefUtils.setPreference(context, "autoLogin", autoLogin)
+                val intent = Intent(this, LoginActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+            }
         }
     }
 

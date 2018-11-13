@@ -270,10 +270,12 @@ class ReviewWriteContentsActivity : RootActivity() {
 
                         Utils.hideKeyboard(context)
 
-                        val intent = Intent();
+                        var intent = Intent();
                         intent.putExtra("review_id", review_id)
                         intent.action = "EDIT_REVIEW"
                         sendBroadcast(intent)
+
+                        intent = Intent();
                         setResult(Activity.RESULT_OK, intent)
                         finish()
 

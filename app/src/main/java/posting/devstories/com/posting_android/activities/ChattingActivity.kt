@@ -149,7 +149,8 @@ class ChattingActivity : RootActivity(), AbsListView.OnScrollListener {
                 return@setOnClickListener
             }
 
-            var intent = Intent(context, DlgChattingExitActivity::class.java)
+            var intent = Intent(context, DlgYesOrNoCommonActivity::class.java)
+            intent.putExtra("contents", "채팅을 종료 하시겠습니까?")
             startActivityForResult(intent, CHATTING_EXIT)
         }
 

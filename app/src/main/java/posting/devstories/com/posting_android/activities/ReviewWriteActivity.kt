@@ -311,7 +311,7 @@ class ReviewWriteActivity : RootActivity() {
                 }
 
                 WRITE_RIVEW -> {
-                    if(resultCode== Activity.RESULT_OK) {
+                    if(resultCode == Activity.RESULT_OK) {
                         var intent = Intent()
                         setResult(Activity.RESULT_OK, intent)
                         finish()

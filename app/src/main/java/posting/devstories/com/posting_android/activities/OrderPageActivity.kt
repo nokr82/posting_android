@@ -35,6 +35,7 @@ open class OrderPageActivity : RootActivity() {
 
     private var progressDialog: ProgressDialog? = null
     var adapterData: ArrayList<JSONObject> = ArrayList<JSONObject>()
+    var reviewData: ArrayList<JSONObject> = ArrayList<JSONObject>()
     lateinit var adapterOrder: OrderAdapter
     lateinit var adapterReview: ReviewAdapter
 
@@ -50,17 +51,15 @@ open class OrderPageActivity : RootActivity() {
             if (intent != null) {
                 var review_id:Int = intent.getIntExtra("review_id", 1)
 
-                if(clicktype == 2) {
-                    for (i in 0..(adapterData.size - 1)) {
-                        var data = adapterData.get(i)
-                        var review = data.getJSONObject("Review")
+                for (i in (reviewData.size - 1) downTo 0) {
+                    var data = reviewData.get(i)
+                    var review = data.getJSONObject("Review")
 
-                        if(review_id == Utils.getInt(review, "id")) {
-                            adapterData.removeAt(i)
-                        }
+                    if(review_id == Utils.getInt(review, "id")) {
+                        reviewData.removeAt(i)
                     }
-                    adapterReview.notifyDataSetChanged()
                 }
+                adapterReview.notifyDataSetChanged()
 
             }
         }
@@ -72,7 +71,6 @@ open class OrderPageActivity : RootActivity() {
                 var review_id:Int = intent.getIntExtra("review_id", 1)
 
                     loadData()
-
             }
         }
     }
@@ -95,7 +93,7 @@ open class OrderPageActivity : RootActivity() {
         val filter2 = IntentFilter("EDIT_REVIEW")
         registerReceiver(editReviewReceiver, filter2)
 
-        adapterReview = ReviewAdapter(context, R.layout.item_post,adapterData)
+        adapterReview = ReviewAdapter(context, R.layout.item_post,reviewData)
         adapterOrder = OrderAdapter(context, R.layout.item_post,adapterData)
 
         couponGV.adapter = adapterOrder
@@ -109,26 +107,13 @@ open class OrderPageActivity : RootActivity() {
             couponGV.adapter = adapterOrder
             clicktype = 1
             loadData()
-            couponGV.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
-                try {
-                    val Posting = adapterData[position].getJSONObject("Posting")
-
-                    //                    Intent intent = new Intent(context, _StoreDetailActivity.class);
-                    val intent = Intent(context, DetailActivity::class.java)
-                    intent.putExtra("id", Utils.getString(Posting, "id"))
-                    startActivity(intent)
-
-                } catch (e: JSONException) {
-                    e.printStackTrace()
-                }
-            }
 
         }
 
         reviewLL.setOnClickListener {
             reviewWriteLL.visibility = View.VISIBLE
             couponV.visibility = View.VISIBLE
-            adapterData.clear()
+            reviewData.clear()
             reviewV.visibility = View.VISIBLE
             couponV.visibility = View.INVISIBLE
             clicktype = 2
@@ -209,9 +194,8 @@ open class OrderPageActivity : RootActivity() {
                         var profile = Config.url + Utils.getString(member,"image_uri")
                         ImageLoader.getInstance().displayImage(profile, profileIV, Utils.UILoptionsUserProfile)
 
-                        adapterData.clear()
-
                         if (clicktype ==1){
+                            adapterData.clear()
                             adapterOrder.notifyDataSetChanged()
 
                             val data = response.getJSONArray("postList")
@@ -224,11 +208,12 @@ open class OrderPageActivity : RootActivity() {
                             adapterOrder.notifyDataSetChanged()
 
                         } else {
+                            reviewData.clear()
                             adapterReview.notifyDataSetChanged()
 
                             val data = response.getJSONArray("reviewList")
                             for (i in 0..data.length() - 1) {
-                                adapterData.add(data[i] as JSONObject)
+                                reviewData.add(data[i] as JSONObject)
 
                             }
                             adapterReview.notifyDataSetChanged()
