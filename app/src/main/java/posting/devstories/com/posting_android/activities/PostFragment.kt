@@ -336,6 +336,7 @@ open class PostFragment : Fragment() {
 
         univIV.setOnClickListener {
             setMainView()
+            mainData()
         }
 
         freeRL.setOnClickListener {
@@ -651,6 +652,12 @@ open class PostFragment : Fragment() {
 
     class PagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
 
+        var keyword:String = ""
+
+        fun setSearchKeyword(searchKeyword:String){
+            keyword = searchKeyword
+        }
+
         override fun getItem(i: Int): Fragment {
 
             var fragment: Fragment
@@ -659,38 +666,45 @@ open class PostFragment : Fragment() {
             when (i) {
                 0 -> {
                     fragment = FreeFragment()
+                    args.putString("keyword", keyword)
                     fragment.arguments = args
 
                     return fragment
                 }
                 1 -> {
                     fragment = InfoFragment()
+                    args.putString("keyword", keyword)
                     fragment.arguments = args
 
                     return fragment
                 }
                 2 -> {
                     fragment = StudyFragment()
+                    args.putString("keyword", keyword)
                     fragment.arguments = args
                     return fragment
                 }
                 3 -> {
                     fragment = ClassFragment()
+                    args.putString("keyword", keyword)
                     fragment.arguments = args
                     return fragment
                 }
                 4 -> {
                     fragment = MeetingFragment()
+                    args.putString("keyword", keyword)
                     fragment.arguments = args
                     return fragment
                 }
                 5 -> {
                     fragment = CouponFragment()
+                    args.putString("keyword", keyword)
                     fragment.arguments = args
                     return fragment
                 }
                 else -> {
                     fragment = FreeFragment()
+                    args.putString("keyword", keyword)
                     fragment.arguments = args
                     return fragment
                 }
