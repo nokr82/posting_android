@@ -65,9 +65,9 @@ class DetailActivity : RootActivity() {
 
     var dlgtype  = ""
 
-
     var school_id = -1
     var me_school_id =-1
+    var posting_count = 9999
 
     var confirm_yn = ""
     lateinit var adapterRe: ReAdapter
@@ -443,12 +443,21 @@ class DetailActivity : RootActivity() {
                         var intent = Intent(context, DlgStorageActivity::class.java)
                         startActivity(intent)
 
+                        val count = response.getInt("count")
 
                         intent = Intent()
                         intent.putExtra("posting_id", posting_id)
                         intent.action = "SAVE_POSTING"
                         sendBroadcast(intent)
-                        detaildata()
+//                        detaildata()
+
+                        if(posting_count < 1) {
+                            leftCntTV.text = "∞"
+                        } else {
+                            var leftCnt = posting_count - count;
+
+                            leftCntTV.text = leftCnt.toString()
+                        }
 
                         saveLL.visibility = View.GONE
 
@@ -568,6 +577,7 @@ class DetailActivity : RootActivity() {
                         school_id = Utils.getInt(posting, "school_id")
 
                         count = Utils.getInt(posting, "leftCount")
+                        posting_count = Utils.getInt(posting, "count")
 
                         if(count < 1 || me_school_id != school_id || member_id == member_id2 || "Y" == save_yn || "3" == member_type) {
 
