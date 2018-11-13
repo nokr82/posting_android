@@ -13,15 +13,15 @@ import android.view.ViewGroup
 class StudyFragment : MainFragment() {
     var getImage=""
 
-//    internal var searchKeywordReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
-//        override fun onReceive(context: Context, intent: Intent?) {
-//            if (intent != null) {
-//                type = intent.getIntExtra("type", 1)
-//                keyword = intent.getStringExtra("keyword")
-//                loadData(3)
-//            }
-//        }
-//    }
+    internal var searchKeywordReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent?) {
+            if (intent != null) {
+                type = intent.getIntExtra("type", 1)
+                keyword = intent.getStringExtra("keyword")
+                loadData(3)
+            }
+        }
+    }
 
     private var progressDialog: ProgressDialog? = null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,8 +37,8 @@ class StudyFragment : MainFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-//        val filter3 = IntentFilter("SEARCH_KEYWORD")
-//        activity.registerReceiver(searchKeywordReceiver, filter3)
+        val filter3 = IntentFilter("SEARCH_KEYWORD")
+        activity.registerReceiver(searchKeywordReceiver, filter3)
 
         type = 3
         keyword = arguments!!.getString("keyword")
@@ -49,12 +49,12 @@ class StudyFragment : MainFragment() {
     override fun onDestroy() {
         super.onDestroy()
 
-//        try {
-//            if (searchKeywordReceiver != null) {
-//                context!!.unregisterReceiver(searchKeywordReceiver)
-//            }
-//        } catch (e: IllegalArgumentException) {
-//        }
+        try {
+            if (searchKeywordReceiver != null) {
+                context!!.unregisterReceiver(searchKeywordReceiver)
+            }
+        } catch (e: IllegalArgumentException) {
+        }
 
     }
 

@@ -13,15 +13,15 @@ class InfoFragment : MainFragment() {
 
     var getImage=""
 
-//    internal var searchKeywordReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
-//        override fun onReceive(context: Context, intent: Intent?) {
-//            if (intent != null) {
-//                type = intent.getIntExtra("type", 1)
-//                keyword = intent.getStringExtra("keyword")
-//                loadData(2)
-//            }
-//        }
-//    }
+    internal var searchKeywordReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent?) {
+            if (intent != null) {
+                type = intent.getIntExtra("type", 1)
+                keyword = intent.getStringExtra("keyword")
+                loadData(2)
+            }
+        }
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var view = super.onCreateView(inflater, container, savedInstanceState)
@@ -33,8 +33,8 @@ class InfoFragment : MainFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-//        val filter3 = IntentFilter("SEARCH_KEYWORD")
-//        activity.registerReceiver(searchKeywordReceiver, filter3)
+        val filter3 = IntentFilter("SEARCH_KEYWORD")
+        activity.registerReceiver(searchKeywordReceiver, filter3)
 
         type = 2
         keyword = arguments!!.getString("keyword")
@@ -45,12 +45,12 @@ class InfoFragment : MainFragment() {
     override fun onDestroy() {
         super.onDestroy()
 
-//        try {
-//            if (searchKeywordReceiver != null) {
-//                context!!.unregisterReceiver(searchKeywordReceiver)
-//            }
-//        } catch (e: IllegalArgumentException) {
-//        }
+        try {
+            if (searchKeywordReceiver != null) {
+                context!!.unregisterReceiver(searchKeywordReceiver)
+            }
+        } catch (e: IllegalArgumentException) {
+        }
 
     }
 }

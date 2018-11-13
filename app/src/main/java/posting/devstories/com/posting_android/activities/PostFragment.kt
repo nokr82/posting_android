@@ -407,6 +407,8 @@ open class PostFragment : Fragment() {
                         context!!.sendBroadcast(intent)
                     }
 
+                    Utils.hideKeyboard(context)
+
                 }
             }
             return@setOnEditorActionListener true
@@ -731,6 +733,8 @@ open class PostFragment : Fragment() {
         mainLL.visibility = View.VISIBLE
         pagerVP.visibility = View.GONE
 
+        searchET.hint = "학교검색"
+
         mainData()
     }
 
@@ -774,6 +778,8 @@ open class PostFragment : Fragment() {
             couponV.visibility = View.VISIBLE
             couponTV.setTextColor(Color.parseColor("#063588"))
         }
+
+        searchET.hint = "검색"
 
     }
 
