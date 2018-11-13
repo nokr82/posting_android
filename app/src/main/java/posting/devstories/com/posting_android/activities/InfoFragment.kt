@@ -19,8 +19,8 @@ class InfoFragment : MainFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        //리스트뷰초기화 중복생성방지
-        adapterData.clear()
+        type = 2
+
         loadData(2)
     }
 

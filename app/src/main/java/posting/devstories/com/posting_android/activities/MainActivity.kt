@@ -364,6 +364,12 @@ class MainActivity : FragmentActivity() {
             }
         } catch (e: IllegalArgumentException) {
         }
+        try {
+            if (setViewReceiver != null) {
+                context.unregisterReceiver(setViewReceiver)
+            }
+        } catch (e: IllegalArgumentException) {
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

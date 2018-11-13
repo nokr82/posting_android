@@ -12,6 +12,7 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.support.v4.content.FileProvider
+import android.support.v4.content.res.TypedArrayUtils
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
@@ -32,6 +33,7 @@ import posting.devstories.com.posting_android.base.*
 import java.io.File
 import java.io.IOException
 import java.util.*
+import kotlin.collections.ArrayList
 
 class PostWriteActivity : RootActivity() {
 
@@ -116,8 +118,9 @@ class PostWriteActivity : RootActivity() {
             dayRL.visibility = View.GONE
         }
 
-        typeAdapter = ArrayAdapter<String>(this, R.layout.spinner_item, mee)
+        typeAdapter = ArrayAdapter<String>(context, R.layout.spinner_item, mee)
         meetingSP2.adapter = typeAdapter
+        typeAdapter.notifyDataSetChanged()
 
         adapter = ArrayAdapter<String>(this, R.layout.spinner_item, day)
         daySP.adapter = adapter
@@ -143,18 +146,18 @@ class PostWriteActivity : RootActivity() {
                 var intent = Intent(context, CouponTextActivity::class.java)
                 startActivity(intent)
             } else {
-                if (getmost.equals("수량")) {
-                    Toast.makeText(context, "수량을 선택해주세요", Toast.LENGTH_SHORT).show()
+//                if (getmost.equals("수량")) {
+//                    Toast.makeText(context, "수량을 선택해주세요", Toast.LENGTH_SHORT).show()
 //                } else if (getday.equals("기간")) {
 //                    Toast.makeText(context, "기간을 선택해주세요", Toast.LENGTH_SHORT).show()
-                } else {
+//                } else {
                     var intent = Intent(context, MyPostingWriteActivity::class.java)
                     intent.putExtra("getmee", getmee)
                     intent.putExtra("getmost", getmost)
 //                    intent.putExtra("getday", getday)
                     intent.putExtra("postingType", "T")
                     startActivity(intent)
-                }
+//                }
             }
         }
 
@@ -270,25 +273,29 @@ class PostWriteActivity : RootActivity() {
 
                             var study = Utils.getString(response, "study")
                             var classStr = Utils.getString(response, "class")
-                            var meeting = Utils.getString(response, "study")
+                            var meeting = Utils.getString(response, "meeting")
 
-                            println("study : " + study)
-                            println("classStr : " + classStr)
-                            println("meeting : " + meeting)
+                            var mee: ArrayList<String> = ArrayList()
+                            mee.add("자유")
+                            mee.add("정보")
 
-                            if(meeting == "fail") {
-                                mee.drop(4)
+                            if(study == "ok") {
+                                mee.add("스터디")
                             }
 
-                            if(classStr == "fail") {
-                                mee.drop(3)
+                            if(classStr == "ok") {
+                                mee.add("동아리")
                             }
 
-                            if(study == "fail") {
-                                mee.drop(2)
+                            if(meeting == "ok") {
+                                mee.add("미팅")
                             }
 
+                            typeAdapter = ArrayAdapter<String>(context, R.layout.spinner_item, mee)
+                            meetingSP2.adapter = typeAdapter
                             typeAdapter.notifyDataSetChanged()
+
+                            println("mee : " + mee.toString())
 
                         }
 

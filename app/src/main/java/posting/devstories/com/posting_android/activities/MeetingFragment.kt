@@ -23,6 +23,9 @@ class MeetingFragment : MainFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+        type = 5
+
         loadData(5)
     }
 

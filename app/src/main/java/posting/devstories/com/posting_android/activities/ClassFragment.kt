@@ -24,7 +24,8 @@ class ClassFragment : MainFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        adapterData.clear()
+        type = 4
+
         loadData(4)
 
     }

@@ -25,82 +25,78 @@
 
         </LinearLayout>
 
-        <!--<LinearLayout-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_weight="1"-->
-            <!--android:orientation="horizontal"-->
-            <!--android:padding="16dp">-->
-
-            <!--<Spinner-->
-                <!--android:id="@+id/meetingSP3"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:background="@null">-->
-
-            <!--</Spinner>-->
-
-
-            <!--<ImageView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_gravity="center_vertical"-->
-                <!--android:layout_marginRight="20dp"-->
-                <!--android:src="@mipmap/semo" />-->
-
-
-            <!--<Spinner-->
-
-                <!--android:id="@+id/mostSP3"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:background="@null">-->
-
-            <!--</Spinner>-->
-            <!--<ImageView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_gravity="center_vertical"-->
-                <!--android:layout_marginRight="20dp"-->
-                <!--android:src="@mipmap/semo" />-->
-            <!--<Spinner-->
-
-                <!--android:id="@+id/daySP3"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:background="@null">-->
-
-            <!--</Spinner>-->
-
-            <!--<ImageView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_gravity="center_vertical"-->
-                <!--android:src="@mipmap/semo" />-->
-
-        <!--</LinearLayout>-->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="wrap_content"></LinearLayout>
-<LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-    android:id="@+id/nextLL2">
-
-        <TextView
-            android:id="@+id/next2TX"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginRight="15.3dp"
-            android:text="다음"
-            android:textColor="#063588"
-            android:textSize="14dp"
-            />
+            android:padding="16dp">
 
-</LinearLayout>
+            <RelativeLayout
+                    android:layout_width="78dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/meeting2RL"
+                    android:layout_marginRight="20dp">
 
+                <Spinner
+                        android:id="@+id/meetingSP2"
+                        android:popupBackground="@drawable/background_border_707070"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null">
+
+                </Spinner>
+
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:src="@mipmap/semo" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                    android:layout_width="78dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="20dp">
+
+                <Spinner
+                        android:popupBackground="@drawable/background_border_707070"
+                        android:id="@+id/mostSP"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null">
+
+                </Spinner>
+
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:src="@mipmap/semo" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/nextLL2">
+
+                <TextView
+                    android:id="@+id/next2TX"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="15.3dp"
+                    android:text="다음"
+                    android:textColor="#063588"
+                    android:textSize="14dp"
+                    />
+
+        </LinearLayout>
 
     </LinearLayout>
 

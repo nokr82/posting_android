@@ -18,9 +18,9 @@ class FreeFragment : MainFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        adapterData.clear()
+        type = 1
+
         loadData(1)
     }
-
 
 }
