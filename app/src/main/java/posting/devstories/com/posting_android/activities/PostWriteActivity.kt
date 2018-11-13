@@ -496,7 +496,15 @@ class PostWriteActivity : RootActivity() {
             //이미지가져오기
             imgid = photo.photoPath!!
 
-            imageUri = Uri.fromFile(File(imgid))
+            // imageUri = Uri.fromFile(File(imgid))
+
+            if (intent.resolveActivity(packageManager) != null) {
+                try {
+                    imageUri = FileProvider.getUriForFile(context, packageName + ".provider", File(imgid))
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                }
+            }
 
             cropImage()
 
