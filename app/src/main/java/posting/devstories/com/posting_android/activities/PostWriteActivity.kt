@@ -12,7 +12,6 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.support.v4.content.FileProvider
-import android.support.v4.content.res.TypedArrayUtils
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
@@ -66,9 +65,12 @@ class PostWriteActivity : RootActivity() {
     var image: String? = null
     var capture: Bitmap? = null
     var tabType = -1
+    var type = -1
+    var count = -1
 
     lateinit var adapter: ArrayAdapter<String>
     lateinit var typeAdapter: ArrayAdapter<String>
+    lateinit var countAdapter: ArrayAdapter<String>
     var setMee: ArrayList<String> = ArrayList<String>()
 
     //mypostwrite에서 브로드캐스트로 인텐트를 받는다
@@ -99,6 +101,18 @@ class PostWriteActivity : RootActivity() {
         contents = intent.getStringExtra("contents")
         image_uri = intent.getStringExtra("image_uri")
         tabType = intent.getIntExtra("tabType", -1)
+        type = intent.getIntExtra("type", 1)
+        count = intent.getIntExtra("count", 1)
+
+        typeAdapter = ArrayAdapter<String>(context, R.layout.spinner_item, mee)
+        meetingSP2.adapter = typeAdapter
+        typeAdapter.notifyDataSetChanged()
+
+        adapter = ArrayAdapter<String>(this, R.layout.spinner_item, day)
+        daySP.adapter = adapter
+
+        countAdapter = ArrayAdapter<String>(this, R.layout.spinner_item, most)
+        mostSP.adapter = countAdapter
 
         if (current_school != school_id) {
             bgRL.background = getDrawable(R.mipmap.write_bg2)
@@ -111,6 +125,51 @@ class PostWriteActivity : RootActivity() {
             image = Config.url + image_uri
             ImageLoader.getInstance().displayImage(image, imgIV2, Utils.UILoptionsPosting)
             imgIV2.visibility = View.VISIBLE
+
+            var position = 1
+
+            println("type : " + type)
+
+            if(type == 1) {
+                position = typeAdapter.getPosition("자유")
+            } else if (type == 2) {
+                position = typeAdapter.getPosition("정보")
+            } else if (type == 3) {
+                position = typeAdapter.getPosition("스터디")
+            } else if (type == 4) {
+                position = typeAdapter.getPosition("동아리")
+            } else if (type == 5) {
+                position = typeAdapter.getPosition("미팅")
+            }
+
+            println("position : $position")
+
+            meetingSP2.setSelection(position)
+
+            position = 1
+
+            if(count == 1) {
+                position = countAdapter.getPosition("1")
+            } else if (count == 3) {
+                position = countAdapter.getPosition("3")
+            } else if (count == 5) {
+                position = countAdapter.getPosition("5")
+            } else if (count == 10) {
+                position = countAdapter.getPosition("10")
+            } else if (count == 20) {
+                position = countAdapter.getPosition("20")
+            } else if (count < 1) {
+                position = countAdapter.getPosition("무제한")
+            } else {
+                position = countAdapter.getPosition("수량")
+            }
+
+            mostSP.setSelection(position)
+
+        } else {
+            if(tabType < 6) {
+                meetingSP2.setSelection(tabType - 1)
+            }
         }
 
         if (member_type.equals("3")) {
@@ -118,16 +177,6 @@ class PostWriteActivity : RootActivity() {
         } else {
             dayRL.visibility = View.GONE
         }
-
-        typeAdapter = ArrayAdapter<String>(context, R.layout.spinner_item, mee)
-        meetingSP2.adapter = typeAdapter
-        typeAdapter.notifyDataSetChanged()
-
-        adapter = ArrayAdapter<String>(this, R.layout.spinner_item, day)
-        daySP.adapter = adapter
-
-        adapter = ArrayAdapter<String>(this, R.layout.spinner_item, most)
-        mostSP.adapter = adapter
 
         finishLL.setOnClickListener {
             finish()
@@ -155,9 +204,10 @@ class PostWriteActivity : RootActivity() {
                     var intent = Intent(context, MyPostingWriteActivity::class.java)
                     intent.putExtra("getmee", getmee)
                     intent.putExtra("getmost", getmost)
+                    intent.putExtra("posting_id", posting_id)
+                    intent.putExtra("contents", contents)
 //                    intent.putExtra("getday", getday)
                     intent.putExtra("postingType", "T")
-                    intent.putExtra("type_list", setMee.toString())
                     startActivity(intent)
 //                }
             }
@@ -246,11 +296,8 @@ class PostWriteActivity : RootActivity() {
 
         loadPhoto()
 
-        checkCategory()
+//        checkCategory()
 
-        if(tabType < 6) {
-            meetingSP2.setSelection(tabType - 1)
-        }
     }
 
     fun checkCategory() {

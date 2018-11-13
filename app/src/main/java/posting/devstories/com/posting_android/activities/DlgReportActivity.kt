@@ -37,6 +37,7 @@ class DlgReportActivity : RootActivity() {
     var member_type:String?= null
     var contents:String?= null
     var type = 1
+    var count = 0
     var save_id:String?= null
     var report_member_id:String?= null
 
@@ -56,7 +57,8 @@ class DlgReportActivity : RootActivity() {
         contents = intent.getStringExtra("contents")
         member_type = intent.getStringExtra("member_type")
         report_member_id = intent.getStringExtra("report_member_id")
-        type =intent.getIntExtra("type",-1)
+        type = intent.getIntExtra("type",1)
+        count = intent.getIntExtra("count",0)
 //        this.setFinishOnTouchOutside(true)
         val titleTV = findViewById<TextView>(R.id.titleTV)
         val delTV = findViewById<TextView>(R.id.delTV)
@@ -104,6 +106,8 @@ class DlgReportActivity : RootActivity() {
                 intent.putExtra("image_uri",image_uri)
                 intent.putExtra("member_type",member_type)
                 intent.putExtra("contents",contents)
+                intent.putExtra("type",type)
+                intent.putExtra("count",count)
                 startActivity(intent)
                 finish()
 
