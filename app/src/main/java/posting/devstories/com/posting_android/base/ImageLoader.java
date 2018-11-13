@@ -91,6 +91,8 @@ public class ImageLoader {
 
             Bitmap bitmap = Utils.getImage(resolver, photoPath, 100);
 
+            return bitmap;
+
             /*
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inJustDecodeBounds = true;
@@ -113,7 +115,7 @@ public class ImageLoader {
             Bitmap bitmap = BitmapFactory.decodeFile(path, options);
             */
 
-            return Utils.rotate(bitmap, orientation);
+            // return Utils.rotate(bitmap, orientation);
         }
 
         @Override

@@ -1,32 +1,32 @@
 package posting.devstories.com.posting_android.activities
 
+import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.database.Cursor
-import android.os.Bundle
-import android.provider.MediaStore
-import android.widget.ArrayAdapter
-import android.widget.Toast
-import posting.devstories.com.posting_android.R
-import posting.devstories.com.posting_android.adapter.ImageAdapter
-import posting.devstories.com.posting_android.base.ImageLoader
-import posting.devstories.com.posting_android.base.RootActivity
-import java.util.*
-import com.gun0912.tedpermission.PermissionListener
-import com.gun0912.tedpermission.TedPermission
-import android.app.Activity
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
+import android.os.Bundle
 import android.os.Environment
+import android.provider.MediaStore
 import android.support.v4.content.FileProvider
 import android.view.View
+import android.widget.ArrayAdapter
+import android.widget.Toast
+import com.gun0912.tedpermission.PermissionListener
+import com.gun0912.tedpermission.TedPermission
 import kotlinx.android.synthetic.main.activity_review_write.*
+import posting.devstories.com.posting_android.R
+import posting.devstories.com.posting_android.adapter.ImageAdapter
 import posting.devstories.com.posting_android.base.Config
+import posting.devstories.com.posting_android.base.ImageLoader
+import posting.devstories.com.posting_android.base.RootActivity
 import posting.devstories.com.posting_android.base.Utils
 import java.io.File
 import java.io.IOException
+import java.util.*
 
 
 class ReviewWriteActivity : RootActivity() {
