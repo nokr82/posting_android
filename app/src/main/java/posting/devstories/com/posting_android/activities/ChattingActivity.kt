@@ -797,6 +797,13 @@ class ChattingActivity : RootActivity(), AbsListView.OnScrollListener {
         finish()
     }
 
+    override fun finish() {
+        super.finish()
+
+        Utils.hideKeyboard(context)
+
+    }
+
     fun onClickBack(view: View) {
         back()
     }
