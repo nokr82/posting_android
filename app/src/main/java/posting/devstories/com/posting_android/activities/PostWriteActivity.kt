@@ -120,7 +120,7 @@ class PostWriteActivity : RootActivity() {
             bgRL.background = getDrawable(R.mipmap.wtite_bg)
         }
 
-        if (!posting_id.equals("")) {
+        if (posting_id != null && !posting_id.equals("") ) {
             postingType = "M"
             image = Config.url + image_uri
             ImageLoader.getInstance().displayImage(image, imgIV2, Utils.UILoptionsPosting)
@@ -496,7 +496,15 @@ class PostWriteActivity : RootActivity() {
             //이미지가져오기
             imgid = photo.photoPath!!
 
-            imageUri = Uri.fromFile(File(imgid))
+            // imageUri = Uri.fromFile(File(imgid))
+
+            if (intent.resolveActivity(packageManager) != null) {
+                try {
+                    imageUri = FileProvider.getUriForFile(context, packageName + ".provider", File(imgid))
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                }
+            }
 
             cropImage()
 
@@ -541,6 +549,7 @@ class PostWriteActivity : RootActivity() {
                 capture = MediaStore.Images.Media.getBitmap(this.contentResolver, imageUri)
                 imgIV2.setImageBitmap(capture)
 
+                postingType = "P"
             }
             else -> {
                 Toast.makeText(this, "Unrecognized request code", Toast.LENGTH_SHORT)
@@ -566,8 +575,8 @@ class PostWriteActivity : RootActivity() {
         intent.putExtra("crop", "true")
         intent.putExtra("aspectX", 1)
         intent.putExtra("aspectY", 1)
-        intent.putExtra("outputX", 200)
-        intent.putExtra("outputY", 200)
+        intent.putExtra("outputX", 500)
+        intent.putExtra("outputY", 500)
         intent.putExtra("return-data", true)
 
         grantUriPermission(

@@ -69,6 +69,8 @@ public class HttpClient {
 
         System.out.println("POST : " + Config.url + url + "?" + params);
 
+        client.setTimeout(60 * 1000);
+
         client.post(Config.url + url, params, responseHandler);
     }
 
