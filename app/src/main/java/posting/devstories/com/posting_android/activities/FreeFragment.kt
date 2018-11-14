@@ -23,8 +23,25 @@ class FreeFragment : MainFragment() {
         }
     }
 
+    internal var setViewReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent?) {
+
+            if (intent != null) {
+                tabType = intent.getIntExtra("tabType", 1)
+
+                if (type == 1) {
+                    reloadData(tabType)
+                }
+            }
+
+        }
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var view = super.onCreateView(inflater, container, savedInstanceState)
+
+        val filter3 = IntentFilter("SET_VIEW")
+        getActivity()!!.registerReceiver(setViewReceiver, filter3)
 
         return view
     }

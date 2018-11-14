@@ -103,7 +103,7 @@ class MyPostingWriteActivity : RootActivity() {
         mount = intent.getIntExtra("mount",0)
 
         // 이미지 uri 로드
-        if (!posting_id.equals("") && "M" == postingType) {
+        if (posting_id != null && !posting_id.equals("") && "M" == postingType) {
             var image = Config.url + image_uri
             ImageLoader.getInstance().displayImage(image, captureIV, Utils.UILoptionsPosting)
             popupRL.visibility = View.VISIBLE
@@ -147,6 +147,8 @@ class MyPostingWriteActivity : RootActivity() {
         backLL.setOnClickListener {
             finish()
         }
+
+        println("postingType : $postingType, imageUri : $imageUri")
 
         if (postingType.equals("P") && imageUri != null){
             capture = MediaStore.Images.Media.getBitmap(this.contentResolver, imageUri)
@@ -193,6 +195,9 @@ class MyPostingWriteActivity : RootActivity() {
 
                     Toast.makeText(context,geterror,Toast.LENGTH_SHORT).show()
                 }else{
+
+                    nextLL2.isEnabled = false
+
                     if (posting_id == null||posting_id == ""){
                         write()
                     }else{
@@ -235,6 +240,9 @@ class MyPostingWriteActivity : RootActivity() {
 
                     Toast.makeText(context, geterror, Toast.LENGTH_SHORT).show()
                 } else {
+
+                    nextLL2.isEnabled = false
+
                     if (posting_id == null||posting_id == ""){
                         write()
                     }else{
@@ -372,14 +380,31 @@ class MyPostingWriteActivity : RootActivity() {
         }
         */
 
+        // Utils.alert(context, "ii : $imageUri")
+        // return
 
+        /*
         if (imageUri != null) {
             val add_file = MediaStore.Images.Media.getBitmap(this.contentResolver, imageUri)
+
+            Toast.makeText(context, "f : $add_file", Toast.LENGTH_SHORT).show()
+
             // val add_file = Utils.getImage(context.contentResolver, imgid)
-            params.put("upload",ByteArrayInputStream(Utils.getByteArray(add_file)))
+            params.put("upload", ByteArrayInputStream(Utils.getByteArray(add_file)))
+        }
+        */
+
+        if (capture != null) {
+            // val add_file = MediaStore.Images.Media.getBitmap(this.contentResolver, imageUri)
+
+            // Toast.makeText(context, "f : $add_file", Toast.LENGTH_SHORT).show()
+
+            // val add_file = Utils.getImage(context.contentResolver, imgid)
+            params.put("upload", ByteArrayInputStream(Utils.getByteArray(capture)))
         }
 
-
+        // Toast.makeText(context, "p : $params", Toast.LENGTH_SHORT).show()
+        println("params : $params")
 
 
         PostingAction.write(params, object : JsonHttpResponseHandler() {
@@ -415,7 +440,10 @@ class MyPostingWriteActivity : RootActivity() {
                     } else if ("over" == result) {
                         Toast.makeText(context, "하루 제한량만큼 작성하셨습니다.", Toast.LENGTH_SHORT).show()
                     } else {
-                        geterror = "작성실패"
+
+                        nextLL2.isEnabled = true
+
+                        geterror = "등록중 장애가 발생하였습니다."
 
                         Toast.makeText(context, geterror, Toast.LENGTH_SHORT).show()
                     }
@@ -435,7 +463,7 @@ class MyPostingWriteActivity : RootActivity() {
             }
 
             private fun error() {
-                Utils.alert(context, "올리는중 장애가 발생하였습니다.")
+                Utils.alert(context, "등록중 장애가 발생하였습니다.")
             }
 
             override fun onFailure(statusCode: Int, headers: Array<Header>?, responseString: String?, throwable: Throwable) {

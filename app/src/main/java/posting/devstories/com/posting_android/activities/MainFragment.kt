@@ -151,6 +151,11 @@ open class MainFragment : Fragment(), AbsListView.OnScrollListener {
 
     }
 
+    fun reloadData(type:Int) {
+        page = 1
+        loadData(type)
+    }
+
     fun loadData(type: Int) {
         val params = RequestParams()
         params.put("member_id", PrefUtils.getIntPreference(context, "member_id"))
