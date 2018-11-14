@@ -1,5 +1,6 @@
 package posting.devstories.com.posting_android.activities
 
+import android.app.Activity
 import android.app.NotificationManager
 import android.app.ProgressDialog
 import android.content.Context
@@ -35,6 +36,8 @@ class IntroActivity : RootActivity() {
     private var posting_id:String = ""
     private var chatting_member_id:String = ""
     private var is_push:Boolean = false
+
+    val SHOW_DLG = 301
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -157,6 +160,12 @@ class IntroActivity : RootActivity() {
                             startActivity(intent)
                         }
 
+                    } else if ("block" == result) {
+
+                        val intent = Intent(context, DlgCommonActivity::class.java)
+                        intent.putExtra("contents", "사용제한되었습니다.\n 고객센터로 문의하세요\n\n 문의 메일\n wepostkorea@gmail.com")
+                        startActivityForResult(intent, SHOW_DLG)
+
                     } else {
                         val intent = Intent(context, LoginActivity::class.java)
                         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -230,6 +239,21 @@ class IntroActivity : RootActivity() {
             }
         })
 
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if(resultCode == Activity.RESULT_OK) {
+            when(requestCode) {
+                SHOW_DLG -> {
+                    val intent = Intent(context, LoginActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(intent)
+                }
+            }
+        }
 
     }
 

@@ -122,6 +122,12 @@ class LoginActivity : RootActivity() {
 
                     } else if("confirm_no" == result) {
                         Toast.makeText(context, "관리자 승인 후 로그인이 가능합니다.", Toast.LENGTH_LONG).show()
+                    } else if("block" == result) {
+
+                        val intent = Intent(context, DlgCommonActivity::class.java)
+                        intent.putExtra("contents", "사용제한되었습니다.\n 고객센터로 문의하세요\n\n 문의 메일\n wepostkorea@gmail.com")
+                        startActivity(intent)
+
                     } else {
                         Toast.makeText(context, "일치하는 회원이 존재하지 않습니다.", Toast.LENGTH_LONG).show()
                     }
