@@ -144,7 +144,16 @@ class OrderJoinActivity : RootActivity() {
             val getPhone: String = Utils.getString(phoneET)
             company_num = Utils.getString(companynumET)
 
-            if (company_num == "" || company_num == null || company_num.isEmpty()) {
+            if(email == "" || email == null || email.isEmpty()) {
+                geterror = "이메일을 입력해주세요"
+
+                dlgView( geterror)
+
+            } else if (!Utils.isValidEmail(email)) {
+                geterror = "이메일을 확인해주세요"
+
+                dlgView( geterror)
+            } else if (company_num == "" || company_num == null || company_num.isEmpty()) {
                 geterror = "사업자등록번호를 입력해주세요"
 
                 dlgView(geterror)

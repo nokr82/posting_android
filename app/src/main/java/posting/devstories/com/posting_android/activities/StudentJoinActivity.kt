@@ -127,6 +127,10 @@ class StudentJoinActivity : RootActivity() {
                geterror = "이메일을 입력해주세요"
 
                 dlgView( geterror)
+            } else if (!Utils.isValidEmail(getid)) {
+                geterror = "이메일을 확인해주세요"
+
+                dlgView( geterror)
             }
             else if(getPW==""||getPW==null|| getPW.isEmpty()){
                 geterror = "비밀번호를 입력해주세요"
