@@ -40,6 +40,7 @@ import posting.devstories.com.posting_android.base.NonSwipeableViewPager
 import posting.devstories.com.posting_android.base.PrefUtils
 import posting.devstories.com.posting_android.base.Utils
 
+
 open class PostFragment : Fragment() {
 
     var ctx: Context? = null
