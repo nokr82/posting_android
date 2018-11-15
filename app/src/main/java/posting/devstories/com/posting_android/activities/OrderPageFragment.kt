@@ -18,7 +18,6 @@ import com.github.paolorotolo.expandableheightlistview.ExpandableHeightGridView
 import com.loopj.android.http.JsonHttpResponseHandler
 import com.loopj.android.http.RequestParams
 import cz.msebera.android.httpclient.Header
-import kotlinx.android.synthetic.main.fra_orderpg.*
 import org.json.JSONException
 import org.json.JSONObject
 import posting.devstories.com.posting_android.Actions.MemberAction
@@ -43,15 +42,19 @@ open class OrderPageFragment : Fragment() {
     var member_type = ""
     var member_id = -1
     lateinit var reviewLL: LinearLayout
+    lateinit var review2LL: LinearLayout
+    lateinit var menuLL: LinearLayout
     lateinit var reviewV:View
     lateinit var couponLL: LinearLayout
     lateinit var couponV:View
     lateinit var univIV:ImageView
+    lateinit var profileIV:ImageView
     lateinit var couponGV:ExpandableHeightGridView
     lateinit var gpsLL:LinearLayout
     lateinit var storeInfoTV:TextView
     lateinit var reviewCntTV:TextView
     lateinit var postCntTV:TextView
+    lateinit var companyNameTV:TextView
 
     var clicktype = 1
 
@@ -68,6 +71,21 @@ open class OrderPageFragment : Fragment() {
             }
         }
     }
+    internal var setViewReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent?) {
+            if (intent != null) {
+
+                review2LL.visibility = View.GONE
+                adapterData.clear()
+                couponV.visibility = View.VISIBLE
+                reviewV.visibility = View.INVISIBLE
+                couponGV.adapter = adapterOrder
+                clicktype = 1
+                loadData()
+
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,21 +97,28 @@ open class OrderPageFragment : Fragment() {
         val filter1 = IntentFilter("EDIT_PROFILE")
         myContext!!.registerReceiver(editProfileReceiver, filter1)
 
+        val filter2 = IntentFilter("SET_VIEW")
+        myContext!!.registerReceiver(setViewReceiver, filter2)
+
         return inflater.inflate(R.layout.fra_orderpg, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         reviewLL = view.findViewById(R.id.reviewLL)
+        review2LL = view.findViewById(R.id.review2LL)
         reviewV = view.findViewById(R.id.reviewV)
         couponLL = view.findViewById(R.id.couponLL)
+        menuLL = view.findViewById(R.id.menuLL)
         univIV = view.findViewById(R.id.univIV)
+        profileIV = view.findViewById(R.id.profileIV)
         couponV = view.findViewById(R.id.couponV)
         couponGV = view.findViewById(R.id.couponGV)
         gpsLL = view.findViewById(R.id.gpsLL)
         storeInfoTV = view.findViewById(R.id.storeInfoTV)
         postCntTV = view.findViewById(R.id.postCntTV)
         reviewCntTV = view.findViewById(R.id.reviewCntTV)
+        companyNameTV = view.findViewById(R.id.companyNameTV)
 
     }
 
@@ -197,8 +222,8 @@ open class OrderPageFragment : Fragment() {
                         val school = response.getJSONObject("school")
 
                         name = Utils.getString(member, "company_name")
-                        lng = Utils.getDouble(member, "lat")
-                        lat = Utils.getDouble(member, "lng")
+                        lat = Utils.getDouble(member, "lat")
+                        lng = Utils.getDouble(member, "lng")
 
                         companyNameTV.text = name
                         storeInfoTV.text = Utils.getString(member, "address") + " " + Utils.getString(member, "address_detail")
@@ -283,6 +308,12 @@ open class OrderPageFragment : Fragment() {
         try {
             if (editProfileReceiver != null) {
                 myContext!!.unregisterReceiver(editProfileReceiver)
+            }
+        } catch (e: IllegalArgumentException) {
+        }
+        try {
+            if (setViewReceiver != null) {
+                myContext!!.unregisterReceiver(setViewReceiver)
             }
         } catch (e: IllegalArgumentException) {
         }

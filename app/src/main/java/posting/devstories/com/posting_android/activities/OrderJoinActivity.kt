@@ -143,6 +143,8 @@ class OrderJoinActivity : RootActivity() {
             name = Utils.getString(ceoET)
             val getPhone: String = Utils.getString(phoneET)
             company_num = Utils.getString(companynumET)
+            val address = Utils.getString(addressTV)
+            val address_detail = Utils.getString(addressDetailET)
 
             if(email == "" || email == null || email.isEmpty()) {
                 geterror = "이메일을 입력해주세요"
@@ -179,6 +181,16 @@ class OrderJoinActivity : RootActivity() {
 
             else if (name == "" || name == null || name.isEmpty()) {
                 geterror = "대표자 성명을 입력해주세요"
+
+                dlgView( geterror)
+            }
+            else if (address == "" || address == null || address.isEmpty()) {
+                geterror = "사업장 주소를 입력해주세요"
+
+                dlgView( geterror)
+            }
+            else if (address_detail == "" || address_detail == null || address_detail.isEmpty()) {
+                geterror = "사업장 상세 주소를 입력해주세요"
 
                 dlgView( geterror)
             }
@@ -384,6 +396,7 @@ class OrderJoinActivity : RootActivity() {
         params.put("email",email )
         params.put("company_name", company_name)
         params.put("address", Utils.getString(addressTV))
+        params.put("address_detail", Utils.getString(addressDetailET))
         params.put("lat", lat)
         params.put("lng", lng)
         params.put("company_num",company_num)
@@ -555,10 +568,17 @@ class OrderJoinActivity : RootActivity() {
 
                         if (list.length() > 0) {
                             val obj = list.get(0) as JSONObject
+
+                            println("obj : " + obj)
+                            println("list.get(0)  : " + list.get(0) )
+
                             val address = obj.getJSONObject("road_address")
+                            println("address  : " + address)
 
                             lng = Utils.getString(address, "x")
                             lat = Utils.getString(address, "y")
+
+                            addressDetailET.requestFocus()
 
                         }
                     }

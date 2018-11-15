@@ -97,6 +97,8 @@ class AddressActivity : RootActivity(), AbsListView.OnScrollListener {
         fun setAddress(addr: String) {
             handler!!.post {
 
+                println("addr : " + addr)
+
                 var intent = Intent();
                 intent.putExtra("address", addr)
                 setResult(RESULT_OK, intent)

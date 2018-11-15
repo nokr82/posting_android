@@ -108,7 +108,7 @@ class MainActivity : FragmentActivity() {
                 var intent = Intent(context, DetailActivity::class.java)
                 intent.putExtra("id", posting_id)
                 startActivity(intent)
-            } else {
+            } else if (chatting_member_id != "" && chatting_member_id != null && chatting_member_id != "-1") {
                 var intent = Intent(context, ChattingActivity::class.java)
                 intent.putExtra("attend_member_id", chatting_member_id.toInt())
                 startActivity(intent)

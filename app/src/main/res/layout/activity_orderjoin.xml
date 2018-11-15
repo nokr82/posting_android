@@ -174,6 +174,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
+
                 <TextView
                     android:id="@+id/addressTV"
                     android:layout_width="0dp"
@@ -198,6 +199,22 @@
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
                     android:background="#888888" />
+
+
+                <EditText
+                        android:id="@+id/addressDetailET"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:background="@null"
+                        android:hint="사업장 상세 주소"
+                        android:paddingLeft="7dp"
+                        android:textSize="14dp"
+                        android:textColorHint="#BCBEC0" />
+
+                <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="#888888" />
 
                 <LinearLayout
                     android:id="@+id/schoolLL"
@@ -341,7 +358,9 @@
                     android:text="포스팅 통합약관에 모두 동의합니다"
                     android:textColor="#20408C"
                     android:textSize="9.33dp" />
+
                 </LinearLayout>
+
             </LinearLayout>
 
             <LinearLayout

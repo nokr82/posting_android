@@ -1,18 +1,12 @@
 package posting.devstories.com.posting_android.activities
 
-import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
-import android.graphics.PointF
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.View
-import android.view.inputmethod.EditorInfo
-import android.widget.AdapterView
 import android.widget.Toast
-import com.github.paolorotolo.expandableheightlistview.ExpandableHeightListView
 import com.loopj.android.http.JsonHttpResponseHandler
 import com.loopj.android.http.RequestParams
 import cz.msebera.android.httpclient.Header
@@ -20,11 +14,9 @@ import kotlinx.android.synthetic.main.activity_schooljoin.*
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
-import posting.devstories.com.posting_android.Actions.LoginAction
 import posting.devstories.com.posting_android.Actions.SchoolAction
 import posting.devstories.com.posting_android.R
 import posting.devstories.com.posting_android.adapter.SchoolAdapter
-import posting.devstories.com.posting_android.base.PrefUtils
 import posting.devstories.com.posting_android.base.RootActivity
 import posting.devstories.com.posting_android.base.Utils
 
@@ -40,19 +32,15 @@ class SchoolActivity : RootActivity() {
     var school_id = -1
     var schoolname = ""
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_schooljoin)
 
+        this.context = this
+        progressDialog = ProgressDialog(context)
 
         intent = getIntent()
         member_type = intent.getStringExtra("member_type")
-
-
-
-
 
         nextLL.setOnClickListener {
 
@@ -62,6 +50,8 @@ class SchoolActivity : RootActivity() {
 
 
             } else {
+
+                Utils.hideKeyboard(this)
 
                 if ("2" == member_type) {//2가 학생용
                     val intent = Intent(this, StudentJoinActivity::class.java)
@@ -268,8 +258,6 @@ class SchoolActivity : RootActivity() {
             progressDialog!!.dismiss()
         }
 
-
     }
-
 
 }
