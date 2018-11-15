@@ -52,7 +52,7 @@ open class PostFragment : Fragment() {
     var adPosition = 0;
 
     private var adTime = 0
-    private lateinit var handler: Handler
+    private var handler: Handler? = null
 
     lateinit var mainAdapter: MainPostAdapter
     var mainAdapterData = ArrayList<JSONObject>();
@@ -601,6 +601,11 @@ open class PostFragment : Fragment() {
     }
 
     private fun timer() {
+
+        if(handler != null) {
+            handler!!.removeCallbacksAndMessages(null);
+        }
+
         handler = object : Handler() {
             override fun handleMessage(msg: Message) {
 
@@ -617,10 +622,10 @@ open class PostFragment : Fragment() {
                     }
                 }
 
-                handler.sendEmptyMessageDelayed(0, 2000) // 1초에 한번 업, 1000 = 1 초
+                handler!!.sendEmptyMessageDelayed(0, 2000) // 1초에 한번 업, 1000 = 1 초
             }
         }
-        handler.sendEmptyMessage(0)
+        handler!!.sendEmptyMessage(0)
     }
 
     private fun addDot(circleLL: LinearLayout, selected: Boolean) {
