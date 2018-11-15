@@ -1,6 +1,7 @@
 package posting.devstories.com.posting_android.activities
 
 import android.app.ProgressDialog
+import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -10,11 +11,15 @@ import android.support.v4.view.ViewPager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.GridView
+import android.widget.RelativeLayout
+import android.widget.TextView
 import posting.devstories.com.posting_android.R
 import posting.devstories.com.posting_android.base.NonSwipeableViewPager
 
 open class MyPagePostingStorageFragment : Fragment() {
+
+    lateinit var myContext: Context
 
     private var progressDialog: ProgressDialog? = null
     lateinit var activity: MainActivity
@@ -52,7 +57,9 @@ open class MyPagePostingStorageFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        progressDialog = ProgressDialog(context)
+        this.myContext = container!!.context
+
+        progressDialog = ProgressDialog(myContext)
 
         return inflater.inflate(R.layout.fra_my_page_posting_storage, container, false)
     }

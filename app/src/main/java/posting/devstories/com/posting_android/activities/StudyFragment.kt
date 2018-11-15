@@ -29,7 +29,7 @@ class StudyFragment : MainFragment() {
             if (intent != null) {
                 tabType = intent.getIntExtra("tabType", 3)
 
-                if (type == 1) {
+                if (tabType == 3) {
                     reloadData(tabType)
                 }
             }
@@ -44,6 +44,14 @@ class StudyFragment : MainFragment() {
     }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var view = super.onCreateView(inflater, container, savedInstanceState)
+
+        try {
+            if (setViewReceiver != null) {
+                getActivity()!!.unregisterReceiver(setViewReceiver)
+            }
+        } catch (e: IllegalArgumentException) {
+            e.printStackTrace()
+        }
 
         val filter3 = IntentFilter("SET_VIEW")
         getActivity()!!.registerReceiver(setViewReceiver, filter3)
@@ -71,6 +79,14 @@ class StudyFragment : MainFragment() {
                 context!!.unregisterReceiver(searchKeywordReceiver)
             }
         } catch (e: IllegalArgumentException) {
+        }
+
+        try {
+            if (setViewReceiver != null) {
+                getActivity()!!.unregisterReceiver(setViewReceiver)
+            }
+        } catch (e: IllegalArgumentException) {
+            e.printStackTrace()
         }
 
     }

@@ -100,6 +100,7 @@ class MyPostingWriteActivity : RootActivity() {
         if(h != null) {
             imageUri = Uri.parse(h)
         }
+
         mount = intent.getIntExtra("mount",0)
 
         // 이미지 uri 로드
@@ -425,6 +426,8 @@ class MyPostingWriteActivity : RootActivity() {
 
                         Utils.hideKeyboard(context)
 //                        val intent = Intent(context,MainActivity::class.java)
+
+                        contentResolver.delete(imageUri, null, null);
 
                         //브로드캐스트로 날려주기
                         val intent = Intent()

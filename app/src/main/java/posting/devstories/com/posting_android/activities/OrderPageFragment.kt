@@ -10,7 +10,10 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
+import android.widget.Toast
 import com.github.paolorotolo.expandableheightlistview.ExpandableHeightGridView
 import com.loopj.android.http.JsonHttpResponseHandler
 import com.loopj.android.http.RequestParams
@@ -23,13 +26,13 @@ import posting.devstories.com.posting_android.R
 import posting.devstories.com.posting_android.adapter.OrderAdapter
 import posting.devstories.com.posting_android.adapter.ReviewAdapter
 import posting.devstories.com.posting_android.base.Config
-import posting.devstories.com.posting_android.base.ImageLoader
 import posting.devstories.com.posting_android.base.PrefUtils
 import posting.devstories.com.posting_android.base.Utils
 
 open class OrderPageFragment : Fragment() {
 
-    var ctx: Context? = null
+    lateinit var myContext: Context
+
     private var progressDialog: ProgressDialog? = null
     lateinit var activity: MainActivity
     var adapterData: ArrayList<JSONObject> = ArrayList<JSONObject>()
@@ -71,9 +74,10 @@ open class OrderPageFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        this.myContext = container!!.context
 
         val filter1 = IntentFilter("EDIT_PROFILE")
-        context!!.registerReceiver(editProfileReceiver, filter1)
+        myContext!!.registerReceiver(editProfileReceiver, filter1)
 
         return inflater.inflate(R.layout.fra_orderpg, container, false)
     }
@@ -97,19 +101,19 @@ open class OrderPageFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         activity = getActivity() as MainActivity
-        member_id = PrefUtils.getIntPreference(context, "member_id")
-        member_type = PrefUtils.getStringPreference(context,"member_type")
+        member_id = PrefUtils.getIntPreference(myContext, "member_id")
+        member_type = PrefUtils.getStringPreference(myContext,"member_type")
 
         adapterData.clear()
 
 
        menuLL.setOnClickListener {
-           val intent = Intent(context, MyPageActivity::class.java)
+           val intent = Intent(myContext, MyPageActivity::class.java)
            startActivity(intent)
        }
 
         gpsLL.setOnClickListener {
-            val intent = Intent(context, OrderMapActivity::class.java)
+            val intent = Intent(myContext, OrderMapActivity::class.java)
             intent.putExtra("lat", lat)
             intent.putExtra("lng", lng)
             intent.putExtra("name", name)
@@ -154,8 +158,8 @@ open class OrderPageFragment : Fragment() {
 //            try {
 //                val Posting = adapterData[position].getJSONObject("Posting")
 //
-//                //                    Intent intent = new Intent(context, _StoreDetailActivity.class);
-//                val intent = Intent(context, DetailActivity::class.java)
+//                //                    Intent intent = new Intent(myContext, _StoreDetailActivity.class);
+//                val intent = Intent(myContext, DetailActivity::class.java)
 //                intent.putExtra("id", Utils.getString(Posting, "id"))
 //                startActivity(intent)
 //
@@ -230,7 +234,7 @@ open class OrderPageFragment : Fragment() {
                         }
 
                     } else {
-                        Toast.makeText(context, "일치하는 회원이 존재하지 않습니다.", Toast.LENGTH_LONG).show()
+                        Toast.makeText(myContext, "일치하는 회원이 존재하지 않습니다.", Toast.LENGTH_LONG).show()
                     }
                 } catch (e: JSONException) {
                     e.printStackTrace()
@@ -242,7 +246,7 @@ open class OrderPageFragment : Fragment() {
             }
 
             private fun error() {
-                Utils.alert(context, "조회중 장애가 발생하였습니다.")
+                Utils.alert(myContext, "조회중 장애가 발생하였습니다.")
             }
 
             override fun onFailure(statusCode: Int, headers: Array<Header>?, responseString: String?, throwable: Throwable) {
@@ -278,7 +282,7 @@ open class OrderPageFragment : Fragment() {
 
         try {
             if (editProfileReceiver != null) {
-                context!!.unregisterReceiver(editProfileReceiver)
+                myContext!!.unregisterReceiver(editProfileReceiver)
             }
         } catch (e: IllegalArgumentException) {
         }

@@ -29,7 +29,7 @@ class InfoFragment : MainFragment() {
             if (intent != null) {
                 tabType = intent.getIntExtra("tabType", 1)
 
-                if (type == 2) {
+                if (tabType == 2) {
                     reloadData(tabType)
                 }
             }
@@ -39,6 +39,14 @@ class InfoFragment : MainFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var view = super.onCreateView(inflater, container, savedInstanceState)
+
+        try {
+            if (setViewReceiver != null) {
+                getActivity()!!.unregisterReceiver(setViewReceiver)
+            }
+        } catch (e: IllegalArgumentException) {
+            e.printStackTrace()
+        }
 
         val filter3 = IntentFilter("SET_VIEW")
         getActivity()!!.registerReceiver(setViewReceiver, filter3)
@@ -66,6 +74,14 @@ class InfoFragment : MainFragment() {
                 context!!.unregisterReceiver(searchKeywordReceiver)
             }
         } catch (e: IllegalArgumentException) {
+        }
+
+        try {
+            if (setViewReceiver != null) {
+                getActivity()!!.unregisterReceiver(setViewReceiver)
+            }
+        } catch (e: IllegalArgumentException) {
+            e.printStackTrace()
         }
 
     }

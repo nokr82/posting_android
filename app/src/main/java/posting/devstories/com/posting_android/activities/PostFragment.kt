@@ -43,7 +43,8 @@ import posting.devstories.com.posting_android.base.Utils
 
 open class PostFragment : Fragment() {
 
-    var ctx: Context? = null
+    lateinit var myContext: Context
+
     private var progressDialog: ProgressDialog? = null
 
     var adverImagePaths = ArrayList<String>()
@@ -173,10 +174,9 @@ open class PostFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val ctx = context
-        if (null != ctx) {
-            doSomethingWithContext(ctx)
-        }
+        this.myContext = container!!.context
+
+        progressDialog = ProgressDialog(myContext)
 
         mainActivity = activity as MainActivity
         val filter2 = IntentFilter("DEL_POSTING")
@@ -187,12 +187,6 @@ open class PostFragment : Fragment() {
         mainActivity.registerReceiver(setViewReceiver, filter3)
 
         return inflater.inflate(R.layout.fra_post, container, false)
-    }
-
-    fun doSomethingWithContext(context: Context) {
-        // TODO: Actually do something with the context
-        this.ctx = context
-        progressDialog = ProgressDialog(ctx)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -240,14 +234,14 @@ open class PostFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        val image_uri = PrefUtils.getStringPreference(context, "current_school_image_uri")
+        val image_uri = PrefUtils.getStringPreference(myContext, "current_school_image_uri")
         var univimg = Config.url + image_uri
         ImageLoader.getInstance().displayImage(univimg, univIV, Utils.UILoptionsUserProfile)
 
-        member_id = PrefUtils.getIntPreference(context, "member_id")
+        member_id = PrefUtils.getIntPreference(myContext, "member_id")
 
         // 메인 데이터
-        mainAdapter = MainPostAdapter(ctx, R.layout.item_main, mainAdapterData)
+        mainAdapter = MainPostAdapter(myContext, R.layout.item_main, mainAdapterData)
         mainLV.isExpanded = true
         mainLV.adapter = mainAdapter
 
@@ -276,6 +270,7 @@ open class PostFragment : Fragment() {
         // 뷰페이저
         pagerAdapter = PagerAdapter(getChildFragmentManager(), searchET)
         pagerVP.adapter = pagerAdapter
+        pagerVP.offscreenPageLimit = 1
         pagerAdapter.notifyDataSetChanged()
         pagerVP.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
@@ -329,7 +324,7 @@ open class PostFragment : Fragment() {
 
 
         menuLL.setOnClickListener {
-            val intent = Intent(context, MyPageActivity::class.java)
+            val intent = Intent(myContext, MyPageActivity::class.java)
             startActivity(intent)
         }
 
@@ -404,10 +399,10 @@ open class PostFragment : Fragment() {
                         var intent = Intent()
                         intent.putExtra("keyword", keyword)
                         intent.action = "SEARCH_KEYWORD"
-                        context!!.sendBroadcast(intent)
+                        myContext!!.sendBroadcast(intent)
                     }
 
-                    Utils.hideKeyboard(context)
+                    Utils.hideKeyboard(myContext)
 
                 }
             }
@@ -441,7 +436,7 @@ open class PostFragment : Fragment() {
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
         })
 
-        adapter = SchoolAdapter(context!!, R.layout.school_item, adapterData)
+        adapter = SchoolAdapter(myContext!!, R.layout.school_item, adapterData)
         schoolLV.adapter = adapter
         adapter.notifyDataSetChanged()
 
@@ -454,10 +449,10 @@ open class PostFragment : Fragment() {
                 println("school : $school")
                 println("school_id : $school_id")
 
-                PrefUtils.setPreference(context, "current_school_id", school_id)
+                PrefUtils.setPreference(myContext, "current_school_id", school_id)
 
 
-                val intent = Intent(context, MainActivity::class.java)
+                val intent = Intent(myContext, MainActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intent)
             }
@@ -523,7 +518,7 @@ open class PostFragment : Fragment() {
             }
 
             private fun error() {
-                Utils.alert(context, "조회중 장애가 발생하였습니다.")
+                Utils.alert(myContext, "조회중 장애가 발생하였습니다.")
             }
 
             override fun onFailure(
@@ -629,7 +624,7 @@ open class PostFragment : Fragment() {
     }
 
     private fun addDot(circleLL: LinearLayout, selected: Boolean) {
-        val iv = ImageView(ctx)
+        val iv = ImageView(myContext)
         if (selected) {
             iv.setBackgroundResource(R.drawable.circle_background1)
         } else {
@@ -786,7 +781,7 @@ open class PostFragment : Fragment() {
     fun mainData() {
         val params = RequestParams()
         params.put("member_id", member_id)
-        params.put("current_school_id", PrefUtils.getIntPreference(context, "current_school_id"))
+        params.put("current_school_id", PrefUtils.getIntPreference(myContext, "current_school_id"))
         params.put("type", type)
 
         PostingAction.mainlist(params, object : JsonHttpResponseHandler() {
@@ -831,9 +826,9 @@ open class PostFragment : Fragment() {
                         val schoolindex = school.getJSONObject("School")
                         val image_uri = Utils.getString(schoolindex, "image_uri")
 
-                        PrefUtils.setPreference(context, "current_school_image_uri ", image_uri)
+                        PrefUtils.setPreference(myContext, "current_school_image_uri ", image_uri)
 
-                        val current_school_image_uri = PrefUtils.getStringPreference(context, "current_school_image_uri ")
+                        val current_school_image_uri = PrefUtils.getStringPreference(myContext, "current_school_image_uri ")
 
                         var univimg = Config.url + current_school_image_uri
                         ImageLoader.getInstance().displayImage(univimg, univIV, Utils.UILoptionsUserProfile)
@@ -863,7 +858,7 @@ open class PostFragment : Fragment() {
             }
 
             private fun error() {
-                Utils.alert(context, "조회중 장애가 발생하였습니다.")
+                Utils.alert(myContext, "조회중 장애가 발생하였습니다.")
             }
 
             override fun onFailure(
@@ -933,21 +928,21 @@ open class PostFragment : Fragment() {
 
         try {
             if (savePostingReceiver != null) {
-                context!!.unregisterReceiver(savePostingReceiver)
+                myContext!!.unregisterReceiver(savePostingReceiver)
             }
         } catch (e: IllegalArgumentException) {
         }
 
         try {
             if (setViewReceiver != null) {
-                context!!.unregisterReceiver(setViewReceiver)
+                myContext!!.unregisterReceiver(setViewReceiver)
             }
         } catch (e: IllegalArgumentException) {
         }
 
         try {
             if (delPostingReceiver != null) {
-                context!!.unregisterReceiver(delPostingReceiver)
+                myContext!!.unregisterReceiver(delPostingReceiver)
             }
         } catch (e: IllegalArgumentException) {
         }

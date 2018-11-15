@@ -4,15 +4,16 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import android.support.v4.app.FragmentActivity
+import android.support.v4.content.FileProvider
 import android.view.View
-import android.widget.TextView
 import android.widget.Toast
 import com.loopj.android.http.JsonHttpResponseHandler
 import com.loopj.android.http.RequestParams
@@ -30,13 +31,14 @@ import posting.devstories.com.posting_android.base.Config
 import posting.devstories.com.posting_android.base.PrefUtils
 import posting.devstories.com.posting_android.base.Utils
 import java.io.ByteArrayInputStream
+import java.io.File
 import java.io.IOException
 
 class MyPageActivity : FragmentActivity() {
 
 
     var thumbnail:Bitmap? = null
-    var gallery:Bitmap? = null
+    // var gallery:Bitmap? = null
     var nick = ""
      var name  = ""
     var push_yn  = ""
@@ -53,6 +55,8 @@ class MyPageActivity : FragmentActivity() {
 
     val SECESSION = 301
     val LOGOUT = 401
+
+    var imageUri: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -370,16 +374,12 @@ class MyPageActivity : FragmentActivity() {
 
         val params = RequestParams()
         params.put("member_id", PrefUtils.getIntPreference(context, "member_id"))
-        if (gallery==null){
-        }else{
-            params.put("upload", ByteArrayInputStream(Utils.getByteArray(gallery)))
-        }
-        if (thumbnail==null){
-        }else{
-            print(thumbnail)
-            params.put("upload", ByteArrayInputStream(Utils.getByteArray(thumbnail)))
-        }
         params.put("push_yn", push_yn)
+
+        if (thumbnail != null){
+            val byteArrayInputStream = ByteArrayInputStream(Utils.getByteArray(thumbnail))
+            params.put("upload", byteArrayInputStream)
+        }
 
         MemberAction.edit_info(params, object : JsonHttpResponseHandler() {
 
@@ -621,7 +621,7 @@ class MyPageActivity : FragmentActivity() {
         pictureDialog.show()
     }
 
-    fun choosePhotoFromGallary() {
+    private fun choosePhotoFromGallary() {
         val galleryIntent = Intent(Intent.ACTION_PICK,
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
 
@@ -629,9 +629,43 @@ class MyPageActivity : FragmentActivity() {
 
     }
 
-    fun takePhotoFromCamera() {
+    private fun takePhotoFromCamera() {
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        startActivityForResult(intent, CAMERA)
+        if (intent.resolveActivity(packageManager) != null) {
+
+            val storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+
+            try {
+                val photo = File.createTempFile(
+                    System.currentTimeMillis().toString(), /* prefix */
+                    ".jpg", /* suffix */
+                    storageDir      /* directory */
+                )
+
+                // absolutePath = photo.absolutePath
+                //imageUri = Uri.fromFile(photo);
+                imageUri = FileProvider.getUriForFile(context, packageName + ".provider", photo)
+
+                val resInfoList = context.getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+                for (resolveInfo in resInfoList) {
+                    val packageName = resolveInfo.activityInfo.packageName;
+
+                    println("packageName : $packageName")
+
+                    context.grantUriPermission(packageName, imageUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                }
+
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
+                startActivityForResult(intent, CAMERA)
+
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+
+        }
+
+
+        // startActivityForResult(intent, CAMERA)
 
     }
 
@@ -645,9 +679,9 @@ class MyPageActivity : FragmentActivity() {
                 val contentURI = data!!.data
                 try
                 {
-                    gallery = MediaStore.Images.Media.getBitmap(this.contentResolver, contentURI)
+                    thumbnail = MediaStore.Images.Media.getBitmap(this.contentResolver, contentURI)
+                    thumbnail = Utils.rotate(contentResolver, thumbnail, contentURI)
                     edit_profile()
-                    myproIV!!.setImageBitmap(gallery)
 
                 }
                 catch (e: IOException) {
@@ -660,9 +694,9 @@ class MyPageActivity : FragmentActivity() {
         }
         else if (requestCode == CAMERA)
         {
-            thumbnail = data!!.extras!!.get("data") as Bitmap
+            thumbnail = MediaStore.Images.Media.getBitmap(this.contentResolver, imageUri)
+            thumbnail = Utils.rotate(contentResolver, thumbnail, imageUri)
             edit_profile()
-            myproIV!!.setImageBitmap(thumbnail)
         }
         else if (requestCode == VERSION_UPDATE)
         {
@@ -680,8 +714,6 @@ class MyPageActivity : FragmentActivity() {
             }
         }
     }
-
-
 
     override fun onDestroy() {
         super.onDestroy()

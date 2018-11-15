@@ -5,7 +5,9 @@ import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
@@ -44,9 +46,11 @@ class ReviewWriteContentsActivity : RootActivity() {
     var company_member_id = -1
     var review_id = -1
     var postingType = ""
-    var absolutePath = ""
+    // var absolutePath = ""
     var str:String? = null
 
+    var imageUri: Uri? = null
+    
     lateinit var adpater: ArrayAdapter<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,7 +64,7 @@ class ReviewWriteContentsActivity : RootActivity() {
 
         intent = getIntent()
         // 카메라 사진
-        absolutePath = intent.getStringExtra("absolutePath")
+        // absolutePath = intent.getStringExtra("absolutePath")
         // 포스팅 타입 G-갤러리 P-포토 T-텍스트
         postingType = intent.getStringExtra("postingType")
 
@@ -71,6 +75,11 @@ class ReviewWriteContentsActivity : RootActivity() {
         image = intent.getStringExtra("image")
         image_uri = intent.getStringExtra("image_uri")
 
+        val h = intent.getStringExtra("imageUri")
+        if(h != null) {
+            imageUri = Uri.parse(h)
+        }
+
         if(review_id > 0 && "M" == postingType) {
 
             image = Config.url + image_uri
@@ -79,12 +88,13 @@ class ReviewWriteContentsActivity : RootActivity() {
 
             contentET.setText(contents)
         } else if (postingType.equals("P")){
-            capture = Utils.getImage(context.contentResolver, absolutePath)
+            capture = MediaStore.Images.Media.getBitmap(this.contentResolver, imageUri)
             captureIV.setImageBitmap(capture)
             popupRL.visibility = View.VISIBLE
         }else if (postingType.equals("G")){
             //이미지
-            ImageLoader.getInstance().displayImage(image, captureIV, Utils.UILoptionsPosting)
+            capture = MediaStore.Images.Media.getBitmap(this.contentResolver, imageUri)
+            captureIV.setImageBitmap(capture)
             popupRL.visibility = View.VISIBLE
 
             captureIV.setImageBitmap(Utils.getImage(context.contentResolver, imgid))

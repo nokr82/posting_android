@@ -1,10 +1,8 @@
 package posting.devstories.com.posting_android.base;
 
 import android.content.ContentResolver;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
-import android.provider.MediaStore.Images;
 import android.widget.BaseAdapter;
 
 import java.util.Hashtable;
@@ -22,6 +20,10 @@ public class ImageLoader {
     int runningCount = 0;
     Stack<ItemPair> queue;
     ContentResolver resolver;
+
+    public ContentResolver getResolver() {
+        return resolver;
+    }
 
     public ImageLoader(ContentResolver r) {
         loadImages = new Hashtable<Integer, Bitmap>();
@@ -74,6 +76,8 @@ public class ImageLoader {
         protected Bitmap doInBackground(Object... params) {
 
             this.uid = (Integer) params[0];
+
+            /*
             String photoPath = (String) params[1];
             Integer orientation = (Integer) params[2];
 
@@ -88,8 +92,9 @@ public class ImageLoader {
                     photoPath = mini.getString(mini.getColumnIndex(proj[0]));
                 }
             }
+            */
 
-            Bitmap bitmap = Utils.getImage(resolver, photoPath, 100);
+            Bitmap bitmap = Utils.getImage(resolver, String.valueOf(params[0]), 100);
 
             return bitmap;
 
