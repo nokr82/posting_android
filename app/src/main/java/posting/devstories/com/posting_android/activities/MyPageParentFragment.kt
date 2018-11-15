@@ -133,6 +133,11 @@ open class MyPageParentFragment : Fragment() {
 
     }
 
+    fun reloadData(type: Int) {
+        page = 1
+        loadData(type)
+    }
+
     fun loadData(type: Int) {
         val params = RequestParams()
         params.put("member_id", member_id)

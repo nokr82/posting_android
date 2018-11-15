@@ -1,7 +1,10 @@
 package posting.devstories.com.posting_android.activities
 
 import android.app.ProgressDialog
+import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -52,12 +55,41 @@ open class MyPagePostingStorageFragment : Fragment() {
     lateinit var pagerVP:NonSwipeableViewPager
     lateinit var pagerAdapter:PagerAdapter
 
+    internal var setViewReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent?) {
+
+            if (intent != null) {
+                tabType = intent!!.getIntExtra("tabType", 1)
+                val type = tabType - 1
+
+                if (type == pagerVP.currentItem) {
+                    setMenuTabView()
+                }
+
+                pagerVP.currentItem = type
+            }
+
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         this.myContext = container!!.context
+
+        val filter3 = IntentFilter("SET_VIEW")
+
+        try {
+            if (setViewReceiver != null) {
+                getActivity()!!.unregisterReceiver(setViewReceiver)
+            }
+        } catch (e: IllegalArgumentException) {
+            e.printStackTrace()
+        }
+
+        getActivity()!!.registerReceiver(setViewReceiver, filter3)
 
         progressDialog = ProgressDialog(myContext)
 

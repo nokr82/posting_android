@@ -20,6 +20,8 @@ import com.gun0912.tedpermission.TedPermission
 import com.loopj.android.http.JsonHttpResponseHandler
 import com.loopj.android.http.RequestParams
 import com.nostra13.universalimageloader.core.ImageLoader
+import com.theartofdev.edmodo.cropper.CropImage
+import com.theartofdev.edmodo.cropper.CropImageView
 import cz.msebera.android.httpclient.Header
 import kotlinx.android.synthetic.main.activity_postwrite.*
 import org.json.JSONArray
@@ -52,7 +54,7 @@ class PostWriteActivity : RootActivity() {
     var getmee: String? = null
     var getmost = ""
     var getday = ""
-    var postingType = ""
+    var postingType = "G"
 
     var current_school = -1
     var school_id = -1
@@ -228,6 +230,13 @@ class PostWriteActivity : RootActivity() {
 //            } else if (getday.equals("기간")) {
 //                Toast.makeText(context, "기간을 선택해주세요", Toast.LENGTH_SHORT).show()
             } else {
+
+                if(("G".equals(postingType) || "P".equals(postingType)) && imageUriOutput == null) {
+                    Toast.makeText(context, "이미지를 선택해주세요", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+
+
                 var intent = Intent(context, MyPostingWriteActivity::class.java)
 
                 if (imageUriOutput != null) {
@@ -272,6 +281,9 @@ class PostWriteActivity : RootActivity() {
                     val resInfoList = context.getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
                     for (resolveInfo in resInfoList) {
                         val packageName = resolveInfo.activityInfo.packageName;
+
+                        println("packageName : $packageName")
+
                         context.grantUriPermission(packageName, imageUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION)
                     }
 
@@ -513,6 +525,8 @@ class PostWriteActivity : RootActivity() {
                 }
             }
 
+            println("gfds")
+
             cropImage()
 
              // val imgWidth = Utils.getScreenWidth(context) / 4
@@ -547,16 +561,30 @@ class PostWriteActivity : RootActivity() {
 
                     cropImage()
 
+                    postingType = "P"
+
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
 
             }
             CROP_FROM_CAMERA -> {
+
+                println("imageUriOutput : " + imageUriOutput)
+
                 val capture = MediaStore.Images.Media.getBitmap(this.contentResolver, imageUriOutput)
                 imgIV2.setImageBitmap(capture)
 
-                postingType = "P"
+            }
+            CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE -> {
+                val result = CropImage.getActivityResult(data)
+                if(result != null) {
+                    imageUriOutput = result.uri
+
+                    val capture = MediaStore.Images.Media.getBitmap(this.contentResolver, imageUriOutput)
+                    imgIV2.setImageBitmap(capture)
+                }
+
             }
             else -> {
                 Toast.makeText(this, "Unrecognized request code", Toast.LENGTH_SHORT)
@@ -567,6 +595,17 @@ class PostWriteActivity : RootActivity() {
     }
 
     private fun cropImage() {
+
+        val intent = CropImage.activity(imageUri)
+            .setGuidelines(CropImageView.Guidelines.ON)
+            .setAspectRatio(1, 1)
+            .getIntent(this);
+
+        startActivityForResult(intent, CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE)
+    }
+
+    private fun cropImageOld() {
+
         context.grantUriPermission(
             "com.android.camera", imageUri,
             Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION

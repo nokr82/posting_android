@@ -20,13 +20,7 @@ import org.json.JSONException
 import org.json.JSONObject
 import posting.devstories.com.posting_android.Actions.PostingAction
 import posting.devstories.com.posting_android.R
-import posting.devstories.com.posting_android.R.mipmap.back
-import posting.devstories.com.posting_android.base.BackPressCloseHandler
-import posting.devstories.com.posting_android.base.PrefUtils
-import posting.devstories.com.posting_android.base.RootActivity
-import posting.devstories.com.posting_android.base.Utils
-import posting.devstories.com.posting_android.base.Config
-import java.util.zip.Inflater
+import posting.devstories.com.posting_android.base.*
 
 /**
  * Created by dev1 on 2018-02-28.
@@ -60,6 +54,14 @@ class MatchInfoActivity : RootActivity() {
         }
     }
 
+    internal var delPostingReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent?) {
+            if (intent != null) {
+                finish()
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_match_info)
@@ -69,6 +71,9 @@ class MatchInfoActivity : RootActivity() {
 
         var filter1 = IntentFilter("MATCH_UPDATE")
         registerReceiver(matchCntUpdate, filter1)
+
+        val filter2 = IntentFilter("DEL_POSTING")
+        registerReceiver(delPostingReceiver, filter2)
 
         posting_id = intent.getStringExtra("posting_id")
 

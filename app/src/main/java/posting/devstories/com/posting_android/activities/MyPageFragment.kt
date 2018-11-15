@@ -40,6 +40,8 @@ open class MyPageFragment : Fragment() {
     lateinit var fragmentFT: FragmentTabHost
     lateinit var fragmentFL: FrameLayout
 
+    var tabType = 1
+
     internal var updateAlarmCntReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent?) {
             if (intent != null) {
@@ -64,6 +66,19 @@ open class MyPageFragment : Fragment() {
         }
     }
 
+    fun getPostingTabType(): Int {
+        val myPagePostingFragment = childFragmentManager.findFragmentByTag("posting") as? MyPagePostingFragment
+        if(myPagePostingFragment != null) {
+
+            println("myPagePostingFragment : " + myPagePostingFragment.tabType)
+
+            return myPagePostingFragment.tabType
+        }
+
+        println("kljhgfds")
+
+        return 0
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

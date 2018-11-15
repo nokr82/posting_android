@@ -197,8 +197,7 @@ class ChattingActivity : RootActivity(), AbsListView.OnScrollListener {
 
                     val filePathColumn = arrayOf(MediaStore.MediaColumns.DATA)
 
-                    val cursor =
-                        context!!.contentResolver.query(selectedImageUri!!, filePathColumn, null, null, null)
+                    val cursor = context!!.contentResolver.query(selectedImageUri!!, filePathColumn, null, null, null)
                     if (cursor!!.moveToFirst()) {
                         val columnIndex = cursor.getColumnIndex(filePathColumn[0])
                         val picturePath = cursor.getString(columnIndex)
@@ -674,7 +673,7 @@ class ChattingActivity : RootActivity(), AbsListView.OnScrollListener {
                     progressDialog!!.dismiss()
                 }
 
-                // System.out.println(responseString);
+                System.out.println(responseString);
 
                 throwable.printStackTrace()
                 error()
@@ -813,6 +812,9 @@ class ChattingActivity : RootActivity(), AbsListView.OnScrollListener {
             progressDialog!!.dismiss()
         }
 
+        if (timer != null) {
+            timer!!.cancel()
+        }
 
         super.onDestroy()
     }
@@ -825,9 +827,11 @@ class ChattingActivity : RootActivity(), AbsListView.OnScrollListener {
     override fun onPause() {
         super.onPause()
 
+        /*
         if (timer != null) {
             timer!!.cancel()
         }
+        */
     }
 
 

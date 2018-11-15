@@ -152,6 +152,7 @@ open class PostFragment : Fragment() {
             mainAdapter.notifyDataSetChanged()
         }
     }
+
     internal var setViewReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent?) {
 

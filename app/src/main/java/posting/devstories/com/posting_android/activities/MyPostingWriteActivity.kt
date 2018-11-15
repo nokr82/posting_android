@@ -427,7 +427,11 @@ class MyPostingWriteActivity : RootActivity() {
                         Utils.hideKeyboard(context)
 //                        val intent = Intent(context,MainActivity::class.java)
 
-                        contentResolver.delete(imageUri, null, null);
+                        try {
+                            contentResolver.delete(imageUri, null, null);
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
 
                         //브로드캐스트로 날려주기
                         val intent = Intent()
