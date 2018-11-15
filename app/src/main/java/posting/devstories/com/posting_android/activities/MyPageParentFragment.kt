@@ -26,6 +26,8 @@ import posting.devstories.com.posting_android.base.Utils
 
 open class MyPageParentFragment : Fragment() {
 
+    lateinit var myContext: Context
+
     private var progressDialog: ProgressDialog? = null
 
     lateinit var activity:MainActivity
@@ -50,6 +52,8 @@ open class MyPageParentFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        this.myContext = container!!.context
+
         var view = super.onCreateView(inflater, container, savedInstanceState)
 
         return inflater.inflate(R.layout.fra_main, container, false)
@@ -58,9 +62,9 @@ open class MyPageParentFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        progressDialog = ProgressDialog(context)
+        progressDialog = ProgressDialog(myContext)
 
-        member_id = PrefUtils.getIntPreference(context, "member_id")
+        member_id = PrefUtils.getIntPreference(myContext, "member_id")
 
         gideGV = view.findViewById(R.id.gideGV)
 
@@ -76,7 +80,7 @@ open class MyPageParentFragment : Fragment() {
 
         adapterMy = MyPostingAdapter(activity, R.layout.item_storage, adapterData)
         gideGV.adapter = adapterMy
-        member_id = PrefUtils.getIntPreference(context, "member_id")
+        member_id = PrefUtils.getIntPreference(myContext, "member_id")
 
         gideGV.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             try {
@@ -88,13 +92,13 @@ open class MyPageParentFragment : Fragment() {
 
                     if (type == 3 || type == 4 || type == 5) {
 
-                        val intent = Intent(context, MatchInfoActivity::class.java)
+                        val intent = Intent(myContext, MatchInfoActivity::class.java)
                         intent.putExtra("posting_id", Utils.getString(Posting, "id"))
                         startActivity(intent)
 
                     } else {
 
-                        val intent = Intent(context, DetailActivity::class.java)
+                        val intent = Intent(myContext, DetailActivity::class.java)
                         intent.putExtra("id", Utils.getString(Posting, "id"))
                         startActivity(intent)
 
@@ -104,7 +108,7 @@ open class MyPageParentFragment : Fragment() {
 
                     if (type == 3 || type == 4 || type == 5) {
 
-                        val intent = Intent(context, MatchInfoActivity::class.java)
+                        val intent = Intent(myContext, MatchInfoActivity::class.java)
                         intent.putExtra("posting_id", Utils.getString(Posting, "id"))
                         startActivity(intent)
 
@@ -112,7 +116,7 @@ open class MyPageParentFragment : Fragment() {
 
                         val PostingSave = adapterData[position].getJSONObject("PostingSave")
 
-                        val intent = Intent(context, DetailActivity::class.java)
+                        val intent = Intent(myContext, DetailActivity::class.java)
                         intent.putExtra("id", Utils.getString(Posting, "id"))
                         intent.putExtra("save_id", Utils.getString(PostingSave, "id"))
                         intent.putExtra("taptype",tab)
@@ -127,6 +131,11 @@ open class MyPageParentFragment : Fragment() {
             }
         }
 
+    }
+
+    fun reloadData(type: Int) {
+        page = 1
+        loadData(type)
     }
 
     fun loadData(type: Int) {
@@ -167,7 +176,7 @@ open class MyPageParentFragment : Fragment() {
                         adapterMy.notifyDataSetChanged()
 
                     } else {
-                        Toast.makeText(context, "일치하는 회원이 존재하지 않습니다.", Toast.LENGTH_LONG).show()
+                        Toast.makeText(myContext, "일치하는 회원이 존재하지 않습니다.", Toast.LENGTH_LONG).show()
                     }
 
                 } catch (e: JSONException) {
@@ -183,7 +192,7 @@ open class MyPageParentFragment : Fragment() {
             }
 
             private fun error() {
-                Utils.alert(context, "조회중 장애가 발생하였습니다.")
+                Utils.alert(myContext, "조회중 장애가 발생하였습니다.")
             }
 
             override fun onFailure(
@@ -225,7 +234,7 @@ open class MyPageParentFragment : Fragment() {
 
         try {
             if (delPostingReceiver != null) {
-                context!!.unregisterReceiver(delPostingReceiver)
+                myContext!!.unregisterReceiver(delPostingReceiver)
             }
 
         } catch (e: IllegalArgumentException) {

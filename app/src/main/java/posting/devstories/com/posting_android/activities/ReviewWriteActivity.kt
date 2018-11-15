@@ -4,8 +4,8 @@ import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.database.Cursor
-import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -52,9 +52,10 @@ class ReviewWriteActivity : RootActivity() {
     var review_id = -1
 
     var imageUri: Uri? = null
-    var absolutePath: String? = ""
+    var imageUriOutput: Uri? = null
+    // var absolutePath: String? = ""
 
-    var capture: Bitmap? = null
+    // var capture: Bitmap? = null
 
     lateinit var adpater: ArrayAdapter<String>
 
@@ -105,7 +106,7 @@ class ReviewWriteActivity : RootActivity() {
             intent.putExtra("image_uri",image_uri)
             intent.putExtra("company_member_id",company_member_id)
             intent.putExtra("postingType",postingType)
-            intent.putExtra("absolutePath", absolutePath)
+            // intent.putExtra("absolutePath", absolutePath)
             startActivityForResult(intent, WRITE_RIVEW)
         }
 
@@ -128,7 +129,7 @@ class ReviewWriteActivity : RootActivity() {
                                     storageDir      /* directory */
                                 )
 
-                                absolutePath = photo.absolutePath
+                                // absolutePath = photo.absolutePath
                                 //imageUri = Uri.fromFile(photo);
                                 imageUri = FileProvider.getUriForFile(context, packageName + ".provider", photo)
                                 intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
@@ -168,7 +169,7 @@ class ReviewWriteActivity : RootActivity() {
                             storageDir      /* directory */
                         )
 
-                        absolutePath = photo.absolutePath
+                        // absolutePath = photo.absolutePath
                         //imageUri = Uri.fromFile(photo);
                         imageUri = FileProvider.getUriForFile(context, packageName + ".provider", photo)
                         intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
@@ -302,11 +303,10 @@ class ReviewWriteActivity : RootActivity() {
                 }
 
                 CROP_FROM_CAMERA -> {
-//                    capture = Utils.getImage(context.contentResolver, absolutePath)
-                    val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, imageUri)
-                    capture = bitmap
+                    val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, imageUriOutput)
+                    // capture = bitmap
                     postingType = "P"
-                    imgIV2.setImageBitmap(capture)
+                    imgIV2.setImageBitmap(bitmap)
 
                 }
 
@@ -342,17 +342,43 @@ class ReviewWriteActivity : RootActivity() {
         intent.putExtra("crop", "true")
         intent.putExtra("aspectX", 1)
         intent.putExtra("aspectY", 1)
-        intent.putExtra("outputX", 200)
-        intent.putExtra("outputY", 200)
+        intent.putExtra("outputX", 500)
+        intent.putExtra("outputY", 500)
         intent.putExtra("return-data", true)
 
-        grantUriPermission(
-            packageName, imageUri,
-            Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION
-        )
+        if (intent.resolveActivity(packageManager) != null) {
+
+            val storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+
+            try {
+                val photo = File.createTempFile(
+                    System.currentTimeMillis().toString(), /* prefix */
+                    ".jpg", /* suffix */
+                    storageDir      /* directory */
+                )
+
+                // absolutePath = photo.absolutePath
+                //imageUri = Uri.fromFile(photo);
+                imageUriOutput = FileProvider.getUriForFile(context, packageName + ".provider", photo)
+
+                val resInfoList = context.getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+                for (resolveInfo in resInfoList) {
+                    val packageName = resolveInfo.activityInfo.packageName;
+                    context.grantUriPermission(packageName, imageUriOutput, Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                }
+
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUriOutput)
+                startActivityForResult(intent, CROP_FROM_CAMERA)
+
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+
+        }
+
         //you must setup this
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
-        startActivityForResult(intent, CROP_FROM_CAMERA)
+        // intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
+        // startActivityForResult(intent, CROP_FROM_CAMERA)
 
     }
 

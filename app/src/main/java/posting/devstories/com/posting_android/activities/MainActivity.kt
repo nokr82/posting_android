@@ -198,11 +198,16 @@ class MainActivity : FragmentActivity() {
 
 
             val postFragment = supportFragmentManager.findFragmentByTag("post") as? PostFragment
+            val myPageFragment = supportFragmentManager.findFragmentByTag("myPage") as? MyPageFragment
 
             var tabType = -1
-            if(postFragment != null) {
-                if(fragmentFT.currentTab == 0) {
+            if(fragmentFT.currentTab == 0) {
+                if(postFragment != null) {
                     tabType = postFragment.tabType
+                }
+            } else if(fragmentFT.currentTab == 2) {
+                if(myPageFragment != null) {
+                    tabType = myPageFragment.getPostingTabType()
                 }
             }
 

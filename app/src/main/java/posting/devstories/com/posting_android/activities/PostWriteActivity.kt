@@ -5,8 +5,8 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.pm.PackageManager
 import android.database.Cursor
-import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -20,6 +20,8 @@ import com.gun0912.tedpermission.TedPermission
 import com.loopj.android.http.JsonHttpResponseHandler
 import com.loopj.android.http.RequestParams
 import com.nostra13.universalimageloader.core.ImageLoader
+import com.theartofdev.edmodo.cropper.CropImage
+import com.theartofdev.edmodo.cropper.CropImageView
 import cz.msebera.android.httpclient.Header
 import kotlinx.android.synthetic.main.activity_postwrite.*
 import org.json.JSONArray
@@ -45,14 +47,14 @@ class PostWriteActivity : RootActivity() {
     private val CROP_FROM_CAMERA = 100
     var imageUri: Uri? = null
     var imageUriOutput: Uri? = null
-    var absolutePath: String? = null
+    // var absolutePath: String? = null
     var mee = arrayOf("자유", "정보", "스터디", "동아리", "미팅")
     var most = arrayOf("수량", "1", "3", "5", "10", "20", "무제한")
     var day = arrayOf("기간", "1일", "5일", "7일", "10일", "30일", "60일")
     var getmee: String? = null
     var getmost = ""
     var getday = ""
-    var postingType = ""
+    var postingType = "G"
 
     var current_school = -1
     var school_id = -1
@@ -63,7 +65,7 @@ class PostWriteActivity : RootActivity() {
     var contents: String? = null
     var image_uri: String? = null
     var image: String? = null
-    var capture: Bitmap? = null
+    // var capture: Bitmap? = null
     var tabType = -1
     var type = -1
     var count = -1
@@ -228,10 +230,17 @@ class PostWriteActivity : RootActivity() {
 //            } else if (getday.equals("기간")) {
 //                Toast.makeText(context, "기간을 선택해주세요", Toast.LENGTH_SHORT).show()
             } else {
+
+                if(("G".equals(postingType) || "P".equals(postingType)) && imageUriOutput == null) {
+                    Toast.makeText(context, "이미지를 선택해주세요", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+
+
                 var intent = Intent(context, MyPostingWriteActivity::class.java)
 
-                if (imageUri != null) {
-                    intent.putExtra("imageUri",  imageUri.toString())
+                if (imageUriOutput != null) {
+                    intent.putExtra("imageUri",  imageUriOutput.toString())
                 } else {
                     // intent.putExtra("imageUri",  imageUri.toString())
                 }
@@ -256,7 +265,7 @@ class PostWriteActivity : RootActivity() {
             val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
             if (intent.resolveActivity(packageManager) != null) {
 
-                val storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+                val storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
 
                 try {
                     val photo = File.createTempFile(
@@ -265,9 +274,19 @@ class PostWriteActivity : RootActivity() {
                         storageDir      /* directory */
                     )
 
-                    absolutePath = photo.absolutePath
+                    // absolutePath = photo.absolutePath
                     //imageUri = Uri.fromFile(photo);
                     imageUri = FileProvider.getUriForFile(context, packageName + ".provider", photo)
+
+                    val resInfoList = context.getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+                    for (resolveInfo in resInfoList) {
+                        val packageName = resolveInfo.activityInfo.packageName;
+
+                        println("packageName : $packageName")
+
+                        context.grantUriPermission(packageName, imageUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                    }
+
                     intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
                     startActivityForResult(intent, REQUEST_CAMERA)
 
@@ -506,12 +525,14 @@ class PostWriteActivity : RootActivity() {
                 }
             }
 
+            println("gfds")
+
             cropImage()
 
              // val imgWidth = Utils.getScreenWidth(context) / 4
              // imgIV2.setImageBitmap(Utils.getImage(context.contentResolver, imgid, imgWidth))
              // imgIV2.setImageBitmap(Utils.getImage(context.contentResolver, imgid))
-            capture = null
+            // capture = null
             // imageUri = null
 
         }
@@ -529,7 +550,7 @@ class PostWriteActivity : RootActivity() {
             REQUEST_CAMERA -> {
                 imgid = null
 
-                val realPathFromURI = imageUri!!.getPath()
+                val realPathFromURI = imageUri!!.path
                 context.sendBroadcast(
                     Intent(
                         Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
@@ -540,16 +561,30 @@ class PostWriteActivity : RootActivity() {
 
                     cropImage()
 
+                    postingType = "P"
+
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
 
             }
             CROP_FROM_CAMERA -> {
-                capture = MediaStore.Images.Media.getBitmap(this.contentResolver, imageUri)
+
+                println("imageUriOutput : " + imageUriOutput)
+
+                val capture = MediaStore.Images.Media.getBitmap(this.contentResolver, imageUriOutput)
                 imgIV2.setImageBitmap(capture)
 
-                postingType = "P"
+            }
+            CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE -> {
+                val result = CropImage.getActivityResult(data)
+                if(result != null) {
+                    imageUriOutput = result.uri
+
+                    val capture = MediaStore.Images.Media.getBitmap(this.contentResolver, imageUriOutput)
+                    imgIV2.setImageBitmap(capture)
+                }
+
             }
             else -> {
                 Toast.makeText(this, "Unrecognized request code", Toast.LENGTH_SHORT)
@@ -559,7 +594,18 @@ class PostWriteActivity : RootActivity() {
 
     }
 
-    fun cropImage() {
+    private fun cropImage() {
+
+        val intent = CropImage.activity(imageUri)
+            .setGuidelines(CropImageView.Guidelines.ON)
+            .setAspectRatio(1, 1)
+            .getIntent(this);
+
+        startActivityForResult(intent, CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE)
+    }
+
+    private fun cropImageOld() {
+
         context.grantUriPermission(
             "com.android.camera", imageUri,
             Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION
@@ -568,7 +614,6 @@ class PostWriteActivity : RootActivity() {
         val intent = Intent("com.android.camera.action.CROP")
         intent.setDataAndType(imageUri, "image/*")
 
-        //you must setup two line below
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
 
@@ -579,16 +624,9 @@ class PostWriteActivity : RootActivity() {
         intent.putExtra("outputY", 500)
         intent.putExtra("return-data", true)
 
-        grantUriPermission(
-            packageName, imageUri,
-            Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION
-        )
-        //you must setup this
-
-        /*
         if (intent.resolveActivity(packageManager) != null) {
 
-            val storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+            val storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
 
             try {
                 val photo = File.createTempFile(
@@ -597,12 +635,17 @@ class PostWriteActivity : RootActivity() {
                     storageDir      /* directory */
                 )
 
-                absolutePath = photo.absolutePath
+                // absolutePath = photo.absolutePath
                 //imageUri = Uri.fromFile(photo);
                 imageUriOutput = FileProvider.getUriForFile(context, packageName + ".provider", photo)
 
-                // intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUriOutput)
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
+                val resInfoList = context.getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+                for (resolveInfo in resInfoList) {
+                    val packageName = resolveInfo.activityInfo.packageName;
+                    context.grantUriPermission(packageName, imageUriOutput, Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                }
+
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUriOutput)
                 startActivityForResult(intent, CROP_FROM_CAMERA)
 
             } catch (e: IOException) {
@@ -610,10 +653,9 @@ class PostWriteActivity : RootActivity() {
             }
 
         }
-        */
 
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
-        startActivityForResult(intent, CROP_FROM_CAMERA)
+        // intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
+        // startActivityForResult(intent, CROP_FROM_CAMERA)
 
 
     }

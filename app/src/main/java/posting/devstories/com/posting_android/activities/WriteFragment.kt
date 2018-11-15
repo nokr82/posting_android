@@ -29,7 +29,8 @@ import java.util.*
 
 open class WriteFragment : Fragment() {
 
-    var ctx: Context? = null
+    lateinit var myContext: Context
+
     private var progressDialog: ProgressDialog? = null
 
     private val photoList = ArrayList<ImageAdapter.PhotoData>()
@@ -71,20 +72,13 @@ open class WriteFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val ctx = context
-        if (null != ctx) {
-            doSomethingWithContext(ctx)
-        }
+        this.myContext = container!!.context
+
+        progressDialog = ProgressDialog(myContext)
 
         mainActivity = activity as MainActivity
 
         return inflater.inflate(R.layout.fra_write, container, false)
-    }
-
-    fun doSomethingWithContext(context: Context) {
-        // TODO: Actually do something with the context
-        this.ctx = context
-        progressDialog = ProgressDialog(ctx)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -107,18 +101,18 @@ open class WriteFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        progressDialog = ProgressDialog(context)
+        progressDialog = ProgressDialog(myContext)
 
-        member_type = PrefUtils.getStringPreference(context, "member_type")
+        member_type = PrefUtils.getStringPreference(myContext, "member_type")
 
         if (member_type.equals("3")) {
 
             meetingLL.visibility = View.GONE
 
-            adpater = ArrayAdapter<String>(mainActivity.context, android.R.layout.simple_spinner_item, most)
+            adpater = ArrayAdapter<String>(myContext, android.R.layout.simple_spinner_item, most)
             day2SP.adapter = adpater
 
-            adpater = ArrayAdapter<String>(mainActivity.context, android.R.layout.simple_spinner_item, day)
+            adpater = ArrayAdapter<String>(myContext, android.R.layout.simple_spinner_item, day)
             mostSP.adapter = adpater
 
             meetingSP.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -133,7 +127,7 @@ open class WriteFragment : Fragment() {
             }
 
 
-            adpater = ArrayAdapter<String>(mainActivity.context, android.R.layout.simple_spinner_item, day)
+            adpater = ArrayAdapter<String>(myContext, android.R.layout.simple_spinner_item, day)
             mostSP.adapter = adpater
 
 
@@ -162,11 +156,11 @@ open class WriteFragment : Fragment() {
 //          }
 //
 //          dateLL.setOnClickListener {
-//              DatePickerDialog(context, dateSetListener2,
+//              DatePickerDialog(myContext, dateSetListener2,
 //              cal.get(Calendar.YEAR),
 //              cal.get(Calendar.MONTH),
 //              cal.get(Calendar.DAY_OF_MONTH)).show()
-//              DatePickerDialog(context, dateSetListener,
+//              DatePickerDialog(myContext, dateSetListener,
 //                      cal.get(Calendar.YEAR),
 //                      cal.get(Calendar.MONTH),
 //                      cal.get(Calendar.DAY_OF_MONTH)).show()
@@ -175,22 +169,22 @@ open class WriteFragment : Fragment() {
 
 
         } else {
-            adpater = ArrayAdapter<String>(mainActivity.context, android.R.layout.simple_spinner_item, mee)
+            adpater = ArrayAdapter<String>(myContext, android.R.layout.simple_spinner_item, mee)
             meetingSP.adapter = adpater
 
-            adpater = ArrayAdapter<String>(mainActivity.context, android.R.layout.simple_spinner_item, most)
+            adpater = ArrayAdapter<String>(myContext, android.R.layout.simple_spinner_item, most)
             mostSP.adapter = adpater
 
-            adpater = ArrayAdapter<String>(mainActivity.context, android.R.layout.simple_spinner_item, day)
+            adpater = ArrayAdapter<String>(myContext, android.R.layout.simple_spinner_item, day)
             day2SP.adapter = adpater
         }
 
         textRL.setOnClickListener {
             if (member_type.equals("3")) {
-                var intent = Intent(context, CouponTextActivity::class.java)
+                var intent = Intent(myContext, CouponTextActivity::class.java)
                 startActivity(intent)
             } else {
-                var intent = Intent(context, MyPostingWriteActivity::class.java)
+                var intent = Intent(myContext, MyPostingWriteActivity::class.java)
                 intent.putExtra("text", text)
                 startActivity(intent)
             }
@@ -198,7 +192,7 @@ open class WriteFragment : Fragment() {
 
         nextLL.setOnClickListener {
 
-            var intent = Intent(context, MyPostingWriteActivity::class.java)
+            var intent = Intent(myContext, MyPostingWriteActivity::class.java)
             intent.putExtra("imgid", imgid)
             intent.putExtra("capture", capture)
             intent.putExtra("startd", startd)
@@ -229,7 +223,7 @@ open class WriteFragment : Fragment() {
 
                 }
 
-                TedPermission.with(mainActivity.context)
+                TedPermission.with(myContext)
                     .setPermissionListener(permissionlistener)
                     .setDeniedMessage("[설정] > [권한] 에서 권한을 허용할 수 있습니다.")
                     .setPermissions(
@@ -255,7 +249,7 @@ open class WriteFragment : Fragment() {
 
         val imageLoader = ImageLoader(mainActivity.contentResolver)
 
-        adapter = ImageAdapter(mainActivity.context, photoList, imageLoader, selected)
+        adapter = ImageAdapter(myContext, photoList, imageLoader, selected)
         listGV.adapter = adapter
         listGV.setOnItemClickListener { parent, view, position, id ->
 
@@ -279,7 +273,7 @@ open class WriteFragment : Fragment() {
             }
         }
 
-        TedPermission.with(mainActivity.context)
+        TedPermission.with(myContext)
             .setPermissionListener(permissionlistener)
             .setDeniedMessage("[설정] > [권한] 에서 권한을 허용할 수 있습니다.")
             .setPermissions(
@@ -370,7 +364,7 @@ open class WriteFragment : Fragment() {
                 }
             }
             else -> {
-                Toast.makeText(mainActivity.context, "Unrecognized request code", Toast.LENGTH_SHORT)
+                Toast.makeText(myContext, "Unrecognized request code", Toast.LENGTH_SHORT)
             }
         }
 

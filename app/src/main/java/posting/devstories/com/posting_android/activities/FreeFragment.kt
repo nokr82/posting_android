@@ -29,7 +29,7 @@ class FreeFragment : MainFragment() {
             if (intent != null) {
                 tabType = intent.getIntExtra("tabType", 1)
 
-                if (type == 1) {
+                if (tabType == 1) {
                     reloadData(tabType)
                 }
             }
@@ -41,6 +41,15 @@ class FreeFragment : MainFragment() {
         var view = super.onCreateView(inflater, container, savedInstanceState)
 
         val filter3 = IntentFilter("SET_VIEW")
+
+        try {
+            if (setViewReceiver != null) {
+                getActivity()!!.unregisterReceiver(setViewReceiver)
+            }
+        } catch (e: IllegalArgumentException) {
+            e.printStackTrace()
+        }
+
         getActivity()!!.registerReceiver(setViewReceiver, filter3)
 
         return view
@@ -66,6 +75,14 @@ class FreeFragment : MainFragment() {
                 context!!.unregisterReceiver(searchKeywordReceiver)
             }
         } catch (e: IllegalArgumentException) {
+        }
+
+        try {
+            if (setViewReceiver != null) {
+                getActivity()!!.unregisterReceiver(setViewReceiver)
+            }
+        } catch (e: IllegalArgumentException) {
+            e.printStackTrace()
         }
 
     }

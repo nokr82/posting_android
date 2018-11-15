@@ -11,15 +11,12 @@ import android.widget.Toast
 import com.loopj.android.http.JsonHttpResponseHandler
 import com.loopj.android.http.RequestParams
 import cz.msebera.android.httpclient.Header
-import kotlinx.android.synthetic.main.find_id_and_passwd_activity.*
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
-import posting.devstories.com.posting_android.Actions.LoginAction
 import posting.devstories.com.posting_android.Actions.PostingAction
 import posting.devstories.com.posting_android.Actions.ReviewAction
 import posting.devstories.com.posting_android.R
-import posting.devstories.com.posting_android.base.PrefUtils
 import posting.devstories.com.posting_android.base.RootActivity
 import posting.devstories.com.posting_android.base.Utils
 
@@ -177,6 +174,13 @@ class DlgReportActivity : RootActivity() {
                         intent.action = "DEL_POSTING"
                         sendBroadcast(intent)
                         setResult(Activity.RESULT_OK, intent)
+
+
+                        //브로드캐스트로 날려주기
+                        val intent = Intent()
+                        intent.putExtra("tabType",type)
+                        intent.action = "SET_VIEW"
+                        sendBroadcast(intent)
 
                         finish()
 

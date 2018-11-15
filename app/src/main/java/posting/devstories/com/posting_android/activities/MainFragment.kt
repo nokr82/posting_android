@@ -28,6 +28,8 @@ open class MainFragment : Fragment(), AbsListView.OnScrollListener {
 
     private var progressDialog: ProgressDialog? = null
 
+    lateinit var myContext: Context
+
     lateinit var activity: MainActivity
     var tabType = 1;
     var member_id = -1
@@ -82,8 +84,8 @@ open class MainFragment : Fragment(), AbsListView.OnScrollListener {
     internal var delPostingReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent?) {
             if (intent != null) {
-                type = intent.getIntExtra("type", 1)
-                loadData(type)
+                // type = intent.getIntExtra("type", 1)
+                // loadData(type)
             }
         }
     }
@@ -94,7 +96,9 @@ open class MainFragment : Fragment(), AbsListView.OnScrollListener {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        progressDialog = ProgressDialog(context)
+        this.myContext = container!!.context
+
+        progressDialog = ProgressDialog(myContext)
 
         return inflater.inflate(R.layout.fra_main, container, false)
     }
@@ -123,23 +127,23 @@ open class MainFragment : Fragment(), AbsListView.OnScrollListener {
 
         adapterMain = PostAdapter(activity, R.layout.item_post, adapterData)
         gideGV.adapter = adapterMain
-        member_id = PrefUtils.getIntPreference(context, "member_id")
+        member_id = PrefUtils.getIntPreference(myContext, "member_id")
         gideGV.setOnScrollListener(this)
         gideGV.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             try {
                 val Posting = adapterData[position].getJSONObject("Posting")
 
-                //                    Intent intent = new Intent(context, _StoreDetailActivity.class);
+                //                    Intent intent = new Intent(myContext, _StoreDetailActivity.class);
 
                 val type = Utils.getString(Posting, "type")
 
 //                if("3" == type || "4" == type || "5" == type) {
                     // 채팅 화면
-//                    val intent = Intent(context, MatchInfoActivity::class.java)
+//                    val intent = Intent(myContext, MatchInfoActivity::class.java)
 //                    intent.putExtra("posting_id", Utils.getString(Posting, "id"))
 //                    startActivity(intent)
 //                } else {
-                    val intent = Intent(context, DetailActivity::class.java)
+                    val intent = Intent(myContext, DetailActivity::class.java)
                     intent.putExtra("id", Utils.getString(Posting, "id"))
                     startActivity(intent)
 //                }
@@ -158,8 +162,8 @@ open class MainFragment : Fragment(), AbsListView.OnScrollListener {
 
     fun loadData(type: Int) {
         val params = RequestParams()
-        params.put("member_id", PrefUtils.getIntPreference(context, "member_id"))
-        params.put("current_school_id", PrefUtils.getIntPreference(context, "current_school_id"))
+        params.put("member_id", PrefUtils.getIntPreference(myContext, "member_id"))
+        params.put("current_school_id", PrefUtils.getIntPreference(myContext, "current_school_id"))
         params.put("type", type)
         params.put("keyword", keyword)
         params.put("page", page)
@@ -219,7 +223,7 @@ open class MainFragment : Fragment(), AbsListView.OnScrollListener {
             }
 
             private fun error() {
-                Utils.alert(context, "조회중 장애가 발생하였습니다.")
+                Utils.alert(myContext, "조회중 장애가 발생하였습니다.")
             }
 
             override fun onFailure(
@@ -299,14 +303,14 @@ open class MainFragment : Fragment(), AbsListView.OnScrollListener {
 
         try {
             if (savePostingReceiver != null) {
-                context!!.unregisterReceiver(savePostingReceiver)
+                myContext!!.unregisterReceiver(savePostingReceiver)
             }
         } catch (e: IllegalArgumentException) {
         }
 
         try {
             if (delPostingReceiver != null) {
-                context!!.unregisterReceiver(delPostingReceiver)
+                myContext!!.unregisterReceiver(delPostingReceiver)
             }
         } catch (e: IllegalArgumentException) {
         }
