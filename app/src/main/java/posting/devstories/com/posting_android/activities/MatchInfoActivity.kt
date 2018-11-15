@@ -34,6 +34,7 @@ class MatchInfoActivity : RootActivity() {
     private val backPressCloseHandler: BackPressCloseHandler? = null
 
     var posting_id = ""
+    var save_id = -1
     var member_id = -1
     var match_count = 0
 
@@ -62,6 +63,14 @@ class MatchInfoActivity : RootActivity() {
         }
     }
 
+    internal var saveDelPostingReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent?) {
+            if (intent != null) {
+                finish()
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_match_info)
@@ -75,7 +84,11 @@ class MatchInfoActivity : RootActivity() {
         val filter2 = IntentFilter("DEL_POSTING")
         registerReceiver(delPostingReceiver, filter2)
 
+        val filter3 = IntentFilter("SAVE_DEL_POSTING")
+        registerReceiver(saveDelPostingReceiver, filter3)
+
         posting_id = intent.getStringExtra("posting_id")
+        save_id = intent.getIntExtra("save_id", -1)
 
         member_id = PrefUtils.getIntPreference(context, "member_id")
 
@@ -86,6 +99,7 @@ class MatchInfoActivity : RootActivity() {
         postingRL.setOnClickListener {
             var intent = Intent(context, DetailActivity::class.java);
             intent.putExtra("id", posting_id)
+            intent.putExtra("save_id", save_id)
             startActivity(intent)
         }
 
@@ -260,6 +274,22 @@ class MatchInfoActivity : RootActivity() {
         try {
             if (matchCntUpdate != null) {
                 context!!.unregisterReceiver(matchCntUpdate)
+            }
+
+        } catch (e: IllegalArgumentException) {
+        }
+
+        try {
+            if (delPostingReceiver != null) {
+                context!!.unregisterReceiver(delPostingReceiver)
+            }
+
+        } catch (e: IllegalArgumentException) {
+        }
+
+        try {
+            if (saveDelPostingReceiver != null) {
+                context!!.unregisterReceiver(saveDelPostingReceiver)
             }
 
         } catch (e: IllegalArgumentException) {

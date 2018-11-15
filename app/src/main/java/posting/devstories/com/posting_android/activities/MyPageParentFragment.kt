@@ -46,6 +46,20 @@ open class MyPageParentFragment : Fragment() {
         override fun onReceive(context: Context, intent: Intent?) {
             if (intent != null) {
                 var type:Int = intent.getIntExtra("type", 1)
+                tab = 1
+                loadData(type)
+            }
+        }
+    }
+
+    internal var saveDelPostingReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent?) {
+            if (intent != null) {
+                var type:Int = intent.getIntExtra("type", 1)
+
+                println(" ========================================================= " + type)
+
+                tab = 2
                 loadData(type)
             }
         }
@@ -78,6 +92,9 @@ open class MyPageParentFragment : Fragment() {
         val filter2 = IntentFilter("DEL_POSTING")
         activity.registerReceiver(delPostingReceiver, filter2)
 
+        val filter1 = IntentFilter("SAVE_DEL_POSTING")
+        activity.registerReceiver(saveDelPostingReceiver, filter1)
+
         adapterMy = MyPostingAdapter(activity, R.layout.item_storage, adapterData)
         gideGV.adapter = adapterMy
         member_id = PrefUtils.getIntPreference(myContext, "member_id")
@@ -106,19 +123,20 @@ open class MyPageParentFragment : Fragment() {
 
                 } else {
 
+                    val PostingSave = adapterData[position].getJSONObject("PostingSave")
+
                     if (type == 3 || type == 4 || type == 5) {
 
                         val intent = Intent(myContext, MatchInfoActivity::class.java)
                         intent.putExtra("posting_id", Utils.getString(Posting, "id"))
+                        intent.putExtra("save_id", Utils.getInt(PostingSave, "id"))
                         startActivity(intent)
 
                     } else {
 
-                        val PostingSave = adapterData[position].getJSONObject("PostingSave")
-
                         val intent = Intent(myContext, DetailActivity::class.java)
                         intent.putExtra("id", Utils.getString(Posting, "id"))
-                        intent.putExtra("save_id", Utils.getString(PostingSave, "id"))
+                        intent.putExtra("save_id", Utils.getInt(PostingSave, "id"))
                         intent.putExtra("taptype",tab)
                         startActivity(intent)
 
@@ -234,7 +252,14 @@ open class MyPageParentFragment : Fragment() {
 
         try {
             if (delPostingReceiver != null) {
-                myContext!!.unregisterReceiver(delPostingReceiver)
+                context!!.unregisterReceiver(delPostingReceiver)
+            }
+
+        } catch (e: IllegalArgumentException) {
+        }
+        try {
+            if (saveDelPostingReceiver != null) {
+                context!!.unregisterReceiver(saveDelPostingReceiver)
             }
 
         } catch (e: IllegalArgumentException) {

@@ -42,7 +42,6 @@ class DetailActivity : RootActivity() {
     val STORAGE_POST = 201;
     val USES_COUPON = 301;
 
-
     var nick = ""
     lateinit var context:Context
     private var progressDialog: ProgressDialog? = null
@@ -60,8 +59,7 @@ class DetailActivity : RootActivity() {
     var type = 1
     var contents = ""
     var coupon = -1
-    var taptype = -1
-    var save_id :String? = null
+    var save_id = -1
 
     var dlgtype  = ""
 
@@ -86,8 +84,7 @@ class DetailActivity : RootActivity() {
         loadInfo()
 
         intent = getIntent()
-        taptype=intent.getIntExtra("taptype",-1)
-        save_id = intent.getStringExtra("save_id")
+        save_id = intent.getIntExtra("save_id", -1)
 
         coupon = intent.getIntExtra("coupon",-1)
         use_yn = intent.getStringExtra("use_yn")
@@ -181,10 +178,10 @@ class DetailActivity : RootActivity() {
 
 
         menuIV.setOnClickListener {
-            if (taptype ==2){
-                storagedlgView()
-            }else{
+            if (save_id < 1){
                 dlgView()
+            }else{
+                storagedlgView()
             }
         }
 
@@ -678,7 +675,7 @@ class DetailActivity : RootActivity() {
                         }
 //                        var created =   Utils.getString(posting, "created")
 
-                        if (taptype==2){
+                        if (save_id > 0){
                             menuIV.visibility = View.VISIBLE
                         }
 
@@ -815,8 +812,9 @@ class DetailActivity : RootActivity() {
     fun storagedlgView(){
         dlgtype = "Storage"
         var intent = Intent(context, DlgReportActivity::class.java)
-        intent.putExtra("save_id", save_id)
+        intent.putExtra("save_id", save_id.toString())
         intent.putExtra("dlgtype", dlgtype)
+        intent.putExtra("type", type)
         startActivityForResult(intent, STORAGE_POST)
 
     }

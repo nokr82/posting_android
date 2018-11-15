@@ -117,6 +117,8 @@ class DlgReportActivity : RootActivity() {
             recyTV.visibility = View.GONE
             modiTV.visibility = View.GONE
 
+            println("type : " + type)
+
             delTV.setOnClickListener {
                 savedel_posting()
                 //이것을 어찌할꼬...
@@ -309,9 +311,9 @@ class DlgReportActivity : RootActivity() {
                     if ("ok" == result) {
 
                         intent = Intent()
-                        intent.putExtra("posting_id", posting_id)
+                        intent.putExtra("save_id", save_id)
                         intent.putExtra("type", type)
-                        intent.action = "DEL_POSTING"
+                        intent.action = "SAVE_DEL_POSTING"
                         sendBroadcast(intent)
                         setResult(RESULT_OK, intent)
 
