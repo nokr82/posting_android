@@ -96,7 +96,6 @@ open class AlarmAdapter(context: Context, view:Int, data : ArrayList<JSONObject>
     fun removeItem(position: Int){
         data.removeAt(position)
         notifyDataSetChanged()
-
     }
 
     class ViewHolder(v: View) {

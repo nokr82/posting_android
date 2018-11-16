@@ -1,5 +1,6 @@
 package posting.devstories.com.posting_android.activities
 
+import android.app.Activity
 import android.app.ProgressDialog
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -27,10 +28,13 @@ import posting.devstories.com.posting_android.base.PrefUtils
 import posting.devstories.com.posting_android.base.Utils
 
 class MainActivity : FragmentActivity() {
+
     private var progressDialog: ProgressDialog? = null
     lateinit var context: Context
     private val BACK_PRESSED_TERM = (1000 * 2).toLong()
     private var backPressedTime: Long = 0
+
+    val CONFRIM_SCHOOL = 301;
 
     var tabType = 1
     var type :String?= null
@@ -39,7 +43,7 @@ class MainActivity : FragmentActivity() {
     var member_type = ""
     var is_push = false
     var posting_id:String?=null
-
+    var chatting_member_id:String = "-1"
 
     internal var editPostingReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent?) {
@@ -70,15 +74,16 @@ class MainActivity : FragmentActivity() {
         override fun onReceive(context: Context, intent: Intent?) {
             if (intent != null) {
 
-                if(fragmentFT.currentTab != 0) {
-                    fragmentFT.onTabChanged("post")
-                }
+//                if(fragmentFT.currentTab != 0) {
+//                    fragmentFT.onTabChanged("post")
+//                }
 
             }
         }
     }
 
     private var confirm_yn = ""
+    private var active_yn = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -92,14 +97,23 @@ class MainActivity : FragmentActivity() {
         type = intent.getStringExtra("intent")
 
         confirm_yn = PrefUtils.getStringPreference(context, "confirm_yn")
+        active_yn = PrefUtils.getStringPreference(context, "active_yn")
 
         if(is_push) {
 
             posting_id = intent.getStringExtra("posting_id")
+            chatting_member_id = intent.getStringExtra("chatting_member_id")
 
-            var intent = Intent(context, DetailActivity::class.java)
-            intent.putExtra("id", posting_id)
-            startActivity(intent)
+            if(posting_id != "" && posting_id != null && posting_id != "-1") {
+                var intent = Intent(context, DetailActivity::class.java)
+                intent.putExtra("id", posting_id)
+                startActivity(intent)
+            } else if (chatting_member_id != "" && chatting_member_id != null && chatting_member_id != "-1") {
+                var intent = Intent(context, ChattingActivity::class.java)
+                intent.putExtra("attend_member_id", chatting_member_id.toInt())
+                startActivity(intent)
+            }
+
         }
 
         val filter3 = IntentFilter("EDIT_POSTING")
@@ -129,11 +143,13 @@ class MainActivity : FragmentActivity() {
         }else{
             fragmentFT.addTab(fragmentFT.newTabSpec("myPage").setIndicator(tabMypageV), MyPageFragment::class.java, null)
         }
+
         if(member_type.equals("3")) {
             setTabBar()
             myPageIV.setImageResource(R.mipmap.clickmy)
             fragmentFT.currentTab = 2
         }
+
         homeLL.setOnClickListener {
 
             setTabBar()
@@ -143,27 +159,67 @@ class MainActivity : FragmentActivity() {
             val school_id = PrefUtils.getIntPreference(context, "school_id")
             PrefUtils.setPreference(context, "current_school_id", school_id)
 
-            val postFragment = supportFragmentManager.findFragmentByTag("post") as PostFragment
-            postFragment.disableOnPageSelected()
 
-            fragmentFT.onTabChanged("post")
+            val postFragment = supportFragmentManager.findFragmentByTag("post") as? PostFragment
+
+            if(fragmentFT.currentTab == 0) {
+                if(postFragment != null) {
+                    postFragment.setMainView()
+                }
+            } else {
+                if(postFragment != null) {
+                    postFragment.disableOnPageSelected()
+                }
+
+                // fragmentFT.onTabChanged("post")
+                fragmentFT.currentTab = 0
+            }
         }
 
         writeLL.setOnClickListener {
 
-            println("confirm_yn : " + confirm_yn)
+            if(member_type.equals("2")) {
+                if("N" == confirm_yn) {
+                    var intent = Intent(context, DlgCommonActivity::class.java)
+                    intent.putExtra("contents", "학교 인증 후 이용하실 수 있습니다")
+                    startActivityForResult(intent, CONFRIM_SCHOOL)
 
-            if("N" == confirm_yn) {
-                Toast.makeText(context, "학교 인증 후 이용하실 수 있습니다.", Toast.LENGTH_LONG).show()
-                return@setOnClickListener
+                    return@setOnClickListener
+                }
+            } else {
+                if(active_yn == "N") {
+                    var intent = Intent(context, DlgCommonActivity::class.java)
+                    intent.putExtra("contents", "사업자 인증 후 이용하실 수 있습니다")
+                    startActivity(intent)
+
+                    return@setOnClickListener
+                }
             }
+
+
+            val postFragment = supportFragmentManager.findFragmentByTag("post") as? PostFragment
+            val myPageFragment = supportFragmentManager.findFragmentByTag("myPage") as? MyPageFragment
+
+            var tabType = -1
+            if(fragmentFT.currentTab == 0) {
+                if(postFragment != null) {
+                    tabType = postFragment.tabType
+                }
+            } else if(fragmentFT.currentTab == 2) {
+                if(myPageFragment != null) {
+                    tabType = myPageFragment.getPostingTabType()
+                }
+            }
+
 
             val current_school = PrefUtils.getIntPreference(context, "current_school_id")
             val school_id = PrefUtils.getIntPreference(context, "school_id")
+
             val intent = Intent(this, PostWriteActivity::class.java)
             intent.putExtra("current_school",current_school)
             intent.putExtra("school_id",school_id)
             intent.putExtra("member_type",member_type)
+            intent.putExtra("tabType", tabType)
 
             startActivity(intent)
 
@@ -179,7 +235,9 @@ class MainActivity : FragmentActivity() {
             setTabBar()
 
             myPageIV.setImageResource(R.mipmap.clickmy)
-            fragmentFT.onTabChanged("myPage")
+            // fragmentFT.onTabChanged("myPage")
+
+            fragmentFT.currentTab = 2
 
         }
 
@@ -317,6 +375,31 @@ class MainActivity : FragmentActivity() {
             }
         } catch (e: IllegalArgumentException) {
         }
+        try {
+            if (setViewReceiver != null) {
+                context.unregisterReceiver(setViewReceiver)
+            }
+        } catch (e: IllegalArgumentException) {
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        when(requestCode) {
+            CONFRIM_SCHOOL -> {
+                if(Activity.RESULT_OK == resultCode) {
+
+                    var intent = Intent(context, SchoolagreeActivity::class.java)
+                    intent.putExtra("has_branch_yn", "N")
+                    intent.putExtra("school_email_confirmed", "N")
+                    intent.putExtra("school_confirmed", "N")
+                    startActivity(intent)
+
+                }
+            }
+        }
+
     }
 
 }

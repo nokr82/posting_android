@@ -106,6 +106,8 @@ class LoginActivity : RootActivity() {
                         PrefUtils.setPreference(context, "current_school_id", school_id)
                         PrefUtils.setPreference(context, "current_school_image_uri", school_image_uri)
 
+                        PrefUtils.setPreference(context, "school_domain", Utils.getString(school, "domain"))
+
                         PrefUtils.setPreference(context, "loginID", loginID)
                         PrefUtils.setPreference(context, "member_id", Utils.getInt(data, "id"))
                         PrefUtils.setPreference(context, "email", Utils.getString(data, "email"))
@@ -113,6 +115,7 @@ class LoginActivity : RootActivity() {
                         PrefUtils.setPreference(context, "member_type", Utils.getString(data, "member_type"))
                         PrefUtils.setPreference(context, "school_id", Utils.getInt(data, "school_id"))
                         PrefUtils.setPreference(context, "confirm_yn", Utils.getString(data, "confirm_yn"))
+                        PrefUtils.setPreference(context, "active_yn", Utils.getString(data, "active_yn"))
                         PrefUtils.setPreference(context, "autoLogin", autoLogin)
 
                         val intent = Intent(context, MainActivity::class.java)
@@ -121,6 +124,12 @@ class LoginActivity : RootActivity() {
 
                     } else if("confirm_no" == result) {
                         Toast.makeText(context, "관리자 승인 후 로그인이 가능합니다.", Toast.LENGTH_LONG).show()
+                    } else if("block" == result) {
+
+                        val intent = Intent(context, DlgCommonActivity::class.java)
+                        intent.putExtra("contents", "사용제한되었습니다.\n 고객센터로 문의하세요\n\n 문의 메일\n wepostkorea@gmail.com")
+                        startActivity(intent)
+
                     } else {
                         Toast.makeText(context, "일치하는 회원이 존재하지 않습니다.", Toast.LENGTH_LONG).show()
                     }

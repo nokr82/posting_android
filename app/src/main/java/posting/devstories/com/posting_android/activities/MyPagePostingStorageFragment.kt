@@ -8,40 +8,34 @@ import android.content.IntentFilter
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentManager
+import android.support.v4.app.FragmentStatePagerAdapter
+import android.support.v4.view.ViewPager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
-import com.google.gson.JsonObject
-import com.loopj.android.http.JsonHttpResponseHandler
-import com.loopj.android.http.RequestParams
-import cz.msebera.android.httpclient.Header
-import org.json.JSONException
-import org.json.JSONObject
-import posting.devstories.com.posting_android.Actions.MemberAction
+import android.widget.GridView
+import android.widget.RelativeLayout
+import android.widget.TextView
 import posting.devstories.com.posting_android.R
-import posting.devstories.com.posting_android.R.id.*
-import posting.devstories.com.posting_android.adapter.MyPostingAdapter
-import posting.devstories.com.posting_android.adapter.PostAdapter
-import posting.devstories.com.posting_android.base.PrefUtils
-import posting.devstories.com.posting_android.base.Utils
+import posting.devstories.com.posting_android.base.NonSwipeableViewPager
 
 open class MyPagePostingStorageFragment : Fragment() {
+
+    lateinit var myContext: Context
 
     private var progressDialog: ProgressDialog? = null
     lateinit var activity: MainActivity
     var member_id = -1
-    var adapterData: ArrayList<JSONObject> = ArrayList<JSONObject>()
-    lateinit var adapterMy: MyPostingAdapter
     var tabType = 1
-    var taptype = 1
+    var tab = 1
+
     lateinit var free2TV:TextView
     lateinit var info2TV:TextView
     lateinit var study2TV:TextView
     lateinit var class2TV:TextView
     lateinit var meeting2TV:TextView
     lateinit var coupon2TV:TextView
-
 
     lateinit var storageGV: GridView
     lateinit var free2V:View
@@ -51,7 +45,6 @@ open class MyPagePostingStorageFragment : Fragment() {
     lateinit var meeting2V:View
     lateinit var coupon2V:View
 
-
     lateinit var free2RL: RelativeLayout
     lateinit var info2RL: RelativeLayout
     lateinit var study2RL: RelativeLayout
@@ -59,22 +52,46 @@ open class MyPagePostingStorageFragment : Fragment() {
     lateinit var meeting2RL: RelativeLayout
     lateinit var coupon2RL: RelativeLayout
 
-    internal var delPostingReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
+    lateinit var pagerVP:NonSwipeableViewPager
+    lateinit var pagerAdapter:PagerAdapter
+
+    internal var setViewReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent?) {
+
             if (intent != null) {
-                var type:Int = intent.getIntExtra("type", 1)
-                loadData(type)
+                tabType = intent!!.getIntExtra("tabType", 1)
+                val type = tabType - 1
+
+                if (type == pagerVP.currentItem) {
+                    setMenuTabView()
+                }
+
+                pagerVP.currentItem = type
             }
+
         }
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        progressDialog = ProgressDialog(context)
+        this.myContext = container!!.context
+
+        val filter3 = IntentFilter("SET_VIEW")
+
+        try {
+            if (setViewReceiver != null) {
+                getActivity()!!.unregisterReceiver(setViewReceiver)
+            }
+        } catch (e: IllegalArgumentException) {
+            e.printStackTrace()
+        }
+
+        getActivity()!!.registerReceiver(setViewReceiver, filter3)
+
+        progressDialog = ProgressDialog(myContext)
 
         return inflater.inflate(R.layout.fra_my_page_posting_storage, container, false)
     }
@@ -89,15 +106,12 @@ open class MyPagePostingStorageFragment : Fragment() {
         meeting2TV = view.findViewById(R.id.Miting2TX)
         coupon2TV = view.findViewById(R.id.Coupon2TX)
 
-
-
         free2V = view.findViewById(R.id.free2V)
         info2V = view.findViewById(R.id.info2V)
         study2V = view.findViewById(R.id.Study2V)
         class2V = view.findViewById(R.id.class2V)
         meeting2V = view.findViewById(R.id.miting2V)
         coupon2V = view.findViewById(R.id.coupon2V)
-
 
         free2RL = view.findViewById(R.id.free2RL)
         info2RL = view.findViewById(R.id.info2RL)
@@ -106,208 +120,187 @@ open class MyPagePostingStorageFragment : Fragment() {
         meeting2RL = view.findViewById(R.id.meeting2RL)
         coupon2RL = view.findViewById(R.id.coupon2RL)
 
-
         storageGV = view.findViewById(R.id.storageGV)
+
+        pagerVP = view.findViewById(R.id.pagerVP)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
         activity = getActivity() as MainActivity
-        val filter2 = IntentFilter("DEL_POSTING")
-        activity.registerReceiver(delPostingReceiver, filter2)
-
-        //기본화면설정
-        tabType= 1
-        setMenuTabView()
-        loadData(tabType)
-
 
         free2RL.setOnClickListener {
-            adapterData.clear()
-            tabType = 1;
-            loadData(tabType)
-            setMenuTabView()
+//            adapterData.clear()
+//            tabType = 1;
+//            setMenuTabView()
+            pagerVP.currentItem = 0
 
         }
 
         info2RL.setOnClickListener {
-            adapterData.clear()
-            tabType = 2;
-            loadData(tabType)
-            setMenuTabView()
+//            adapterData.clear()
+//            tabType = 2;
+//            setMenuTabView()
+            pagerVP.currentItem = 1
 
         }
 
         study2RL.setOnClickListener {
-            adapterData.clear()
-            tabType = 3;
-            loadData(tabType)
-            setMenuTabView()
-
-
-
+//            adapterData.clear()
+//            tabType = 3;
+//            setMenuTabView()
+            pagerVP.currentItem = 2
         }
 
         class2RL.setOnClickListener {
-            adapterData.clear()
-            tabType = 4;
-            loadData(tabType)
-            setMenuTabView()
-
+//            adapterData.clear()
+//            tabType = 4;
+//            setMenuTabView()
+            pagerVP.currentItem = 3
         }
 
         meeting2RL.setOnClickListener {
-            adapterData.clear()
-            tabType = 5;
-            loadData(tabType)
-            setMenuTabView()
-
+//            adapterData.clear()
+//            tabType = 5;
+//            setMenuTabView()
+            pagerVP.currentItem = 4
         }
 
         coupon2RL.setOnClickListener {
-            adapterData.clear()
-            tabType = 6;
-            loadData(tabType)
-            setMenuTabView()
+//            adapterData.clear()
+//            tabType = 6;
+//            setMenuTabView()
+            pagerVP.currentItem = 5
         }
 
 
+        pagerAdapter = PagerAdapter(getChildFragmentManager())
+        pagerVP.adapter = pagerAdapter
+        pagerAdapter.notifyDataSetChanged()
+        pagerVP.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
 
+            }
 
+            override fun onPageSelected(position: Int) {
 
-        adapterMy = MyPostingAdapter(activity, R.layout.item_storage, adapterData)
-        storageGV.adapter = adapterMy
-        member_id = PrefUtils.getIntPreference(context, "member_id")
+                when (position) {
+                    0 -> {
+                        tabType = 1;
 
-        storageGV.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
-            try {
-                val Posting = adapterData[position].getJSONObject("Posting")
-                val type = Utils.getInt(Posting,"type")
-
-                if (taptype ==1) {
-                    if (type == 3 || type == 4 || type == 5) {
-//                        val intent = Intent(context, MyPostingActivity::class.java)
-//                        intent.putExtra("id", Utils.getString(Posting, "id"))
-//                        intent.putExtra("image_uri", Utils.getString(Posting, "image_uri"))
-//                        startActivity(intent)
-                        val intent = Intent(context, MatchInfoActivity::class.java)
-                        intent.putExtra("posting_id", Utils.getString(Posting, "id"))
-                        startActivity(intent)
-                    }else{
-                            val intent = Intent(context, DetailActivity::class.java)
-                            intent.putExtra("id", Utils.getString(Posting, "id"))
-                            startActivity(intent)
-                        }
-                }else {
-                    if (type == 3 || type == 4 || type == 5) {
-                        val intent = Intent(context, MatchInfoActivity::class.java)
-                        intent.putExtra("posting_id", Utils.getString(Posting, "id"))
-                        startActivity(intent)
-                    }else{
-                        val PostingSave = adapterData[position].getJSONObject("PostingSave")
-
-                        val intent = Intent(context, DetailActivity::class.java)
-                        intent.putExtra("id", Utils.getString(Posting, "id"))
-                        intent.putExtra("save_id", Utils.getString(PostingSave, "id"))
-                        intent.putExtra("taptype",taptype)
-                        println("tap============="+taptype)
-                        startActivity(intent)
+                        setMenuTabView()
                     }
+                    1 -> {
+                        tabType = 2;
 
-                }
-            } catch (e: JSONException) {
-                e.printStackTrace()
-            }
-        }
-
-
-
-    }
-
-    fun loadData(type: Int) {
-        val params = RequestParams()
-        member_id = PrefUtils.getIntPreference(context, "member_id")
-        params.put("member_id", member_id)
-        params.put("tab", taptype)
-        params.put("type", tabType)
-
-        MemberAction.my_page_index(params, object : JsonHttpResponseHandler() {
-
-            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
-                if (progressDialog != null) {
-                    progressDialog!!.dismiss()
-                }
-
-                try {
-                    val result = response!!.getString("result")
-
-                    adapterData.clear()
-                    if ("ok" == result) {
-
-                        var member = response.getJSONObject("member");
-
-                        val data = response.getJSONArray("list")
-
-                        for (i in 0..(data.length() - 1)) {
-
-                            adapterData.add(data[i] as JSONObject)
-
-                        }
-                        adapterMy.notifyDataSetChanged()
-
-                    } else {
-                        Toast.makeText(context, "일치하는 회원이 존재하지 않습니다.", Toast.LENGTH_LONG).show()
+                        setMenuTabView()
                     }
+                    2 -> {
+                        tabType = 3;
 
-                } catch (e: JSONException) {
-                    e.printStackTrace()
-                }
+                        setMenuTabView()
+                    }
+                    3 -> {
+                        tabType = 4;
 
-            }
+                        setMenuTabView()
+                    }
+                    4 -> {
+                        tabType = 5;
 
+                        setMenuTabView()
+                    }
+                    5 -> {
+                        tabType = 6;
 
-            override fun onSuccess(statusCode: Int, headers: Array<Header>?, responseString: String?) {
-
-                // System.out.println(responseString);
-            }
-
-            private fun error() {
-                Utils.alert(context, "조회중 장애가 발생하였습니다.")
-            }
-
-            override fun onFailure(
-                    statusCode: Int,
-                    headers: Array<Header>?,
-                    responseString: String?,
-                    throwable: Throwable
-            ) {
-                if (progressDialog != null) {
-                    progressDialog!!.dismiss()
-                }
-
-                // System.out.println(responseString);
-
-                throwable.printStackTrace()
-                error()
-            }
-
-
-            override fun onStart() {
-                // show dialog
-                if (progressDialog != null) {
-
-                    progressDialog!!.show()
+                        setMenuTabView()
+                    }
                 }
             }
 
-            override fun onFinish() {
-                if (progressDialog != null) {
-                    progressDialog!!.dismiss()
-                }
+            override fun onPageScrollStateChanged(state: Int) {
+
             }
         })
+
     }
+
+    class PagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
+
+        var tab = 1
+
+        fun setTabType(setTab: Int){
+            tab = setTab
+        }
+
+        override fun getItem(i: Int): Fragment {
+
+            var fragment: Fragment
+
+            val args = Bundle()
+            when (i) {
+                0 -> {
+                    fragment = MyPageFreeFragment()
+                    args.putInt("tab", tab)
+                    fragment.arguments = args
+
+                    return fragment
+                }
+                1 -> {
+                    fragment = MyPageInfoFragment()
+                    args.putInt("tab", tab)
+                    fragment.arguments = args
+
+                    return fragment
+                }
+                2 -> {
+                    fragment = MyPageStudyFragment()
+                    args.putInt("tab", tab)
+                    fragment.arguments = args
+                    return fragment
+                }
+                3 -> {
+                    fragment = MyPageClassFragment()
+                    args.putInt("tab", tab)
+                    fragment.arguments = args
+                    return fragment
+                }
+                4 -> {
+                    fragment = MyPageMeetingFragment()
+                    args.putInt("tab", tab)
+                    fragment.arguments = args
+                    return fragment
+                }
+                5 -> {
+                    fragment = MyPageCouponFragment()
+                    args.putInt("tab", tab)
+                    fragment.arguments = args
+                    return fragment
+                }
+                else -> {
+                    fragment = MyPageFreeFragment()
+                    args.putInt("tab", tab)
+                    fragment.arguments = args
+                    return fragment
+                }
+            }
+        }
+
+        override fun getCount(): Int {
+            return 6
+        }
+
+        override fun getPageTitle(position: Int): CharSequence? {
+            return ""
+        }
+
+        override fun getItemPosition(`object`: Any): Int {
+            return POSITION_NONE
+        }
+
+    }
+
     fun setMenuTabView() {
         free2TV.setTextColor(Color.parseColor("#A19F9B"))
         info2TV.setTextColor(Color.parseColor("#A19F9B"))
@@ -323,39 +316,30 @@ open class MyPagePostingStorageFragment : Fragment() {
         meeting2V.visibility = View.INVISIBLE
         coupon2V.visibility = View.INVISIBLE
 
-
         if(tabType == 1) {
-            free2TV.setTextColor(Color.parseColor("#01b4ec"))
+            free2TV.setTextColor(Color.parseColor("#063588"))
             free2V.visibility = View.VISIBLE
         } else if (tabType == 2) {
             info2V.visibility = View.VISIBLE
-            info2TV.setTextColor(Color.parseColor("#01b4ec"))
+            info2TV.setTextColor(Color.parseColor("#063588"))
         } else if (tabType == 3) {
             study2V.visibility = View.VISIBLE
-            study2TV.setTextColor(Color.parseColor("#01b4ec"))
+            study2TV.setTextColor(Color.parseColor("#063588"))
         } else if (tabType == 4) {
             class2V.visibility = View.VISIBLE
-            class2TV.setTextColor(Color.parseColor("#01b4ec"))
+            class2TV.setTextColor(Color.parseColor("#063588"))
         } else if (tabType == 5) {
             meeting2V.visibility = View.VISIBLE
-            meeting2TV.setTextColor(Color.parseColor("#01b4ec"))
+            meeting2TV.setTextColor(Color.parseColor("#063588"))
         } else if (tabType == 6) {
             coupon2V.visibility = View.VISIBLE
-            coupon2TV.setTextColor(Color.parseColor("#01b4ec"))
+            coupon2TV.setTextColor(Color.parseColor("#063588"))
         }
 
     }
 
     override fun onDestroy() {
         super.onDestroy()
-
-        try {
-            if (delPostingReceiver != null) {
-                context!!.unregisterReceiver(delPostingReceiver)
-            }
-
-        } catch (e: IllegalArgumentException) {
-        }
 
     }
 

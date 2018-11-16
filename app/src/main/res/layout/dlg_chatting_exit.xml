@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <posting.devstories.com.posting_android.base.RationalRelativeLayout
+        android:id="@+id/popup"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        app:ratio="960:443"
+        android:background="@drawable/background_round_ffffff">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
+
+            <TextView
+                android:id="@+id/contentsTV"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:textSize="15.07dp"
+                android:text="채팅을 종료 하시겠습니까?"
+                android:textColor="#6D6E71"
+                android:gravity="center"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="23dp"
+                android:layout_marginLeft="19dp"
+                android:layout_marginRight="19dp">
+
+                <TextView
+                    android:id="@+id/cancelTV"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="37.51dp"
+                    android:gravity="center"
+                    android:text="NO"
+                    android:textSize="15.33dp"
+                    android:textColor="#20408C"
+                    android:background="@mipmap/coupon_no"
+                    android:layout_marginRight="4dp"
+                    android:visibility="visible"/>
+
+                <TextView
+                    android:id="@+id/doneTV"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="37.51dp"
+                    android:gravity="center"
+                    android:text="YES"
+                    android:textSize="15.33dp"
+                    android:textColor="#20408C"
+                    android:background="@mipmap/coupon_y"
+                    android:visibility="visible"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </posting.devstories.com.posting_android.base.RationalRelativeLayout>
+
+</LinearLayout>

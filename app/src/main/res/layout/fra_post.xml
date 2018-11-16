@@ -19,14 +19,14 @@
             android:id="@+id/univIV"
             android:layout_width="97.5dp"
             android:layout_height="29dp"
-            android:scaleType="fitCenter"
+            android:scaleType="centerCrop"
             android:src="@mipmap/school"/>
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@mipmap/whitebar"
+            android:background="@drawable/background_radius_15_border_dededd"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingLeft="10dp"
@@ -96,7 +96,7 @@
                         android:layout_centerVertical="true"
                         android:text="자유"
                         android:textColor="#99a0a0"
-                        android:textSize="14dp" />
+                        android:textSize="16dp" />
 
                     <View
                         android:layout_width="match_parent"
@@ -104,7 +104,7 @@
                         android:layout_alignParentBottom="true"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
-                        android:background="#01b4ec"
+                        android:background="#063588"
                         android:id="@+id/freeV"
                         android:visibility="invisible"/>
 
@@ -124,7 +124,7 @@
                         android:layout_centerVertical="true"
                         android:text="정보"
                         android:textColor="#99a0a0"
-                        android:textSize="14dp" />
+                        android:textSize="16dp" />
 
                     <View
                         android:layout_width="match_parent"
@@ -133,7 +133,7 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:id="@+id/infoV"
-                        android:background="#01b4ec"
+                        android:background="#063588"
                         android:visibility="invisible" />
 
                 </RelativeLayout>
@@ -152,7 +152,7 @@
                         android:text="스터디"
                         android:id="@+id/studyTV"
                         android:textColor="#99a0a0"
-                        android:textSize="14dp" />
+                        android:textSize="16dp" />
 
                     <View
                         android:layout_width="match_parent"
@@ -161,7 +161,7 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:id="@+id/studyV"
-                        android:background="#01b4ec"
+                        android:background="#063588"
                         android:visibility="invisible" />
 
                 </RelativeLayout>
@@ -180,7 +180,7 @@
                         android:text="동아리"
                         android:id="@+id/classTV"
                         android:textColor="#99a0a0"
-                        android:textSize="14dp" />
+                        android:textSize="16dp" />
 
                     <View
                         android:layout_width="match_parent"
@@ -189,7 +189,7 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:id="@+id/classV"
-                        android:background="#01b4ec"
+                        android:background="#063588"
                         android:visibility="invisible" />
 
                 </RelativeLayout>
@@ -207,7 +207,7 @@
                         android:text="미팅"
                         android:id="@+id/meetingTV"
                         android:textColor="#99a0a0"
-                        android:textSize="14dp" />
+                        android:textSize="16dp" />
 
                     <View
                         android:layout_width="match_parent"
@@ -216,7 +216,7 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:id="@+id/meetingV"
-                        android:background="#01b4ec"
+                        android:background="#063588"
                         android:visibility="invisible" />
 
                 </RelativeLayout>
@@ -235,7 +235,7 @@
                         android:text="쿠폰"
                         android:id="@+id/couponTV"
                         android:textColor="#99a0a0"
-                        android:textSize="14dp" />
+                        android:textSize="16dp" />
 
                     <View
                         android:layout_width="match_parent"
@@ -244,7 +244,7 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:id="@+id/couponV"
-                        android:background="#01b4ec"
+                        android:background="#063588"
                         android:visibility="invisible" />
 
                 </RelativeLayout>

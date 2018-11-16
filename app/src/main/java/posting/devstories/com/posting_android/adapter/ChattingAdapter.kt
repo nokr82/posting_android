@@ -1,6 +1,7 @@
 package posting.devstories.com.posting_android.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
@@ -9,6 +10,7 @@ import de.hdodenhof.circleimageview.CircleImageView
 import org.json.JSONException
 import org.json.JSONObject
 import posting.devstories.com.posting_android.R
+import posting.devstories.com.posting_android.activities.FullScreenImageActivity
 import posting.devstories.com.posting_android.base.Config
 import posting.devstories.com.posting_android.base.PrefUtils
 import posting.devstories.com.posting_android.base.Utils
@@ -59,8 +61,18 @@ open class ChattingAdapter(context: Context, view: Int, data: ArrayList<JSONObje
                     item.myTV.visibility = View.VISIBLE
                     item.myTV.text = contents
                 } else {
+
+                    val image_uri = Config.url + chat_image
+
                     item.myImageIV.visibility = View.VISIBLE
-                    ImageLoader.getInstance().displayImage(Config.url + chat_image, item.myImageIV, Utils.UILoptionsProfile)
+                    ImageLoader.getInstance().displayImage(image_uri, item.myImageIV, Utils.UILoptionsAder)
+
+                    item.myImageIV.setOnClickListener {
+                        var intent = Intent(context, FullScreenImageActivity::class.java)
+                        intent.putExtra("image_uri", image_uri)
+                        context.startActivity(intent)
+                    }
+
                 }
 
             } else {
@@ -78,8 +90,19 @@ open class ChattingAdapter(context: Context, view: Int, data: ArrayList<JSONObje
                     item.otherTV.visibility = View.VISIBLE
                     item.otherTV.text = contents
                 } else {
+
+                    val image_uri = Config.url + chat_image
+
                     item.otherImageIV.visibility = View.VISIBLE
-                    ImageLoader.getInstance().displayImage(Config.url + chat_image, item.otherImageIV, Utils.UILoptionsProfile)
+                    ImageLoader.getInstance().displayImage(image_uri, item.otherImageIV, Utils.UILoptionsAder)
+
+                    item.otherImageIV.setOnClickListener {
+                        var intent = Intent(context, FullScreenImageActivity::class.java)
+                        intent.putExtra("image_uri", image_uri)
+                        context.startActivity(intent)
+
+                    }
+
                 }
 
             }

@@ -57,4 +57,8 @@ object PostingAction {
     fun savedel_posting(params: RequestParams, handler: JsonHttpResponseHandler) {
         HttpClient.post("/posting/savedel_posting.json", params, handler)
     }
+
+    fun today_posting(params: RequestParams, handler: JsonHttpResponseHandler) {
+        HttpClient.post("/posting/today_posting.json", params, handler)
+    }
 }

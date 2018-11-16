@@ -100,11 +100,13 @@
 
                     <posting.devstories.com.posting_android.base.RationalRelativeLayout
                         android:id="@+id/postingLL"
-                        android:layout_width="286.02dp"
-                        android:layout_height="292.67dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
                         android:layout_gravity="center"
                         android:background="@mipmap/wtite_bg"
-                        app:ratio="1:1">
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginRight="30dp"
+                        app:ratio="1195.5:1223.5">
 
                         <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
                             android:id="@+id/recycler_view"
@@ -124,9 +126,12 @@
 
                         <posting.devstories.com.posting_android.base.RationalRelativeLayout
                             android:id="@+id/coupon3RL"
-                            android:layout_width="247.23dp"
-                            android:layout_height="261.21dp"
-                            android:layout_centerInParent="true">
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_centerInParent="true"
+                            android:layout_marginLeft="18dp"
+                            android:layout_marginRight="19dp"
+                            app:ratio="1055.5:1089.5">
 
                             <LinearLayout
                                 android:id="@+id/coupon3LL"
@@ -155,15 +160,16 @@
                                     android:gravity="center_vertical">
 
                                     <TextView
-                                            android:id="@+id/coupon_titleTV"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:gravity="right"
-                                            android:text=""
-                                            android:layout_marginRight="10dp"
-                                            android:textColor="#FFFFFF"
-                                            android:textSize="28dp"
-                                            android:visibility="visible" />
+                                        android:id="@+id/coupon_titleTV"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="right"
+                                        android:text=""
+                                        android:layout_marginRight="10dp"
+                                        android:textColor="#FFFFFF"
+                                        android:textSize="28dp"
+                                        android:visibility="visible"
+                                        android:textStyle="bold"/>
 
                                     <LinearLayout
                                             android:layout_width="match_parent"
@@ -233,9 +239,10 @@
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:gravity="center_horizontal|bottom"
+                                    android:gravity="right|bottom"
                                     android:orientation="horizontal"
-                                    android:layout_marginBottom="5dp">
+                                    android:layout_marginBottom="5dp"
+                                    android:layout_marginRight="10dp">
 
                                     <TextView
                                         android:id="@+id/coupon_startdateTV"
@@ -259,7 +266,6 @@
 
                             </LinearLayout>
 
-
                             <ImageView
                                 android:id="@+id/imgIV"
                                 android:layout_width="match_parent"
@@ -274,38 +280,40 @@
                                 android:gravity="center"
                                 android:layout_centerInParent="true"
                                 android:text=""
+                                android:textSize="42dp"
                                 android:visibility="gone"
                                 android:maxLines="3"
-                                android:ellipsize="end"/>
+                                android:ellipsize="end"
+                                android:lineSpacingExtra="23dp"/>
+
+                            <posting.devstories.com.posting_android.base.RationalRelativeLayout
+                                    android:layout_width="23dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentBottom="true"
+                                    android:background="@mipmap/nemocount"
+                                    android:gravity="center"
+                                    app:ratio="1:1">
+
+                                <LinearLayout
+                                        android:id="@+id/countLL"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal">
+
+                                    <TextView
+                                            android:id="@+id/leftCntTV"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="0"
+                                            android:textColor="#FFFFFF"
+                                            android:textSize="16dp" />
+
+                                </LinearLayout>
+
+                            </posting.devstories.com.posting_android.base.RationalRelativeLayout>
 
                         </posting.devstories.com.posting_android.base.RationalRelativeLayout>
 
-                        <ImageView
-                            android:id="@+id/img2IV"
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:scaleType="centerCrop" />
-
-                        <LinearLayout
-                            android:id="@+id/countLL"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentBottom="true"
-                            android:layout_margin="10dp"
-                            android:background="@mipmap/nemocount"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:id="@+id/leftCntTV"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="4.5dp"
-                                android:text="0"
-                                android:textColor="#FFFFFF"
-                                android:textSize="17.67dp" />
-
-                        </LinearLayout>
                     </posting.devstories.com.posting_android.base.RationalRelativeLayout>
 
                 </LinearLayout>
@@ -328,6 +336,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="9dp"
+                        android:textStyle="bold"
                         android:text=""
                         android:textSize="13.5dp" />
 
@@ -343,7 +352,7 @@
                             android:layout_gravity="center_vertical"
                             android:layout_marginLeft="20dp"
                             android:text=""
-                            android:textSize="9.5dp"
+                            android:textSize="13.5dp"
                             android:visibility="visible" />
 
                         <TextView
@@ -352,7 +361,7 @@
                             android:layout_height="wrap_content"
                             android:text=" | 신고"
                             android:textColor="#BDBBB8"
-                            android:textSize="9.5dp" />
+                            android:textSize="13.5dp" />
 
 
                     </LinearLayout>
@@ -415,7 +424,7 @@
                         android:layout_marginTop="14dp"
                         android:layout_marginRight="25.5dp"
                         android:text=""
-                        android:textSize="10dp" />
+                        android:textSize="14dp" />
 
                     <TextView
                         android:id="@+id/usesTV"
@@ -424,7 +433,7 @@
                         android:layout_marginLeft="25.5dp"
                         android:layout_marginRight="25.5dp"
                         android:text="사용기간:"
-                        android:textSize="10dp"
+                        android:textSize="14dp"
                         android:visibility="gone" />
 
                     <TextView
@@ -435,7 +444,7 @@
                         android:layout_marginRight="25.5dp"
                         android:text="#피자헛"
                         android:textColor="#063588"
-                        android:textSize="10dp"
+                        android:textSize="14dp"
                         android:visibility="gone" />
 
                     <View
@@ -478,7 +487,7 @@
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_weight="1"
-                android:background="@mipmap/chat_bg">
+                android:background="@drawable/background_radius_15_border_dededd">
 
                 <EditText
                     android:id="@+id/commentsET"
@@ -489,33 +498,36 @@
                     android:layout_weight="1"
                     android:background="@null"
                     android:hint="댓글을 입력하세요..."
-                    android:imeOptions="actionDone"
-                    android:singleLine="true"
-                    android:textSize="10.5dp" />
+                    android:textSize="10.5dp"/>
 
 
-                <ImageView
+                <TextView
+                    android:id="@+id/submitTV"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="10dp"
-                    android:src="@mipmap/smile" />
+                    android:gravity="center"
+                    android:text="확인"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="4dp"
+                    android:textColor="#063588"/>
 
             </LinearLayout>
 
 
             <View
                 android:layout_width="48dp"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"/>
 
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/saveLL"
             android:layout_width="match_parent"
-            android:layout_height="43dp"
-            android:layout_marginLeft="30.8dp"
-            android:layout_marginRight="30.8dp"
+            android:layout_height="35dp"
+            android:layout_marginLeft="57dp"
+            android:layout_marginRight="57dp"
             android:layout_marginBottom="16dp"
             android:background="#FAC841"
             android:gravity="center"
@@ -533,8 +545,7 @@
                 android:layout_height="wrap_content"
                 android:text="My Storage로 떼어가기"
                 android:textColor="#063588"
-                android:textSize="17dp" />
-
+                android:textSize="15dp" />
 
         </LinearLayout>
     </LinearLayout>

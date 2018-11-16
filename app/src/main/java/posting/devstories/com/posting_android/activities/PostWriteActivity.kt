@@ -1,30 +1,41 @@
 package posting.devstories.com.posting_android.activities
 
+import android.app.Activity
 import android.app.ProgressDialog
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.pm.PackageManager
 import android.database.Cursor
+import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
+import android.support.v4.content.FileProvider
+import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import posting.devstories.com.posting_android.R
-import posting.devstories.com.posting_android.adapter.ImageAdapter
-import java.util.*
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
-import android.graphics.Bitmap
-import android.view.View
+import com.loopj.android.http.JsonHttpResponseHandler
+import com.loopj.android.http.RequestParams
+import com.nostra13.universalimageloader.core.ImageLoader
+import com.theartofdev.edmodo.cropper.CropImage
+import com.theartofdev.edmodo.cropper.CropImageView
+import cz.msebera.android.httpclient.Header
 import kotlinx.android.synthetic.main.activity_postwrite.*
-import android.net.Uri
-import android.os.Environment
-import android.support.v4.content.FileProvider
+import org.json.JSONArray
+import org.json.JSONException
+import org.json.JSONObject
+import posting.devstories.com.posting_android.Actions.PostingAction
+import posting.devstories.com.posting_android.R
+import posting.devstories.com.posting_android.adapter.ImageAdapter
 import posting.devstories.com.posting_android.base.*
 import java.io.File
 import java.io.IOException
-import com.nostra13.universalimageloader.core.ImageLoader
+import java.util.*
+import kotlin.collections.ArrayList
 
 class PostWriteActivity : RootActivity() {
 
@@ -36,14 +47,15 @@ class PostWriteActivity : RootActivity() {
     private val REQUEST_CAMERA = 0
     private val CROP_FROM_CAMERA = 100
     var imageUri: Uri? = null
-    var absolutePath: String? = null
+    var imageUriOutput: Uri? = null
+    // var absolutePath: String? = null
     var mee = arrayOf("자유", "정보", "스터디", "동아리", "미팅")
-    var most = arrayOf("수량", "1", "3", "5", "10", "20", "∞")
+    var most = arrayOf("수량", "1", "3", "5", "10", "20", "무제한")
     var day = arrayOf("기간", "1일", "5일", "7일", "10일", "30일", "60일")
     var getmee: String? = null
     var getmost = ""
     var getday = ""
-    var postingType = ""
+    var postingType = "G"
 
     var current_school = -1
     var school_id = -1
@@ -54,14 +66,20 @@ class PostWriteActivity : RootActivity() {
     var contents: String? = null
     var image_uri: String? = null
     var image: String? = null
-    var capture: Bitmap? = null
+    // var capture: Bitmap? = null
+    var tabType = -1
+    var type = -1
+    var count = -1
 
     lateinit var adapter: ArrayAdapter<String>
+    lateinit var typeAdapter: ArrayAdapter<String>
+    lateinit var countAdapter: ArrayAdapter<String>
+    var setMee: ArrayList<String> = ArrayList<String>()
 
     //mypostwrite에서 브로드캐스트로 인텐트를 받는다
     internal var setViewReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent?) {
-            if(intent != null) {
+            if (intent != null) {
                 finish()
             }
         }
@@ -85,6 +103,19 @@ class PostWriteActivity : RootActivity() {
         posting_id = intent.getStringExtra("posting_id")
         contents = intent.getStringExtra("contents")
         image_uri = intent.getStringExtra("image_uri")
+        tabType = intent.getIntExtra("tabType", -1)
+        type = intent.getIntExtra("type", 1)
+        count = intent.getIntExtra("count", 1)
+
+        typeAdapter = ArrayAdapter<String>(context, R.layout.spinner_item, mee)
+        meetingSP2.adapter = typeAdapter
+        typeAdapter.notifyDataSetChanged()
+
+        adapter = ArrayAdapter<String>(this, R.layout.spinner_item, day)
+        daySP.adapter = adapter
+
+        countAdapter = ArrayAdapter<String>(this, R.layout.spinner_item, most)
+        mostSP.adapter = countAdapter
 
         if (current_school != school_id) {
             bgRL.background = getDrawable(R.mipmap.write_bg2)
@@ -92,19 +123,324 @@ class PostWriteActivity : RootActivity() {
             bgRL.background = getDrawable(R.mipmap.wtite_bg)
         }
 
-        if (!posting_id.equals("")) {
+        if (posting_id != null && !posting_id.equals("") ) {
             postingType = "M"
             image = Config.url + image_uri
             ImageLoader.getInstance().displayImage(image, imgIV2, Utils.UILoptionsPosting)
             imgIV2.visibility = View.VISIBLE
+
+            var position = 1
+
+            println("type : " + type)
+
+            if(type == 1) {
+                position = typeAdapter.getPosition("자유")
+            } else if (type == 2) {
+                position = typeAdapter.getPosition("정보")
+            } else if (type == 3) {
+                position = typeAdapter.getPosition("스터디")
+            } else if (type == 4) {
+                position = typeAdapter.getPosition("동아리")
+            } else if (type == 5) {
+                position = typeAdapter.getPosition("미팅")
+            }
+
+            println("position : $position")
+
+            meetingSP2.setSelection(position)
+
+            position = 1
+
+            if(count == 1) {
+                position = countAdapter.getPosition("1")
+            } else if (count == 3) {
+                position = countAdapter.getPosition("3")
+            } else if (count == 5) {
+                position = countAdapter.getPosition("5")
+            } else if (count == 10) {
+                position = countAdapter.getPosition("10")
+            } else if (count == 20) {
+                position = countAdapter.getPosition("20")
+            } else if (count < 1) {
+                position = countAdapter.getPosition("무제한")
+            } else {
+                position = countAdapter.getPosition("수량")
+            }
+
+            mostSP.setSelection(position)
+
+        } else {
+            if(tabType < 6) {
+                meetingSP2.setSelection(tabType - 1)
+            }
         }
 
         if (member_type.equals("3")) {
-            meeting2LL.visibility = View.GONE
+            meeting2RL.visibility = View.GONE
         } else {
-            dayLL.visibility = View.GONE
+            dayRL.visibility = View.GONE
         }
 
+        finishLL.setOnClickListener {
+            finish()
+        }
+
+        textRL.setOnClickListener {
+
+            if(member_type == "3") {
+                getday = daySP.selectedItem.toString()
+            } else {
+                getmee = meetingSP2.selectedItem.toString()
+            }
+
+            getmost = mostSP.selectedItem.toString()
+
+            if (member_type.equals("3")) {
+                var intent = Intent(context, CouponTextActivity::class.java)
+                startActivity(intent)
+            } else {
+//                if (getmost.equals("수량")) {
+//                    Toast.makeText(context, "수량을 선택해주세요", Toast.LENGTH_SHORT).show()
+//                } else if (getday.equals("기간")) {
+//                    Toast.makeText(context, "기간을 선택해주세요", Toast.LENGTH_SHORT).show()
+//                } else {
+                    var intent = Intent(context, MyPostingWriteActivity::class.java)
+                    intent.putExtra("getmee", getmee)
+                    intent.putExtra("getmost", getmost)
+                    intent.putExtra("posting_id", posting_id)
+                    intent.putExtra("contents", contents)
+//                    intent.putExtra("getday", getday)
+                    intent.putExtra("postingType", "T")
+                    startActivity(intent)
+//                }
+            }
+        }
+
+        nextLL.setOnClickListener {
+
+            if(member_type == "3") {
+                getday = daySP.selectedItem.toString()
+            } else {
+                getmee = meetingSP2.selectedItem.toString()
+            }
+
+            getmost = mostSP.selectedItem.toString()
+
+            if (getmost.equals("수량")) {
+                Toast.makeText(context, "수량을 선택해주세요", Toast.LENGTH_SHORT).show()
+//            } else if (getday.equals("기간")) {
+//                Toast.makeText(context, "기간을 선택해주세요", Toast.LENGTH_SHORT).show()
+            } else {
+
+                if(("G".equals(postingType) || "P".equals(postingType)) && imageUriOutput == null) {
+                    Toast.makeText(context, "이미지를 선택해주세요", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+
+
+                var intent = Intent(context, MyPostingWriteActivity::class.java)
+
+                if (imageUriOutput != null) {
+                    intent.putExtra("imageUri",  imageUriOutput.toString())
+                } else {
+                    // intent.putExtra("imageUri",  imageUri.toString())
+                }
+
+                intent.putExtra("current_school", current_school)
+                intent.putExtra("school_id", school_id)
+                // intent.putExtra("imgid", imgid)
+                intent.putExtra("postingType", postingType)
+                // intent.putExtra("absolutePath", absolutePath)
+                intent.putExtra("contents", contents)
+                intent.putExtra("posting_id", posting_id)
+                intent.putExtra("image_uri", image_uri)
+                intent.putExtra("getmee", getmee)
+                intent.putExtra("getmost", getmost)
+                intent.putExtra("getday", getday)
+
+                startActivity(intent)
+            }
+
+        }
+        cameraRL.setOnClickListener {
+            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            if (intent.resolveActivity(packageManager) != null) {
+
+                val storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+
+                try {
+                    val photo = File.createTempFile(
+                        System.currentTimeMillis().toString(), /* prefix */
+                        ".jpg", /* suffix */
+                        storageDir      /* directory */
+                    )
+
+                    // absolutePath = photo.absolutePath
+                    //imageUri = Uri.fromFile(photo);
+                    imageUri = FileProvider.getUriForFile(context, packageName + ".provider", photo)
+
+                    val resInfoList = context.getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+                    for (resolveInfo in resInfoList) {
+                        val packageName = resolveInfo.activityInfo.packageName;
+
+                        println("packageName : $packageName")
+
+                        context.grantUriPermission(packageName, imageUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                    }
+
+                    intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
+                    startActivityForResult(intent, REQUEST_CAMERA)
+
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                }
+
+            }
+
+
+        }
+
+        val permissionlistener = object : PermissionListener {
+            override fun onPermissionGranted() {
+                loadPhoto()
+            }
+
+            override fun onPermissionDenied(deniedPermissions: List<String>) {
+            }
+
+        }
+
+        TedPermission.with(this)
+            .setPermissionListener(permissionlistener)
+            .setDeniedMessage("[설정] > [권한] 에서 권한을 허용할 수 있습니다.")
+            .setPermissions(
+                android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                android.Manifest.permission.CAMERA,
+                android.Manifest.permission.READ_EXTERNAL_STORAGE
+            )
+            .check()
+
+        loadPhoto()
+
+        if(tabType > 0) {
+            meetingSP2.setSelection(tabType - 1)
+        }
+
+//        checkCategory()
+
+    }
+
+    fun checkCategory() {
+        val params = RequestParams()
+        params.put("member_id", PrefUtils.getIntPreference(context, "member_id"));
+        params.put("member_type", member_type);
+
+        PostingAction.today_posting(params, object : JsonHttpResponseHandler() {
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+
+                try {
+
+                    val result = response!!.getString("result")
+
+                    if ("ok" == result) {
+
+                        if(member_type == "2") {
+
+                            var study = Utils.getString(response, "study")
+                            var classStr = Utils.getString(response, "class")
+                            var meeting = Utils.getString(response, "meeting")
+
+                            setMee = ArrayList()
+                            setMee.add("자유")
+                            setMee.add("정보")
+
+                            if(study == "ok") {
+                                setMee.add("스터디")
+                            }
+
+                            if(classStr == "ok") {
+                                setMee.add("동아리")
+                            }
+
+                            if(meeting == "ok") {
+                                setMee.add("미팅")
+                            }
+
+                            typeAdapter = ArrayAdapter<String>(context, R.layout.spinner_item, setMee)
+                            meetingSP2.adapter = typeAdapter
+                            typeAdapter.notifyDataSetChanged()
+
+                            if(tabType < 3) {
+                                meetingSP2.setSelection(tabType - 1)
+                            } else if(tabType == 3 && study == "ok") {
+                                meetingSP2.setSelection(2)
+                            } else if(tabType == 4) {
+                                if(study == "ok" && classStr == "ok") {
+                                    meetingSP2.setSelection(3)
+                                } else if(study != "ok" && classStr == "ok") {
+                                    meetingSP2.setSelection(2)
+                                }
+                            } else if(tabType == 5) {
+                                if(study == "ok" && classStr == "ok" && meeting == "ok") {
+                                    meetingSP2.setSelection(4)
+                                } else if(study != "ok" && classStr == "ok" && meeting == "ok") {
+                                    meetingSP2.setSelection(3)
+                                } else if(study != "ok" && classStr != "ok" && meeting == "ok") {
+                                    meetingSP2.setSelection(2)
+                                }
+                            }
+                        }
+
+                    }
+
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+
+            }
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONArray?) {
+                super.onSuccess(statusCode, headers, response)
+            }
+
+            private fun error() {
+                Utils.alert(context, "조회중 장애가 발생하였습니다.")
+            }
+
+            override fun onFailure(
+                statusCode: Int,
+                headers: Array<Header>?,
+                throwable: Throwable,
+                errorResponse: JSONArray?
+            ) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+                throwable.printStackTrace()
+                error()
+            }
+
+            override fun onStart() {
+                // show dialog
+                if (progressDialog != null) {
+
+                    progressDialog!!.show()
+                }
+            }
+
+            override fun onFinish() {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+            }
+        })
+    }
+
+    fun loadPhoto() {
         var cursor: Cursor? = null
         val resolver = contentResolver
 
@@ -165,102 +501,6 @@ class PostWriteActivity : RootActivity() {
 
         }
 
-        adapter = ArrayAdapter<String>(this, R.layout.spinner_item, mee)
-        meetingSP2.adapter = adapter
-
-        adapter = ArrayAdapter<String>(this, R.layout.spinner_item, day)
-        daySP.adapter = adapter
-
-        adapter = ArrayAdapter<String>(this, R.layout.spinner_item, most)
-        mostSP.adapter = adapter
-
-        finishLL.setOnClickListener {
-            finish()
-        }
-
-        textRL.setOnClickListener {
-
-            getmee = meetingSP2.selectedItem.toString()
-            getmost = mostSP.selectedItem.toString()
-            getday = daySP.selectedItem.toString()
-
-            if (member_type.equals("3")) {
-                var intent = Intent(context, CouponTextActivity::class.java)
-                startActivity(intent)
-            } else {
-                if (getmost.equals("수량")) {
-                    Toast.makeText(context, "수량을 선택해주세요", Toast.LENGTH_SHORT).show()
-//                } else if (getday.equals("기간")) {
-//                    Toast.makeText(context, "기간을 선택해주세요", Toast.LENGTH_SHORT).show()
-                } else {
-                    var intent = Intent(context, MyPostingWriteActivity::class.java)
-                    intent.putExtra("getmee", getmee)
-                    intent.putExtra("getmost", getmost)
-//                    intent.putExtra("getday", getday)
-                    intent.putExtra("postingType", "T")
-                    startActivity(intent)
-                }
-            }
-        }
-
-        nextLL.setOnClickListener {
-
-            getmee = meetingSP2.selectedItem.toString()
-            getmost = mostSP.selectedItem.toString()
-            getday = daySP.selectedItem.toString()
-
-
-            if (getmost.equals("수량")) {
-                Toast.makeText(context, "수량을 선택해주세요", Toast.LENGTH_SHORT).show()
-//            } else if (getday.equals("기간")) {
-//                Toast.makeText(context, "기간을 선택해주세요", Toast.LENGTH_SHORT).show()
-            } else {
-                var intent = Intent(context, MyPostingWriteActivity::class.java)
-                intent.putExtra("image", image)
-                intent.putExtra("current_school", current_school)
-                intent.putExtra("school_id", school_id)
-                intent.putExtra("imgid", imgid)
-                intent.putExtra("postingType", postingType)
-                intent.putExtra("absolutePath", absolutePath)
-                intent.putExtra("contents", contents)
-                intent.putExtra("posting_id", posting_id)
-                intent.putExtra("image_uri", image_uri)
-                intent.putExtra("getmee", getmee)
-                intent.putExtra("getmost", getmost)
-                intent.putExtra("getday", getday)
-
-                startActivity(intent)
-            }
-
-        }
-        cameraRL.setOnClickListener {
-            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            if (intent.resolveActivity(packageManager) != null) {
-
-                val storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
-
-                try {
-                    val photo = File.createTempFile(
-                        System.currentTimeMillis().toString(), /* prefix */
-                        ".jpg", /* suffix */
-                        storageDir      /* directory */
-                    )
-
-                    absolutePath = photo.absolutePath
-                    //imageUri = Uri.fromFile(photo);
-                    imageUri = FileProvider.getUriForFile(context, packageName + ".provider", photo)
-                    intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
-                    startActivityForResult(intent, REQUEST_CAMERA)
-
-                } catch (e: IOException) {
-                    e.printStackTrace()
-                }
-
-            }
-
-
-        }
-
 
         val imageLoader = ImageLoader(resolver)
 
@@ -276,32 +516,30 @@ class PostWriteActivity : RootActivity() {
             //이미지가져오기
             imgid = photo.photoPath!!
 
-            imgIV2.setImageBitmap(Utils.getImage(context.contentResolver, imgid, 200))
-            capture = null
-            imageUri = null
+            // imageUri = Uri.fromFile(File(imgid))
+
+            if (intent.resolveActivity(packageManager) != null) {
+                try {
+                    imageUri = FileProvider.getUriForFile(context, packageName + ".provider", File(imgid))
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                }
+            }
+
+            println("gfds")
+
+            cropImage()
+
+             // val imgWidth = Utils.getScreenWidth(context) / 4
+             // imgIV2.setImageBitmap(Utils.getImage(context.contentResolver, imgid, imgWidth))
+             // imgIV2.setImageBitmap(Utils.getImage(context.contentResolver, imgid))
+            // capture = null
+            // imageUri = null
 
         }
 
         imageLoader.setListener(adapter)
 
-        val permissionlistener = object : PermissionListener {
-            override fun onPermissionGranted() {
-            }
-
-            override fun onPermissionDenied(deniedPermissions: List<String>) {
-            }
-
-        }
-
-        TedPermission.with(this)
-            .setPermissionListener(permissionlistener)
-            .setDeniedMessage("[설정] > [권한] 에서 권한을 허용할 수 있습니다.")
-            .setPermissions(
-                android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                android.Manifest.permission.CAMERA,
-                android.Manifest.permission.READ_EXTERNAL_STORAGE
-            )
-            .check();
 
     }
 
@@ -311,9 +549,13 @@ class PostWriteActivity : RootActivity() {
 
         when (requestCode) {
             REQUEST_CAMERA -> {
+                if(resultCode == Activity.RESULT_CANCELED) {
+                    return
+                }
+
                 imgid = null
 
-                val realPathFromURI = imageUri!!.getPath()
+                val realPathFromURI = imageUri!!.path
                 context.sendBroadcast(
                     Intent(
                         Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
@@ -324,17 +566,29 @@ class PostWriteActivity : RootActivity() {
 
                     cropImage()
 
+                    postingType = "P"
+
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
 
             }
             CROP_FROM_CAMERA -> {
-//                    capture = Utils.getImage(context.contentResolver, absolutePath)
-                    val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, imageUri)
-                    capture = bitmap
-                    postingType = "P"
+
+                println("imageUriOutput : " + imageUriOutput)
+
+                val capture = MediaStore.Images.Media.getBitmap(this.contentResolver, imageUriOutput)
+                imgIV2.setImageBitmap(capture)
+
+            }
+            CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE -> {
+                val result = CropImage.getActivityResult(data)
+                if(result != null) {
+                    imageUriOutput = result.uri
+
+                    val capture = MediaStore.Images.Media.getBitmap(this.contentResolver, imageUriOutput)
                     imgIV2.setImageBitmap(capture)
+                }
 
             }
             else -> {
@@ -345,7 +599,18 @@ class PostWriteActivity : RootActivity() {
 
     }
 
-    fun cropImage() {
+    private fun cropImage() {
+
+        val intent = CropImage.activity(imageUri)
+            .setGuidelines(CropImageView.Guidelines.ON)
+            .setAspectRatio(1, 1)
+            .getIntent(this);
+
+        startActivityForResult(intent, CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE)
+    }
+
+    private fun cropImageOld() {
+
         context.grantUriPermission(
             "com.android.camera", imageUri,
             Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION
@@ -354,24 +619,49 @@ class PostWriteActivity : RootActivity() {
         val intent = Intent("com.android.camera.action.CROP")
         intent.setDataAndType(imageUri, "image/*")
 
-        //you must setup two line below
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
 
         intent.putExtra("crop", "true")
         intent.putExtra("aspectX", 1)
         intent.putExtra("aspectY", 1)
-        intent.putExtra("outputX", 200)
-        intent.putExtra("outputY", 200)
+        intent.putExtra("outputX", 500)
+        intent.putExtra("outputY", 500)
         intent.putExtra("return-data", true)
 
-        grantUriPermission(
-            packageName, imageUri,
-            Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION
-        )
-        //you must setup this
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
-        startActivityForResult(intent, CROP_FROM_CAMERA)
+        if (intent.resolveActivity(packageManager) != null) {
+
+            val storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+
+            try {
+                val photo = File.createTempFile(
+                    System.currentTimeMillis().toString(), /* prefix */
+                    ".jpg", /* suffix */
+                    storageDir      /* directory */
+                )
+
+                // absolutePath = photo.absolutePath
+                //imageUri = Uri.fromFile(photo);
+                imageUriOutput = FileProvider.getUriForFile(context, packageName + ".provider", photo)
+
+                val resInfoList = context.getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+                for (resolveInfo in resInfoList) {
+                    val packageName = resolveInfo.activityInfo.packageName;
+                    context.grantUriPermission(packageName, imageUriOutput, Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                }
+
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUriOutput)
+                startActivityForResult(intent, CROP_FROM_CAMERA)
+
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+
+        }
+
+        // intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
+        // startActivityForResult(intent, CROP_FROM_CAMERA)
+
 
     }
 
@@ -381,6 +671,14 @@ class PostWriteActivity : RootActivity() {
             progressDialog!!.dismiss()
         }
 
+
+        try {
+            if (setViewReceiver != null) {
+                context.unregisterReceiver(setViewReceiver)
+            }
+
+        } catch (e: IllegalArgumentException) {
+        }
     }
 
 }

@@ -1,14 +1,11 @@
 package posting.devstories.com.posting_android.activities
 
 import android.Manifest
-import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -16,10 +13,8 @@ import android.provider.MediaStore
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.view.View
-import android.view.inputmethod.EditorInfo
 import android.widget.AbsListView
 import android.widget.BaseAdapter
-import android.widget.TextView
 import android.widget.Toast
 import com.loopj.android.http.JsonHttpResponseHandler
 import com.loopj.android.http.RequestParams
@@ -33,11 +28,7 @@ import posting.devstories.com.posting_android.Actions.ChattingAction
 import posting.devstories.com.posting_android.Actions.ReviewAction
 import posting.devstories.com.posting_android.R
 import posting.devstories.com.posting_android.adapter.ChattingAdapter
-import posting.devstories.com.posting_android.base.BackPressCloseHandler
-import posting.devstories.com.posting_android.base.PrefUtils
-import posting.devstories.com.posting_android.base.RootActivity
-import posting.devstories.com.posting_android.base.Utils
-import posting.devstories.com.posting_android.base.Config
+import posting.devstories.com.posting_android.base.*
 import java.io.ByteArrayInputStream
 import java.util.*
 
@@ -60,6 +51,8 @@ class ChattingActivity : RootActivity(), AbsListView.OnScrollListener {
     var first_id = -1
     var last_id = -1
 
+    val CHATTING_EXIT = 301
+
     var adapterData: ArrayList<JSONObject> = ArrayList<JSONObject>()
     private lateinit var adapter: ChattingAdapter
 
@@ -72,6 +65,7 @@ class ChattingActivity : RootActivity(), AbsListView.OnScrollListener {
     private var timer: Timer? = null
 
     var member_id = -1
+    var posting_id = -1
 
     private val FROM_ALBUM = 101
     private val REQUEST_PERMISSION_READ_EXTERNAL_STORAGE = 2
@@ -87,6 +81,7 @@ class ChattingActivity : RootActivity(), AbsListView.OnScrollListener {
         member_id = PrefUtils.getIntPreference(context, "member_id")
 
         attend_member_id = intent.getIntExtra("attend_member_id", -1)
+        posting_id = intent.getIntExtra("posting_id", -1)
 
         backLL.setOnClickListener {
             finish()
@@ -96,27 +91,43 @@ class ChattingActivity : RootActivity(), AbsListView.OnScrollListener {
         chatLV.adapter = adapter
         chatLV.setOnScrollListener(this)
 
-        messageET.setOnEditorActionListener { v, actionId, event ->
+//        messageET.setOnEditorActionListener { v, actionId, event ->
+//
+//            when(actionId) {
+//                EditorInfo.IME_ACTION_SEND -> {
+//
+//                    val message = Utils.getString(messageET)
+//
+//                    if(message == "" || message.isEmpty()) {
+//                        return@setOnEditorActionListener true
+//                    }
+//
+//                    if(emptyLL.visibility == View.VISIBLE) {
+//                        chattingAdd("t", message)
+//                    } else {
+//                        sendMessage("t", message)
+//                    }
+//
+//                }
+//            }
+//
+//            return@setOnEditorActionListener true
+//        }
 
-            when(actionId) {
-                EditorInfo.IME_ACTION_SEND -> {
+        submitTV.setOnClickListener {
 
-                    val message = Utils.getString(messageET)
+            val message = Utils.getString(messageET)
 
-                    if(message == "" || message.isEmpty()) {
-                        return@setOnEditorActionListener true
-                    }
-
-                    if(emptyLL.visibility == View.VISIBLE) {
-                        chattingAdd("t", message)
-                    } else {
-                        sendMessage("t", message)
-                    }
-
-                }
+            if(message == "" || message.isEmpty()) {
+                return@setOnClickListener
             }
 
-            return@setOnEditorActionListener true
+            if(emptyLL.visibility == View.VISIBLE) {
+                chattingAdd("t", message)
+            } else {
+                sendMessage("t", message)
+            }
+
         }
 
         reportLL.setOnClickListener {
@@ -131,6 +142,18 @@ class ChattingActivity : RootActivity(), AbsListView.OnScrollListener {
                 imageFromGallery()
             }
 
+        }
+
+        exitLL.setOnClickListener {
+
+            if(chatting_group_id < 1 || emptyLL.visibility == View.VISIBLE) {
+                finish()
+                return@setOnClickListener
+            }
+
+            var intent = Intent(context, DlgYesOrNoCommonActivity::class.java)
+            intent.putExtra("contents", "채팅을 종료 하시겠습니까?")
+            startActivityForResult(intent, CHATTING_EXIT)
         }
 
         chattingCheck()
@@ -176,8 +199,7 @@ class ChattingActivity : RootActivity(), AbsListView.OnScrollListener {
 
                     val filePathColumn = arrayOf(MediaStore.MediaColumns.DATA)
 
-                    val cursor =
-                        context!!.contentResolver.query(selectedImageUri!!, filePathColumn, null, null, null)
+                    val cursor = context!!.contentResolver.query(selectedImageUri!!, filePathColumn, null, null, null)
                     if (cursor!!.moveToFirst()) {
                         val columnIndex = cursor.getColumnIndex(filePathColumn[0])
                         val picturePath = cursor.getString(columnIndex)
@@ -190,40 +212,119 @@ class ChattingActivity : RootActivity(), AbsListView.OnScrollListener {
 
                     }
                 }
+
+                CHATTING_EXIT -> {
+                    exitChatting()
+                }
+
             }
         }
     }
 
+
+
     fun policedlgView(){
-        var mPopupDlg: DialogInterface? = null
 
-        val builder = AlertDialog.Builder(this)
-        val dialogView = layoutInflater.inflate(R.layout.myposting_dlg, null)
-        val titleTV = dialogView.findViewById<TextView>(R.id.titleTV)
-        val delTV = dialogView.findViewById<TextView>(R.id.delTV)
-        val modiTV = dialogView.findViewById<TextView>(R.id.modiTV)
-        val recyTV = dialogView.findViewById<TextView>(R.id.recyTV)
-        titleTV.text = "이 사용자를 신고하는 이유를 선택하세요"
-        delTV.text = "불건전합니다"
-        modiTV.text = "부적절합니다"
-        recyTV.text = "스팸입니다"
+        var intent = Intent(context, DlgReportActivity::class.java)
+        intent.putExtra("dlgtype", "police_member")
+        intent.putExtra("report_member_id", attend_member_id.toString())
+        startActivity(intent)
 
-        mPopupDlg =  builder.setView(dialogView).show()
+//        var mPopupDlg: DialogInterface? = null
+//
+//        val builder = AlertDialog.Builder(this)
+//        val dialogView = layoutInflater.inflate(R.layout.myposting_dlg, null)
+//        val titleTV = dialogView.findViewById<TextView>(R.id.titleTV)
+//        val delTV = dialogView.findViewById<TextView>(R.id.delTV)
+//        val modiTV = dialogView.findViewById<TextView>(R.id.modiTV)
+//        val recyTV = dialogView.findViewById<TextView>(R.id.recyTV)
+//        titleTV.text = "이 사용자를 신고하는 이유를 선택하세요"
+//        delTV.text = "불건전합니다"
+//        modiTV.text = "부적절합니다"
+//        recyTV.text = "스팸입니다"
+//
+//        mPopupDlg =  builder.setView(dialogView).show()
+//
+//        delTV.setOnClickListener {
+//            report("1")
+//            mPopupDlg.dismiss()
+//
+//        }
+//        modiTV.setOnClickListener {
+//            report("2")
+//            mPopupDlg.dismiss()
+//        }
+//        recyTV.setOnClickListener {
+//            report("3")
+//            mPopupDlg.dismiss()
+//        }
 
-        delTV.setOnClickListener {
-            report("1")
-            mPopupDlg.dismiss()
+    }
 
-        }
-        modiTV.setOnClickListener {
-            report("2")
-            mPopupDlg.dismiss()
-        }
-        recyTV.setOnClickListener {
-            report("3")
-            mPopupDlg.dismiss()
-        }
+    fun exitChatting(){
+        val params = RequestParams()
+        params.put("member_id", member_id)
+        params.put("chatting_group_id", chatting_group_id)
+        params.put("posting_id", posting_id)
 
+        ChattingAction.exitChatting(params, object : JsonHttpResponseHandler() {
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+
+                try {
+                    val result = response!!.getString("result")
+
+                    if ("ok" == result) {
+
+                        var intent = Intent();
+                        intent.putExtra("type", "minus")
+                        intent.putExtra("block_member_id", Utils.getInt(response, "block_member_id"))
+                        intent.action = "MATCH_UPDATE"
+                        sendBroadcast(intent)
+
+                        finish()
+
+                    }
+
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+
+            }
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONArray?) {
+                super.onSuccess(statusCode, headers, response)
+            }
+
+            private fun error() {
+                Utils.alert(context, "조회중 장애가 발생하였습니다.")
+            }
+
+            override fun onFailure(statusCode: Int, headers: Array<Header>?, throwable: Throwable, errorResponse: JSONArray?) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+                throwable.printStackTrace()
+                error()
+            }
+
+            override fun onStart() {
+                // show dialog
+                if (progressDialog != null) {
+
+                    progressDialog!!.show()
+                }
+            }
+
+            override fun onFinish() {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+            }
+        })
     }
 
     fun report(type:String){
@@ -292,6 +393,7 @@ class ChattingActivity : RootActivity(), AbsListView.OnScrollListener {
         val params = RequestParams()
         params.put("founder_member_id", PrefUtils.getIntPreference(context, "member_id"))
         params.put("attend_member_id", attend_member_id)
+        params.put("posting_id", posting_id)
 
         ChattingAction.chattingCheck(params, object : JsonHttpResponseHandler() {
 
@@ -305,6 +407,8 @@ class ChattingActivity : RootActivity(), AbsListView.OnScrollListener {
 
                     if ("ok" == result || "empty" == result) {
 
+                        chatting_group_id = Utils.getInt(response, "chatting_group_id")
+
                         val att_member = response.getJSONObject("att_member")
 
                         nickNameTV.text = Utils.getString(att_member, "nick_name")
@@ -317,8 +421,6 @@ class ChattingActivity : RootActivity(), AbsListView.OnScrollListener {
                         ImageLoader.getInstance().displayImage(profile_uri, profile2IV, Utils.UILoptionsProfile)
 
                         if("ok" == result) {
-
-                            chatting_group_id = Utils.getInt(response, "chatting_group_id")
 
                             chatLV.visibility = View.VISIBLE
 
@@ -465,6 +567,13 @@ class ChattingActivity : RootActivity(), AbsListView.OnScrollListener {
                     e.printStackTrace()
                 }
 
+                val listViewHeight = Utils.getListViewHeightBasedOnItems(chatLV)
+
+                if (chatLV.height < listViewHeight) {
+                    chatLV.transcriptMode = AbsListView.TRANSCRIPT_MODE_ALWAYS_SCROLL
+                } else {
+                    chatLV.transcriptMode = AbsListView.TRANSCRIPT_MODE_NORMAL
+                }
             }
 
 
@@ -568,7 +677,7 @@ class ChattingActivity : RootActivity(), AbsListView.OnScrollListener {
                     progressDialog!!.dismiss()
                 }
 
-                // System.out.println(responseString);
+                System.out.println(responseString);
 
                 throwable.printStackTrace()
                 error()
@@ -596,6 +705,7 @@ class ChattingActivity : RootActivity(), AbsListView.OnScrollListener {
         val params = RequestParams()
         params.put("founder_member_id", PrefUtils.getIntPreference(context, "member_id"))
         params.put("attend_member_id", attend_member_id)
+        params.put("posting_id", posting_id)
         params.put("type", type)
 
         if(type == "t") {
@@ -625,6 +735,11 @@ class ChattingActivity : RootActivity(), AbsListView.OnScrollListener {
 
                         emptyLL.visibility = View.GONE
                         chatLV.visibility = View.VISIBLE
+
+                        var intent = Intent();
+                        intent.putExtra("type", "plus")
+                        intent.action = "MATCH_UPDATE"
+                        sendBroadcast(intent)
 
                         timerStart()
 
@@ -685,6 +800,13 @@ class ChattingActivity : RootActivity(), AbsListView.OnScrollListener {
         finish()
     }
 
+    override fun finish() {
+        super.finish()
+
+        Utils.hideKeyboard(context)
+
+    }
+
     fun onClickBack(view: View) {
         back()
     }
@@ -695,6 +817,9 @@ class ChattingActivity : RootActivity(), AbsListView.OnScrollListener {
             progressDialog!!.dismiss()
         }
 
+        if (timer != null) {
+            timer!!.cancel()
+        }
 
         super.onDestroy()
     }
@@ -707,9 +832,11 @@ class ChattingActivity : RootActivity(), AbsListView.OnScrollListener {
     override fun onPause() {
         super.onPause()
 
+        /*
         if (timer != null) {
             timer!!.cancel()
         }
+        */
     }
 
 

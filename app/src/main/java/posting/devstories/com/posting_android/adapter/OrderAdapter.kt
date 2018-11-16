@@ -1,6 +1,7 @@
 package posting.devstories.com.posting_android.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.view.View
 import android.view.ViewGroup
@@ -10,8 +11,10 @@ import org.json.JSONObject
 import posting.devstories.com.posting_android.R
 import posting.devstories.com.posting_android.base.Utils
 import posting.devstories.com.posting_android.base.Config
+import posting.devstories.com.posting_android.base.RationalRelativeLayout
 import java.text.SimpleDateFormat
 import java.util.*
+import posting.devstories.com.posting_android.activities.DetailActivity
 
 
 open class OrderAdapter(context:Context, view:Int, data:ArrayList<JSONObject>) : ArrayAdapter<JSONObject>(context, view, data) {
@@ -87,7 +90,7 @@ open class OrderAdapter(context:Context, view:Int, data:ArrayList<JSONObject>) :
             item.coupon_titleTV.text = menu_name
             item.coupon_saleTV.text = "FREE"
             item.coupon_TV.visibility = View.GONE
-            item.coupon_sale2TV.visibility = View.GONE
+            item.coupon_sale2TV.text = "%"
             item.coupon_contentTV.text = contents
             item.coupon_startdateTV.text = ctv_startdate+"~"
             item.coupon_enddateTV.text = ctv_enddate
@@ -121,6 +124,11 @@ open class OrderAdapter(context:Context, view:Int, data:ArrayList<JSONObject>) :
             item.leftCntTV.text = leftCount
         }
 
+        item.postRL.setOnClickListener {
+            val intent = Intent(context, DetailActivity::class.java)
+            intent.putExtra("id", Utils.getString(posting, "id"))
+            context.startActivity(intent)
+        }
         return retView
     }
 
@@ -158,6 +166,7 @@ open class OrderAdapter(context:Context, view:Int, data:ArrayList<JSONObject>) :
         var coupon_startdateTV :TextView
         var coupon_enddateTV :TextView
         var coupon_contentTV :TextView
+        var postRL :RationalRelativeLayout
         init {
             postIV = v.findViewById(R.id.postIV) as ImageView
             contentsTV = v.findViewById(R.id.contentsTV) as TextView
@@ -171,6 +180,7 @@ open class OrderAdapter(context:Context, view:Int, data:ArrayList<JSONObject>) :
             coupon_TV = v.findViewById(R.id.coupon_TV) as TextView
             coupon_startdateTV = v.findViewById(R.id.coupon_startdateTV) as TextView
             coupon_enddateTV = v.findViewById(R.id.coupon_enddateTV) as TextView
+            postRL = v.findViewById(R.id.postRL) as RationalRelativeLayout
         }
     }
 }

@@ -11,15 +11,12 @@ import android.widget.Toast
 import com.loopj.android.http.JsonHttpResponseHandler
 import com.loopj.android.http.RequestParams
 import cz.msebera.android.httpclient.Header
-import kotlinx.android.synthetic.main.find_id_and_passwd_activity.*
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
-import posting.devstories.com.posting_android.Actions.LoginAction
 import posting.devstories.com.posting_android.Actions.PostingAction
 import posting.devstories.com.posting_android.Actions.ReviewAction
 import posting.devstories.com.posting_android.R
-import posting.devstories.com.posting_android.base.PrefUtils
 import posting.devstories.com.posting_android.base.RootActivity
 import posting.devstories.com.posting_android.base.Utils
 
@@ -37,7 +34,9 @@ class DlgReportActivity : RootActivity() {
     var member_type:String?= null
     var contents:String?= null
     var type = 1
+    var count = 0
     var save_id:String?= null
+    var report_member_id:String?= null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,8 +53,9 @@ class DlgReportActivity : RootActivity() {
         image_uri  = intent.getStringExtra("image_uri")
         contents = intent.getStringExtra("contents")
         member_type = intent.getStringExtra("member_type")
-        dlgtype = intent.getStringExtra("dlgtype")
-        type =intent.getIntExtra("type",-1)
+        report_member_id = intent.getStringExtra("report_member_id")
+        type = intent.getIntExtra("type",1)
+        count = intent.getIntExtra("count",0)
 //        this.setFinishOnTouchOutside(true)
         val titleTV = findViewById<TextView>(R.id.titleTV)
         val delTV = findViewById<TextView>(R.id.delTV)
@@ -103,6 +103,8 @@ class DlgReportActivity : RootActivity() {
                 intent.putExtra("image_uri",image_uri)
                 intent.putExtra("member_type",member_type)
                 intent.putExtra("contents",contents)
+                intent.putExtra("type",type)
+                intent.putExtra("count",count)
                 startActivity(intent)
                 finish()
 
@@ -115,6 +117,8 @@ class DlgReportActivity : RootActivity() {
             recyTV.visibility = View.GONE
             modiTV.visibility = View.GONE
 
+            println("type : " + type)
+
             delTV.setOnClickListener {
                 savedel_posting()
                 //이것을 어찌할꼬...
@@ -123,6 +127,28 @@ class DlgReportActivity : RootActivity() {
 //                startActivity(intent)
 
             }
+        } else if (dlgtype.equals("police_member")) {
+
+
+            titleTV.text = "이 사용자를 신고하는 이유를 선택하세요"
+            delTV.text = "불건전합니다"
+            modiTV.text = "부적절합니다"
+            recyTV.text = "스팸입니다"
+
+            delTV.setOnClickListener {
+                report("1")
+                finish()
+
+            }
+            modiTV.setOnClickListener {
+                report("2")
+                finish()
+            }
+            recyTV.setOnClickListener {
+                report("3")
+                finish()
+            }
+
         }
 
     }
@@ -150,6 +176,13 @@ class DlgReportActivity : RootActivity() {
                         intent.action = "DEL_POSTING"
                         sendBroadcast(intent)
                         setResult(Activity.RESULT_OK, intent)
+
+
+                        //브로드캐스트로 날려주기
+                        val intent = Intent()
+                        intent.putExtra("tabType",type)
+                        intent.action = "SET_VIEW"
+                        sendBroadcast(intent)
 
                         finish()
 
@@ -197,10 +230,7 @@ class DlgReportActivity : RootActivity() {
         val params = RequestParams()
         params.put("member_id", member_id)
         params.put("posting_id", posting_id)
-
-       print("00000000000"+member_id)
-        print("00000000000"+posting_id)
-
+        params.put("report_member_id", report_member_id)
         params.put("type", type)
 
         ReviewAction.report(params, object : JsonHttpResponseHandler() {
@@ -218,7 +248,13 @@ class DlgReportActivity : RootActivity() {
                         startActivity(intent)
 
                     } else if("already" == result) {
-                        Toast.makeText(context, "신고한 게시물입니다.", Toast.LENGTH_LONG).show()
+
+                        if("M" == Utils.getString(response, "report_type")) {
+                            Toast.makeText(context, "신고한 회원입니다.", Toast.LENGTH_LONG).show()
+                        } else {
+                            Toast.makeText(context, "신고한 게시물입니다.", Toast.LENGTH_LONG).show()
+                        }
+
                     }
 
                 } catch (e: JSONException) {
@@ -275,9 +311,9 @@ class DlgReportActivity : RootActivity() {
                     if ("ok" == result) {
 
                         intent = Intent()
-                        intent.putExtra("posting_id", posting_id)
+                        intent.putExtra("save_id", save_id)
                         intent.putExtra("type", type)
-                        intent.action = "DEL_POSTING"
+                        intent.action = "SAVE_DEL_POSTING"
                         sendBroadcast(intent)
                         setResult(RESULT_OK, intent)
 

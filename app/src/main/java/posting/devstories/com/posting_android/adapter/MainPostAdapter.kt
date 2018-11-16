@@ -89,7 +89,7 @@ open class MainPostAdapter(context: Context?, view: Int, data: ArrayList<JSONObj
         }
 
         item.titleTV.text = title
-        item.titleTV.setTextColor(Color.parseColor(color))
+//        item.titleTV.setTextColor(Color.parseColor(color))
 
         item.titleLL.setOnClickListener {
 
@@ -149,7 +149,7 @@ open class MainPostAdapter(context: Context?, view: Int, data: ArrayList<JSONObj
             val cymd = SimpleDateFormat("yy.MM.dd", Locale.KOREA)
 
             val params = postRL.layoutParams as LinearLayout.LayoutParams
-            params.setMargins(10, 0, 0, 0)
+            params.setMargins(7, 0, 0, 0)
             postRL.layoutParams = params
 
             if (!coupon_type.equals("")) {

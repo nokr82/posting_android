@@ -12,17 +12,24 @@ import posting.devstories.com.posting_android.adapter.PostAdapter
 class MyPagePostingFragment : MyPagePostingStorageFragment() {
 
     private var progressDialog: ProgressDialog? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var view = super.onCreateView(inflater, container, savedInstanceState)
-        adapterData.clear()
-        taptype=1
 
+        tab = 1
 
         return view
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        pagerAdapter.setTabType(tab)
+
     }
 
 

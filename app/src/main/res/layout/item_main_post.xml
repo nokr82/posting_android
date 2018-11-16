@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:adjustViewBounds="true"
-    android:orientation="vertical">
+    android:orientation="vertical"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <RelativeLayout
         android:id="@+id/postRL"
@@ -22,10 +23,10 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="7dp"
-            android:layout_marginRight="9dp"
-            android:layout_marginBottom="9dp"
+            android:layout_marginLeft="7dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp"
             android:adjustViewBounds="true">
 
             <LinearLayout
@@ -130,7 +131,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_horizontal|bottom"
+                    android:gravity="right|bottom"
                     android:orientation="horizontal"
                     android:layout_marginBottom="5dp">
 
@@ -174,29 +175,37 @@
                 android:gravity="center"
                 android:maxLines="3"
                 android:textColor="#3E3A39"
-                android:textSize="13dp"
+                android:textSize="16dp"
                 android:visibility="gone"
-                android:ellipsize="end"/>
+                android:ellipsize="end"
+                android:lineSpacingExtra="8dp"/>
 
-            <LinearLayout
-                android:id="@+id/countLL"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:background="@mipmap/nemocount"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+            <posting.devstories.com.posting_android.base.RationalRelativeLayout
+                    android:layout_width="18.5dp"
+                    android:layout_height="0dp"
+                    android:layout_alignParentBottom="true"
+                    app:ratio="1:1"
+                    android:background="@mipmap/nemocount">
 
-                <TextView
-                    android:id="@+id/leftCntTV"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="4.9dp"
-                    android:text="0"
-                    android:textColor="#FFFFFF"
-                    android:textSize="17.67dp" />
+                <LinearLayout
+                        android:id="@+id/countLL"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal">
 
-            </LinearLayout>
+                    <TextView
+                            android:id="@+id/leftCntTV"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:gravity="center"
+                            android:textColor="#FFFFFF"
+                            android:textSize="14dp" />
+
+                </LinearLayout>
+
+            </posting.devstories.com.posting_android.base.RationalRelativeLayout>
 
         </RelativeLayout>
 

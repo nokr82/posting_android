@@ -31,12 +31,16 @@ import posting.devstories.com.posting_android.base.Utils
 
 open class MyPageFragment : Fragment() {
 
+    lateinit var myContext: Context
+
     private var progressDialog: ProgressDialog? = null
 
     lateinit var mainActivity:MainActivity
 
     lateinit var fragmentFT: FragmentTabHost
     lateinit var fragmentFL: FrameLayout
+
+    var tabType = 1
 
     internal var updateAlarmCntReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent?) {
@@ -62,18 +66,32 @@ open class MyPageFragment : Fragment() {
         }
     }
 
+    fun getPostingTabType(): Int {
+        val myPagePostingFragment = childFragmentManager.findFragmentByTag("posting") as? MyPagePostingFragment
+        if(myPagePostingFragment != null) {
+
+            println("myPagePostingFragment : " + myPagePostingFragment.tabType)
+
+            return myPagePostingFragment.tabType
+        }
+
+        println("kljhgfds")
+
+        return 0
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        this.myContext = container!!.context
 
         val filter1 = IntentFilter("UPDATE_ALARM_CNT")
-        context!!.registerReceiver(updateAlarmCntReceiver, filter1)
+        myContext!!.registerReceiver(updateAlarmCntReceiver, filter1)
 
         val filter2 = IntentFilter("EDIT_PROFILE")
-        context!!.registerReceiver(editProfileReceiver, filter2)
+        myContext!!.registerReceiver(editProfileReceiver, filter2)
 
         mainActivity = activity as MainActivity
         return inflater.inflate(R.layout.fra_my_page, container, false)
@@ -90,11 +108,11 @@ open class MyPageFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        fragmentFT.setup(context, childFragmentManager, R.id.fragmentFL)
+        fragmentFT.setup(myContext, childFragmentManager, R.id.fragmentFL)
 
-        val tabPostingV = View.inflate(context, R.layout.tab_my_page_posting_view, null)
-        val tabStorageV = View.inflate(context, R.layout.tab_my_page_storage_view, null)
-        val tabNotiV = View.inflate(context, R.layout.tab_my_page_noti_view, null)
+        val tabPostingV = View.inflate(myContext, R.layout.tab_my_page_posting_view, null)
+        val tabStorageV = View.inflate(myContext, R.layout.tab_my_page_storage_view, null)
+        val tabNotiV = View.inflate(myContext, R.layout.tab_my_page_noti_view, null)
 
         fragmentFT.tabWidget.dividerDrawable = null
 
@@ -104,7 +122,7 @@ open class MyPageFragment : Fragment() {
 
 
         menuIV.setOnClickListener {
-            val intent = Intent(context, MyPageActivity::class.java)
+            val intent = Intent(myContext, MyPageActivity::class.java)
             startActivity(intent)
         }
 
@@ -146,7 +164,7 @@ open class MyPageFragment : Fragment() {
 
     fun loadData() {
         val params = RequestParams()
-        params.put("member_id", PrefUtils.getIntPreference(context, "member_id"))
+        params.put("member_id", PrefUtils.getIntPreference(myContext, "member_id"))
 
         MemberAction.my_info(params, object : JsonHttpResponseHandler() {
 
@@ -179,7 +197,7 @@ open class MyPageFragment : Fragment() {
                         nickNameTV.text = Utils.getString(member, "nick_name")
 
                     } else {
-                        Toast.makeText(context, "일치하는 회원이 존재하지 않습니다.", Toast.LENGTH_LONG).show()
+                        Toast.makeText(myContext, "일치하는 회원이 존재하지 않습니다.", Toast.LENGTH_LONG).show()
                     }
 
                 } catch (e: JSONException) {
@@ -194,7 +212,7 @@ open class MyPageFragment : Fragment() {
             }
 
             private fun error() {
-                Utils.alert(context, "조회중 장애가 발생하였습니다.")
+                Utils.alert(myContext, "조회중 장애가 발생하였습니다.")
             }
 
             override fun onFailure(
@@ -235,13 +253,13 @@ open class MyPageFragment : Fragment() {
 
         try {
             if (updateAlarmCntReceiver != null) {
-                context!!.unregisterReceiver(updateAlarmCntReceiver)
+                myContext!!.unregisterReceiver(updateAlarmCntReceiver)
             }
         } catch (e: IllegalArgumentException) {
         }
         try {
             if (editProfileReceiver != null) {
-                context!!.unregisterReceiver(editProfileReceiver)
+                myContext!!.unregisterReceiver(editProfileReceiver)
             }
         } catch (e: IllegalArgumentException) {
         }

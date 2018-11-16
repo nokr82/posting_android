@@ -89,17 +89,21 @@
 
                     <posting.devstories.com.posting_android.base.RationalRelativeLayout
                         android:id="@+id/postingLL"
-                        android:layout_width="286.02dp"
-                        android:layout_height="292.67dp"
-                        app:ratio="1:1"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
                         android:layout_gravity="center"
-                        android:background="@mipmap/wtite_bg">
+                        android:background="@mipmap/wtite_bg"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginRight="30dp"
+                        app:ratio="1195.5:1223.5">
 
                         <posting.devstories.com.posting_android.base.RationalRelativeLayout
-                            android:layout_width="247.23dp"
-                            android:layout_height="261.21dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
                             android:layout_centerInParent="true"
-                            app:ratio="1:1">
+                            android:layout_marginLeft="18dp"
+                            android:layout_marginRight="19dp"
+                            app:ratio="1055.5:1089.5">
 
                             <ImageView
                                 android:id="@+id/imgIV"
@@ -112,12 +116,14 @@
                                 android:id="@+id/contentsTV"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
+                                android:gravity="center"
                                 android:layout_centerInParent="true"
+                                android:text=""
+                                android:textSize="42dp"
+                                android:visibility="gone"
                                 android:maxLines="3"
                                 android:ellipsize="end"
-                                android:gravity="center"
-                                android:text=""
-                                android:visibility="gone"/>
+                                android:lineSpacingExtra="23dp"/>
 
                         </posting.devstories.com.posting_android.base.RationalRelativeLayout>
 
@@ -126,7 +132,8 @@
                             android:layout_height="40.2dp"
                             android:src="@mipmap/blue"
                             android:layout_alignParentTop="true"
-                            android:layout_centerInParent="true"/>
+                            android:layout_centerInParent="true"
+                            android:visibility="gone"/>
 
                     </posting.devstories.com.posting_android.base.RationalRelativeLayout>
 
@@ -149,6 +156,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="9dp"
+                        android:textStyle="bold"
                         android:textSize="13.5dp"
                         android:text=""
                         android:id="@+id/wnameTX"/>
@@ -164,16 +172,15 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginLeft="20dp"
-                                android:textSize="9.5dp"
+                                android:textSize="13.5dp"
                                 android:text=""/>
                         <TextView
                                 android:id="@+id/policeTV"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text=" | 신고"
-                                android:textSize="9.5dp"
+                                android:textSize="13.5dp"
                                 android:textColor="#BDBBB8"/>
-
 
                     </LinearLayout>
 
@@ -183,8 +190,8 @@
                             android:gravity="center"
                             android:visibility="gone"
                             android:id="@+id/couponLL">
-                        <TextView
 
+                        <TextView
                                 android:id="@id/couponTV"
                                 android:layout_marginRight="19dp"
                                 android:layout_marginBottom="8.5dp"
@@ -198,18 +205,18 @@
 
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:id="@+id/myLL"
-                        android:visibility="gone"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+                    <!--<LinearLayout-->
+                        <!--android:id="@+id/myLL"-->
+                        <!--android:visibility="gone"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content">-->
 
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@mipmap/myimg_w"/>
+                        <!--<ImageView-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:src="@mipmap/myimg_w"/>-->
 
-                    </LinearLayout>
+                    <!--</LinearLayout>-->
 
                 </LinearLayout>
 
@@ -230,7 +237,7 @@
                         android:layout_marginLeft="25.5dp"
                         android:layout_marginRight="25.5dp"
                         android:text=""
-                        android:textSize="10dp"
+                        android:textSize="14dp"
                         android:layout_marginTop="14dp"/>
 
                 </LinearLayout>

@@ -16,12 +16,16 @@ class MyPageStorageFragment : MyPagePostingStorageFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var view = super.onCreateView(inflater, container, savedInstanceState)
 
-        adapterData.clear()
-        taptype =2
-
-
-
         return view
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        tab = 2
+
+        pagerAdapter.setTabType(tab)
+
     }
 
 }

@@ -5,7 +5,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 26
     defaultConfig {
         applicationId "posting.devstories.com.posting_android"
         minSdkVersion 21
@@ -60,5 +60,8 @@ dependencies {
     implementation 'com.github.paolorotolo:expandableheightlistview:1.0.0'
     compile 'com.github.nihad92:SwipeableCards:1.0.19'
     implementation files('libs/libDaumMapAndroid.jar')
+
+    implementation 'com.theartofdev.edmodo:android-image-cropper:2.7.0'
+
 }
 apply plugin: 'com.google.gms.google-services'

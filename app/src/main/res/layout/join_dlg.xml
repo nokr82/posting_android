@@ -17,16 +17,17 @@
             android:layout_marginRight="44.43dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="center">
+            android:orientation="vertical">
 
             <TextView
+                android:id="@+id/messageTV"
                 android:textSize="15.07dp"
                 android:text="가입이 완료 되었습니다.\n\n캠퍼스생활 이제 떼고,붙이세요!"
                 android:textColor="#6D6E71"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/campus"/>
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"/>
 
             <TextView
                 android:id="@+id/PostingStartTX"
@@ -37,7 +38,7 @@
                 android:textSize="15.33dp"
                 android:textColor="#20408C"
                 android:background="#FEDA44"
-                android:layout_marginTop="52.93dp"
+                android:layout_marginBottom="16.5dp"
                 />
 
         </LinearLayout>

@@ -14,6 +14,7 @@ import android.location.LocationManager;
 import android.media.ExifInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -27,13 +28,10 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-
-import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
-import posting.devstories.com.posting_android.R;
-import posting.devstories.com.posting_android.activities.LoginActivity;
-
 import org.json.JSONException;
 import org.json.JSONObject;
+import posting.devstories.com.posting_android.R;
+import posting.devstories.com.posting_android.activities.LoginActivity;
 
 import java.io.*;
 import java.lang.reflect.InvocationTargetException;
@@ -252,6 +250,50 @@ public class Utils {
         return 0;
     }
 
+    public static Bitmap rotate(ContentResolver resolver, Bitmap bitmap,  Uri imageUri) throws FileNotFoundException {
+
+        ExifInterface ei;
+
+        try {
+
+            InputStream input = resolver.openInputStream(imageUri);
+
+            if (Build.VERSION.SDK_INT > 23) {
+                ei = new ExifInterface(input);
+            } else {
+                ei = new ExifInterface(imageUri.getPath());
+            }
+
+            int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+
+            switch (orientation) {
+                case ExifInterface.ORIENTATION_ROTATE_90:
+                    return rotateImage(bitmap, 90);
+                case ExifInterface.ORIENTATION_ROTATE_180:
+                    return rotateImage(bitmap, 180);
+                case ExifInterface.ORIENTATION_ROTATE_270:
+                    return rotateImage(bitmap, 270);
+                default:
+                    return bitmap;
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return bitmap;
+    }
+
+    private static Bitmap rotateImage(Bitmap img, int degree) {
+        Matrix matrix = new Matrix();
+        matrix.postRotate(degree);
+        Bitmap rotatedImg = Bitmap.createBitmap(img, 0, 0, img.getWidth(), img.getHeight(), matrix, true);
+        img.recycle();
+        return rotatedImg;
+    }
+
     public static Bitmap getImage(ContentResolver resolver, String imageIdOrPath) {
         try {
             String photoPath = null;
@@ -271,6 +313,7 @@ public class Utils {
                 cursor.close();
 
             } catch (NumberFormatException e) {
+
                 photoPath = imageIdOrPath;
 
                 // rotation
@@ -313,6 +356,33 @@ public class Utils {
     }
 
 
+    public static String getThumbnail(ContentResolver resolver, int uid) {
+        String photoPath = null;
+
+        // String[] proj = { Images.Thumbnails.DATA, Images.Thumbnails.EXTERNAL_CONTENT_URI, Images.Thumbnails.INTERNAL_CONTENT_URI };
+
+        Cursor mini = Images.Thumbnails.queryMiniThumbnail(resolver, uid, Images.Thumbnails.MICRO_KIND, null);
+        if (mini != null && mini.moveToFirst()) {
+            // photo Path = mini.getString(mini.getColumnIndex(proj[0]));
+
+            for(String name : mini.getColumnNames()) {
+                System.out.println("name : " + name);
+            }
+
+        } else {
+            mini = Images.Thumbnails.queryMiniThumbnail(resolver, uid, Images.Thumbnails.MINI_KIND, null);
+            if (mini != null && mini.moveToFirst()) {
+                // photoPath = mini.getString(mini.getColumnIndex(proj[0]));
+
+                for(String name : mini.getColumnNames()) {
+                    System.out.println("name : " + name);
+                }
+
+            }
+        }
+
+        return photoPath;
+    }
 
 
     public static Bitmap getImage(ContentResolver resolver, String imageIdOrPath, int reqSize) {
@@ -1405,5 +1475,29 @@ public class Utils {
         paint.setAlpha(155);
         canvas.drawRect(0F, 0F, (float) width, (float) height, paint);
         return bitmap;
+    }
+
+
+    // 리스트 뷰 아이템 높이만큼 크기 늘리기
+    public static int getListViewHeightBasedOnItems(ListView listView) {
+
+        // Get list adpter of listview;
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null)  return 0;
+
+        int numberOfItems = listAdapter.getCount();
+
+        // Get total height of all items.
+        int totalItemsHeight = 0;
+        for (int itemPos = 0; itemPos < numberOfItems; itemPos++) {
+            View item = listAdapter.getView(itemPos, null, listView);
+            item.measure(0, 0);
+            totalItemsHeight += item.getMeasuredHeight();
+        }
+
+        // Get total height of all item dividers.
+        int totalDividersHeight = listView.getDividerHeight() *  (numberOfItems - 1);
+
+        return totalItemsHeight + totalDividersHeight;
     }
 }

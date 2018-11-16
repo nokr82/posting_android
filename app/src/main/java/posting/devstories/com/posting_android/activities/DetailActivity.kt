@@ -9,7 +9,6 @@ import android.os.Bundle
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.View
-import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import com.loopj.android.http.JsonHttpResponseHandler
 import com.loopj.android.http.RequestParams
@@ -26,7 +25,10 @@ import posting.devstories.com.posting_android.Actions.PostingAction.write_commen
 import posting.devstories.com.posting_android.R
 import posting.devstories.com.posting_android.adapter.DetailAnimationRecyclerAdapter
 import posting.devstories.com.posting_android.adapter.ReAdapter
-import posting.devstories.com.posting_android.base.*
+import posting.devstories.com.posting_android.base.Config
+import posting.devstories.com.posting_android.base.PrefUtils
+import posting.devstories.com.posting_android.base.RootActivity
+import posting.devstories.com.posting_android.base.Utils
 import swipeable.com.layoutmanager.OnItemSwiped
 import swipeable.com.layoutmanager.SwipeableLayoutManager
 import swipeable.com.layoutmanager.SwipeableTouchHelperCallback
@@ -39,7 +41,6 @@ class DetailActivity : RootActivity() {
     val EDIT_POST = 101;
     val STORAGE_POST = 201;
     val USES_COUPON = 301;
-
 
     var nick = ""
     lateinit var context:Context
@@ -58,14 +59,13 @@ class DetailActivity : RootActivity() {
     var type = 1
     var contents = ""
     var coupon = -1
-    var taptype = -1
-    var save_id :String? = null
+    var save_id = -1
 
     var dlgtype  = ""
 
-
     var school_id = -1
     var me_school_id =-1
+    var posting_count = -1
 
     var confirm_yn = ""
     lateinit var adapterRe: ReAdapter
@@ -84,8 +84,7 @@ class DetailActivity : RootActivity() {
         loadInfo()
 
         intent = getIntent()
-        taptype=intent.getIntExtra("taptype",-1)
-        save_id = intent.getStringExtra("save_id")
+        save_id = intent.getIntExtra("save_id", -1)
 
         coupon = intent.getIntExtra("coupon",-1)
         use_yn = intent.getStringExtra("use_yn")
@@ -179,13 +178,14 @@ class DetailActivity : RootActivity() {
 
 
         menuIV.setOnClickListener {
-            if (taptype ==2){
-                storagedlgView()
-            }else{
+            if (save_id < 1){
                 dlgView()
+            }else{
+                storagedlgView()
             }
         }
 
+        /*
         commentsET.setOnEditorActionListener { textView, i, keyEvent ->
             commentsET.hint = "댓글쓰기"
             when (i) {
@@ -199,7 +199,15 @@ class DetailActivity : RootActivity() {
                 }
             }
             return@setOnEditorActionListener true
+        }
+        */
 
+        submitTV.setOnClickListener {
+            var comments = Utils.getString(commentsET)
+
+            if(!comments.isEmpty() && comments != "") {
+                writeComments(comments)
+            }
         }
 
         /*
@@ -236,7 +244,7 @@ class DetailActivity : RootActivity() {
                 return@setOnClickListener
             }
 
-
+            /*
             val pageCurlView = PageCurlView(context)
 
             // val bm = ImageLoader.getInstance().loadImageSync(Config.url + image_uri)
@@ -257,6 +265,7 @@ class DetailActivity : RootActivity() {
 
             pageCurlView.setbFlipping(true)
             pageCurlView.FlipAnimationStep()
+            */
 
             savePosting()
 
@@ -431,12 +440,21 @@ class DetailActivity : RootActivity() {
                         var intent = Intent(context, DlgStorageActivity::class.java)
                         startActivity(intent)
 
+                        val count = response.getInt("count")
 
                         intent = Intent()
                         intent.putExtra("posting_id", posting_id)
                         intent.action = "SAVE_POSTING"
                         sendBroadcast(intent)
-                        detaildata()
+//                        detaildata()
+
+                        if(posting_count < 1) {
+                            leftCntTV.text = "∞"
+                        } else {
+                            var leftCnt = posting_count - count;
+
+                            leftCntTV.text = leftCnt.toString()
+                        }
 
                         saveLL.visibility = View.GONE
 
@@ -544,7 +562,7 @@ class DetailActivity : RootActivity() {
                         var menu_name:String =  Utils.getString(posting, "menu_name")
                         var sale_per:String =  Utils.getString(posting, "sale_per")
                         var sale_price:String =  Utils.getString(posting, "sale_price")
-                        var contents =   Utils.getString(posting, "contents")
+                        contents =   Utils.getString(posting, "contents")
 
                         image_uri = Utils.getString(posting, "image_uri")
                         var leftCount = Utils.getString(posting, "leftCount")
@@ -556,6 +574,7 @@ class DetailActivity : RootActivity() {
                         school_id = Utils.getInt(posting, "school_id")
 
                         count = Utils.getInt(posting, "leftCount")
+                        posting_count = Utils.getInt(posting, "count")
 
                         if(count < 1 || me_school_id != school_id || member_id == member_id2 || "Y" == save_yn || "3" == member_type) {
 
@@ -609,7 +628,7 @@ class DetailActivity : RootActivity() {
                                 coupon_orderTV.text = company_name
                                 coupon_sale2TV.text = "할인"
                                 coupon_TV.text = "%"
-                                coupon_startdateTV.text = ctv_startdate+"~"
+                                coupon_startdateTV.text = ctv_startdate+" ~ "
                                 coupon_contentTV.text = contents
                                 coupon_enddateTV.text = ctv_enddate
                             }else if (coupon_type.equals("2")){
@@ -621,7 +640,7 @@ class DetailActivity : RootActivity() {
                                 coupon_saleTV.text = "FREE"
                                 coupon_TV.visibility = View.GONE
                                 coupon_sale2TV.visibility = View.GONE
-                                coupon_startdateTV.text = ctv_startdate+"~"
+                                coupon_startdateTV.text = ctv_startdate+" ~ "
                                 coupon_contentTV.text = contents
                                 coupon_enddateTV.text = ctv_enddate
                             }else if (coupon_type.equals("3")){
@@ -633,7 +652,7 @@ class DetailActivity : RootActivity() {
                                 coupon_saleTV.text = sale_price
                                 coupon_sale2TV.text = "할인"
                                 coupon_TV.text = "원"
-                                coupon_startdateTV.text = ctv_startdate+"~"
+                                coupon_startdateTV.text = ctv_startdate+" ~ "
                                 coupon_contentTV.text = contents
                                 coupon_enddateTV.text = ctv_enddate
                             }
@@ -655,7 +674,7 @@ class DetailActivity : RootActivity() {
                         }
 //                        var created =   Utils.getString(posting, "created")
 
-                        if (taptype==2){
+                        if (save_id > 0){
                             menuIV.visibility = View.VISIBLE
                         }
 
@@ -675,6 +694,12 @@ class DetailActivity : RootActivity() {
 
                         if("3" == Utils.getString(member, "member_type")) {
                             writerIV.setOnClickListener {
+                                var intent = Intent(context, OrderPageActivity::class.java)
+                                intent.putExtra("company_id", Utils.getInt(member, "id"))
+                                startActivity(intent)
+                            }
+
+                            wnameTX.setOnClickListener {
                                 var intent = Intent(context, OrderPageActivity::class.java)
                                 intent.putExtra("company_id", Utils.getInt(member, "id"))
                                 startActivity(intent)
@@ -779,14 +804,16 @@ class DetailActivity : RootActivity() {
         intent.putExtra("member_type",member_type)
         intent.putExtra("contents",contents)
         intent.putExtra("type",type)
+        intent.putExtra("count",posting_count)
         startActivityForResult(intent, EDIT_POST)
 
     }
     fun storagedlgView(){
         dlgtype = "Storage"
         var intent = Intent(context, DlgReportActivity::class.java)
-        intent.putExtra("save_id", save_id)
+        intent.putExtra("save_id", save_id.toString())
         intent.putExtra("dlgtype", dlgtype)
+        intent.putExtra("type", type)
         startActivityForResult(intent, STORAGE_POST)
 
     }

@@ -1,32 +1,32 @@
 package posting.devstories.com.posting_android.activities
 
+import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.database.Cursor
-import android.os.Bundle
-import android.provider.MediaStore
-import android.widget.ArrayAdapter
-import android.widget.Toast
-import posting.devstories.com.posting_android.R
-import posting.devstories.com.posting_android.adapter.ImageAdapter
-import posting.devstories.com.posting_android.base.ImageLoader
-import posting.devstories.com.posting_android.base.RootActivity
-import java.util.*
-import com.gun0912.tedpermission.PermissionListener
-import com.gun0912.tedpermission.TedPermission
-import android.app.Activity
-import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
+import android.os.Bundle
 import android.os.Environment
+import android.provider.MediaStore
 import android.support.v4.content.FileProvider
 import android.view.View
+import android.widget.ArrayAdapter
+import android.widget.Toast
+import com.gun0912.tedpermission.PermissionListener
+import com.gun0912.tedpermission.TedPermission
 import kotlinx.android.synthetic.main.activity_review_write.*
+import posting.devstories.com.posting_android.R
+import posting.devstories.com.posting_android.adapter.ImageAdapter
 import posting.devstories.com.posting_android.base.Config
+import posting.devstories.com.posting_android.base.ImageLoader
+import posting.devstories.com.posting_android.base.RootActivity
 import posting.devstories.com.posting_android.base.Utils
 import java.io.File
 import java.io.IOException
+import java.util.*
 
 
 class ReviewWriteActivity : RootActivity() {
@@ -52,9 +52,10 @@ class ReviewWriteActivity : RootActivity() {
     var review_id = -1
 
     var imageUri: Uri? = null
-    var absolutePath: String? = ""
+    var imageUriOutput: Uri? = null
+    // var absolutePath: String? = ""
 
-    var capture: Bitmap? = null
+    // var capture: Bitmap? = null
 
     lateinit var adpater: ArrayAdapter<String>
 
@@ -81,6 +82,134 @@ class ReviewWriteActivity : RootActivity() {
             imgIV2.visibility = View.VISIBLE
 
         }
+
+        finishLL.setOnClickListener {
+            finish()
+        }
+
+        textRL.setOnClickListener {
+            var intent = Intent(context, ReviewWriteContentsActivity::class.java)
+            intent.putExtra("review_id", review_id)
+            intent.putExtra("contents", contents)
+            intent.putExtra("company_member_id", company_member_id)
+            intent.putExtra("postingType", "T")
+            intent.putExtra("absolutePath", "")
+            startActivityForResult(intent, WRITE_RIVEW)
+        }
+
+        nextTX.setOnClickListener {
+            var intent = Intent(context, ReviewWriteContentsActivity::class.java)
+            intent.putExtra("review_id", review_id)
+            intent.putExtra("image", image)
+            intent.putExtra("imgid", imgid)
+            intent.putExtra("contents", contents)
+            intent.putExtra("image_uri",image_uri)
+            intent.putExtra("company_member_id",company_member_id)
+            intent.putExtra("postingType",postingType)
+            // intent.putExtra("absolutePath", absolutePath)
+            startActivityForResult(intent, WRITE_RIVEW)
+        }
+
+        cameraRL.setOnClickListener {
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+
+                val permissionlistener = object : PermissionListener {
+                    override fun onPermissionGranted() {
+
+                        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                        if (intent.resolveActivity(packageManager)!=null){
+
+                            val storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+
+                            try {
+                                val photo = File.createTempFile(
+                                    System.currentTimeMillis().toString(), /* prefix */
+                                    ".jpg", /* suffix */
+                                    storageDir      /* directory */
+                                )
+
+                                // absolutePath = photo.absolutePath
+                                //imageUri = Uri.fromFile(photo);
+                                imageUri = FileProvider.getUriForFile(context, packageName + ".provider", photo)
+                                intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
+                                startActivityForResult(intent, REQUEST_CAMERA)
+
+                            } catch (e: IOException) {
+                                e.printStackTrace()
+                            }
+
+                        }
+
+                    }
+
+                    override fun onPermissionDenied(deniedPermissions: List<String>) {
+                    }
+
+                }
+
+                TedPermission.with(context)
+                    .setPermissionListener(permissionlistener)
+                    .setDeniedMessage("[설정] > [권한] 에서 권한을 허용할 수 있습니다.")
+                    .setPermissions(android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.CAMERA, android.Manifest.permission.READ_EXTERNAL_STORAGE)
+                    .check();
+
+            } else {
+
+                val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                if (intent.resolveActivity(packageManager)!=null){
+
+
+                    val storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+
+                    try {
+                        val photo = File.createTempFile(
+                            System.currentTimeMillis().toString(), /* prefix */
+                            ".jpg", /* suffix */
+                            storageDir      /* directory */
+                        )
+
+                        // absolutePath = photo.absolutePath
+                        //imageUri = Uri.fromFile(photo);
+                        imageUri = FileProvider.getUriForFile(context, packageName + ".provider", photo)
+                        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
+                        startActivityForResult(intent, REQUEST_CAMERA)
+
+                    } catch (e: IOException) {
+                        e.printStackTrace()
+                    }
+
+                }
+
+            }
+
+        }
+
+        val permissionlistener = object : PermissionListener {
+            override fun onPermissionGranted() {
+                loadPhoto()
+            }
+
+            override fun onPermissionDenied(deniedPermissions: List<String>) {
+            }
+
+        }
+
+        TedPermission.with(this)
+                .setPermissionListener(permissionlistener)
+                .setDeniedMessage("[설정] > [권한] 에서 권한을 허용할 수 있습니다.")
+                .setPermissions(android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.CAMERA, android.Manifest.permission.READ_EXTERNAL_STORAGE)
+                .check();
+
+        if(review_id > 1) {
+
+        }
+
+        loadPhoto()
+
+    }
+
+    fun loadPhoto(){
 
         var cursor: Cursor? = null
         val resolver = contentResolver
@@ -130,109 +259,6 @@ class ReviewWriteActivity : RootActivity() {
 
         }
 
-        finishLL.setOnClickListener {
-            finish()
-        }
-
-        textRL.setOnClickListener {
-            var intent = Intent(context, ReviewWriteContentsActivity::class.java)
-            intent.putExtra("review_id", review_id)
-            intent.putExtra("contents", contents)
-            intent.putExtra("company_member_id", company_member_id)
-            intent.putExtra("postingType", "T")
-            intent.putExtra("absolutePath", "")
-            startActivityForResult(intent, WRITE_RIVEW)
-        }
-
-        nextTX.setOnClickListener {
-            var intent = Intent(context, ReviewWriteContentsActivity::class.java)
-            intent.putExtra("review_id", review_id)
-            intent.putExtra("image", image)
-            intent.putExtra("imgid", imgid)
-            intent.putExtra("contents", contents)
-            // intent.putExtra("capture", capture)
-            intent.putExtra("image_uri",image_uri)
-            intent.putExtra("company_member_id",company_member_id)
-            intent.putExtra("postingType",postingType)
-            intent.putExtra("absolutePath", absolutePath)
-            startActivityForResult(intent, WRITE_RIVEW)
-        }
-
-        cameraRL.setOnClickListener {
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
-
-                val permissionlistener = object : PermissionListener {
-                    override fun onPermissionGranted() {
-
-                        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                        if (intent.resolveActivity(packageManager)!=null){
-
-                            val storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
-
-                            try {
-                                val photo = File.createTempFile(
-                                    System.currentTimeMillis().toString(), /* prefix */
-                                    ".jpg", /* suffix */
-                                    storageDir      /* directory */
-                                )
-
-                                absolutePath = photo.absolutePath
-                                //imageUri = Uri.fromFile(photo);
-                                imageUri = FileProvider.getUriForFile(context, packageName + ".provider", photo)
-                                intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
-                                startActivityForResult(intent, REQUEST_CAMERA)
-
-                            } catch (e: IOException) {
-                                e.printStackTrace()
-                            }
-
-                        }
-
-                    }
-
-                    override fun onPermissionDenied(deniedPermissions: List<String>) {
-                    }
-
-                }
-
-                TedPermission.with(context)
-                    .setPermissionListener(permissionlistener)
-                    .setDeniedMessage("[설정] > [권한] 에서 권한을 허용할 수 있습니다.")
-                    .setPermissions(android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.CAMERA, android.Manifest.permission.READ_EXTERNAL_STORAGE)
-                    .check();
-
-            } else {
-
-                val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                if (intent.resolveActivity(packageManager)!=null){
-
-
-                    val storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
-
-                    try {
-                        val photo = File.createTempFile(
-                            System.currentTimeMillis().toString(), /* prefix */
-                            ".jpg", /* suffix */
-                            storageDir      /* directory */
-                        )
-
-                        absolutePath = photo.absolutePath
-                        //imageUri = Uri.fromFile(photo);
-                        imageUri = FileProvider.getUriForFile(context, packageName + ".provider", photo)
-                        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
-                        startActivityForResult(intent, REQUEST_CAMERA)
-
-                    } catch (e: IOException) {
-                        e.printStackTrace()
-                    }
-
-                }
-
-            }
-
-        }
-
         val imageLoader = ImageLoader(resolver)
 
         val adapter = ImageAdapter(context, photoList, imageLoader, selected)
@@ -249,26 +275,6 @@ class ReviewWriteActivity : RootActivity() {
         }
 
         imageLoader.setListener(adapter)
-
-        val permissionlistener = object : PermissionListener {
-            override fun onPermissionGranted() {
-            }
-
-            override fun onPermissionDenied(deniedPermissions: List<String>) {
-            }
-
-        }
-
-        TedPermission.with(this)
-                .setPermissionListener(permissionlistener)
-                .setDeniedMessage("[설정] > [권한] 에서 권한을 허용할 수 있습니다.")
-                .setPermissions(android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.CAMERA, android.Manifest.permission.READ_EXTERNAL_STORAGE)
-                .check();
-
-        if(review_id > 1) {
-
-        }
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -297,16 +303,15 @@ class ReviewWriteActivity : RootActivity() {
                 }
 
                 CROP_FROM_CAMERA -> {
-//                    capture = Utils.getImage(context.contentResolver, absolutePath)
-                    val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, imageUri)
-                    capture = bitmap
+                    val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, imageUriOutput)
+                    // capture = bitmap
                     postingType = "P"
-                    imgIV2.setImageBitmap(capture)
+                    imgIV2.setImageBitmap(bitmap)
 
                 }
 
                 WRITE_RIVEW -> {
-                    if(resultCode== Activity.RESULT_OK) {
+                    if(resultCode == Activity.RESULT_OK) {
                         var intent = Intent()
                         setResult(Activity.RESULT_OK, intent)
                         finish()
@@ -337,17 +342,43 @@ class ReviewWriteActivity : RootActivity() {
         intent.putExtra("crop", "true")
         intent.putExtra("aspectX", 1)
         intent.putExtra("aspectY", 1)
-        intent.putExtra("outputX", 200)
-        intent.putExtra("outputY", 200)
+        intent.putExtra("outputX", 500)
+        intent.putExtra("outputY", 500)
         intent.putExtra("return-data", true)
 
-        grantUriPermission(
-            packageName, imageUri,
-            Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION
-        )
+        if (intent.resolveActivity(packageManager) != null) {
+
+            val storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+
+            try {
+                val photo = File.createTempFile(
+                    System.currentTimeMillis().toString(), /* prefix */
+                    ".jpg", /* suffix */
+                    storageDir      /* directory */
+                )
+
+                // absolutePath = photo.absolutePath
+                //imageUri = Uri.fromFile(photo);
+                imageUriOutput = FileProvider.getUriForFile(context, packageName + ".provider", photo)
+
+                val resInfoList = context.getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+                for (resolveInfo in resInfoList) {
+                    val packageName = resolveInfo.activityInfo.packageName;
+                    context.grantUriPermission(packageName, imageUriOutput, Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                }
+
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUriOutput)
+                startActivityForResult(intent, CROP_FROM_CAMERA)
+
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+
+        }
+
         //you must setup this
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
-        startActivityForResult(intent, CROP_FROM_CAMERA)
+        // intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
+        // startActivityForResult(intent, CROP_FROM_CAMERA)
 
     }
 

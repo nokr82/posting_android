@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -13,38 +13,36 @@
         android:gravity="center">
 
         <TextView
-                android:layout_width="match_parent"
+                android:id="@+id/TV"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_centerInParent="true"
                 android:text="알림"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:textSize="11.75dp"/>
+                android:textSize="16dp"/>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:layout_centerInParent="true"
-            android:layout_alignParentTop="true">
+        <posting.devstories.com.posting_android.base.RationalRelativeLayout
+                android:layout_width="16dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                app:ratio="1:1"
+                android:layout_centerInParent="true"
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@+id/TV">
 
             <TextView
-                android:id="@+id/alarmCntTV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="32"
-                android:textSize="10dp"
-                android:textColor="#FFFFFF"
-                android:layout_marginLeft="27dp"
-                android:layout_marginTop="3.5dp"
-                android:background="@drawable/circle_red"
-                android:layout_marginBottom="1dp"
-                android:gravity="center"
-                android:paddingLeft="2.5dp"
-                android:paddingRight="2.5dp"
-                android:visibility="gone"/>
+                    android:id="@+id/alarmCntTV"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text=""
+                    android:textSize="12dp"
+                    android:textColor="#FFFFFF"
+                    android:gravity="center"
+                    android:visibility="gone"
+                    android:background="@drawable/circle_red"/>
 
-        </LinearLayout>
+        </posting.devstories.com.posting_android.base.RationalRelativeLayout>
 
         <View
             android:id="@+id/notifyV"

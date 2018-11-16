@@ -22,13 +22,13 @@ import posting.devstories.com.posting_android.base.Utils
 
 class MyPageNotifyFragment : Fragment() {
 
+    lateinit var myContext: Context
+
     private var progressDialog: ProgressDialog? = null
 
     private lateinit var listLV:ListView
     private lateinit var adapter: AlarmAdapter
     private var adapterData: ArrayList<JSONObject> = ArrayList<JSONObject>()
-
-    private lateinit var mContext: Context
 
     private var page = 1
 
@@ -37,8 +37,9 @@ class MyPageNotifyFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        mContext = this!!.context!!
-        progressDialog = ProgressDialog(context)
+        this.myContext = container!!.context
+
+        progressDialog = ProgressDialog(myContext)
 
         return inflater.inflate(R.layout.fra_alarm, container, false)
     }
@@ -53,14 +54,14 @@ class MyPageNotifyFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        adapter = AlarmAdapter(mContext, R.layout.item_alram, adapterData)
+        adapter = AlarmAdapter(myContext, R.layout.item_alram, adapterData)
         listLV.adapter = adapter
         listLV.setOnItemClickListener { parent, view, position, id ->
 
             var data = adapterData.get(position)
             var posting= data.getJSONObject("Posting")
 
-            var intent = Intent(mContext, DetailActivity::class.java)
+            var intent = Intent(myContext, DetailActivity::class.java)
             intent.putExtra("id", Utils.getString(posting, "id"))
             startActivity(intent)
 
@@ -72,7 +73,7 @@ class MyPageNotifyFragment : Fragment() {
 
     fun loadData() {
         val params = RequestParams()
-        params.put("member_id", PrefUtils.getIntPreference(context, "member_id"))
+        params.put("member_id", PrefUtils.getIntPreference(myContext, "member_id"))
         params.put("page", page)
 
         AlarmAction.alarm_list(params, object : JsonHttpResponseHandler() {
@@ -104,7 +105,7 @@ class MyPageNotifyFragment : Fragment() {
                         var intent = Intent()
                         intent.action = "UPDATE_ALARM_CNT"
                         intent.putExtra("alarm_count", alarm_count)
-                        mContext.sendBroadcast(intent)
+                        myContext.sendBroadcast(intent)
 
                     } else if("empty".equals(result)) {
 
@@ -125,7 +126,7 @@ class MyPageNotifyFragment : Fragment() {
             }
 
             private fun error() {
-                Utils.alert(context, "조회중 장애가 발생하였습니다.")
+                Utils.alert(myContext, "조회중 장애가 발생하였습니다.")
             }
 
             override fun onFailure(

@@ -40,18 +40,19 @@ import posting.devstories.com.posting_android.base.NonSwipeableViewPager
 import posting.devstories.com.posting_android.base.PrefUtils
 import posting.devstories.com.posting_android.base.Utils
 
+
 open class PostFragment : Fragment() {
 
-    var ctx: Context? = null
+    lateinit var myContext: Context
+
     private var progressDialog: ProgressDialog? = null
 
     var adverImagePaths = ArrayList<String>()
-    private var adverAdapterData = ArrayList<JSONObject>()
     private lateinit var adverAdapter: FullScreenImageAdapter
     var adPosition = 0;
 
     private var adTime = 0
-    private lateinit var handler: Handler
+    private var handler: Handler? = null
 
     lateinit var mainAdapter: MainPostAdapter
     var mainAdapterData = ArrayList<JSONObject>();
@@ -125,7 +126,13 @@ open class PostFragment : Fragment() {
 
                             if (Utils.getInt(posting, "leftCount") != 9999) {
                                 var cnt = Utils.getInt(posting, "leftCount") - 1
-                                posting.put("leftCount", cnt)
+
+                                if(cnt < 1) {
+                                    list.remove(i)
+                                } else {
+                                    posting.put("leftCount", cnt)
+                                }
+
                             }
 
                         }
@@ -145,6 +152,7 @@ open class PostFragment : Fragment() {
             mainAdapter.notifyDataSetChanged()
         }
     }
+
     internal var setViewReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent?) {
 
@@ -167,10 +175,9 @@ open class PostFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val ctx = context
-        if (null != ctx) {
-            doSomethingWithContext(ctx)
-        }
+        this.myContext = container!!.context
+
+        progressDialog = ProgressDialog(myContext)
 
         mainActivity = activity as MainActivity
         val filter2 = IntentFilter("DEL_POSTING")
@@ -181,12 +188,6 @@ open class PostFragment : Fragment() {
         mainActivity.registerReceiver(setViewReceiver, filter3)
 
         return inflater.inflate(R.layout.fra_post, container, false)
-    }
-
-    fun doSomethingWithContext(context: Context) {
-        // TODO: Actually do something with the context
-        this.ctx = context
-        progressDialog = ProgressDialog(ctx)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -234,14 +235,14 @@ open class PostFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        val image_uri = PrefUtils.getStringPreference(context, "current_school_image_uri")
+        val image_uri = PrefUtils.getStringPreference(myContext, "current_school_image_uri")
         var univimg = Config.url + image_uri
         ImageLoader.getInstance().displayImage(univimg, univIV, Utils.UILoptionsUserProfile)
 
-        member_id = PrefUtils.getIntPreference(context, "member_id")
+        member_id = PrefUtils.getIntPreference(myContext, "member_id")
 
         // 메인 데이터
-        mainAdapter = MainPostAdapter(ctx, R.layout.item_main, mainAdapterData)
+        mainAdapter = MainPostAdapter(myContext, R.layout.item_main, mainAdapterData)
         mainLV.isExpanded = true
         mainLV.adapter = mainAdapter
 
@@ -268,8 +269,9 @@ open class PostFragment : Fragment() {
         })
 
         // 뷰페이저
-        pagerAdapter = PagerAdapter(getChildFragmentManager())
+        pagerAdapter = PagerAdapter(getChildFragmentManager(), searchET)
         pagerVP.adapter = pagerAdapter
+        pagerVP.offscreenPageLimit = 1
         pagerAdapter.notifyDataSetChanged()
         pagerVP.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
@@ -323,13 +325,14 @@ open class PostFragment : Fragment() {
 
 
         menuLL.setOnClickListener {
-            val intent = Intent(context, MyPageActivity::class.java)
+            val intent = Intent(myContext, MyPageActivity::class.java)
             startActivity(intent)
         }
 
 
         univIV.setOnClickListener {
             setMainView()
+            mainData()
         }
 
         freeRL.setOnClickListener {
@@ -393,16 +396,14 @@ open class PostFragment : Fragment() {
 
                     keyword = Utils.getString(searchET)
 
-                    if (mainLL.visibility == View.VISIBLE) {
-                        // 메인 학교 검색
-
-                    } else {
+                    if (mainLL.visibility == View.GONE) {
                         var intent = Intent()
                         intent.putExtra("keyword", keyword)
-                        intent.putExtra("type", (pagerVP.currentItem + 1))
                         intent.action = "SEARCH_KEYWORD"
-                        context!!.sendBroadcast(intent)
+                        myContext!!.sendBroadcast(intent)
                     }
+
+                    Utils.hideKeyboard(myContext)
 
                 }
             }
@@ -423,9 +424,11 @@ open class PostFragment : Fragment() {
 
                 // yourEditText...
 
-                val keyword = Utils.getString(searchET)
+                if(mainLL.visibility == View.VISIBLE) {
+                    val keyword = Utils.getString(searchET)
 
-                searchSchool(keyword)
+                    searchSchool(keyword)
+                }
 
             }
 
@@ -434,7 +437,7 @@ open class PostFragment : Fragment() {
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
         })
 
-        adapter = SchoolAdapter(context!!, R.layout.school_item, adapterData)
+        adapter = SchoolAdapter(myContext!!, R.layout.school_item, adapterData)
         schoolLV.adapter = adapter
         adapter.notifyDataSetChanged()
 
@@ -447,10 +450,10 @@ open class PostFragment : Fragment() {
                 println("school : $school")
                 println("school_id : $school_id")
 
-                PrefUtils.setPreference(context, "current_school_id", school_id)
+                PrefUtils.setPreference(myContext, "current_school_id", school_id)
 
 
-                val intent = Intent(context, MainActivity::class.java)
+                val intent = Intent(myContext, MainActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intent)
             }
@@ -516,7 +519,7 @@ open class PostFragment : Fragment() {
             }
 
             private fun error() {
-                Utils.alert(context, "조회중 장애가 발생하였습니다.")
+                Utils.alert(myContext, "조회중 장애가 발생하였습니다.")
             }
 
             override fun onFailure(
@@ -599,13 +602,18 @@ open class PostFragment : Fragment() {
     }
 
     private fun timer() {
+
+        if(handler != null) {
+            handler!!.removeCallbacksAndMessages(null);
+        }
+
         handler = object : Handler() {
             override fun handleMessage(msg: Message) {
 
                 adTime++
 
                 val index = adverVP.getCurrentItem()
-                val last_index = adverAdapterData.size - 1
+                val last_index = adverImagePaths.size - 1
 
                 if (adTime % 2 == 0) {
                     if (index < last_index) {
@@ -615,14 +623,14 @@ open class PostFragment : Fragment() {
                     }
                 }
 
-                handler.sendEmptyMessageDelayed(0, 2000) // 1초에 한번 업, 1000 = 1 초
+                handler!!.sendEmptyMessageDelayed(0, 2000) // 1초에 한번 업, 1000 = 1 초
             }
         }
-        handler.sendEmptyMessage(0)
+        handler!!.sendEmptyMessage(0)
     }
 
     private fun addDot(circleLL: LinearLayout, selected: Boolean) {
-        val iv = ImageView(ctx)
+        val iv = ImageView(myContext)
         if (selected) {
             iv.setBackgroundResource(R.drawable.circle_background1)
         } else {
@@ -643,13 +651,17 @@ open class PostFragment : Fragment() {
         circleLL.addView(iv)
     }
 
-    class PagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
+    class PagerAdapter(fm: FragmentManager, searchET: EditText) : FragmentStatePagerAdapter(fm) {
+
+        var searchET = searchET
 
         override fun getItem(i: Int): Fragment {
 
             var fragment: Fragment
 
             val args = Bundle()
+            args.putString("keyword", Utils.getString(searchET))
+
             when (i) {
                 0 -> {
                     fragment = FreeFragment()
@@ -722,6 +734,8 @@ open class PostFragment : Fragment() {
         mainLL.visibility = View.VISIBLE
         pagerVP.visibility = View.GONE
 
+        searchET.hint = "학교검색"
+
         mainData()
     }
 
@@ -747,33 +761,33 @@ open class PostFragment : Fragment() {
         pagerVP.visibility = View.VISIBLE
 
         if (tabType == 1) {
-            freeTV.setTextColor(Color.parseColor("#01b4ec"))
+            freeTV.setTextColor(Color.parseColor("#063588"))
             freeV.visibility = View.VISIBLE
         } else if (tabType == 2) {
             infoV.visibility = View.VISIBLE
-            infoTV.setTextColor(Color.parseColor("#01b4ec"))
+            infoTV.setTextColor(Color.parseColor("#063588"))
         } else if (tabType == 3) {
             studyV.visibility = View.VISIBLE
-            studyTV.setTextColor(Color.parseColor("#01b4ec"))
+            studyTV.setTextColor(Color.parseColor("#063588"))
         } else if (tabType == 4) {
             classV.visibility = View.VISIBLE
-            classTV.setTextColor(Color.parseColor("#01b4ec"))
+            classTV.setTextColor(Color.parseColor("#063588"))
         } else if (tabType == 5) {
             meetingV.visibility = View.VISIBLE
-            meetingTV.setTextColor(Color.parseColor("#01b4ec"))
+            meetingTV.setTextColor(Color.parseColor("#063588"))
         } else if (tabType == 6) {
             couponV.visibility = View.VISIBLE
-            couponTV.setTextColor(Color.parseColor("#01b4ec"))
+            couponTV.setTextColor(Color.parseColor("#063588"))
         }
 
-        searchET.setText("")
+        searchET.hint = "검색"
 
     }
 
     fun mainData() {
         val params = RequestParams()
         params.put("member_id", member_id)
-        params.put("current_school_id", PrefUtils.getIntPreference(context, "current_school_id"))
+        params.put("current_school_id", PrefUtils.getIntPreference(myContext, "current_school_id"))
         params.put("type", type)
 
         PostingAction.mainlist(params, object : JsonHttpResponseHandler() {
@@ -785,28 +799,7 @@ open class PostFragment : Fragment() {
 
                 try {
 
-                    adverImagePaths.clear()
-                    adverAdapterData.clear()
                     mainAdapterData.clear()
-
-                    var path = "http://13.124.13.37/data/ad/5ba1ebab-0018-486f-ace1-624cac1f0bcc";
-
-                    adverImagePaths.add(path);
-                    adverImagePaths.add(path);
-                    adverImagePaths.add(path);
-                    adverImagePaths.add(path);
-                    adverImagePaths.add(path);
-                    adverImagePaths.add(path);
-
-                    var data = JSONObject();
-                    data.put("path", path)
-
-                    adverAdapterData.add(data)
-                    adverAdapterData.add(data)
-                    adverAdapterData.add(data)
-                    adverAdapterData.add(data)
-                    adverAdapterData.add(data)
-                    adverAdapterData.add(data)
 
                     val result = response!!.getString("result")
 
@@ -821,14 +814,27 @@ open class PostFragment : Fragment() {
                             mainActivity.alarmCntTV.text = alarm_count.toString()
                         }
 
+                        var adver = response.getJSONArray("adver")
+                        adverImagePaths.clear()
+
+                        for(i in 0 until adver.length()) {
+                            val adverObj:JSONObject = adver[i] as JSONObject
+                            val advertise = adverObj.getJSONObject("Advertise")
+
+                            var image_uri = Config.url + Utils.getString(advertise, "image_uri")
+
+                            adverImagePaths.add(image_uri);
+
+                        }
+
                         val list = response.getJSONArray("list")
                         var school = response.getJSONObject("school")
                         val schoolindex = school.getJSONObject("School")
                         val image_uri = Utils.getString(schoolindex, "image_uri")
 
-                        PrefUtils.setPreference(context, "current_school_image_uri ", image_uri)
+                        PrefUtils.setPreference(myContext, "current_school_image_uri ", image_uri)
 
-                        val current_school_image_uri = PrefUtils.getStringPreference(context, "current_school_image_uri ")
+                        val current_school_image_uri = PrefUtils.getStringPreference(myContext, "current_school_image_uri ")
 
                         var univimg = Config.url + current_school_image_uri
                         ImageLoader.getInstance().displayImage(univimg, univIV, Utils.UILoptionsUserProfile)
@@ -858,7 +864,7 @@ open class PostFragment : Fragment() {
             }
 
             private fun error() {
-                Utils.alert(context, "조회중 장애가 발생하였습니다.")
+                Utils.alert(myContext, "조회중 장애가 발생하였습니다.")
             }
 
             override fun onFailure(
@@ -928,21 +934,21 @@ open class PostFragment : Fragment() {
 
         try {
             if (savePostingReceiver != null) {
-                context!!.unregisterReceiver(savePostingReceiver)
+                myContext!!.unregisterReceiver(savePostingReceiver)
             }
         } catch (e: IllegalArgumentException) {
         }
 
         try {
             if (setViewReceiver != null) {
-                context!!.unregisterReceiver(setViewReceiver)
+                myContext!!.unregisterReceiver(setViewReceiver)
             }
         } catch (e: IllegalArgumentException) {
         }
 
         try {
             if (delPostingReceiver != null) {
-                context!!.unregisterReceiver(delPostingReceiver)
+                myContext!!.unregisterReceiver(delPostingReceiver)
             }
         } catch (e: IllegalArgumentException) {
         }

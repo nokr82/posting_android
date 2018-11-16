@@ -29,7 +29,7 @@ class nickchangeActivity : RootActivity() {
 
     lateinit var context: Context
     private var progressDialog: ProgressDialog? = null
-    var getNick=""
+    var getNick = ""
     var nick = ""
     var tab = "id"
     var geterror = ""
@@ -59,8 +59,9 @@ class nickchangeActivity : RootActivity() {
         }
 
     }
+
     //닉네임바꾸기
-    fun edit_nick(nick_name:String){
+    fun edit_nick(nick_name: String) {
         val params = RequestParams()
         params.put("member_id", PrefUtils.getIntPreference(context, "member_id"))
         params.put("nick_name", nick_name)
@@ -75,7 +76,7 @@ class nickchangeActivity : RootActivity() {
                 try {
                     val result = response!!.getString("result")
 
-                    val message:String = response!!.getString("message")
+                    val message: String = response!!.getString("message")
 
 
                     if ("ok" == result) {
@@ -84,9 +85,9 @@ class nickchangeActivity : RootActivity() {
 
 
                     } else {
-                        geterror ="이미 사용중인 닉네임입니다"
+                        geterror = "이미 사용중인 닉네임입니다"
 
-                        dlgView( geterror)
+                        dlgView(geterror)
                     }
 
                 } catch (e: JSONException) {
@@ -108,7 +109,12 @@ class nickchangeActivity : RootActivity() {
                 Utils.alert(context, "조회중 장애가 발생하였습니다.")
             }
 
-            override fun onFailure(statusCode: Int, headers: Array<Header>?, responseString: String?, throwable: Throwable) {
+            override fun onFailure(
+                statusCode: Int,
+                headers: Array<Header>?,
+                responseString: String?,
+                throwable: Throwable
+            ) {
                 if (progressDialog != null) {
                     progressDialog!!.dismiss()
                 }
@@ -119,7 +125,12 @@ class nickchangeActivity : RootActivity() {
                 error()
             }
 
-            override fun onFailure(statusCode: Int, headers: Array<Header>?, throwable: Throwable, errorResponse: JSONObject?) {
+            override fun onFailure(
+                statusCode: Int,
+                headers: Array<Header>?,
+                throwable: Throwable,
+                errorResponse: JSONObject?
+            ) {
                 if (progressDialog != null) {
                     progressDialog!!.dismiss()
                 }
@@ -127,7 +138,12 @@ class nickchangeActivity : RootActivity() {
                 error()
             }
 
-            override fun onFailure(statusCode: Int, headers: Array<Header>?, throwable: Throwable, errorResponse: JSONArray?) {
+            override fun onFailure(
+                statusCode: Int,
+                headers: Array<Header>?,
+                throwable: Throwable,
+                errorResponse: JSONArray?
+            ) {
                 if (progressDialog != null) {
                     progressDialog!!.dismiss()
                 }
@@ -152,7 +168,7 @@ class nickchangeActivity : RootActivity() {
     }
 
     //닉네임중복체크
-    fun Nick(nick_name:String){
+    fun Nick(nick_name: String) {
         val params = RequestParams()
         params.put("nick_name", nick_name)
 
@@ -166,21 +182,21 @@ class nickchangeActivity : RootActivity() {
                 try {
                     val result = response!!.getString("result")
 
-                    val message:String = response!!.getString("message")
+                    val message: String = response!!.getString("message")
 
 
                     if ("ok" == result) {
                         edit_nick(getNick)
-                        println("=============닉넴"+getNick)
+                        println("=============닉넴" + getNick)
                         val intent = Intent(context, MyPageActivity::class.java)
                         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                         startActivity(intent)
 
 
                     } else {
-                        geterror ="이미 사용중인 닉네임입니다"
+                        geterror = "이미 사용중인 닉네임입니다"
 
-                        dlgView( geterror)
+                        dlgView(geterror)
                     }
 
                 } catch (e: JSONException) {
@@ -202,7 +218,12 @@ class nickchangeActivity : RootActivity() {
                 Utils.alert(context, "조회중 장애가 발생하였습니다.")
             }
 
-            override fun onFailure(statusCode: Int, headers: Array<Header>?, responseString: String?, throwable: Throwable) {
+            override fun onFailure(
+                statusCode: Int,
+                headers: Array<Header>?,
+                responseString: String?,
+                throwable: Throwable
+            ) {
                 if (progressDialog != null) {
                     progressDialog!!.dismiss()
                 }
@@ -213,7 +234,12 @@ class nickchangeActivity : RootActivity() {
                 error()
             }
 
-            override fun onFailure(statusCode: Int, headers: Array<Header>?, throwable: Throwable, errorResponse: JSONObject?) {
+            override fun onFailure(
+                statusCode: Int,
+                headers: Array<Header>?,
+                throwable: Throwable,
+                errorResponse: JSONObject?
+            ) {
                 if (progressDialog != null) {
                     progressDialog!!.dismiss()
                 }
@@ -221,7 +247,12 @@ class nickchangeActivity : RootActivity() {
                 error()
             }
 
-            override fun onFailure(statusCode: Int, headers: Array<Header>?, throwable: Throwable, errorResponse: JSONArray?) {
+            override fun onFailure(
+                statusCode: Int,
+                headers: Array<Header>?,
+                throwable: Throwable,
+                errorResponse: JSONArray?
+            ) {
                 if (progressDialog != null) {
                     progressDialog!!.dismiss()
                 }
@@ -244,21 +275,14 @@ class nickchangeActivity : RootActivity() {
             }
         })
     }
-    fun dlgView(error:String){
-        var mPopupDlg: DialogInterface? = null
 
-        val builder = AlertDialog.Builder(this)
-        val dialogView = layoutInflater.inflate(R.layout.joinerror_dlg, null)
-        val errorTX = dialogView.findViewById<TextView>(R.id.errorTX)
-        val PostingStartTX = dialogView.findViewById<TextView>(R.id.PostingStartTX)
-        errorTX.setText(error)
-        PostingStartTX.text = "확인"
-        mPopupDlg =  builder.setView(dialogView).show()
-        PostingStartTX.setOnClickListener {
+    fun dlgView(error: String) {
 
-            mPopupDlg.dismiss()
-        }
+        var intent = Intent(context, DlgJoinActivity::class.java)
+        intent.putExtra("type", "join_error")
+        intent.putExtra("message", error)
+        startActivity(intent)
 
     }
 
-    }
+}

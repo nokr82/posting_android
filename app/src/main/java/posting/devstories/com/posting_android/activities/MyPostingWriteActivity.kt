@@ -5,8 +5,11 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.View
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import com.loopj.android.http.JsonHttpResponseHandler
 import com.loopj.android.http.RequestParams
@@ -29,11 +32,11 @@ class MyPostingWriteActivity : RootActivity() {
 
     lateinit var context:Context
     private var progressDialog: ProgressDialog? = null
-    var imgid:String? = null
+    // var imgid:String? = null
     var capture: Bitmap?= null
     var member_type = ""
     var image_uri:String? = null
-    var image:String? = null
+    var imageUri:Uri? = null
     var str:String? = null
     var posting_id :String?=null
     var member_id = -1
@@ -45,7 +48,7 @@ class MyPostingWriteActivity : RootActivity() {
     var startd:String?=null
     var last:String?=null
     var mount:Int? = 0
-    var absolutePath:String? =null
+    // var absolutePath:String? =null
     var getmee:String?= null
     var getmost = ""
     var getday:String?= null
@@ -53,6 +56,13 @@ class MyPostingWriteActivity : RootActivity() {
 
     var current_school = -1
     var school_id = -1
+
+    var mee = arrayOf("자유", "정보", "스터디", "동아리", "미팅")
+    var most = arrayOf("수량", "1", "3", "5", "10", "20", "무제한")
+
+    lateinit var adapter: ArrayAdapter<String>
+    lateinit var typeAdapter: ArrayAdapter<String>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_posttextwrite)
@@ -65,17 +75,18 @@ class MyPostingWriteActivity : RootActivity() {
 
         intent = getIntent()
         // 카메라 사진
-        absolutePath = intent.getStringExtra("absolutePath")
+        // absolutePath = intent.getStringExtra("absolutePath")
         // 포스팅 타입 G-갤러리 P-포토 T-텍스트
         postingType = intent.getStringExtra("postingType")
         getmee = intent.getStringExtra("getmee")
         getmost = intent.getStringExtra("getmost")
+        image_uri = intent.getStringExtra("image_uri")
 
         if("3" == member_type){
             getday = intent.getStringExtra("getday")
         }
 
-        imgid = intent.getStringExtra("imgid")
+        // imgid = intent.getStringExtra("imgid")
         // 수정 contents
         contents2 = intent.getStringExtra("contents")
         startd = intent.getStringExtra("startd")
@@ -83,18 +94,28 @@ class MyPostingWriteActivity : RootActivity() {
         school_id = intent.getIntExtra("school_id",-1)
 
         last = intent.getStringExtra("last")
-        posting_id = intent!!.getStringExtra("posting_id")
-        image = intent.getStringExtra("image")
+        posting_id = intent.getStringExtra("posting_id")
+
+        val h = intent.getStringExtra("imageUri")
+        if(h != null) {
+            imageUri = Uri.parse(h)
+        }
+
         mount = intent.getIntExtra("mount",0)
 
-
         // 이미지 uri 로드
-        if (!posting_id.equals("") && "M" == postingType) {
+        if (posting_id != null && !posting_id.equals("") && "M" == postingType) {
             var image = Config.url + image_uri
             ImageLoader.getInstance().displayImage(image, captureIV, Utils.UILoptionsPosting)
             popupRL.visibility = View.VISIBLE
+
         } else if ("T" == postingType) {
             popupRL.visibility = View.GONE
+            meeting2RL.visibility = View.VISIBLE
+            mostRL.visibility = View.VISIBLE
+
+//            checkCategory()
+
         }
 
         // 배경 포스트잇
@@ -103,6 +124,19 @@ class MyPostingWriteActivity : RootActivity() {
         }else{
             popupRL.background = getDrawable(R.mipmap.wtite_bg)
         }
+
+
+        typeAdapter = ArrayAdapter<String>(this, R.layout.spinner_item, mee)
+        meetingSP2.adapter = typeAdapter
+
+        adapter = ArrayAdapter<String>(this, R.layout.spinner_item, most)
+        mostSP.adapter = adapter
+
+        var typePosition = typeAdapter.getPosition(getmee)
+        meetingSP2.setSelection(typePosition)
+
+        var countPosition = adapter.getPosition(getmost)
+        mostSP.setSelection(countPosition)
 
         contentET.setText(contents2)
 
@@ -115,21 +149,24 @@ class MyPostingWriteActivity : RootActivity() {
             finish()
         }
 
+        println("postingType : $postingType, imageUri : $imageUri")
 
-
-
-        if (postingType.equals("P")){
-            capture = Utils.getImage(context.contentResolver, absolutePath)
+        if (postingType.equals("P") && imageUri != null){
+            capture = MediaStore.Images.Media.getBitmap(this.contentResolver, imageUri)
             captureIV.setImageBitmap(capture)
             popupRL.visibility = View.VISIBLE
-        }else if (postingType.equals("G")){
-            //이미지
-            ImageLoader.getInstance().displayImage(image, captureIV, Utils.UILoptionsUserProfile)
+
+        }else if (postingType.equals("G") && imageUri != null){
+            capture = MediaStore.Images.Media.getBitmap(this.contentResolver, imageUri)
+            captureIV.setImageBitmap(capture)
+            // ImageLoader.getInstance().displayImage(image, captureIV, Utils.UILoptionsUserProfile)
             popupRL.visibility = View.VISIBLE
 
-            captureIV.setImageBitmap(Utils.getImage(context.contentResolver, imgid))
-        }else if (postingType.equals("M")){
-            com.nostra13.universalimageloader.core.ImageLoader.getInstance().displayImage(image, captureIV, Utils.UILoptionsUserProfile)
+            // captureIV.setImageBitmap(Utils.getImage(context.contentResolver, imgid))
+        }else if (postingType.equals("M") && imageUri != null){
+            capture = MediaStore.Images.Media.getBitmap(this.contentResolver, imageUri)
+            captureIV.setImageBitmap(capture)
+            // com.nostra13.universalimageloader.core.ImageLoader.getInstance().displayImage(image, captureIV, Utils.UILoptionsUserProfile)
             captureIV.visibility = View.VISIBLE
         }
 
@@ -159,6 +196,9 @@ class MyPostingWriteActivity : RootActivity() {
 
                     Toast.makeText(context,geterror,Toast.LENGTH_SHORT).show()
                 }else{
+
+                    nextLL2.isEnabled = false
+
                     if (posting_id == null||posting_id == ""){
                         write()
                     }else{
@@ -171,6 +211,12 @@ class MyPostingWriteActivity : RootActivity() {
             }else {
 //                type = meetingSP3.selectedItem.toString()
 //                count = mostSP3.selectedItem.toString()
+
+//                if(postingType == "T") {
+                    getmee = meetingSP2.selectedItem.toString()
+                    count = mostSP.selectedItem.toString()
+//                }
+
                 if (getmee.equals("자유")) {
                     type = 1
                 } else if (getmee.equals("정보")) {
@@ -180,10 +226,11 @@ class MyPostingWriteActivity : RootActivity() {
                 } else if (getmee.equals("동아리")) {
                     type = 4
                 } else if (getmee.equals("미팅")) {
-                    type =5
+                    type = 5
                 } else if (getmee.equals("쿠폰")) {
                     type = 6
                 }
+
                 if(count.equals("수량")){
 
                     Toast.makeText(context,"수량을 선택해주세요",Toast.LENGTH_SHORT).show()
@@ -194,6 +241,9 @@ class MyPostingWriteActivity : RootActivity() {
 
                     Toast.makeText(context, geterror, Toast.LENGTH_SHORT).show()
                 } else {
+
+                    nextLL2.isEnabled = false
+
                     if (posting_id == null||posting_id == ""){
                         write()
                     }else{
@@ -210,8 +260,102 @@ class MyPostingWriteActivity : RootActivity() {
 
     }
 
+    fun checkCategory() {
+        val params = RequestParams()
+        params.put("member_id", PrefUtils.getIntPreference(context, "member_id"));
+        params.put("member_type", member_type);
 
+        PostingAction.today_posting(params, object : JsonHttpResponseHandler() {
 
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+
+                try {
+
+                    val result = response!!.getString("result")
+
+                    if ("ok" == result) {
+
+                        if(member_type == "2") {
+
+                            var study = Utils.getString(response, "study")
+                            var classStr = Utils.getString(response, "class")
+                            var meeting = Utils.getString(response, "meeting")
+
+                            var setMee:ArrayList<String> = ArrayList()
+                            setMee.add("자유")
+                            setMee.add("정보")
+
+                            if(study == "ok") {
+                                setMee.add("스터디")
+                            }
+
+                            if(classStr == "ok") {
+                                setMee.add("동아리")
+                            }
+
+                            if(meeting == "ok") {
+                                setMee.add("미팅")
+                            }
+
+                            typeAdapter = ArrayAdapter<String>(context, R.layout.spinner_item, setMee)
+                            meetingSP2.adapter = typeAdapter
+                            typeAdapter.notifyDataSetChanged()
+
+                            var typePosition = typeAdapter.getPosition(getmee)
+                            meetingSP2.setSelection(typePosition)
+
+                            var countPosition = adapter.getPosition(getmost)
+                            mostSP.setSelection(countPosition)
+
+                        }
+
+                    }
+
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+
+            }
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONArray?) {
+                super.onSuccess(statusCode, headers, response)
+            }
+
+            private fun error() {
+                Utils.alert(context, "조회중 장애가 발생하였습니다.")
+            }
+
+            override fun onFailure(
+                statusCode: Int,
+                headers: Array<Header>?,
+                throwable: Throwable,
+                errorResponse: JSONArray?
+            ) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+                throwable.printStackTrace()
+                error()
+            }
+
+            override fun onStart() {
+                // show dialog
+                if (progressDialog != null) {
+
+                    progressDialog!!.show()
+                }
+            }
+
+            override fun onFinish() {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+            }
+        })
+    }
 
     fun write(){
 
@@ -226,7 +370,7 @@ class MyPostingWriteActivity : RootActivity() {
         params.put("current_school_id", PrefUtils.getIntPreference(context, "current_school_id"))
         params.put("days",getday)
 
-
+        /*
         if (capture==null){
 
         }else{
@@ -235,20 +379,33 @@ class MyPostingWriteActivity : RootActivity() {
 
 //            params.put("upload",capture)
         }
+        */
 
+        // Utils.alert(context, "ii : $imageUri")
+        // return
 
+        /*
+        if (imageUri != null) {
+            val add_file = MediaStore.Images.Media.getBitmap(this.contentResolver, imageUri)
 
-        if (imgid.equals("")||imgid==null){
+            Toast.makeText(context, "f : $add_file", Toast.LENGTH_SHORT).show()
 
-        }else{
+            // val add_file = Utils.getImage(context.contentResolver, imgid)
+            params.put("upload", ByteArrayInputStream(Utils.getByteArray(add_file)))
+        }
+        */
 
+        if (capture != null) {
+            // val add_file = MediaStore.Images.Media.getBitmap(this.contentResolver, imageUri)
 
-            val add_file = Utils.getImage(context.contentResolver, imgid)
-            params.put("upload",ByteArrayInputStream(Utils.getByteArray(add_file)))
+            // Toast.makeText(context, "f : $add_file", Toast.LENGTH_SHORT).show()
 
+            // val add_file = Utils.getImage(context.contentResolver, imgid)
+            params.put("upload", ByteArrayInputStream(Utils.getByteArray(capture)))
         }
 
-
+        // Toast.makeText(context, "p : $params", Toast.LENGTH_SHORT).show()
+        println("params : $params")
 
 
         PostingAction.write(params, object : JsonHttpResponseHandler() {
@@ -269,7 +426,14 @@ class MyPostingWriteActivity : RootActivity() {
 
                         Utils.hideKeyboard(context)
 //                        val intent = Intent(context,MainActivity::class.java)
-                   //브로드캐스트로 날려주기
+
+                        try {
+                            contentResolver.delete(imageUri, null, null);
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+
+                        //브로드캐스트로 날려주기
                         val intent = Intent()
                         intent.putExtra("tabType",type)
                         intent.action = "SET_VIEW"
@@ -283,7 +447,10 @@ class MyPostingWriteActivity : RootActivity() {
                     } else if ("over" == result) {
                         Toast.makeText(context, "하루 제한량만큼 작성하셨습니다.", Toast.LENGTH_SHORT).show()
                     } else {
-                        geterror = "작성실패"
+
+                        nextLL2.isEnabled = true
+
+                        geterror = "등록중 장애가 발생하였습니다."
 
                         Toast.makeText(context, geterror, Toast.LENGTH_SHORT).show()
                     }
@@ -303,7 +470,7 @@ class MyPostingWriteActivity : RootActivity() {
             }
 
             private fun error() {
-                Utils.alert(context, "올리는중 장애가 발생하였습니다.")
+                Utils.alert(context, "등록중 장애가 발생하였습니다.")
             }
 
             override fun onFailure(statusCode: Int, headers: Array<Header>?, responseString: String?, throwable: Throwable) {
@@ -354,24 +521,31 @@ class MyPostingWriteActivity : RootActivity() {
     fun edit_posting(){
 
         val params = RequestParams()
-
         params.put("posting_id", posting_id)
         params.put("member_id", member_id)
         params.put("type", type)
         params.put("contents", contents)
         params.put("count", count)
 
-        if (capture==null){
+        if(postingType == "T") {
+            params.put("image", "")
+            params.put("image_uri", "")
+        } else {
 
-        }else{
-            params.put("upload",ByteArrayInputStream(Utils.getByteArray(capture)))
+            if (imageUri != null) {
+                val add_file = MediaStore.Images.Media.getBitmap(this.contentResolver, imageUri)
+                // val add_file = Utils.getImage(context.contentResolver, imgid)
+                params.put("upload",ByteArrayInputStream(Utils.getByteArray(add_file)))
+            }
 
-        }
-        if (imgid.equals("")||imgid==null){
+            /*
+            if (capture != null) {
+                val add_file = Utils.getImage(context.contentResolver, image_uri)
+                // val add_file = Utils.getImage(context.contentResolver, imgid)
+                params.put("upload",ByteArrayInputStream(Utils.getByteArray(add_file)))
+            }
+            */
 
-        }else{
-            val add_file = Utils.getImage(context.contentResolver, imgid)
-            params.put("upload",ByteArrayInputStream(Utils.getByteArray(add_file)))
         }
 
         PostingAction.edit_posting(params, object : JsonHttpResponseHandler() {
@@ -462,7 +636,6 @@ class MyPostingWriteActivity : RootActivity() {
             }
         })
     }
-
 
     override fun finish() {
         super.finish()

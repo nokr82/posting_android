@@ -38,8 +38,6 @@ class FindIDAndPasswdActivity : RootActivity() {
             finish()
         }
 
-
-
         findTV.setOnClickListener {
             val email:String = emailET.text.toString()
             val getName:String = nameET.text.toString()
@@ -55,12 +53,8 @@ class FindIDAndPasswdActivity : RootActivity() {
             }
 
 //            Toast.makeText(this,"찾는중...", Toast.LENGTH_SHORT).show()
-            if("id" == tab) {
 
-            } else {
-                findPW(email, getName)
-            }
-
+            findPW(email, getName)
         }
 
     }

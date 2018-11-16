@@ -36,10 +36,21 @@ class ReviewDetailActivity : RootActivity() {
     var image_uri  = ""
     var contents  = ""
 
+    internal var delReviewReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent?) {
+            if (intent != null) {
+                finish()
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_review_detail)
 
+
+        val filter1 = IntentFilter("DEL_REVIEW")
+        registerReceiver(delReviewReceiver, filter1)
 
         this.context = this
         progressDialog = ProgressDialog(context)
@@ -92,7 +103,7 @@ class ReviewDetailActivity : RootActivity() {
                        image_uri = Utils.getString(review, "image_uri")
 //                        var created =   Utils.getString(posting, "created")
                         if (member_id == Utils.getInt(member, "id")){
-                            myLL.visibility = View.VISIBLE
+//                            myLL.visibility = View.VISIBLE
                             menuIV.visibility = View.VISIBLE
                         }
 
@@ -172,196 +183,27 @@ class ReviewDetailActivity : RootActivity() {
     }
 
     fun policedlgView(){
-        var mPopupDlg: DialogInterface? = null
 
-        val builder = AlertDialog.Builder(this, R.style.full_screen_dialog1)
-        val dialogView = layoutInflater.inflate(R.layout.myposting_dlg, null)
-        val titleTV = dialogView.findViewById<TextView>(R.id.titleTV)
-        val delTV = dialogView.findViewById<TextView>(R.id.delTV)
-        val modiTV = dialogView.findViewById<TextView>(R.id.modiTV)
-        val recyTV = dialogView.findViewById<TextView>(R.id.recyTV)
-        titleTV.text = "이 포스트를 신고하는 이유를 선택하세요"
-        delTV.text = "불건전합니다"
-        modiTV.text = "부적절합니다"
-        recyTV.text = "스팸입니다"
+        var intent = Intent(context, DlgReviewActivity::class.java)
+        intent.putExtra("dlgtype", "police")
+        intent.putExtra("member_id", member_id)
+        intent.putExtra("review_id", review_id)
+        startActivity(intent)
 
-        mPopupDlg =  builder.setView(dialogView).show()
-
-        delTV.setOnClickListener {
-            report("1")
-            mPopupDlg.dismiss()
-        }
-        modiTV.setOnClickListener {
-            report("2")
-            mPopupDlg.dismiss()
-        }
-        recyTV.setOnClickListener {
-            report("3")
-            mPopupDlg.dismiss()
-        }
     }
 
     fun dlgView(){
-        var mPopupDlg: DialogInterface? = null
 
-        val builder = AlertDialog.Builder(this)
-        val dialogView = layoutInflater.inflate(R.layout.myposting_dlg, null)
-        val delTV = dialogView.findViewById<TextView>(R.id.delTV)
-        val modiTV = dialogView.findViewById<TextView>(R.id.modiTV)
-        val recyTV = dialogView.findViewById<TextView>(R.id.recyTV)
-
-        recyTV.visibility = View.GONE
-
-        delTV.setOnClickListener {
-            del_posting()
-            mPopupDlg!!.cancel()
-        }
-
-        modiTV.setOnClickListener {
-
-            val intent = Intent(context, ReviewWriteActivity::class.java)
-            intent.putExtra("review_id", review_id)
-            intent.putExtra("image_uri",image_uri)
-            intent.putExtra("contents",contents)
-            intent.putExtra("company_member_id", company_member_id)
-            startActivityForResult(intent, EDIT_REIVEW)
-            mPopupDlg!!.cancel()
-
-        }
-
-        recyTV.setOnClickListener {
-
-        }
-
-
-        mPopupDlg =  builder.setView(dialogView).show()
+        var intent = Intent(context, DlgReviewActivity::class.java)
+        intent.putExtra("review_id", review_id)
+        intent.putExtra("dlgtype", "MyReview")
+        intent.putExtra("image_uri",image_uri)
+        intent.putExtra("contents",contents)
+        intent.putExtra("company_member_id",company_member_id)
+        startActivityForResult(intent, EDIT_REIVEW)
 
     }
 
-
-    fun del_posting(){
-        val params = RequestParams()
-        params.put("review_id", review_id)
-
-        ReviewAction.del(params, object : JsonHttpResponseHandler() {
-
-            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
-                if (progressDialog != null) {
-                    progressDialog!!.dismiss()
-                }
-
-                try {
-                    val result = response!!.getString("result")
-                    if ("ok" == result) {
-
-                        intent = Intent()
-                        intent.putExtra("review_id", review_id)
-                        intent.action = "DEL_REVIEW"
-                        sendBroadcast(intent)
-
-                        finish()
-
-                    }
-
-                } catch (e: JSONException) {
-                    e.printStackTrace()
-                }
-
-            }
-
-            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONArray?) {
-                super.onSuccess(statusCode, headers, response)
-            }
-
-            private fun error() {
-                Utils.alert(context, "조회중 장애가 발생하였습니다.")
-            }
-
-            override fun onFailure(statusCode: Int, headers: Array<Header>?, throwable: Throwable, errorResponse: JSONArray?) {
-                if (progressDialog != null) {
-                    progressDialog!!.dismiss()
-                }
-                throwable.printStackTrace()
-                error()
-            }
-
-            override fun onStart() {
-                // show dialog
-                if (progressDialog != null) {
-
-                    progressDialog!!.show()
-                }
-            }
-
-            override fun onFinish() {
-                if (progressDialog != null) {
-                    progressDialog!!.dismiss()
-                }
-            }
-        })
-    }
-
-    fun report(type:String){
-        val params = RequestParams()
-        params.put("member_id", member_id)
-        params.put("review_id", review_id)
-        params.put("type", type)
-
-        ReviewAction.report(params, object : JsonHttpResponseHandler() {
-
-            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
-                if (progressDialog != null) {
-                    progressDialog!!.dismiss()
-                }
-
-                try {
-                    val result = response!!.getString("result")
-                    if ("ok" == result) {
-
-                        var intent = Intent(context, DlgPoliceActivity::class.java)
-                        startActivity(intent)
-
-                    } else if("already" == result) {
-                        Toast.makeText(context, "신고한 게시물입니다.", Toast.LENGTH_LONG).show()
-                    }
-
-                } catch (e: JSONException) {
-                    e.printStackTrace()
-                }
-
-            }
-
-            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONArray?) {
-                super.onSuccess(statusCode, headers, response)
-            }
-
-            private fun error() {
-                Utils.alert(context, "조회중 장애가 발생하였습니다.")
-            }
-
-            override fun onFailure(statusCode: Int, headers: Array<Header>?, throwable: Throwable, errorResponse: JSONArray?) {
-                if (progressDialog != null) {
-                    progressDialog!!.dismiss()
-                }
-                throwable.printStackTrace()
-                error()
-            }
-
-            override fun onStart() {
-                // show dialog
-                if (progressDialog != null) {
-
-                    progressDialog!!.show()
-                }
-            }
-
-            override fun onFinish() {
-                if (progressDialog != null) {
-                    progressDialog!!.dismiss()
-                }
-            }
-        })
-    }
 
     override fun onDestroy() {
         super.onDestroy()
@@ -369,6 +211,13 @@ class ReviewDetailActivity : RootActivity() {
             progressDialog!!.dismiss()
         }
 
+        try {
+            if (delReviewReceiver != null) {
+                unregisterReceiver(delReviewReceiver)
+            }
+
+        } catch (e: IllegalArgumentException) {
+        }
 
     }
 

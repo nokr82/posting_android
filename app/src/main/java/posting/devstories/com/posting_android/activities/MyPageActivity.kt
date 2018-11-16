@@ -1,18 +1,19 @@
 package posting.devstories.com.posting_android.activities
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import android.support.v4.app.FragmentActivity
-import android.view.ContextThemeWrapper
+import android.support.v4.content.FileProvider
 import android.view.View
-import android.widget.TextView
 import android.widget.Toast
 import com.loopj.android.http.JsonHttpResponseHandler
 import com.loopj.android.http.RequestParams
@@ -30,13 +31,14 @@ import posting.devstories.com.posting_android.base.Config
 import posting.devstories.com.posting_android.base.PrefUtils
 import posting.devstories.com.posting_android.base.Utils
 import java.io.ByteArrayInputStream
+import java.io.File
 import java.io.IOException
 
 class MyPageActivity : FragmentActivity() {
 
 
     var thumbnail:Bitmap? = null
-    var gallery:Bitmap? = null
+    // var gallery:Bitmap? = null
     var nick = ""
      var name  = ""
     var push_yn  = ""
@@ -49,6 +51,12 @@ class MyPageActivity : FragmentActivity() {
     var autoLogin = false
 
     private var has_branch_yn = "N"
+    private var school_domain = ""
+
+    val SECESSION = 301
+    val LOGOUT = 401
+
+    var imageUri: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,6 +74,7 @@ class MyPageActivity : FragmentActivity() {
             intent.putExtra("has_branch_yn", has_branch_yn)
             intent.putExtra("school_email_confirmed", school_email_confirmed)
             intent.putExtra("school_confirmed", school_confirmed)
+            intent.putExtra("school_domain", school_domain)
             startActivity(intent)
 
         }
@@ -221,50 +230,61 @@ class MyPageActivity : FragmentActivity() {
     }
 
     fun dlgView(){
-        val builder = AlertDialog.Builder(ContextThemeWrapper(this, R.style.Theme_AppCompat_Light_Dialog))
-        builder.setTitle("회원탈퇴")
-        builder.setMessage("정말 탈퇴하시겠습니까?")
 
-        builder.setPositiveButton("확인") { _, _ ->
-            PrefUtils.setPreference(context, "autoLogin", autoLogin)
-            redout()
-        }
-        builder.setNegativeButton("취소") { _, _ ->
+        var intent = Intent(context, DlgYesOrNoCommonActivity::class.java)
+        intent.putExtra("contents", "정말 탈퇴하시겠습니까?")
+        startActivityForResult(intent, SECESSION)
 
-
-
-        }
-
-        builder.show()
+//        val builder = AlertDialog.Builder(ContextThemeWrapper(this, R.style.Theme_AppCompat_Light_Dialog))
+//        builder.setTitle("회원탈퇴")
+//        builder.setMessage("정말 탈퇴하시겠습니까?")
+//
+//        builder.setPositiveButton("확인") { _, _ ->
+//            PrefUtils.setPreference(context, "autoLogin", autoLogin)
+//            redout()
+//        }
+//        builder.setNegativeButton("취소") { _, _ ->
+//
+//
+//
+//        }
+//
+//        builder.show()
     }
 
     fun joinoutdlgView(){
-        var mPopupDlg: DialogInterface? = null
 
-        val builder = AlertDialog.Builder(this)
-        val dialogView = layoutInflater.inflate(R.layout.coupon_dlg, null)
-        val couponnoTX = dialogView.findViewById<TextView>(R.id.couponnoTX)
-        val couponyTX = dialogView.findViewById<TextView>(R.id.couponyTX)
-        val couponTV :TextView = dialogView.findViewById<TextView>(R.id.couponTV)
-        couponTV.text = "로그아웃 하시겠습니까?"
-        couponnoTX.text = "NO"
-        couponyTX.text = "YES"
+        var intent = Intent(context, DlgYesOrNoCommonActivity::class.java)
+        intent.putExtra("contents", "로그아웃 하시겠습니까?")
+        startActivityForResult(intent, LOGOUT)
 
-        couponnoTX.setOnClickListener {
-            mPopupDlg!!.cancel()
-        }
 
-        couponyTX.setOnClickListener {
-
-            PrefUtils.setPreference(context, "autoLogin", autoLogin)
-            val intent = Intent(this, LoginActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(intent)
-            mPopupDlg!!.cancel()
-
-        }
-
-        mPopupDlg =  builder.setView(dialogView).show()
+//        var mPopupDlg: DialogInterface? = null
+//
+//        val builder = AlertDialog.Builder(this)
+//        val dialogView = layoutInflater.inflate(R.layout.coupon_dlg, null)
+//        val couponnoTX = dialogView.findViewById<TextView>(R.id.couponnoTX)
+//        val couponyTX = dialogView.findViewById<TextView>(R.id.couponyTX)
+//        val couponTV :TextView = dialogView.findViewById<TextView>(R.id.couponTV)
+//        couponTV.text = "로그아웃 하시겠습니까?"
+//        couponnoTX.text = "NO"
+//        couponyTX.text = "YES"
+//
+//        couponnoTX.setOnClickListener {
+//            mPopupDlg!!.cancel()
+//        }
+//
+//        couponyTX.setOnClickListener {
+//
+//            PrefUtils.setPreference(context, "autoLogin", autoLogin)
+//            val intent = Intent(this, LoginActivity::class.java)
+//            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+//            startActivity(intent)
+//            mPopupDlg!!.cancel()
+//
+//        }
+//
+//        mPopupDlg =  builder.setView(dialogView).show()
 
     }
     //회원탈퇴
@@ -354,21 +374,12 @@ class MyPageActivity : FragmentActivity() {
 
         val params = RequestParams()
         params.put("member_id", PrefUtils.getIntPreference(context, "member_id"))
-        if (gallery==null){
-        }else{
-            params.put("upload", ByteArrayInputStream(Utils.getByteArray(gallery)))
-        }
-        if (thumbnail==null){
-        }else{
-            print(thumbnail)
-            params.put("upload", ByteArrayInputStream(Utils.getByteArray(thumbnail)))
-        }
-
-        println(" gallery $gallery")
-        println(" thumbnail $thumbnail")
-
-
         params.put("push_yn", push_yn)
+
+        if (thumbnail != null){
+            val byteArrayInputStream = ByteArrayInputStream(Utils.getByteArray(thumbnail))
+            params.put("upload", byteArrayInputStream)
+        }
 
         MemberAction.edit_info(params, object : JsonHttpResponseHandler() {
 
@@ -384,9 +395,12 @@ class MyPageActivity : FragmentActivity() {
 
                         Toast.makeText(context, "변경되었습니다.", Toast.LENGTH_SHORT).show()
 
-//                        var intent = Intent()
-//                        intent.action = "EDIT_PROFILE"
-//                        sendBroadcast(intent)
+//                        var member = response.getJSONObject("member");
+
+                        var intent = Intent()
+//                        intent.putExtra("profile_uri", Utils.getString(member, "image_uri"))
+                        intent.action = "EDIT_PROFILE"
+                        sendBroadcast(intent)
 
                         loadInfo()
 
@@ -459,6 +473,7 @@ class MyPageActivity : FragmentActivity() {
 
     private var school_email_confirmed = "N"
     private var school_confirmed = "N"
+    private var school_email = ""
 
     //회원정보
     fun loadInfo() {
@@ -501,7 +516,9 @@ class MyPageActivity : FragmentActivity() {
                         // school
                         val school = response.getJSONObject("school")
                         has_branch_yn = Utils.getString(school, "has_branch_yn")
+                        school_domain = Utils.getString(school, "domain")
 
+                        school_email = Utils.getString(member, "school_email")
                         school_email_confirmed = Utils.getString(member, "school_email_confirmed")
                         school_confirmed = Utils.getString(member, "school_confirmed")
 
@@ -531,6 +548,12 @@ class MyPageActivity : FragmentActivity() {
 
                         val today = Utils.getString(response, "today")
                         todayTV.text = today
+
+
+                        // 닉네임 변경
+                        if(Utils.getString(member, "member_type") == "3") {
+                            nickTV.visibility = View.GONE
+                        }
 
                     } else {
 //                        Toast.makeText(context, "일치하는 회원이 존재하지 않습니다.", Toast.LENGTH_LONG).show()
@@ -598,7 +621,7 @@ class MyPageActivity : FragmentActivity() {
         pictureDialog.show()
     }
 
-    fun choosePhotoFromGallary() {
+    private fun choosePhotoFromGallary() {
         val galleryIntent = Intent(Intent.ACTION_PICK,
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
 
@@ -606,9 +629,43 @@ class MyPageActivity : FragmentActivity() {
 
     }
 
-    fun takePhotoFromCamera() {
+    private fun takePhotoFromCamera() {
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        startActivityForResult(intent, CAMERA)
+        if (intent.resolveActivity(packageManager) != null) {
+
+            val storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+
+            try {
+                val photo = File.createTempFile(
+                    System.currentTimeMillis().toString(), /* prefix */
+                    ".jpg", /* suffix */
+                    storageDir      /* directory */
+                )
+
+                // absolutePath = photo.absolutePath
+                //imageUri = Uri.fromFile(photo);
+                imageUri = FileProvider.getUriForFile(context, packageName + ".provider", photo)
+
+                val resInfoList = context.getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+                for (resolveInfo in resInfoList) {
+                    val packageName = resolveInfo.activityInfo.packageName;
+
+                    println("packageName : $packageName")
+
+                    context.grantUriPermission(packageName, imageUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                }
+
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
+                startActivityForResult(intent, CAMERA)
+
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+
+        }
+
+
+        // startActivityForResult(intent, CAMERA)
 
     }
 
@@ -622,9 +679,9 @@ class MyPageActivity : FragmentActivity() {
                 val contentURI = data!!.data
                 try
                 {
-                    gallery = MediaStore.Images.Media.getBitmap(this.contentResolver, contentURI)
+                    thumbnail = MediaStore.Images.Media.getBitmap(this.contentResolver, contentURI)
+                    thumbnail = Utils.rotate(contentResolver, thumbnail, contentURI)
                     edit_profile()
-                    myproIV!!.setImageBitmap(gallery)
 
                 }
                 catch (e: IOException) {
@@ -637,17 +694,26 @@ class MyPageActivity : FragmentActivity() {
         }
         else if (requestCode == CAMERA)
         {
-            thumbnail = data!!.extras!!.get("data") as Bitmap
+            thumbnail = MediaStore.Images.Media.getBitmap(this.contentResolver, imageUri)
+            thumbnail = Utils.rotate(contentResolver, thumbnail, imageUri)
             edit_profile()
-            myproIV!!.setImageBitmap(thumbnail)
         }
         else if (requestCode == VERSION_UPDATE)
         {
 
+        } else if (requestCode == SECESSION) {
+            if(resultCode == Activity.RESULT_OK) {
+                redout()
+            }
+        } else if (requestCode == LOGOUT) {
+            if(resultCode == Activity.RESULT_OK) {
+                PrefUtils.setPreference(context, "autoLogin", autoLogin)
+                val intent = Intent(this, LoginActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+            }
         }
     }
-
-
 
     override fun onDestroy() {
         super.onDestroy()

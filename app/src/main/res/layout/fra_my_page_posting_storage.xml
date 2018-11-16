@@ -23,8 +23,8 @@
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:text="자유"
-                android:textColor="#99a0a0"
-                android:textSize="12.95dp" />
+                android:textColor="#063588"
+                android:textSize="14dp" />
 
             <View
                     android:layout_width="match_parent"
@@ -32,9 +32,9 @@
                     android:layout_alignParentBottom="true"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:background="#01b4ec"
+                    android:background="#063588"
                     android:id="@+id/free2V"
-                    android:visibility="invisible"/>
+                    android:visibility="visible"/>
 
         </RelativeLayout>
 
@@ -52,7 +52,7 @@
                     android:text="정보"
                     android:id="@+id/info2TX"
                     android:textColor="#99a0a0"
-                    android:textSize="12.95dp" />
+                    android:textSize="14dp" />
 
             <View
                     android:layout_width="match_parent"
@@ -61,7 +61,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:id="@+id/info2V"
-                    android:background="#01b4ec"
+                    android:background="#063588"
                     android:visibility="invisible" />
 
         </RelativeLayout>
@@ -80,7 +80,7 @@
                     android:text="스터디"
                     android:id="@+id/Study2TX"
                     android:textColor="#99a0a0"
-                    android:textSize="12.95dp" />
+                    android:textSize="14dp" />
 
             <View
                     android:layout_width="match_parent"
@@ -89,7 +89,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:id="@+id/Study2V"
-                    android:background="#01b4ec"
+                    android:background="#063588"
                     android:visibility="invisible" />
 
         </RelativeLayout>
@@ -108,7 +108,7 @@
                     android:text="동아리"
                     android:id="@+id/class2TX"
                     android:textColor="#99a0a0"
-                    android:textSize="12.95dp" />
+                    android:textSize="14dp" />
 
             <View
                     android:layout_width="match_parent"
@@ -117,10 +117,11 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:id="@+id/class2V"
-                    android:background="#01b4ec"
+                    android:background="#063588"
                     android:visibility="invisible" />
 
         </RelativeLayout>
+
         <RelativeLayout
                 android:id="@+id/meeting2RL"
                 android:layout_width="0dp"
@@ -135,7 +136,7 @@
                     android:text="미팅"
                     android:id="@+id/Miting2TX"
                     android:textColor="#99a0a0"
-                    android:textSize="12.95dp" />
+                    android:textSize="14dp" />
 
             <View
                     android:layout_width="match_parent"
@@ -144,7 +145,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:id="@+id/miting2V"
-                    android:background="#01b4ec"
+                    android:background="#063588"
                     android:visibility="invisible" />
 
         </RelativeLayout>
@@ -163,7 +164,7 @@
                     android:text="쿠폰"
                     android:id="@+id/Coupon2TX"
                     android:textColor="#99a0a0"
-                    android:textSize="12.95dp" />
+                    android:textSize="14dp" />
 
             <View
                     android:layout_width="match_parent"
@@ -172,7 +173,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:id="@+id/coupon2V"
-                    android:background="#01b4ec"
+                    android:background="#063588"
                     android:visibility="invisible" />
 
         </RelativeLayout>
@@ -180,17 +181,21 @@
 
     </LinearLayout>
 
+    <posting.devstories.com.posting_android.base.NonSwipeableViewPager
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/pagerVP"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+    </posting.devstories.com.posting_android.base.NonSwipeableViewPager>
+
     <GridView
         android:id="@+id/storageGV"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:numColumns="3">
 
-
-
-
     </GridView>
-
-
 
 </LinearLayout>

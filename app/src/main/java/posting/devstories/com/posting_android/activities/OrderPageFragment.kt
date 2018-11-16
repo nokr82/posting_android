@@ -1,19 +1,23 @@
 package posting.devstories.com.posting_android.activities
 
 import android.app.ProgressDialog
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
+import android.widget.Toast
 import com.github.paolorotolo.expandableheightlistview.ExpandableHeightGridView
 import com.loopj.android.http.JsonHttpResponseHandler
 import com.loopj.android.http.RequestParams
 import cz.msebera.android.httpclient.Header
-import kotlinx.android.synthetic.main.fra_orderpg.*
 import org.json.JSONException
 import org.json.JSONObject
 import posting.devstories.com.posting_android.Actions.MemberAction
@@ -21,13 +25,13 @@ import posting.devstories.com.posting_android.R
 import posting.devstories.com.posting_android.adapter.OrderAdapter
 import posting.devstories.com.posting_android.adapter.ReviewAdapter
 import posting.devstories.com.posting_android.base.Config
-import posting.devstories.com.posting_android.base.ImageLoader
 import posting.devstories.com.posting_android.base.PrefUtils
 import posting.devstories.com.posting_android.base.Utils
 
 open class OrderPageFragment : Fragment() {
 
-    var ctx: Context? = null
+    lateinit var myContext: Context
+
     private var progressDialog: ProgressDialog? = null
     lateinit var activity: MainActivity
     var adapterData: ArrayList<JSONObject> = ArrayList<JSONObject>()
@@ -38,15 +42,19 @@ open class OrderPageFragment : Fragment() {
     var member_type = ""
     var member_id = -1
     lateinit var reviewLL: LinearLayout
+    lateinit var review2LL: LinearLayout
+    lateinit var menuLL: LinearLayout
     lateinit var reviewV:View
     lateinit var couponLL: LinearLayout
     lateinit var couponV:View
     lateinit var univIV:ImageView
+    lateinit var profileIV:ImageView
     lateinit var couponGV:ExpandableHeightGridView
     lateinit var gpsLL:LinearLayout
     lateinit var storeInfoTV:TextView
     lateinit var reviewCntTV:TextView
     lateinit var postCntTV:TextView
+    lateinit var companyNameTV:TextView
 
     var clicktype = 1
 
@@ -54,36 +62,63 @@ open class OrderPageFragment : Fragment() {
     var lng = 0.0
     var lat = 0.0
 
+    internal var editProfileReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent?) {
+            if (intent != null) {
+
+                loadData()
+
+            }
+        }
+    }
+    internal var setViewReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent?) {
+            if (intent != null) {
+
+                review2LL.visibility = View.GONE
+                adapterData.clear()
+                couponV.visibility = View.VISIBLE
+                reviewV.visibility = View.INVISIBLE
+                couponGV.adapter = adapterOrder
+                clicktype = 1
+                loadData()
+
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val ctx = context
-        if (null != ctx) {
-            doSomethingWithContext(ctx)
-        }
+        this.myContext = container!!.context
+
+        val filter1 = IntentFilter("EDIT_PROFILE")
+        myContext!!.registerReceiver(editProfileReceiver, filter1)
+
+        val filter2 = IntentFilter("SET_VIEW")
+        myContext!!.registerReceiver(setViewReceiver, filter2)
 
         return inflater.inflate(R.layout.fra_orderpg, container, false)
-    }
-    fun doSomethingWithContext(context: Context) {
-        // TODO: Actually do something with the context
-        this.ctx = context
-        progressDialog = ProgressDialog(ctx)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         reviewLL = view.findViewById(R.id.reviewLL)
+        review2LL = view.findViewById(R.id.review2LL)
         reviewV = view.findViewById(R.id.reviewV)
         couponLL = view.findViewById(R.id.couponLL)
+        menuLL = view.findViewById(R.id.menuLL)
         univIV = view.findViewById(R.id.univIV)
+        profileIV = view.findViewById(R.id.profileIV)
         couponV = view.findViewById(R.id.couponV)
         couponGV = view.findViewById(R.id.couponGV)
         gpsLL = view.findViewById(R.id.gpsLL)
         storeInfoTV = view.findViewById(R.id.storeInfoTV)
         postCntTV = view.findViewById(R.id.postCntTV)
         reviewCntTV = view.findViewById(R.id.reviewCntTV)
+        companyNameTV = view.findViewById(R.id.companyNameTV)
 
     }
 
@@ -91,20 +126,19 @@ open class OrderPageFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         activity = getActivity() as MainActivity
-        member_id = PrefUtils.getIntPreference(context, "member_id")
-        member_type = PrefUtils.getStringPreference(context,"member_type")
+        member_id = PrefUtils.getIntPreference(myContext, "member_id")
+        member_type = PrefUtils.getStringPreference(myContext,"member_type")
 
         adapterData.clear()
 
 
        menuLL.setOnClickListener {
-           val intent = Intent(context, MyPageActivity::class.java)
+           val intent = Intent(myContext, MyPageActivity::class.java)
            startActivity(intent)
        }
 
-
         gpsLL.setOnClickListener {
-            val intent = Intent(context, OrderMapActivity::class.java)
+            val intent = Intent(myContext, OrderMapActivity::class.java)
             intent.putExtra("lat", lat)
             intent.putExtra("lng", lng)
             intent.putExtra("name", name)
@@ -142,22 +176,23 @@ open class OrderPageFragment : Fragment() {
             reviewV.visibility = View.INVISIBLE
             couponGV.adapter = adapterOrder
             clicktype = 1
-          loadData()
-            couponGV.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
-                try {
-                    val Posting = adapterData[position].getJSONObject("Posting")
-
-                    //                    Intent intent = new Intent(context, _StoreDetailActivity.class);
-                    val intent = Intent(context, DetailActivity::class.java)
-                    intent.putExtra("id", Utils.getString(Posting, "id"))
-                    startActivity(intent)
-
-                } catch (e: JSONException) {
-                    e.printStackTrace()
-                }
-            }
-
+            loadData()
         }
+
+//        couponGV.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
+//            try {
+//                val Posting = adapterData[position].getJSONObject("Posting")
+//
+//                //                    Intent intent = new Intent(myContext, _StoreDetailActivity.class);
+//                val intent = Intent(myContext, DetailActivity::class.java)
+//                intent.putExtra("id", Utils.getString(Posting, "id"))
+//                startActivity(intent)
+//
+//            } catch (e: JSONException) {
+//                e.printStackTrace()
+//            }
+//        }
+
         loadData()
 
     }
@@ -184,19 +219,19 @@ open class OrderPageFragment : Fragment() {
                         postCntTV.text = Utils.getString(response, "postCnt");
 
                         val member = response.getJSONObject("member")
+                        val school = response.getJSONObject("school")
 
                         name = Utils.getString(member, "company_name")
-                        lng = Utils.getDouble(member, "lat")
-                        lat = Utils.getDouble(member, "lng")
+                        lat = Utils.getDouble(member, "lat")
+                        lng = Utils.getDouble(member, "lng")
 
                         companyNameTV.text = name
                         storeInfoTV.text = Utils.getString(member, "address") + " " + Utils.getString(member, "address_detail")
 
                         var profile_uri = Config.url + Utils.getString(member,"image_uri")
                         com.nostra13.universalimageloader.core.ImageLoader.getInstance().displayImage(profile_uri, profileIV, Utils.UILoptionsProfile)
-                        val image_uri =   PrefUtils.getStringPreference(context, "school_image")
-                        var univimg = Config.url +image_uri
-                        println("이미지!!!!"+image_uri)
+
+                        var univimg = Config.url +Utils.getString(school, "image_uri")
                         com.nostra13.universalimageloader.core.ImageLoader.getInstance().displayImage(univimg, univIV, Utils.UILoptionsProfile)
                         adapterData.clear()
 
@@ -224,7 +259,7 @@ open class OrderPageFragment : Fragment() {
                         }
 
                     } else {
-                        Toast.makeText(context, "일치하는 회원이 존재하지 않습니다.", Toast.LENGTH_LONG).show()
+                        Toast.makeText(myContext, "일치하는 회원이 존재하지 않습니다.", Toast.LENGTH_LONG).show()
                     }
                 } catch (e: JSONException) {
                     e.printStackTrace()
@@ -236,7 +271,7 @@ open class OrderPageFragment : Fragment() {
             }
 
             private fun error() {
-                Utils.alert(context, "조회중 장애가 발생하였습니다.")
+                Utils.alert(myContext, "조회중 장애가 발생하였습니다.")
             }
 
             override fun onFailure(statusCode: Int, headers: Array<Header>?, responseString: String?, throwable: Throwable) {
@@ -264,6 +299,25 @@ open class OrderPageFragment : Fragment() {
                 }
             }
         })
+    }
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        try {
+            if (editProfileReceiver != null) {
+                myContext!!.unregisterReceiver(editProfileReceiver)
+            }
+        } catch (e: IllegalArgumentException) {
+        }
+        try {
+            if (setViewReceiver != null) {
+                myContext!!.unregisterReceiver(setViewReceiver)
+            }
+        } catch (e: IllegalArgumentException) {
+        }
+
     }
 
 }

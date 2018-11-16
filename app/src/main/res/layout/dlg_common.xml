@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <posting.devstories.com.posting_android.base.RationalRelativeLayout
+        android:id="@+id/popup"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        app:ratio="960:515"
+        android:background="@drawable/background_round_ffffff">
+
+        <LinearLayout
+            android:layout_marginLeft="44.43dp"
+            android:layout_marginRight="44.43dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/contentsTV"
+                android:textSize="15.07dp"
+                android:text=""
+                android:textColor="#6D6E71"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:src="@mipmap/campus"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="16.5dp">
+
+                <TextView
+                    android:id="@+id/cancelTV"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="37.51dp"
+                    android:gravity="center"
+                    android:text="취소"
+                    android:textSize="15.33dp"
+                    android:textColor="#20408C"
+                    android:background="@mipmap/coupon_no"
+                    android:layout_marginRight="4dp"
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:id="@+id/doneTV"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="37.51dp"
+                    android:gravity="center"
+                    android:text="확인"
+                    android:textSize="15.33dp"
+                    android:textColor="#20408C"
+                    android:background="@mipmap/coupon_y"
+                    android:visibility="visible"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </posting.devstories.com.posting_android.base.RationalRelativeLayout>
+
+</LinearLayout>

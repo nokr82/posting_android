@@ -58,7 +58,6 @@ class AddressActivity : RootActivity(), AbsListView.OnScrollListener {
         handler = Handler()
     }
 
-
     fun init_webView() {
         // JavaScript 허용
         webViewWV!!.settings.javaScriptEnabled = true
@@ -97,6 +96,8 @@ class AddressActivity : RootActivity(), AbsListView.OnScrollListener {
         @JavascriptInterface
         fun setAddress(addr: String) {
             handler!!.post {
+
+                println("addr : " + addr)
 
                 var intent = Intent();
                 intent.putExtra("address", addr)

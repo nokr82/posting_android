@@ -15,10 +15,10 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Storage"
+            android:text="떼다"
             android:layout_weight="1"
             android:gravity="center"
-            android:textSize="11.75dp"/>
+            android:textSize="16dp"/>
 
         <View
             android:id="@+id/storageV"

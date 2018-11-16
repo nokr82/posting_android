@@ -57,7 +57,7 @@
                     android:paddingLeft="7dp"
                     android:id="@+id/nameET"
                     android:background="@null"
-                    android:textSize="8.5dp"
+                    android:textSize="14dp"
                     android:layout_gravity="center"/>
 
                 <View
@@ -70,7 +70,7 @@
                     android:layout_height="40dp"
                     android:hint="가입 이메일"
                     android:paddingLeft="7dp"
-                    android:textSize="8.5dp"
+                    android:textSize="14dp"
                     android:background="@null"
                     android:id="@+id/emailET"
                     android:inputType="textEmailAddress"

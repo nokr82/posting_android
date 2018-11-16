@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <View
         android:layout_width="match_parent"
@@ -39,7 +40,7 @@
             android:gravity="center"
             android:text="다음"
             android:textColor="#063588"
-            android:textSize="11.5dp" />
+            android:textSize="14dp" />
 
     </LinearLayout>
 
@@ -48,35 +49,47 @@
         android:layout_height="0dp"
         android:layout_weight="1.5"
         android:orientation="vertical"
-        android:gravity="center">
+        android:layout_marginBottom="5dp">
 
-        <RelativeLayout
-            android:layout_width="286.02dp"
-            android:layout_height="292.67dp"
-            android:background="@mipmap/wtite_bg"
-            android:gravity="center">
+        <posting.devstories.com.posting_android.base.RationalRelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                app:ratio="1195.5:1223.5">
 
             <RelativeLayout
-                android:id="@+id/imgRL"
-                android:layout_width="247.23dp"
-                android:layout_height="261.21dp">
-
-                <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:id="@+id/imgIV2"
-                    android:scaleType="centerCrop"/>
+                    android:background="@mipmap/wtite_bg">
+
+                <posting.devstories.com.posting_android.base.RationalRelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_centerInParent="true"
+                        android:layout_marginLeft="18dp"
+                        android:layout_marginRight="19dp"
+                        app:ratio="1055.5:1089.5">
+
+                    <ImageView
+                            android:id="@+id/imgIV2"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop" />
+
+                </posting.devstories.com.posting_android.base.RationalRelativeLayout>
 
             </RelativeLayout>
 
-        </RelativeLayout>
+
+        </posting.devstories.com.posting_android.base.RationalRelativeLayout>
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.7"
+        android:layout_weight="0.6"
         android:orientation="vertical">
 
         <GridView
@@ -94,7 +107,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.2"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginBottom="3dp">
 
         <RelativeLayout
             android:layout_width="0dp"
@@ -114,7 +128,7 @@
             android:layout_width="match_parent"
             android:layout_height="3dp"
             android:layout_alignParentBottom="true"
-            android:background="#D0D0D0"/>
+            android:background="#063588"/>
 
         </RelativeLayout>
 

@@ -25,10 +25,10 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="7dp"
-            android:layout_marginRight="9dp"
-            android:layout_marginBottom="9dp"
+            android:layout_marginLeft="7dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp"
             android:adjustViewBounds="true">
 
             <LinearLayout
@@ -175,57 +175,72 @@
 
             <TextView
                 android:id="@+id/storageTV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:maxLines="3"
+                android:ellipsize="end"
                 android:textColor="#3E3A39"
-                android:textSize="13dp"
-                android:visibility="gone" />
+                android:textSize="16dp"
+                android:visibility="visible"
+                android:gravity="center"
+                android:lineSpacingExtra="8dp" />
 
-            <LinearLayout
-                android:id="@+id/countLL"
+            <posting.devstories.com.posting_android.base.RationalRelativeLayout
+                    android:layout_width="18.5dp"
+                    android:layout_height="0dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@mipmap/nemocount"
+                    app:ratio="1:1">
+
+                <LinearLayout
+                        android:id="@+id/countLL"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                    <TextView
+                            android:id="@+id/leftCntTV"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:textColor="#FFFFFF"
+                            android:textSize="14dp" />
+
+                </LinearLayout>
+
+            </posting.devstories.com.posting_android.base.RationalRelativeLayout>
+
+        </RelativeLayout>
+
+        <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:background="@mipmap/nemocount"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true">
 
-                <TextView
-                    android:id="@+id/leftCntTV"
-                    android:layout_width="wrap_content"
+            <posting.devstories.com.posting_android.base.RationalRelativeLayout
+                    android:layout_width="16dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="4.9dp"
-                    android:text="0"
-                    android:textColor="#FFFFFF"
-                    android:textSize="17.67dp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:gravity="center"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentTop="true">
+                    app:ratio="1:1">
 
                 <TextView
                         android:id="@+id/chatAlarmCntTV"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text=""
-                        android:textSize="10dp"
-                        android:background="@drawable/circle_red"
+                        android:layout_height="match_parent"
+                        android:text="30"
+                        android:textSize="12dp"
                         android:textColor="#FFFFFF"
                         android:gravity="center"
-                        android:paddingLeft="2.5dp"
-                        android:paddingRight="2.5dp"
-                        android:visibility="gone"/>
+                        android:visibility="gone"
+                        android:background="@drawable/circle_red"/>
 
-            </LinearLayout>
+            </posting.devstories.com.posting_android.base.RationalRelativeLayout>
 
-        </RelativeLayout>
+        </LinearLayout>
 
     </posting.devstories.com.posting_android.base.RationalRelativeLayout>
 
