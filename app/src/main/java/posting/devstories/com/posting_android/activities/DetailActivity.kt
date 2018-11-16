@@ -583,7 +583,6 @@ class DetailActivity : RootActivity() {
                         else{
                             postingLL.background = getDrawable(R.mipmap.wtite_bg)
                         }
-
                         if(6 == type) {
 
                             val ymd = SimpleDateFormat("yy년MM월dd일", Locale.KOREA)
