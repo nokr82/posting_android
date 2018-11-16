@@ -5,6 +5,7 @@ import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -27,31 +28,33 @@ import posting.devstories.com.posting_android.base.RootActivity
 import posting.devstories.com.posting_android.base.Utils
 import java.io.ByteArrayInputStream
 
+
 class ReviewWriteContentsActivity : RootActivity() {
 
-    lateinit var context: Context
+    lateinit var context:Context
     private var progressDialog: ProgressDialog? = null
 
-    var imgid:String? = null
     var capture: Bitmap?= null
     var member_type = ""
     var image_uri:String? = null
-    var image:String? = null
-    var text:String? = null
+    var imageUri:Uri? = null
+    var str:String? = null
     var member_id = -1
-    var type:String?=null
+    var type = -1
     var contents = ""
+    var contents2:String?=null
     var count:String?=null
     var geterror = ""
-    var company_member_id = -1
-    var review_id = -1
-    var postingType = ""
-    // var absolutePath = ""
-    var str:String? = null
 
-    var imageUri: Uri? = null
-    
-    lateinit var adpater: ArrayAdapter<String>
+
+    var postingType:String?= null
+    var review_id = -1
+    var company_member_id = -1
+
+
+
+    lateinit var adapter: ArrayAdapter<String>
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,96 +64,117 @@ class ReviewWriteContentsActivity : RootActivity() {
         progressDialog = ProgressDialog(context)
 
         member_id =  PrefUtils.getIntPreference(context,"member_id")
+        member_type = PrefUtils.getStringPreference(context, "member_type")
 
         intent = getIntent()
-        // 카메라 사진
-        // absolutePath = intent.getStringExtra("absolutePath")
-        // 포스팅 타입 G-갤러리 P-포토 T-텍스트
-        postingType = intent.getStringExtra("postingType")
 
+        // 리뷰 타입 G-갤러리 P-포토 T-텍스트
         review_id = intent.getIntExtra("review_id", -1)
-        company_member_id = intent.getIntExtra("company_member_id", -1)
-        contents = intent.getStringExtra("contents")
-        imgid = intent.getStringExtra("imgid")
-        image = intent.getStringExtra("image")
+        postingType = intent.getStringExtra("postingType")
         image_uri = intent.getStringExtra("image_uri")
+        company_member_id = intent.getIntExtra("company_member_id", -1)
+        contents2 = intent.getStringExtra("contents")
+
 
         val h = intent.getStringExtra("imageUri")
         if(h != null) {
             imageUri = Uri.parse(h)
         }
 
-        if(review_id > 0 && "M" == postingType) {
-
-            image = Config.url + image_uri
+        // 이미지 uri 로드
+        if (review_id > 0 && "M" == postingType) {
+            var image = Config.url + image_uri
             ImageLoader.getInstance().displayImage(image, captureIV, Utils.UILoptionsPosting)
-            captureIV.visibility = View.VISIBLE
-
-            contentET.setText(contents)
-        } else if (postingType.equals("P")){
-            capture = MediaStore.Images.Media.getBitmap(this.contentResolver, imageUri)
-            captureIV.setImageBitmap(capture)
-            popupRL.visibility = View.VISIBLE
-        }else if (postingType.equals("G")){
-            //이미지
-            capture = MediaStore.Images.Media.getBitmap(this.contentResolver, imageUri)
-            captureIV.setImageBitmap(capture)
             popupRL.visibility = View.VISIBLE
 
-            captureIV.setImageBitmap(Utils.getImage(context.contentResolver, imgid))
-//        }else if (postingType.equals("M")){
-//            com.nostra13.universalimageloader.core.ImageLoader.getInstance().displayImage(image, captureIV, Utils.UILoptionsUserProfile)
-//            captureIV.visibility = View.VISIBLE
+        } else if ("T" == postingType) {
+            popupRL.visibility = View.GONE
+
         }
+
+
+
+
+        contentET.setText(contents2)
+
+        val options = BitmapFactory.Options()
+        options.inJustDecodeBounds = true
+        BitmapFactory.decodeFile(str, options)
+        options.inJustDecodeBounds = false
 
         backLL.setOnClickListener {
             finish()
         }
 
-        if (imgid != null && "" != imgid && imgid!!.length> 1&&capture != null&&image != null){
+        println("postingType : $postingType, imageUri : $imageUri")
+
+        if (postingType.equals("P") && imageUri != null){
+            capture = MediaStore.Images.Media.getBitmap(this.contentResolver, imageUri)
+            captureIV.setImageBitmap(capture)
             popupRL.visibility = View.VISIBLE
+
+        }else if (postingType.equals("G") && imageUri != null){
+            capture = MediaStore.Images.Media.getBitmap(this.contentResolver, imageUri)
+            captureIV.setImageBitmap(capture)
+            // ImageLoader.getInstance().displayImage(image, captureIV, Utils.UILoptionsUserProfile)
+            popupRL.visibility = View.VISIBLE
+
+            // captureIV.setImageBitmap(Utils.getImage(context.contentResolver, imgid))
+        }else if (postingType.equals("M") && imageUri != null){
+            capture = MediaStore.Images.Media.getBitmap(this.contentResolver, imageUri)
+            captureIV.setImageBitmap(capture)
+            // com.nostra13.universalimageloader.core.ImageLoader.getInstance().displayImage(image, captureIV, Utils.UILoptionsUserProfile)
+            captureIV.visibility = View.VISIBLE
         }
+
+
+
 
         nextLL2.setOnClickListener {
 
             contents = Utils.getString(contentET)
 
-            if(contents==""||contents==null|| contents.isEmpty()){
-                geterror = "내용을 입력해주세요"
+            if (contents == "" || contents == null || contents.isEmpty()) {
+                    geterror = "내용을 입력해주세요"
 
-                Toast.makeText(context,geterror,Toast.LENGTH_SHORT).show()
-            } else {
+                    Toast.makeText(context, geterror, Toast.LENGTH_SHORT).show()
+                } else {
+
+                    nextLL2.isEnabled = false
+
                 if (review_id < 1){
-                    write()
-                }else{
-                    edit_review()
+                        write()
+                    }else{
+
+                        edit_posting()
+                    }
                 }
-            }
+
+
+
 
         }
 
+
     }
 
+
+
     fun write(){
+
 
         val params = RequestParams()
         params.put("company_member_id", company_member_id)
         params.put("member_id", member_id)
         params.put("contents", contents)
 
-        if (capture==null){
+        if (capture != null) {
 
-        }else{
             params.put("upload", ByteArrayInputStream(Utils.getByteArray(capture)))
         }
 
-        if (imgid.equals("")||imgid==null){
+        println("params : $params")
 
-        }else{
-            val add_file = Utils.getImage(context.contentResolver, imgid)
-            params.put("upload", ByteArrayInputStream(Utils.getByteArray(add_file)))
-
-        }
 
         ReviewAction.write(params, object : JsonHttpResponseHandler() {
 
@@ -165,14 +189,27 @@ class ReviewWriteContentsActivity : RootActivity() {
                     if ("ok" == result) {
 
                         Utils.hideKeyboard(context)
+//                        val intent = Intent(context,MainActivity::class.java)
+
+                        try {
+                            contentResolver.delete(imageUri, null, null);
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+
+                        Toast.makeText(context, "글작성이 완료되었습니다", Toast.LENGTH_SHORT).show()
 
                         val intent = Intent();
                         setResult(Activity.RESULT_OK, intent)
 
+
                         finish()
 
-                    } else {
 
+                    } else {
+                        nextLL2.isEnabled = true
+                        geterror = "등록중 장애가 발생하였습니다."
+                        Toast.makeText(context, geterror, Toast.LENGTH_SHORT).show()
                     }
 
                 } catch (e: JSONException) {
@@ -186,12 +223,11 @@ class ReviewWriteContentsActivity : RootActivity() {
             }
 
             override fun onSuccess(statusCode: Int, headers: Array<Header>?, responseString: String?) {
-
                 // System.out.println(responseString);
             }
 
             private fun error() {
-                Utils.alert(context, "올리는중 장애가 발생하였습니다.")
+                Utils.alert(context, "등록중 장애가 발생하였습니다.")
             }
 
             override fun onFailure(statusCode: Int, headers: Array<Header>?, responseString: String?, throwable: Throwable) {
@@ -239,7 +275,7 @@ class ReviewWriteContentsActivity : RootActivity() {
 
     }
 
-    fun edit_review() {
+    fun edit_posting(){
 
         val params = RequestParams()
         params.put("company_member_id", company_member_id)
@@ -247,23 +283,19 @@ class ReviewWriteContentsActivity : RootActivity() {
         params.put("contents", contents)
         params.put("review_id", review_id)
 
+
         if(postingType == "T") {
             params.put("image", "")
             params.put("image_uri", "")
         } else {
-            if (capture==null){
 
-            }else{
-                params.put("upload", ByteArrayInputStream(Utils.getByteArray(capture)))
+            if (imageUri != null) {
+                val add_file = MediaStore.Images.Media.getBitmap(this.contentResolver, imageUri)
+                // val add_file = Utils.getImage(context.contentResolver, imgid)
+                params.put("upload",ByteArrayInputStream(Utils.getByteArray(add_file)))
             }
 
-            if (imgid.equals("")||imgid==null){
 
-            }else{
-                val add_file = Utils.getImage(context.contentResolver, imgid)
-                params.put("upload", ByteArrayInputStream(Utils.getByteArray(add_file)))
-
-            }
         }
 
         ReviewAction.edit_review(params, object : JsonHttpResponseHandler() {
@@ -289,8 +321,12 @@ class ReviewWriteContentsActivity : RootActivity() {
                         setResult(Activity.RESULT_OK, intent)
                         finish()
 
-                    } else {
 
+
+                    } else {
+                        geterror = "작성실패"
+
+                        Toast.makeText(context, geterror, Toast.LENGTH_SHORT).show()
                     }
 
                 } catch (e: JSONException) {
@@ -352,8 +388,20 @@ class ReviewWriteContentsActivity : RootActivity() {
                     progressDialog!!.dismiss()
                 }
             }
-
         })
+    }
+
+    override fun finish() {
+        super.finish()
+
+        Utils.hideKeyboard(context)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if (progressDialog != null) {
+            progressDialog!!.dismiss()
+        }
 
     }
 
