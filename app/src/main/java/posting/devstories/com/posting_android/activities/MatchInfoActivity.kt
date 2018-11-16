@@ -42,6 +42,7 @@ class MatchInfoActivity : RootActivity() {
         override fun onReceive(context: Context, intent: Intent?) {
             if (intent != null) {
                 var type = intent.getStringExtra("type")
+                var block_member_id = intent.getIntExtra("block_member_id", -1)
 
                 if(type == "plus") {
                     match_count = match_count + 1;
@@ -50,6 +51,21 @@ class MatchInfoActivity : RootActivity() {
                 }
 
                 matchCntTV.text = match_count.toString()
+
+                if(block_member_id > 0) {
+                    for (i in 0 until addProfileLL.childCount) {
+                        var childView = addProfileLL.getChildAt(i)
+
+                        var RL: RelativeLayout = childView.findViewById(R.id.RL)
+                        val tag_member_id: Int = RL.getTag() as Int
+
+                        if(tag_member_id == block_member_id) {
+                            addProfileLL.removeViewAt(i);
+                        }
+
+                    }
+
+                }
 
             }
         }
@@ -142,8 +158,11 @@ class MatchInfoActivity : RootActivity() {
                             var alarmCntTV: TextView = profileView.findViewById(R.id.alarmCntTV)
                             var RL: RelativeLayout = profileView.findViewById(R.id.RL)
                             val savemember_id = Utils.getInt(member, "id")
+                            val member_block_yn = Utils.getString(member, "member_block_yn")
 
-                            if (member_id == savemember_id) {
+                            RL.setTag(savemember_id)
+
+                            if (member_id == savemember_id || member_block_yn == "Y") {
                                 RL.visibility = View.GONE
                             } else {
                                 var profile_uri = Config.url + Utils.getString(member, "image_uri")
@@ -155,6 +174,7 @@ class MatchInfoActivity : RootActivity() {
                                 if (Utils.getInt(member, "id") != member_id) {
                                     var intent = Intent(context, ChattingActivity::class.java)
                                     intent.putExtra("attend_member_id", Utils.getInt(member, "id"))
+                                    intent.putExtra("posting_id", posting_id.toInt())
                                     startActivity(intent)
 
                                     alarmCntTV.visibility = View.GONE

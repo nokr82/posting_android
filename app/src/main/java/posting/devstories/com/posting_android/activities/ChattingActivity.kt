@@ -65,6 +65,7 @@ class ChattingActivity : RootActivity(), AbsListView.OnScrollListener {
     private var timer: Timer? = null
 
     var member_id = -1
+    var posting_id = -1
 
     private val FROM_ALBUM = 101
     private val REQUEST_PERMISSION_READ_EXTERNAL_STORAGE = 2
@@ -80,6 +81,7 @@ class ChattingActivity : RootActivity(), AbsListView.OnScrollListener {
         member_id = PrefUtils.getIntPreference(context, "member_id")
 
         attend_member_id = intent.getIntExtra("attend_member_id", -1)
+        posting_id = intent.getIntExtra("posting_id", -1)
 
         backLL.setOnClickListener {
             finish()
@@ -228,7 +230,6 @@ class ChattingActivity : RootActivity(), AbsListView.OnScrollListener {
         intent.putExtra("report_member_id", attend_member_id.toString())
         startActivity(intent)
 
-
 //        var mPopupDlg: DialogInterface? = null
 //
 //        val builder = AlertDialog.Builder(this)
@@ -264,6 +265,7 @@ class ChattingActivity : RootActivity(), AbsListView.OnScrollListener {
         val params = RequestParams()
         params.put("member_id", member_id)
         params.put("chatting_group_id", chatting_group_id)
+        params.put("posting_id", posting_id)
 
         ChattingAction.exitChatting(params, object : JsonHttpResponseHandler() {
 
@@ -279,6 +281,7 @@ class ChattingActivity : RootActivity(), AbsListView.OnScrollListener {
 
                         var intent = Intent();
                         intent.putExtra("type", "minus")
+                        intent.putExtra("block_member_id", Utils.getInt(response, "block_member_id"))
                         intent.action = "MATCH_UPDATE"
                         sendBroadcast(intent)
 
@@ -390,6 +393,7 @@ class ChattingActivity : RootActivity(), AbsListView.OnScrollListener {
         val params = RequestParams()
         params.put("founder_member_id", PrefUtils.getIntPreference(context, "member_id"))
         params.put("attend_member_id", attend_member_id)
+        params.put("posting_id", posting_id)
 
         ChattingAction.chattingCheck(params, object : JsonHttpResponseHandler() {
 
@@ -701,6 +705,7 @@ class ChattingActivity : RootActivity(), AbsListView.OnScrollListener {
         val params = RequestParams()
         params.put("founder_member_id", PrefUtils.getIntPreference(context, "member_id"))
         params.put("attend_member_id", attend_member_id)
+        params.put("posting_id", posting_id)
         params.put("type", type)
 
         if(type == "t") {
