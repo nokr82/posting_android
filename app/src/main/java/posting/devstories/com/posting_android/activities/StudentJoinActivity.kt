@@ -489,6 +489,8 @@ class StudentJoinActivity : RootActivity() {
                         PrefUtils.setPreference(context, "current_school_id", school_id)
                         PrefUtils.setPreference(context, "current_school_image_uri", school_image_uri)
 
+                        PrefUtils.setPreference(context, "school_domain", Utils.getString(school, "domain"))
+
                         PrefUtils.setPreference(context, "loginID", loginID)
                         PrefUtils.setPreference(context, "member_id", Utils.getInt(data, "id"))
                         PrefUtils.setPreference(context, "email", Utils.getString(data, "email"))
