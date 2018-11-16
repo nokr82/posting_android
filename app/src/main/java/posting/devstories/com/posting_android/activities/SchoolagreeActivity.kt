@@ -47,7 +47,7 @@ class SchoolagreeActivity : RootActivity() {
         has_branch_yn = intent.getStringExtra("has_branch_yn")
         school_email_confirmed = intent.getStringExtra("school_email_confirmed")
         school_confirmed = intent.getStringExtra("school_confirmed")
-        school_domain = intent.getStringExtra("school_domain")
+        school_domain = PrefUtils.getStringPreference(context, "school_domain")
 
         if(school_domain != null) {
             schoolDomainTV.text = "@$school_domain"
