@@ -1,5 +1,6 @@
 package posting.devstories.com.posting_android.activities
 
+import android.app.Activity
 import android.app.ProgressDialog
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -548,6 +549,10 @@ class PostWriteActivity : RootActivity() {
 
         when (requestCode) {
             REQUEST_CAMERA -> {
+                if(resultCode == Activity.RESULT_CANCELED) {
+                    return
+                }
+
                 imgid = null
 
                 val realPathFromURI = imageUri!!.path
