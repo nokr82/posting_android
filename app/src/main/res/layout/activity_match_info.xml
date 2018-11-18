@@ -43,8 +43,7 @@
                 android:layout_height="116dp"
                 android:layout_marginTop="14dp"
                 android:layout_marginBottom="10dp"
-                android:layout_marginRight="20dp"
-                android:background="@mipmap/mybg">
+                android:layout_marginRight="20dp">
 
                 <RelativeLayout
                     android:layout_width="100dp"

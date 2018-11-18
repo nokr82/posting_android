@@ -299,10 +299,9 @@ class DetailActivity : RootActivity() {
                         var member = response.getJSONObject("member")
                         nick =  Utils.getString(member, "nick_name")
                         var image_uri = Utils.getString(member, "image_uri")
-                        if (!image_uri.equals("")||image_uri!=null){
-                            var image = Config.url + image_uri
-                            ImageLoader.getInstance().displayImage(image,myIV, Utils.UILoptionsPosting)
-                        }
+
+                        var image = Config.url + image_uri
+                        ImageLoader.getInstance().displayImage(image,myIV, Utils.UILoptionsUserProfile)
 
                         mynameTV.text =nick
 
@@ -566,8 +565,8 @@ class DetailActivity : RootActivity() {
 
                         image_uri = Utils.getString(posting, "image_uri")
                         var leftCount = Utils.getString(posting, "leftCount")
-                        var current_school_id = Utils.getInt(member1, "school_id")
-                        PrefUtils.setPreference(context, "detail_current_school_id", current_school_id)
+                        var writer_school_id = Utils.getInt(member1, "school_id")
+                        PrefUtils.setPreference(context, "detail_current_school_id", writer_school_id)
 
 
                         //게시물의 학교아이디
@@ -593,7 +592,7 @@ class DetailActivity : RootActivity() {
 
 //                        if (school_id!=me_school_id){
 //                            saveLL.visibility = View.GONE
-                        if (current_school_id != school_id){
+                        if (writer_school_id != school_id){
                             postingLL.background = getDrawable(R.mipmap.write_bg2)
 //                            saveLL.visibility = View.GONE
 //                        }else if(save_yn.equals("N")&&member_id2!=member_id){
@@ -602,6 +601,20 @@ class DetailActivity : RootActivity() {
                         else{
                             postingLL.background = getDrawable(R.mipmap.wtite_bg)
                         }
+
+                        val current_school_id = PrefUtils.getIntPreference(context, "current_school_id")
+                        if(current_school_id != me_school_id) {
+                            // 학교도 다르고 내가 쓴 글이 아니면
+                            // 커멘트 막기
+                            if (member_id != member_id2) {
+                                commentsLL.visibility = View.GONE
+                            } else {
+                                commentsLL.visibility = View.VISIBLE
+                            }
+                        } else {
+                            commentsLL.visibility = View.VISIBLE
+                        }
+
                         if(6 == type) {
 
                             val ymd = SimpleDateFormat("yy년MM월dd일", Locale.KOREA)
@@ -660,7 +673,10 @@ class DetailActivity : RootActivity() {
                             if (use_yn.equals("Y")){
                                 couponLL.visibility = View.GONE
                             }else if(save_yn.equals("Y")&&use_yn.equals("N")){
-                                couponLL.visibility = View.VISIBLE
+
+                                if (save_id > 0) {
+                                    couponLL.visibility = View.VISIBLE
+                                }
                             }
                         }
 

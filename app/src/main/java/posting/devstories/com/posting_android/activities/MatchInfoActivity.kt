@@ -144,9 +144,19 @@ class MatchInfoActivity : RootActivity() {
                         val postingSaves = response.getJSONArray("postingSaves")
 
                         val posting = response.getJSONObject("posting")
-                        val write_member = response.getJSONObject("member")
+                        val write_member = response.getJSONObject("posting_member")
                         match_count = Utils.getInt(response, "match_count")
-                        val savemember_id = Utils.getInt(write_member, "id")
+                        // val savemember_id = Utils.getInt(write_member, "id")
+
+                        var current_school_id = PrefUtils.getIntPreference(context, "current_school_id")
+                        val write_member_school_id = Utils.getInt(write_member, "school_id")
+
+                        if (current_school_id != write_member_school_id){
+                            postingRL.setBackgroundResource(R.mipmap.write_bg2)
+                        }else{
+                            postingRL.setBackgroundResource(R.mipmap.bg)
+                        }
+
 
                         for (i in 0..(postingSaves.length() - 1)) {
 
