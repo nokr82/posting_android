@@ -279,6 +279,10 @@ class ChattingActivity : RootActivity(), AbsListView.OnScrollListener {
 
                     if ("ok" == result) {
 
+                        if (timer != null) {
+                            timer!!.cancel()
+                        }
+
                         var intent = Intent();
                         intent.putExtra("type", "minus")
                         intent.putExtra("block_member_id", Utils.getInt(response, "block_member_id"))
@@ -447,7 +451,7 @@ class ChattingActivity : RootActivity(), AbsListView.OnScrollListener {
             }
 
             private fun error() {
-                Utils.alert(context, "조회중 장애가 발생하였습니다.")
+                // Utils.alert(context, "조회중 장애가 발생하였습니다.")
             }
 
             override fun onFailure(
@@ -583,7 +587,7 @@ class ChattingActivity : RootActivity(), AbsListView.OnScrollListener {
             }
 
             private fun error() {
-                Utils.alert(context, "조회중 장애가 발생하였습니다.")
+                // Utils.alert(context, "조회중 장애가 발생하였습니다.")
             }
 
             override fun onFailure(
@@ -773,7 +777,7 @@ class ChattingActivity : RootActivity(), AbsListView.OnScrollListener {
                     progressDialog!!.dismiss()
                 }
 
-                // System.out.println(responseString);
+                System.out.println(responseString);
 
                 throwable.printStackTrace()
                 error()
