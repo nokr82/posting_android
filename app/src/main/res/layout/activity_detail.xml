@@ -378,15 +378,19 @@
 
                             <TextView
                                 android:id="@id/couponTV"
-                                android:layout_width="130.89dp"
+                                android:layout_width="wrap_content"
                                 android:layout_height="35dp"
+                                android:paddingRight="13dp"
+                                android:paddingLeft="13dp"
                                 android:layout_marginRight="19dp"
                                 android:background="@drawable/background_round_ffe330"
                                 android:gravity="center"
                                 android:text="쿠폰 사용확인"
                                 android:textColor="#063588"
                                 android:textSize="15dp" />
+
                         </LinearLayout>
+
                     </LinearLayout>
 
                     <!--<LinearLayout-->
