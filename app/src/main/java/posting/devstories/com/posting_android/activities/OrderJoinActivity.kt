@@ -46,8 +46,8 @@ class OrderJoinActivity : RootActivity() {
     var passwd = ""
     var geterror = ""
 
-    var lng:String = "";
-    var lat:String = "";
+    var lng: String = "";
+    var lat: String = "";
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -136,7 +136,7 @@ class OrderJoinActivity : RootActivity() {
 
         PostingStartTX.setOnClickListener {
 
-             email = Utils.getString(OfficeET)
+            email = Utils.getString(OfficeET)
             val getPW: String = Utils.getString(pwET)
             val getPW2: String = Utils.getString(pw2ET)
             company_name = Utils.getString(StoreET)
@@ -146,53 +146,43 @@ class OrderJoinActivity : RootActivity() {
             val address = Utils.getString(addressTV)
             val address_detail = Utils.getString(addressDetailET)
 
-            if(email == "" || email == null || email.isEmpty()) {
+            if (email == "" || email == null || email.isEmpty()) {
                 geterror = "이메일을 입력해주세요"
 
-                dlgView( geterror)
+                dlgView(geterror)
 
             } else if (!Utils.isValidEmail(email)) {
                 geterror = "이메일을 확인해주세요"
 
-                dlgView( geterror)
+                dlgView(geterror)
             } else if (company_num == "" || company_num == null || company_num.isEmpty()) {
                 geterror = "사업자등록번호를 입력해주세요"
 
                 dlgView(geterror)
-            }
-
-           else if (getPW == "" || getPW == null || getPW.isEmpty()) {
+            } else if (getPW == "" || getPW == null || getPW.isEmpty()) {
                 geterror = "비밀번호를 입력해주세요"
 
-                dlgView( geterror)
-            }
-
-            else if (getPW != getPW2) {
+                dlgView(geterror)
+            } else if (getPW != getPW2) {
                 geterror = "비밀번호가 일치하지 않습니다"
 
-                dlgView( geterror)
-            }
-
-            else if (company_name == "" || company_name == null || company_name.isEmpty()) {
+                dlgView(geterror)
+            } else if (company_name == "" || company_name == null || company_name.isEmpty()) {
                 geterror = "상호명을 입력해주세요"
 
-                dlgView( geterror)
-            }
-
-            else if (name == "" || name == null || name.isEmpty()) {
+                dlgView(geterror)
+            } else if (name == "" || name == null || name.isEmpty()) {
                 geterror = "대표자 성명을 입력해주세요"
 
-                dlgView( geterror)
-            }
-            else if (address == "" || address == null || address.isEmpty()) {
+                dlgView(geterror)
+            } else if (address == "" || address == null || address.isEmpty()) {
                 geterror = "사업장 주소를 입력해주세요"
 
-                dlgView( geterror)
-            }
-            else if (address_detail == "" || address_detail == null || address_detail.isEmpty()) {
+                dlgView(geterror)
+            } else if (address_detail == "" || address_detail == null || address_detail.isEmpty()) {
                 geterror = "사업장 상세 주소를 입력해주세요"
 
-                dlgView( geterror)
+                dlgView(geterror)
             }
 
 //            else if (getPhone == "" || getPhone == null || getPhone.isEmpty()) {
@@ -200,29 +190,24 @@ class OrderJoinActivity : RootActivity() {
 //
 //                dlgView( geterror)
 //            }
-
-            else if (allCB.isChecked != true) {
-                geterror = "이용약관에 동의해주세요"
-
-                dlgView( geterror)
-            }
+//            else if (allCB.isChecked != true) {
+//                geterror = "이용약관에 동의해주세요"
+//
+//                dlgView( geterror)
+//            }
 
             else if (serviceCK.isChecked != true) {
-                geterror = "이용약관에 동의해주세요"
+                geterror = "서비스 이용약관에 동의해주세요"
 
-                dlgView( geterror)
-            }
+                dlgView(geterror)
+            } else if (soloCK.isChecked != true) {
+                geterror = "개인정보처리방침에 동의해주세요"
 
-            else if (soloCK.isChecked != true) {
-                geterror = "이용약관에 동의해주세요"
+                dlgView(geterror)
+            } else if (agree3CK.isChecked != true) {
+                geterror = "통합커뮤니티 이용규칙에 동의해주세요"
 
-                dlgView( geterror)
-            }
-
-            else if (agree3CK.isChecked != true) {
-                geterror = "이용약관에 동의해주세요"
-
-                dlgView( geterror)
+                dlgView(geterror)
             }
 
 //            else if(getPhone != ori_phone) {
@@ -230,19 +215,17 @@ class OrderJoinActivity : RootActivity() {
 //
 //                dlgView( geterror)
 //            }
-
 //            else if(sms_code != Utils.getString(smsCodeET)) {
 //                geterror = "인증번호를 다시 확인해주세요"
 //
 //                dlgView( geterror)
 //            }
- else{
+            else {
                 passwd = getPW
 
                 join()
 
             }
-
 
 
         }
@@ -260,7 +243,7 @@ class OrderJoinActivity : RootActivity() {
 
         agree1BtnLL.setOnClickListener {
 
-            if(agree1LL.visibility == View.VISIBLE) {
+            if (agree1LL.visibility == View.VISIBLE) {
                 agree1LL.visibility = View.GONE
             } else {
                 agree1LL.visibility = View.VISIBLE
@@ -269,7 +252,7 @@ class OrderJoinActivity : RootActivity() {
         }
 
         agree2BtnLL.setOnClickListener {
-            if(agree2LL.visibility == View.VISIBLE) {
+            if (agree2LL.visibility == View.VISIBLE) {
                 agree2LL.visibility = View.GONE
             } else {
                 agree2LL.visibility = View.VISIBLE
@@ -277,7 +260,7 @@ class OrderJoinActivity : RootActivity() {
         }
 
         agree3BtnLL.setOnClickListener {
-            if(agree3LL.visibility == View.VISIBLE) {
+            if (agree3LL.visibility == View.VISIBLE) {
                 agree3LL.visibility = View.GONE
             } else {
                 agree3LL.visibility = View.VISIBLE
@@ -285,7 +268,7 @@ class OrderJoinActivity : RootActivity() {
         }
 
         agree4BtnLL.setOnClickListener {
-            if(agree4LL.visibility == View.VISIBLE) {
+            if (agree4LL.visibility == View.VISIBLE) {
                 agree4LL.visibility = View.GONE
             } else {
                 agree4LL.visibility = View.VISIBLE
@@ -339,7 +322,12 @@ class OrderJoinActivity : RootActivity() {
                 Utils.alert(context, "조회중 장애가 발생하였습니다.")
             }
 
-            override fun onFailure( statusCode: Int, headers: Array<Header>?, responseString: String?, throwable: Throwable ) {
+            override fun onFailure(
+                statusCode: Int,
+                headers: Array<Header>?,
+                responseString: String?,
+                throwable: Throwable
+            ) {
                 if (progressDialog != null) {
                     progressDialog!!.dismiss()
                 }
@@ -393,13 +381,13 @@ class OrderJoinActivity : RootActivity() {
     fun join() {
         val params = RequestParams()
         params.put("name", name)
-        params.put("email",email )
+        params.put("email", email)
         params.put("company_name", company_name)
         params.put("address", Utils.getString(addressTV))
         params.put("address_detail", Utils.getString(addressDetailET))
         params.put("lat", lat)
         params.put("lng", lng)
-        params.put("company_num",company_num)
+        params.put("company_num", company_num)
         params.put("passwd", passwd)
 //        params.put("phone", ori_phone)
         params.put("phone", Utils.getString(phoneET))
@@ -570,7 +558,7 @@ class OrderJoinActivity : RootActivity() {
                             val obj = list.get(0) as JSONObject
 
                             println("obj : " + obj)
-                            println("list.get(0)  : " + list.get(0) )
+                            println("list.get(0)  : " + list.get(0))
 
                             val address = obj.getJSONObject("road_address")
                             println("address  : " + address)
@@ -664,7 +652,7 @@ class OrderJoinActivity : RootActivity() {
 
 
     //다이얼로그
-    fun dlgView(error:String){
+    fun dlgView(error: String) {
 //        var mPopupDlg: DialogInterface? = null
 //
 //        val builder = AlertDialog.Builder(this)
@@ -686,7 +674,7 @@ class OrderJoinActivity : RootActivity() {
     }
 
 
-    fun login(email:String, passwd:String){
+    fun login(email: String, passwd: String) {
         val params = RequestParams()
         params.put("email", email)
         params.put("passwd", passwd)
@@ -728,17 +716,17 @@ class OrderJoinActivity : RootActivity() {
                         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                         startActivity(intent)
 
-                    } else if("confirm_no" == result) {
+                    } else if ("confirm_no" == result) {
                         Toast.makeText(context, "관리자 승인 후 로그인이 가능합니다.", Toast.LENGTH_LONG).show()
 
-                        val intent = Intent(context,LoginActivity::class.java)
+                        val intent = Intent(context, LoginActivity::class.java)
                         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                         startActivity(intent)
 
                     } else {
                         Toast.makeText(context, "일치하는 회원이 존재하지 않습니다.", Toast.LENGTH_LONG).show()
 
-                        val intent = Intent(context,LoginActivity::class.java)
+                        val intent = Intent(context, LoginActivity::class.java)
                         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                         startActivity(intent)
 
@@ -763,7 +751,12 @@ class OrderJoinActivity : RootActivity() {
                 Utils.alert(context, "조회중 장애가 발생하였습니다.")
             }
 
-            override fun onFailure(statusCode: Int, headers: Array<Header>?, responseString: String?, throwable: Throwable) {
+            override fun onFailure(
+                statusCode: Int,
+                headers: Array<Header>?,
+                responseString: String?,
+                throwable: Throwable
+            ) {
                 if (progressDialog != null) {
                     progressDialog!!.dismiss()
                 }
@@ -774,7 +767,12 @@ class OrderJoinActivity : RootActivity() {
                 error()
             }
 
-            override fun onFailure(statusCode: Int, headers: Array<Header>?, throwable: Throwable, errorResponse: JSONObject?) {
+            override fun onFailure(
+                statusCode: Int,
+                headers: Array<Header>?,
+                throwable: Throwable,
+                errorResponse: JSONObject?
+            ) {
                 if (progressDialog != null) {
                     progressDialog!!.dismiss()
                 }
@@ -782,7 +780,12 @@ class OrderJoinActivity : RootActivity() {
                 error()
             }
 
-            override fun onFailure(statusCode: Int, headers: Array<Header>?, throwable: Throwable, errorResponse: JSONArray?) {
+            override fun onFailure(
+                statusCode: Int,
+                headers: Array<Header>?,
+                throwable: Throwable,
+                errorResponse: JSONArray?
+            ) {
                 if (progressDialog != null) {
                     progressDialog!!.dismiss()
                 }

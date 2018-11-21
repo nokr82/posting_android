@@ -502,7 +502,7 @@
                     android:layout_weight="1"
                     android:background="@null"
                     android:hint="댓글을 입력하세요..."
-                    android:textSize="10.5dp"/>
+                    android:textSize="14dp"/>
 
 
                 <TextView

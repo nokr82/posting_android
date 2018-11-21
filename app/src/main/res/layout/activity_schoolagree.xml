@@ -109,7 +109,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="12dp"
-                        android:text="니다. 인증을 하지 않아도 각종 서비스를 이용하실 수 있습니다. 학교 인증은 사용자의 선택사랑이며, 서비스 이용을 위한 필수 절차가 아닙니다."
+                        android:text="니다. 인증을 하지 않아도 각종 서비스를 이용하실 수 있습니다. 학교 인증은 사용자의 선택사항이며, 서비스 이용을 위한 필수 절차가 아닙니다."
                         android:textColor="#8F8E8A"
                         android:textSize="11dp"/>
                 </LinearLayout>

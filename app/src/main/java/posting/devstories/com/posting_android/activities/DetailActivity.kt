@@ -66,6 +66,7 @@ class DetailActivity : RootActivity() {
     var school_id = -1
     var me_school_id =-1
     var posting_count = -1
+    var current_school_id = -1
 
     var confirm_yn = ""
     lateinit var adapterRe: ReAdapter
@@ -602,7 +603,7 @@ class DetailActivity : RootActivity() {
                             postingLL.background = getDrawable(R.mipmap.wtite_bg)
                         }
 
-                        val current_school_id = PrefUtils.getIntPreference(context, "current_school_id")
+                        current_school_id = PrefUtils.getIntPreference(context, "current_school_id")
                         if(current_school_id != me_school_id) {
                             // 학교도 다르고 내가 쓴 글이 아니면
                             // 커멘트 막기
@@ -821,6 +822,8 @@ class DetailActivity : RootActivity() {
         intent.putExtra("contents",contents)
         intent.putExtra("type",type)
         intent.putExtra("count",posting_count)
+        intent.putExtra("school_id",school_id)
+        intent.putExtra("current_school_id",current_school_id)
         startActivityForResult(intent, EDIT_POST)
 
     }

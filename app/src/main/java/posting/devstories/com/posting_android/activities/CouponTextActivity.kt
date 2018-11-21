@@ -241,9 +241,13 @@ class CouponTextActivity : RootActivity() {
                 try {
                     val result = response!!.getString("result")
                     if ("ok" == result) {
+
+                        Utils.hideKeyboard(context)
+
                         val intent = Intent(context,MainActivity::class.java)
                         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                         startActivity(intent)
+
                         Toast.makeText(context, "글작성이 완료되었습니다", Toast.LENGTH_SHORT).show()
 
                     } else {

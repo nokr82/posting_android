@@ -22,6 +22,8 @@ import posting.devstories.com.posting_android.base.Utils
 import android.view.View
 import posting.devstories.com.posting_android.adapter.SpinnerAdapter
 import posting.devstories.com.posting_android.base.Config
+import java.text.SimpleDateFormat
+import java.util.*
 
 class StudentJoinActivity : RootActivity() {
     lateinit var context: Context
@@ -64,8 +66,10 @@ class StudentJoinActivity : RootActivity() {
 
 
 
-        allCK.setOnCheckedChangeListener{
-            compoundButton, b ->
+        allCK.setOnClickListener{
+
+            val b = allCK.isChecked
+
             if (b==true){
                 serviceCK.isChecked=true
                 soloCK.isChecked=true
@@ -103,6 +107,7 @@ class StudentJoinActivity : RootActivity() {
             val check_1 = serviceCK.isChecked
             val check_2 = soloCK.isChecked
             val check_3 = agree3CK.isChecked
+
             allCK.isChecked = b&&check_1&&check_2&&check_3
         }
 
@@ -149,20 +154,20 @@ class StudentJoinActivity : RootActivity() {
                 geterror = "이름을 입력해주세요"
 
                 dlgView( geterror)
-            }else if (allCK.isChecked!=true){
-                geterror = "이용약관에 동의해주세요"
-
-                dlgView( geterror)
+//            }else if (allCK.isChecked!=true){
+//                geterror = "이용약관에 동의해주세요"
+//
+//                dlgView( geterror)
             }else if (serviceCK.isChecked!=true){
-                geterror = "이용약관에 동의해주세요"
+                geterror = "서비스 이용약관에 동의해주세요"
 
                 dlgView( geterror)
             }else if (soloCK.isChecked!=true){
-                geterror = "이용약관에 동의해주세요"
+                geterror = "개인정보처리방침에 동의해주세요"
 
                 dlgView( geterror)
             }else if(agree3CK.isChecked != true) {
-                geterror = "이용약관에 동의해주세요"
+                geterror = "통합커뮤니티 이용규칙에 동의해주세요"
 
                 dlgView( geterror)
             } else {
@@ -182,7 +187,17 @@ class StudentJoinActivity : RootActivity() {
 
         years.add("태어난 연도");
 
-        for (i in 1968..2018) {
+        // 현재 연도
+        val date = Date(System.currentTimeMillis())
+        val sdf = SimpleDateFormat("yyyy")
+
+        val years_str = sdf.format(date)
+        var year = years_str.toInt()
+
+        // 시작 연도
+        val start_year = year - 50
+
+        for (i in start_year..year) {
 
             years.add(i.toString())
 
@@ -254,6 +269,13 @@ class StudentJoinActivity : RootActivity() {
         params.put("birth", getBirth)
         params.put("gender", gendertype)
         params.put("school_id",schoolid)
+
+        var agree_yn = "N"
+        if(agree4CK.isChecked) {
+            agree_yn = "Y"
+        }
+
+        params.put("agree_yn", agree_yn)
 
 
         JoinAction.join(params, object : JsonHttpResponseHandler() {
@@ -498,6 +520,7 @@ class StudentJoinActivity : RootActivity() {
                         PrefUtils.setPreference(context, "member_type", Utils.getString(data, "member_type"))
                         PrefUtils.setPreference(context, "school_id", Utils.getInt(data, "school_id"))
                         PrefUtils.setPreference(context, "confirm_yn", Utils.getString(data, "confirm_yn"))
+                        PrefUtils.setPreference(context, "active_yn", Utils.getString(data, "active_yn"))
                         PrefUtils.setPreference(context, "autoLogin", true)
 
                         val intent = Intent(context, MainActivity::class.java)

@@ -28,6 +28,8 @@ class DlgReportActivity : RootActivity() {
     private val _active = true
 
     var member_id = -1
+    var school_id = -1
+    var current_school_id = -1
     var posting_id :String?= null
     var dlgtype:String?= null
     var image_uri :String?= null
@@ -47,6 +49,8 @@ class DlgReportActivity : RootActivity() {
 
         intent = getIntent()
         member_id =intent.getIntExtra("member_id",-1)
+        school_id =intent.getIntExtra("school_id",-1)
+        current_school_id =intent.getIntExtra("current_school_id",-1)
         posting_id = intent.getStringExtra("posting_id")
         dlgtype = intent.getStringExtra("dlgtype")
         save_id= intent.getStringExtra("save_id")
@@ -100,6 +104,8 @@ class DlgReportActivity : RootActivity() {
 
                 val intent = Intent(context, PostWriteActivity::class.java)
                 intent.putExtra("posting_id", posting_id)
+                intent.putExtra("current_school_id", current_school_id)
+                intent.putExtra("school_id", school_id)
                 intent.putExtra("image_uri",image_uri)
                 intent.putExtra("member_type",member_type)
                 intent.putExtra("contents",contents)
