@@ -54,5 +54,19 @@ class MyPageStudyFragment : MyPageParentFragment() {
         loadData(3)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+
+        try {
+            if (setViewReceiver != null) {
+                context!!.unregisterReceiver(setViewReceiver)
+            }
+
+        } catch (e: IllegalArgumentException) {
+        }
+
+    }
+
+
 
 }
