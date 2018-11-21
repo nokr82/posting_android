@@ -71,7 +71,7 @@ open class MainFragment : Fragment(), AbsListView.OnScrollListener {
                             }
 
                         }
-
+                        break
                     }
 
                 }
