@@ -37,6 +37,16 @@ object PostingAction {
     fun write_comments(params: RequestParams, handler: JsonHttpResponseHandler) {
         HttpClient.post("/posting/write_comments.json", params, handler)
     }
+
+    // 댓글 삭제
+    fun del_comments(params: RequestParams, handler: JsonHttpResponseHandler) {
+        HttpClient.post("/posting/del_comments.json", params, handler)
+    }
+
+    // 댓글 수정
+    fun edit_comments(params: RequestParams, handler: JsonHttpResponseHandler) {
+        HttpClient.post("/posting/edit_comments.json", params, handler)
+    }
     //삭제
     fun del_posting(params: RequestParams, handler: JsonHttpResponseHandler) {
         HttpClient.post("/posting/del_posting.json", params, handler)

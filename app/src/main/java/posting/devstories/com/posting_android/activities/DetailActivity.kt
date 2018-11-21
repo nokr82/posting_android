@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.View
+import android.widget.AdapterView
 import android.widget.Toast
 import com.loopj.android.http.JsonHttpResponseHandler
 import com.loopj.android.http.RequestParams
@@ -19,7 +20,9 @@ import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 import posting.devstories.com.posting_android.Actions.MemberAction
+import posting.devstories.com.posting_android.Actions.PostingAction.del_comments
 import posting.devstories.com.posting_android.Actions.PostingAction.detail
+import posting.devstories.com.posting_android.Actions.PostingAction.edit_comments
 import posting.devstories.com.posting_android.Actions.PostingAction.save_posting
 import posting.devstories.com.posting_android.Actions.PostingAction.write_comments
 import posting.devstories.com.posting_android.R
@@ -41,6 +44,8 @@ class DetailActivity : RootActivity() {
     val EDIT_POST = 101;
     val STORAGE_POST = 201;
     val USES_COUPON = 301;
+    val EIDT_COMMENTS = 1001;
+    val DEL_COMMENTS = 2001;
 
     var nick = ""
     lateinit var context:Context
@@ -62,6 +67,8 @@ class DetailActivity : RootActivity() {
     var save_id = -1
 
     var dlgtype  = ""
+    var editComments  = false
+    var edit_comments_id  = -1
 
     var school_id = -1
     var me_school_id =-1
@@ -155,22 +162,43 @@ class DetailActivity : RootActivity() {
         ///////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////
 
-
-
         policeTV.setOnClickListener {
             policedlgView()
         }
 
         commentsLV.setOnItemClickListener { adapterView, view, i, l ->
 
-            var data = adapterData.get(i)
-            val comments_id = Utils.getInt(data, "id")
-            if (comments_id != -1) {
-                p_comments_id = comments_id
-                commentsET.requestFocus()
-                Utils.showKeyboard(context)
-                commentsET.hint = "답글쓰기"
+            if(!editComments) {
+                var data = adapterData.get(i)
+                val comments_id = Utils.getInt(data, "id")
+                if (comments_id != -1) {
+                    p_comments_id = comments_id
+                    commentsET.requestFocus()
+                    Utils.showKeyboard(context)
+                    commentsET.hint = "답글쓰기"
+                }
             }
+
+        }
+
+        commentsLV.setOnItemLongClickListener { parent, view, position, id ->
+
+            var data = adapterData.get(position)
+            val comments_id = Utils.getInt(data, "id")
+            val comments_member_id = Utils.getInt(data, "member_id")
+            val comments = Utils.getString(data, "comments")
+
+            if (comments_id != -1 && member_id == comments_member_id) {
+
+                editComments = true
+
+                var intent = Intent(context, DlgMyCommentsActivity::class.java)
+                intent.putExtra("comments_id", comments_id)
+                intent.putExtra("comments", comments)
+                startActivityForResult(intent, EIDT_COMMENTS)
+            }
+
+            false
         }
 
         couponTV.setOnClickListener {
@@ -207,7 +235,13 @@ class DetailActivity : RootActivity() {
             var comments = Utils.getString(commentsET)
 
             if(!comments.isEmpty() && comments != "") {
-                writeComments(comments)
+
+                if(editComments) {
+                    editComments(comments)
+                } else {
+                    writeComments(comments)
+                }
+
             }
         }
 
@@ -357,6 +391,7 @@ class DetailActivity : RootActivity() {
             }
         })
     }
+
     //댓글
     fun writeComments(comments:String) {
         val params = RequestParams()
@@ -419,6 +454,130 @@ class DetailActivity : RootActivity() {
             }
         })
     }
+
+    //댓글 수정
+    fun editComments(comments:String) {
+        val params = RequestParams()
+        params.put("comments_id", edit_comments_id)
+        params.put("comments", comments)
+
+        edit_comments(params, object : JsonHttpResponseHandler() {
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+                try {
+
+                    val result = response!!.getString("result")
+
+                    if ("ok" == result) {
+                        detaildata()
+                        Utils.hideKeyboard(context)
+                        commentsET.setText("")
+
+                        editComments = false
+                        edit_comments_id = -1
+                    }
+
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+
+            }
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONArray?) {
+                super.onSuccess(statusCode, headers, response)
+            }
+
+            private fun error() {
+                Utils.alert(context, "조회중 장애가 발생하였습니다.")
+            }
+
+            override fun onFailure(statusCode: Int, headers: Array<Header>?, throwable: Throwable, errorResponse: JSONArray?) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+                throwable.printStackTrace()
+                error()
+            }
+
+            override fun onStart() {
+                // show dialog
+                if (progressDialog != null) {
+
+                    progressDialog!!.show()
+                }
+            }
+
+            override fun onFinish() {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+            }
+        })
+    }
+
+    //댓글 삭제
+    fun delComments() {
+        val params = RequestParams()
+        params.put("comments_id", edit_comments_id)
+
+        del_comments(params, object : JsonHttpResponseHandler() {
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+                try {
+
+                    val result = response!!.getString("result")
+
+                    if ("ok" == result) {
+                        detaildata()
+
+                        editComments = false
+                        edit_comments_id = -1
+                    }
+
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+
+            }
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONArray?) {
+                super.onSuccess(statusCode, headers, response)
+            }
+
+            private fun error() {
+                Utils.alert(context, "조회중 장애가 발생하였습니다.")
+            }
+
+            override fun onFailure(statusCode: Int, headers: Array<Header>?, throwable: Throwable, errorResponse: JSONArray?) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+                throwable.printStackTrace()
+                error()
+            }
+
+            override fun onStart() {
+                // show dialog
+                if (progressDialog != null) {
+
+                    progressDialog!!.show()
+                }
+            }
+
+            override fun onFinish() {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+            }
+        })
+    }
+
     //저장
     fun savePosting() {
         val params = RequestParams()
@@ -503,6 +662,7 @@ class DetailActivity : RootActivity() {
             }
         })
     }
+
     //상세뽑기
     fun detaildata() {
         val params = RequestParams()
@@ -828,6 +988,7 @@ class DetailActivity : RootActivity() {
         startActivityForResult(intent, EDIT_POST)
 
     }
+
     fun storagedlgView(){
         dlgtype = "Storage"
         var intent = Intent(context, DlgReportActivity::class.java)
@@ -845,6 +1006,7 @@ class DetailActivity : RootActivity() {
         intent.putExtra("posting_save_id", posting_save_id)
         startActivityForResult(intent, USES_COUPON)
     }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -859,7 +1021,31 @@ class DetailActivity : RootActivity() {
                 USES_COUPON -> {
                     couponTV.visibility = View.GONE
                 }
+                EIDT_COMMENTS -> {
+                    if (data != null) {
+                        edit_comments_id = data.getIntExtra("comments_id", -1)
+                        var comments = data.getStringExtra("comments")
+
+                        val type = data.getStringExtra("type")
+
+                        if(type == "edit") {
+                            commentsET.requestFocus()
+                            commentsET.setText(comments)
+                        } else {
+                            var intent = Intent(context, DlgCommonActivity::class.java)
+                            intent.putExtra("contents", "댓글을 삭제하시겠습니까?")
+                            intent.putExtra("cancel", true)
+                            startActivityForResult(intent, DEL_COMMENTS)
+                        }
+
+                    }
+                }
+                DEL_COMMENTS -> {
+                    delComments();
+                }
             }
+        } else {
+            editComments = false
         }
 
     }
