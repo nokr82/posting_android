@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 public class PrefUtils {
+
     static String masterKey = "member_id";
 
     public static void setPreference(Context context, String key, boolean value) {
