@@ -114,6 +114,8 @@ open class PostFragment : Fragment() {
                 var posting_id = intent.getStringExtra("posting_id")
                 var count = intent.getIntExtra("count", 1)
 
+                var index = -1
+
                 for (i in 0..(mainAdapterData.size - 1)) {
                     var data = mainAdapterData[i]
                     var list = data.getJSONArray("list")
@@ -130,12 +132,13 @@ open class PostFragment : Fragment() {
 
                                 if(cnt < 1) {
                                     list.remove(j)
+
                                 } else {
                                     posting.put("leftCount", cnt)
                                 }
-
                             }
 
+                            break
                         }
 
                     }
