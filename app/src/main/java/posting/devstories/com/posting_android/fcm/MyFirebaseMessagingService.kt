@@ -1,9 +1,10 @@
 package posting.devstories.com.posting_android.fcm
 
-
+import android.app.ActivityManager
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
@@ -17,7 +18,9 @@ import android.support.v4.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import posting.devstories.com.posting_android.R
+import posting.devstories.com.posting_android.activities.DlgCommonActivity
 import posting.devstories.com.posting_android.activities.IntroActivity
+import posting.devstories.com.posting_android.activities.StartActivity
 
 /**
  * Created by dev1 on 2017-12-15.
@@ -52,49 +55,62 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         val body = data["body"]
         val group = channelId
 
-        val intent = Intent(this, IntroActivity::class.java)
-        // intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.putExtra("posting_id", data["posting_id"])
-        intent.putExtra("chatting_member_id", data["chatting_member_id"])
-        intent.putExtra("FROM_PUSH", true)
+        if(title == "popup") {
+
+            if (isAppRunning(this)) {
+                val intent1 = Intent(this, DlgCommonActivity::class.java)
+                intent1.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                intent1.putExtra("contents", body)
+                this.startActivity(intent1)
+            } else {
+                startActivity(body!!);
+            }
+
+        } else {
+            val intent = Intent(this, IntroActivity::class.java)
+            // intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.putExtra("posting_id", data["posting_id"])
+            intent.putExtra("chatting_member_id", data["chatting_member_id"])
+            intent.putExtra("FROM_PUSH", true)
 
 
-        val pendingIntent =
-            PendingIntent.getActivity(this, System.currentTimeMillis().toInt(), intent, PendingIntent.FLAG_ONE_SHOT)
+            val pendingIntent =
+                PendingIntent.getActivity(this, System.currentTimeMillis().toInt(), intent, PendingIntent.FLAG_ONE_SHOT)
 
-        val notificationBuilder = NotificationCompat.Builder(this, channelId)
-            .setSmallIcon(R.mipmap.ic_launcher)
-            .setLargeIcon(BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher))
-            .setContentTitle(title)
-            .setContentText(body)
-            .setAutoCancel(true)
-            .setShowWhen(true)
-            .setWhen(System.currentTimeMillis())
-            .setVibrate(longArrayOf(1000, 1000))
-            .setGroup(group)
-            .setContentIntent(pendingIntent)
-
-        val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
-        notificationBuilder.setSound(defaultSoundUri)
-
-        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            createChannel(notificationManager, channelId, title, body)
-        }
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            val gnotificationBuilder = NotificationCompat.Builder(this, channelId)
+            val notificationBuilder = NotificationCompat.Builder(this, channelId)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setLargeIcon(BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher))
-                .setGroup(group)
-                .setGroupSummary(true)
+                .setContentTitle(title)
+                .setContentText(body)
                 .setAutoCancel(true)
+                .setShowWhen(true)
+                .setWhen(System.currentTimeMillis())
+                .setVibrate(longArrayOf(1000, 1000))
+                .setGroup(group)
+                .setContentIntent(pendingIntent)
 
-            notificationManager.notify(System.currentTimeMillis().toInt(), notificationBuilder.build())
-            notificationManager.notify(group, 0, gnotificationBuilder.build())
-        } else {
-            notificationManager.notify(System.currentTimeMillis().toInt(), notificationBuilder.build())
+            val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+            notificationBuilder.setSound(defaultSoundUri)
+
+            val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                createChannel(notificationManager, channelId, title, body)
+            }
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                val gnotificationBuilder = NotificationCompat.Builder(this, channelId)
+                    .setSmallIcon(R.mipmap.ic_launcher)
+                    .setLargeIcon(BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher))
+                    .setGroup(group)
+                    .setGroupSummary(true)
+                    .setAutoCancel(true)
+
+                notificationManager.notify(System.currentTimeMillis().toInt(), notificationBuilder.build())
+                notificationManager.notify(group, 0, gnotificationBuilder.build())
+            } else {
+                notificationManager.notify(System.currentTimeMillis().toInt(), notificationBuilder.build())
+            }
         }
 
     }
@@ -118,6 +134,30 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     companion object {
         private val TAG = "MyFirebaseMsgService"
+    }
+
+    private fun isAppRunning(context: Context): Boolean {
+        val PackageName = packageName
+        val manager = getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+        val componentInfo: ComponentName?
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val tasks = manager.appTasks
+            componentInfo = tasks[0].taskInfo.topActivity
+        } else {
+            val tasks = manager.getRunningTasks(1)
+            componentInfo = tasks[0].topActivity
+        }
+
+        if (null != componentInfo) {
+            if (componentInfo.packageName == PackageName) {
+                return true
+            }
+        }
+        return false
+    }
+
+    private fun startActivity(message: String) {
+        mHandler.post(StartActivity(this, message))
     }
 
 }

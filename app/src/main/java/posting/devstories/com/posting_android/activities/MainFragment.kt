@@ -53,6 +53,7 @@ open class MainFragment : Fragment(), AbsListView.OnScrollListener {
         override fun onReceive(context: Context, intent: Intent?) {
             if (intent != null) {
                 var posting_id = intent.getStringExtra("posting_id")
+                var count = intent.getIntExtra("count", 1)
 
                 for (i in 0..(adapterData.size - 1)) {
                     var data = adapterData[i]
@@ -61,7 +62,7 @@ open class MainFragment : Fragment(), AbsListView.OnScrollListener {
                     if (Utils.getString(posting, "id") == posting_id) {
 
                         if(Utils.getInt(posting, "leftCount") != 9999) {
-                            var cnt = Utils.getInt(posting, "leftCount") - 1
+                            var cnt = Utils.getInt(posting, "count") - count
 
                             if(cnt < 1) {
                                 adapterData.removeAt(i)

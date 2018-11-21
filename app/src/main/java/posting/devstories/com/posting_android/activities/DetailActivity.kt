@@ -444,6 +444,7 @@ class DetailActivity : RootActivity() {
 
                         intent = Intent()
                         intent.putExtra("posting_id", posting_id)
+                        intent.putExtra("count", count)
                         intent.action = "SAVE_POSTING"
                         sendBroadcast(intent)
 //                        detaildata()
