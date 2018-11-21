@@ -983,8 +983,7 @@ class DetailActivity : RootActivity() {
         intent.putExtra("contents",contents)
         intent.putExtra("type",type)
         intent.putExtra("count",posting_count)
-        intent.putExtra("school_id",school_id)
-        intent.putExtra("current_school_id",current_school_id)
+        intent.putExtra("current_school_id",school_id)
         startActivityForResult(intent, EDIT_POST)
 
     }

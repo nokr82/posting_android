@@ -209,6 +209,7 @@ class PostWriteActivity : RootActivity() {
                     intent.putExtra("getmost", getmost)
                     intent.putExtra("posting_id", posting_id)
                     intent.putExtra("contents", contents)
+                    intent.putExtra("school_id", school_id)
 //                    intent.putExtra("getday", getday)
                     intent.putExtra("postingType", "T")
                     startActivity(intent)

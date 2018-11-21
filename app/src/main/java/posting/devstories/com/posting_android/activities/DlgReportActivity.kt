@@ -17,6 +17,7 @@ import org.json.JSONObject
 import posting.devstories.com.posting_android.Actions.PostingAction
 import posting.devstories.com.posting_android.Actions.ReviewAction
 import posting.devstories.com.posting_android.R
+import posting.devstories.com.posting_android.base.PrefUtils
 import posting.devstories.com.posting_android.base.RootActivity
 import posting.devstories.com.posting_android.base.Utils
 
@@ -28,7 +29,6 @@ class DlgReportActivity : RootActivity() {
     private val _active = true
 
     var member_id = -1
-    var school_id = -1
     var current_school_id = -1
     var posting_id :String?= null
     var dlgtype:String?= null
@@ -49,7 +49,6 @@ class DlgReportActivity : RootActivity() {
 
         intent = getIntent()
         member_id =intent.getIntExtra("member_id",-1)
-        school_id =intent.getIntExtra("school_id",-1)
         current_school_id =intent.getIntExtra("current_school_id",-1)
         posting_id = intent.getStringExtra("posting_id")
         dlgtype = intent.getStringExtra("dlgtype")
@@ -104,8 +103,8 @@ class DlgReportActivity : RootActivity() {
 
                 val intent = Intent(context, PostWriteActivity::class.java)
                 intent.putExtra("posting_id", posting_id)
-                intent.putExtra("current_school_id", current_school_id)
-                intent.putExtra("school_id", school_id)
+                intent.putExtra("current_school", current_school_id)
+                intent.putExtra("school_id", PrefUtils.getIntPreference(context, "school_id"))
                 intent.putExtra("image_uri",image_uri)
                 intent.putExtra("member_type",member_type)
                 intent.putExtra("contents",contents)

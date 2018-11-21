@@ -129,7 +129,7 @@ open class PostFragment : Fragment() {
                                 var cnt = Utils.getInt(posting, "count") - count
 
                                 if(cnt < 1) {
-                                    list.remove(i)
+                                    list.remove(j)
                                 } else {
                                     posting.put("leftCount", cnt)
                                 }
