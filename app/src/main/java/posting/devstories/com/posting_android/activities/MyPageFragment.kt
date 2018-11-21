@@ -11,16 +11,12 @@ import android.support.v4.app.FragmentTabHost
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
-import android.widget.Toast
+import android.widget.*
 import com.loopj.android.http.JsonHttpResponseHandler
 import com.loopj.android.http.RequestParams
 import com.nostra13.universalimageloader.core.ImageLoader
 import cz.msebera.android.httpclient.Header
-import kotlinx.android.synthetic.main.fra_my_page.*
-import kotlinx.android.synthetic.main.tab_my_page_noti_view.*
-import kotlinx.android.synthetic.main.tab_my_page_posting_view.*
-import kotlinx.android.synthetic.main.tab_my_page_storage_view.*
+import de.hdodenhof.circleimageview.CircleImageView
 import org.json.JSONException
 import org.json.JSONObject
 import posting.devstories.com.posting_android.Actions.MemberAction
@@ -39,6 +35,21 @@ open class MyPageFragment : Fragment() {
 
     lateinit var fragmentFT: FragmentTabHost
     lateinit var fragmentFL: FrameLayout
+
+    lateinit var alarmCntTV: TextView
+
+    lateinit var postingV: View
+    lateinit var postingRL: RelativeLayout
+
+    lateinit var storageV: View
+    lateinit var storageRL: RelativeLayout
+
+    lateinit var notifyV: View
+    lateinit var notiRL: RelativeLayout
+
+    lateinit var nickNameTV: TextView
+    lateinit var menuIV: ImageView
+    lateinit var myIV: CircleImageView
 
     var tabType = 1
 
@@ -69,13 +80,8 @@ open class MyPageFragment : Fragment() {
     fun getPostingTabType(): Int {
         val myPagePostingFragment = childFragmentManager.findFragmentByTag("posting") as? MyPagePostingFragment
         if(myPagePostingFragment != null) {
-
-            println("myPagePostingFragment : " + myPagePostingFragment.tabType)
-
             return myPagePostingFragment.tabType
         }
-
-        println("kljhgfds")
 
         return 0
     }
@@ -103,6 +109,10 @@ open class MyPageFragment : Fragment() {
         fragmentFT = view.findViewById(R.id.fragmentFT)
         fragmentFL = view.findViewById(R.id.fragmentFL)
 
+        nickNameTV = view.findViewById(R.id.nickNameTV)
+        menuIV = view.findViewById(R.id.menuIV)
+        myIV = view.findViewById(R.id.myIV)
+
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -113,6 +123,16 @@ open class MyPageFragment : Fragment() {
         val tabPostingV = View.inflate(myContext, R.layout.tab_my_page_posting_view, null)
         val tabStorageV = View.inflate(myContext, R.layout.tab_my_page_storage_view, null)
         val tabNotiV = View.inflate(myContext, R.layout.tab_my_page_noti_view, null)
+
+        postingV = tabPostingV.findViewById(R.id.postingV)
+        postingRL = tabPostingV.findViewById(R.id.postingRL)
+
+        storageV = tabStorageV.findViewById(R.id.storageV)
+        storageRL = tabStorageV.findViewById(R.id.storageRL)
+
+        notifyV = tabNotiV.findViewById(R.id.notifyV)
+        notiRL = tabNotiV.findViewById(R.id.notiRL)
+        alarmCntTV = tabNotiV.findViewById(R.id.alarmCntTV)
 
         fragmentFT.tabWidget.dividerDrawable = null
 
