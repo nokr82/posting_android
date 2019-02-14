@@ -131,7 +131,8 @@ class PostWriteActivity : RootActivity() {
             count = Utils.getInt(countET)
 
             if (count < 1 || count > 10) {
-                Toast.makeText(context, "1개 ~ 10개 한정\n수량을 기입해주세요", Toast.LENGTH_SHORT).show()
+                countdlgView()
+//                Toast.makeText(context, "1개 ~ 10개 한정\n수량을 기입해주세요", Toast.LENGTH_SHORT).show()
             } else {
 
                 if (chattingCB.isChecked) {
@@ -219,6 +220,16 @@ class PostWriteActivity : RootActivity() {
         loadPhoto()
 
     }
+
+    fun countdlgView() {
+
+        var intent = Intent(context, DlgCommonActivity::class.java)
+        intent.putExtra("contents", "1개 ~ 10개 한정\n수량을 기입해주세요.")
+        startActivity(intent)
+
+    }
+
+
 
     fun loadPhoto() {
         var cursor: Cursor? = null

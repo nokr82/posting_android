@@ -239,7 +239,7 @@ class StudentJoinActivity : RootActivity() {
         var year = years_str.toInt()
 
         // 시작 연도
-        val start_year = year - 50
+        val start_year = year - 29
 
         for (i in start_year..year) {
 
