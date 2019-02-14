@@ -117,7 +117,7 @@ open class MyPagePostingStorageFragment : Fragment() {
 
                     val PostingSave = adapterData[position].getJSONObject("PostingSave")
 
-                    if (type == 3 || type == 4 || type == 5) {
+                    if (chatting_yn == "Y" || type == 3 || type == 4 || type == 5) {
 
                         val intent = Intent(myContext, MatchInfoActivity::class.java)
                         intent.putExtra("posting_id", Utils.getString(Posting, "id"))

@@ -47,8 +47,9 @@
                 android:background="#FEDA44">
 
                 <RelativeLayout
-                    android:layout_width="100dp"
-                    android:layout_height="103.5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="3dp"
                     android:layout_centerInParent="true">
 
                     <ImageView

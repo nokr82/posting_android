@@ -14,6 +14,7 @@ import android.widget.RelativeLayout
 import com.nostra13.universalimageloader.core.ImageLoader
 import org.json.JSONObject
 import posting.devstories.com.posting_android.R
+import posting.devstories.com.posting_android.activities.DlgAdverActivity
 import posting.devstories.com.posting_android.base.Config
 import posting.devstories.com.posting_android.base.Utils
 
@@ -47,9 +48,8 @@ class NewFullScreenImageAdapter(activity:Activity, imagePaths: ArrayList<JSONObj
 
             var link = Utils.getString(advertise, "link")
 
-            val uri = Uri.parse(link)
-
-            var intent = Intent(Intent.ACTION_VIEW, uri)
+            var intent = Intent(_activity, DlgAdverActivity::class.java)
+            intent.putExtra("link", link)
             _activity.startActivity(intent)
 
         }

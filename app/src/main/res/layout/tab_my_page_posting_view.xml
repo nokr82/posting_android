@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:textSize="16dp"
+            android:textSize="14dp"
             android:gravity="center"
             android:text="붙이다"/>
 
