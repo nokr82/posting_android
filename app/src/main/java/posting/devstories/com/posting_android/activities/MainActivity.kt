@@ -135,7 +135,8 @@ class MainActivity : FragmentActivity() {
 
         member_type = PrefUtils.getStringPreference(context, "member_type")
 
-        fragmentFT.addTab(fragmentFT.newTabSpec("post").setIndicator(tabHomeV), PostFragment::class.java, null)
+//        fragmentFT.addTab(fragmentFT.newTabSpec("post").setIndicator(tabHomeV), PostFragment::class.java, null)
+        fragmentFT.addTab(fragmentFT.newTabSpec("post").setIndicator(tabHomeV), HomeFragment::class.java, null)
         fragmentFT.addTab(fragmentFT.newTabSpec("write").setIndicator(tabWriteV), WriteFragment::class.java, null)
 
         if(member_type.equals("3")){
@@ -160,7 +161,7 @@ class MainActivity : FragmentActivity() {
             PrefUtils.setPreference(context, "current_school_id", school_id)
 
 
-            val postFragment = supportFragmentManager.findFragmentByTag("post") as? PostFragment
+            val postFragment = supportFragmentManager.findFragmentByTag("post") as? HomeFragment
 
             if(fragmentFT.currentTab == 0) {
                 if(postFragment != null) {
@@ -178,26 +179,25 @@ class MainActivity : FragmentActivity() {
 
         writeLL.setOnClickListener {
 
-            if(member_type.equals("2")) {
-                if("N" == confirm_yn) {
-                    var intent = Intent(context, DlgCommonActivity::class.java)
-                    intent.putExtra("contents", "학교 인증 후 이용하실 수 있습니다")
-                    startActivityForResult(intent, CONFRIM_SCHOOL)
+//            if(member_type.equals("2")) {
+//                if("N" == confirm_yn) {
+//                    var intent = Intent(context, DlgCommonActivity::class.java)
+//                    intent.putExtra("contents", "학교 인증 후 이용하실 수 있습니다")
+//                    startActivityForResult(intent, CONFRIM_SCHOOL)
+//
+//                    return@setOnClickListener
+//                }
+//            } else {
+//                if(active_yn == "N") {
+//                    var intent = Intent(context, DlgCommonActivity::class.java)
+//                    intent.putExtra("contents", "사업자 인증 후 이용하실 수 있습니다")
+//                    startActivity(intent)
+//
+//                    return@setOnClickListener
+//                }
+//            }
 
-                    return@setOnClickListener
-                }
-            } else {
-                if(active_yn == "N") {
-                    var intent = Intent(context, DlgCommonActivity::class.java)
-                    intent.putExtra("contents", "사업자 인증 후 이용하실 수 있습니다")
-                    startActivity(intent)
-
-                    return@setOnClickListener
-                }
-            }
-
-
-            val postFragment = supportFragmentManager.findFragmentByTag("post") as? PostFragment
+            val postFragment = supportFragmentManager.findFragmentByTag("post") as? HomeFragment
             val myPageFragment = supportFragmentManager.findFragmentByTag("myPage") as? MyPageFragment
 
             var tabType = -1
@@ -210,7 +210,6 @@ class MainActivity : FragmentActivity() {
                     tabType = myPageFragment.getPostingTabType()
                 }
             }
-
 
             val current_school = PrefUtils.getIntPreference(context, "current_school_id")
             val school_id = PrefUtils.getIntPreference(context, "school_id")

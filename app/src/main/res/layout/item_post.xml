@@ -20,7 +20,7 @@
             android:layout_height="match_parent"
             android:adjustViewBounds="true"
             android:scaleType="fitXY"
-            android:src="@mipmap/bg" />
+            android:background="#FEDA44"/>
 
         <RelativeLayout
             android:layout_width="match_parent"

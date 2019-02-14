@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    >
+    android:orientation="vertical">
 
     <View
         android:layout_width="match_parent"
         android:layout_height="0.3dp"
-        android:background="#D0D0D0"/>
+        android:background="#D0D0D0" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -31,81 +30,31 @@
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
+            android:layout_marginLeft="8.5dp"
             android:orientation="horizontal"
-            android:padding="16dp">
+            android:gravity="center_vertical">
 
-            <RelativeLayout
-                android:layout_width="78dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/meeting2RL"
-                android:layout_marginRight="20dp">
+            <EditText
+                android:id="@+id/countET"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:textSize="14dp"
+                android:hint="수량"
+                android:textColor="#888888"
+                android:maxLength="2"
+                android:background="@null"
+                android:inputType="number"/>
 
-            <Spinner
-                android:id="@+id/meetingSP2"
-                android:popupBackground="@drawable/background_border_707070"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@null">
-
-            </Spinner>
-
-            <ImageView
+            <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:src="@mipmap/semo" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                    android:layout_width="78dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="20dp">
-
-                <Spinner
-                        android:popupBackground="@drawable/background_border_707070"
-                        android:id="@+id/mostSP"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@null">
-
-                </Spinner>
-
-                <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentRight="true"
-                        android:src="@mipmap/semo" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/dayRL"
-                android:layout_width="78dp"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <Spinner
-                    android:popupBackground="@drawable/background_border_707070"
-                    android:id="@+id/daySP"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@null">
-
-                </Spinner>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
-                    android:src="@mipmap/semo" />
-
-            </RelativeLayout>
+                android:text="채팅"
+                android:textColor="#888888"
+                android:textSize="14dp"
+                android:background="@null"
+                android:theme="@style/write_checkbox"/>
 
         </LinearLayout>
 
@@ -113,16 +62,16 @@
             android:id="@+id/nextLL"
             android:layout_width="wrap_content"
             android:layout_height="match_parent">
-        <TextView
 
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginRight="15.3dp"
-            android:text="다음"
-            android:textColor="#063588"
-            android:textSize="14dp"
-            />
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="15.3dp"
+                android:text="다음"
+                android:textColor="#063588"
+                android:textSize="14dp" />
         </LinearLayout>
 
     </LinearLayout>
@@ -132,39 +81,38 @@
         android:layout_height="0dp"
         android:layout_weight="1.5"
         android:orientation="vertical"
-        android:layout_marginBottom="5dp" >
+        android:layout_marginBottom="5dp">
 
         <posting.devstories.com.posting_android.base.RationalRelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                app:ratio="1195.5:1223.5">
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            app:ratio="1:1">
 
             <RelativeLayout
-                    android:id="@+id/bgRL"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                android:id="@+id/bgRL"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#FEDA44">
 
                 <posting.devstories.com.posting_android.base.RationalRelativeLayout
-                        android:id="@+id/coupon3RL"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_centerInParent="true"
-                        android:layout_marginLeft="18dp"
-                        android:layout_marginRight="19dp"
-                        app:ratio="1055.5:1089.5">
+                    android:id="@+id/coupon3RL"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_centerInParent="true"
+                    android:layout_margin="10dp"
+                    app:ratio="1:1">
 
                     <ImageView
-                            android:id="@+id/imgIV2"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:scaleType="centerCrop" />
+                        android:id="@+id/imgIV2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop" />
 
                 </posting.devstories.com.posting_android.base.RationalRelativeLayout>
 
             </RelativeLayout>
-
 
         </posting.devstories.com.posting_android.base.RationalRelativeLayout>
 
@@ -176,18 +124,17 @@
         android:layout_weight="0.6"
         android:orientation="vertical">
 
-
         <GridView
             android:id="@+id/listGV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:numColumns="4"
-            >
+            android:numColumns="4">
 
         </GridView>
 
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -201,21 +148,19 @@
             android:layout_weight="1"
             android:gravity="center">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:textSize="14dp"
-            android:gravity="center"
-            android:text="갤러리"
-            />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textSize="14dp"
+                android:gravity="center"
+                android:text="갤러리" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="3dp"
-            android:layout_alignParentBottom="true"
-            android:background="#063588"
-          />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:layout_alignParentBottom="true"
+                android:background="#063588" />
 
         </RelativeLayout>
 
@@ -224,64 +169,30 @@
             android:gravity="center"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            >
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="카메라"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:textSize="14dp"/>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="3dp"
-                android:layout_alignParentBottom="true"
-                android:background="#D0D0D0"
-                android:visibility="invisible"
-                />
-        </RelativeLayout>
-        <RelativeLayout
-            android:id="@+id/textRL"
-            android:layout_width="0dp"
-            android:gravity="center"
-            android:layout_height="match_parent"
             android:layout_weight="1">
-        <TextView
 
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="TEXT"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:textSize="14dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="카메라"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="14dp" />
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="3dp"
                 android:layout_alignParentBottom="true"
-              android:visibility="invisible"
                 android:background="#D0D0D0"
-               />
+                android:visibility="invisible" />
         </RelativeLayout>
-
-
-
-
-
 
     </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:background="#888888" />
-
-
-
-
-
-
-
 
 </LinearLayout>
 

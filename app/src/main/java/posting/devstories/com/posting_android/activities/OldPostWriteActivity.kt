@@ -8,7 +8,6 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.database.Cursor
-import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -25,7 +24,7 @@ import com.nostra13.universalimageloader.core.ImageLoader
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 import cz.msebera.android.httpclient.Header
-import kotlinx.android.synthetic.main.activity_postwrite.*
+import kotlinx.android.synthetic.main.activity_old_postwrite.*
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
@@ -33,13 +32,12 @@ import posting.devstories.com.posting_android.Actions.PostingAction
 import posting.devstories.com.posting_android.R
 import posting.devstories.com.posting_android.adapter.ImageAdapter
 import posting.devstories.com.posting_android.base.*
-import java.io.ByteArrayInputStream
 import java.io.File
 import java.io.IOException
 import java.util.*
 import kotlin.collections.ArrayList
 
-class PostWriteActivity : RootActivity() {
+class OldPostWriteActivity : RootActivity() {
 
     lateinit var context: Context
     private var progressDialog: ProgressDialog? = null
@@ -50,6 +48,13 @@ class PostWriteActivity : RootActivity() {
     private val CROP_FROM_CAMERA = 100
     var imageUri: Uri? = null
     var imageUriOutput: Uri? = null
+    // var absolutePath: String? = null
+    var mee = arrayOf("자유", "정보", "스터디", "동아리", "미팅")
+    var most = arrayOf("수량", "1", "3", "5", "10", "20", "무제한")
+    var day = arrayOf("기간", "1일", "5일", "7일", "10일", "30일", "60일")
+    var getmee: String? = null
+    var getmost = ""
+    var getday = ""
     var postingType = "G"
 
     var current_school = -1
@@ -61,15 +66,15 @@ class PostWriteActivity : RootActivity() {
     var contents: String? = null
     var image_uri: String? = null
     var image: String? = null
+    // var capture: Bitmap? = null
     var tabType = -1
     var type = -1
     var count = -1
 
-    var member_id = -1
-
-    lateinit var capture: Bitmap
-
     lateinit var adapter: ArrayAdapter<String>
+    lateinit var typeAdapter: ArrayAdapter<String>
+    lateinit var countAdapter: ArrayAdapter<String>
+    var setMee: ArrayList<String> = ArrayList<String>()
 
     //mypostwrite에서 브로드캐스트로 인텐트를 받는다
     internal var setViewReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
@@ -82,15 +87,13 @@ class PostWriteActivity : RootActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_postwrite)
+        setContentView(R.layout.activity_old_postwrite)
 
         val filter1 = IntentFilter("SET_VIEW")
         registerReceiver(setViewReceiver, filter1)
 
         this.context = this
         progressDialog = ProgressDialog(context)
-
-        member_id = PrefUtils.getIntPreference(context, "member_id")
 
         intent = getIntent()
 
@@ -102,10 +105,22 @@ class PostWriteActivity : RootActivity() {
         image_uri = intent.getStringExtra("image_uri")
         tabType = intent.getIntExtra("tabType", -1)
         type = intent.getIntExtra("type", 1)
-        count = intent.getIntExtra("count", -1)
+        count = intent.getIntExtra("count", 1)
 
-        if (count > -1) {
-            countET.setText(count.toString())
+        typeAdapter = ArrayAdapter<String>(context, R.layout.spinner_item, mee)
+        meetingSP2.adapter = typeAdapter
+        typeAdapter.notifyDataSetChanged()
+
+        adapter = ArrayAdapter<String>(this, R.layout.spinner_item, day)
+        daySP.adapter = adapter
+
+        countAdapter = ArrayAdapter<String>(this, R.layout.spinner_item, most)
+        mostSP.adapter = countAdapter
+
+        if (current_school != school_id) {
+            bgRL.background = getDrawable(R.mipmap.write_bg2)
+        } else {
+            bgRL.background = getDrawable(R.mipmap.wtite_bg)
         }
 
         if (posting_id != null && !posting_id.equals("") ) {
@@ -113,18 +128,109 @@ class PostWriteActivity : RootActivity() {
             image = Config.url + image_uri
             ImageLoader.getInstance().displayImage(image, imgIV2, Utils.UILoptionsPosting)
             imgIV2.visibility = View.VISIBLE
+
+            var position = 1
+
+            println("type : " + type)
+
+            if(type == 1) {
+                position = typeAdapter.getPosition("자유")
+            } else if (type == 2) {
+                position = typeAdapter.getPosition("정보")
+            } else if (type == 3) {
+                position = typeAdapter.getPosition("스터디")
+            } else if (type == 4) {
+                position = typeAdapter.getPosition("동아리")
+            } else if (type == 5) {
+                position = typeAdapter.getPosition("미팅")
+            }
+
+            println("position : $position")
+
+            meetingSP2.setSelection(position)
+
+            position = 1
+
+            if(count == 1) {
+                position = countAdapter.getPosition("1")
+            } else if (count == 3) {
+                position = countAdapter.getPosition("3")
+            } else if (count == 5) {
+                position = countAdapter.getPosition("5")
+            } else if (count == 10) {
+                position = countAdapter.getPosition("10")
+            } else if (count == 20) {
+                position = countAdapter.getPosition("20")
+            } else if (count < 1) {
+                position = countAdapter.getPosition("무제한")
+            } else {
+                position = countAdapter.getPosition("수량")
+            }
+
+            mostSP.setSelection(position)
+
+        } else {
+            if(tabType < 6) {
+                meetingSP2.setSelection(tabType - 1)
+            }
+        }
+
+        if (member_type.equals("3")) {
+            meeting2RL.visibility = View.GONE
+        } else {
+            dayRL.visibility = View.GONE
         }
 
         finishLL.setOnClickListener {
             finish()
         }
 
+        textRL.setOnClickListener {
+
+            if(member_type == "3") {
+                getday = daySP.selectedItem.toString()
+            } else {
+                getmee = meetingSP2.selectedItem.toString()
+            }
+
+            getmost = mostSP.selectedItem.toString()
+
+            if (member_type.equals("3")) {
+                var intent = Intent(context, CouponTextActivity::class.java)
+                startActivity(intent)
+            } else {
+//                if (getmost.equals("수량")) {
+//                    Toast.makeText(context, "수량을 선택해주세요", Toast.LENGTH_SHORT).show()
+//                } else if (getday.equals("기간")) {
+//                    Toast.makeText(context, "기간을 선택해주세요", Toast.LENGTH_SHORT).show()
+//                } else {
+                    var intent = Intent(context, MyPostingWriteActivity::class.java)
+                    intent.putExtra("getmee", getmee)
+                    intent.putExtra("getmost", getmost)
+                    intent.putExtra("posting_id", posting_id)
+                    intent.putExtra("contents", contents)
+                    intent.putExtra("school_id", school_id)
+//                    intent.putExtra("getday", getday)
+                    intent.putExtra("postingType", "T")
+                    startActivity(intent)
+//                }
+            }
+        }
+
         nextLL.setOnClickListener {
 
-            count = Utils.getInt(countET)
+            if(member_type == "3") {
+                getday = daySP.selectedItem.toString()
+            } else {
+                getmee = meetingSP2.selectedItem.toString()
+            }
 
-            if (count < 1 || count > 10) {
-                Toast.makeText(context, "1개 ~ 10개 한정\n수량을 기입해주세요", Toast.LENGTH_SHORT).show()
+            getmost = mostSP.selectedItem.toString()
+
+            if (getmost.equals("수량")) {
+                Toast.makeText(context, "수량을 선택해주세요", Toast.LENGTH_SHORT).show()
+//            } else if (getday.equals("기간")) {
+//                Toast.makeText(context, "기간을 선택해주세요", Toast.LENGTH_SHORT).show()
             } else {
 
                 if(("G".equals(postingType) || "P".equals(postingType)) && imageUriOutput == null) {
@@ -132,16 +238,31 @@ class PostWriteActivity : RootActivity() {
                     return@setOnClickListener
                 }
 
-                if ("" != posting_id && null != posting_id) {
-                    edit_posting()
+
+                var intent = Intent(context, MyPostingWriteActivity::class.java)
+
+                if (imageUriOutput != null) {
+                    intent.putExtra("imageUri",  imageUriOutput.toString())
                 } else {
-                    write()
+                    // intent.putExtra("imageUri",  imageUri.toString())
                 }
 
+                intent.putExtra("current_school", current_school)
+                intent.putExtra("school_id", school_id)
+                // intent.putExtra("imgid", imgid)
+                intent.putExtra("postingType", postingType)
+                // intent.putExtra("absolutePath", absolutePath)
+                intent.putExtra("contents", contents)
+                intent.putExtra("posting_id", posting_id)
+                intent.putExtra("image_uri", image_uri)
+                intent.putExtra("getmee", getmee)
+                intent.putExtra("getmost", getmost)
+                intent.putExtra("getday", getday)
+
+                startActivity(intent)
             }
 
         }
-
         cameraRL.setOnClickListener {
             val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
             if (intent.resolveActivity(packageManager) != null) {
@@ -162,6 +283,8 @@ class PostWriteActivity : RootActivity() {
                     val resInfoList = context.getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
                     for (resolveInfo in resInfoList) {
                         val packageName = resolveInfo.activityInfo.packageName;
+
+                        println("packageName : $packageName")
 
                         context.grantUriPermission(packageName, imageUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION)
                     }
@@ -200,6 +323,122 @@ class PostWriteActivity : RootActivity() {
 
         loadPhoto()
 
+        if(tabType > 0) {
+            meetingSP2.setSelection(tabType - 1)
+        }
+
+//        checkCategory()
+
+    }
+
+    fun checkCategory() {
+        val params = RequestParams()
+        params.put("member_id", PrefUtils.getIntPreference(context, "member_id"));
+        params.put("member_type", member_type);
+
+        PostingAction.today_posting(params, object : JsonHttpResponseHandler() {
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+
+                try {
+
+                    val result = response!!.getString("result")
+
+                    if ("ok" == result) {
+
+                        if(member_type == "2") {
+
+                            var study = Utils.getString(response, "study")
+                            var classStr = Utils.getString(response, "class")
+                            var meeting = Utils.getString(response, "meeting")
+
+                            setMee = ArrayList()
+                            setMee.add("자유")
+                            setMee.add("정보")
+
+                            if(study == "ok") {
+                                setMee.add("스터디")
+                            }
+
+                            if(classStr == "ok") {
+                                setMee.add("동아리")
+                            }
+
+                            if(meeting == "ok") {
+                                setMee.add("미팅")
+                            }
+
+                            typeAdapter = ArrayAdapter<String>(context, R.layout.spinner_item, setMee)
+                            meetingSP2.adapter = typeAdapter
+                            typeAdapter.notifyDataSetChanged()
+
+                            if(tabType < 3) {
+                                meetingSP2.setSelection(tabType - 1)
+                            } else if(tabType == 3 && study == "ok") {
+                                meetingSP2.setSelection(2)
+                            } else if(tabType == 4) {
+                                if(study == "ok" && classStr == "ok") {
+                                    meetingSP2.setSelection(3)
+                                } else if(study != "ok" && classStr == "ok") {
+                                    meetingSP2.setSelection(2)
+                                }
+                            } else if(tabType == 5) {
+                                if(study == "ok" && classStr == "ok" && meeting == "ok") {
+                                    meetingSP2.setSelection(4)
+                                } else if(study != "ok" && classStr == "ok" && meeting == "ok") {
+                                    meetingSP2.setSelection(3)
+                                } else if(study != "ok" && classStr != "ok" && meeting == "ok") {
+                                    meetingSP2.setSelection(2)
+                                }
+                            }
+                        }
+
+                    }
+
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+
+            }
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONArray?) {
+                super.onSuccess(statusCode, headers, response)
+            }
+
+            private fun error() {
+                Utils.alert(context, "조회중 장애가 발생하였습니다.")
+            }
+
+            override fun onFailure(
+                statusCode: Int,
+                headers: Array<Header>?,
+                throwable: Throwable,
+                errorResponse: JSONArray?
+            ) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+                throwable.printStackTrace()
+                error()
+            }
+
+            override fun onStart() {
+                // show dialog
+                if (progressDialog != null) {
+
+                    progressDialog!!.show()
+                }
+            }
+
+            override fun onFinish() {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+            }
+        })
     }
 
     fun loadPhoto() {
@@ -288,222 +527,21 @@ class PostWriteActivity : RootActivity() {
                 }
             }
 
+            println("gfds")
+
             cropImage()
+
+             // val imgWidth = Utils.getScreenWidth(context) / 4
+             // imgIV2.setImageBitmap(Utils.getImage(context.contentResolver, imgid, imgWidth))
+             // imgIV2.setImageBitmap(Utils.getImage(context.contentResolver, imgid))
+            // capture = null
+            // imageUri = null
 
         }
 
         imageLoader.setListener(adapter)
 
 
-    }
-
-    fun write(){
-
-        val params = RequestParams()
-        params.put("member_id", member_id)
-        params.put("type", type)
-        params.put("contents", contents)
-        params.put("count", Utils.getInt(countET))
-        params.put("current_school_id", PrefUtils.getIntPreference(context, "current_school_id"))
-
-        if (capture != null) {
-            params.put("upload", ByteArrayInputStream(Utils.getByteArray(capture)))
-        }
-
-        PostingAction.write(params, object : JsonHttpResponseHandler() {
-
-            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
-                if (progressDialog != null) {
-                    progressDialog!!.dismiss()
-                }
-
-                try {
-                    val result = response!!.getString("result")
-
-                    if ("ok" == result) {
-
-                        Utils.hideKeyboard(context)
-
-                        try {
-                            contentResolver.delete(imageUri, null, null);
-                        } catch (e: Exception) {
-                            e.printStackTrace()
-                        }
-
-                        //브로드캐스트로 날려주기
-                        val intent = Intent()
-                        intent.action = "WRITE_POST"
-                        sendBroadcast(intent)
-
-                        Toast.makeText(context, "글작성이 완료되었습니다", Toast.LENGTH_SHORT).show()
-
-                        finish()
-
-                    } else if ("over" == result) {
-                        Toast.makeText(context, "하루 제한량만큼 작성하셨습니다.", Toast.LENGTH_SHORT).show()
-                    } else {
-                        Toast.makeText(context, "등록중 장애가 발생하였습니다.", Toast.LENGTH_SHORT).show()
-                    }
-
-                } catch (e: JSONException) {
-                    e.printStackTrace()
-                }
-
-            }
-
-            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONArray?) {
-                super.onSuccess(statusCode, headers, response)
-            }
-
-            override fun onSuccess(statusCode: Int, headers: Array<Header>?, responseString: String?) {
-                // System.out.println(responseString);
-            }
-
-            private fun error() {
-                Utils.alert(context, "등록중 장애가 발생하였습니다.")
-            }
-
-            override fun onFailure(statusCode: Int, headers: Array<Header>?, responseString: String?, throwable: Throwable) {
-                if (progressDialog != null) {
-                    progressDialog!!.dismiss()
-                }
-
-                // System.out.println(responseString);
-
-                throwable.printStackTrace()
-                error()
-            }
-
-            override fun onFailure(statusCode: Int, headers: Array<Header>?, throwable: Throwable, errorResponse: JSONObject?) {
-                if (progressDialog != null) {
-                    progressDialog!!.dismiss()
-                }
-                throwable.printStackTrace()
-                error()
-            }
-
-            override fun onFailure(statusCode: Int, headers: Array<Header>?, throwable: Throwable, errorResponse: JSONArray?) {
-                if (progressDialog != null) {
-                    progressDialog!!.dismiss()
-                }
-                throwable.printStackTrace()
-                error()
-            }
-
-            override fun onStart() {
-                // show dialog
-                if (progressDialog != null) {
-
-                    progressDialog!!.show()
-                }
-            }
-
-            override fun onFinish() {
-                if (progressDialog != null) {
-                    progressDialog!!.dismiss()
-                }
-            }
-
-        })
-
-    }
-
-    fun edit_posting(){
-
-        val params = RequestParams()
-        params.put("posting_id", posting_id)
-        params.put("member_id", member_id)
-        params.put("type", type)
-        params.put("contents", contents)
-        params.put("count", count)
-
-        if (capture != null) {
-            params.put("upload",  ByteArrayInputStream(Utils.getByteArray(capture)))
-        }
-
-        PostingAction.edit_posting(params, object : JsonHttpResponseHandler() {
-
-            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
-                if (progressDialog != null) {
-                    progressDialog!!.dismiss()
-                }
-
-                try {
-                    val result = response!!.getString("result")
-
-                    if ("ok" == result) {
-
-                        Utils.hideKeyboard(context)
-                        val intent = Intent(context,MainActivity::class.java)
-                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                        startActivity(intent)
-
-                        Toast.makeText(context, "수정이 완료되었습니다", Toast.LENGTH_SHORT).show()
-
-                    } else {
-                        Toast.makeText(context, "작성실패", Toast.LENGTH_SHORT).show()
-                    }
-
-                } catch (e: JSONException) {
-                    e.printStackTrace()
-                }
-
-            }
-
-            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONArray?) {
-                super.onSuccess(statusCode, headers, response)
-            }
-
-            override fun onSuccess(statusCode: Int, headers: Array<Header>?, responseString: String?) {
-
-                // System.out.println(responseString);
-            }
-
-            private fun error() {
-                Utils.alert(context, "올리는중 장애가 발생하였습니다.")
-            }
-
-            override fun onFailure(statusCode: Int, headers: Array<Header>?, responseString: String?, throwable: Throwable) {
-                if (progressDialog != null) {
-                    progressDialog!!.dismiss()
-                }
-
-                // System.out.println(responseString);
-
-                throwable.printStackTrace()
-                error()
-            }
-
-            override fun onFailure(statusCode: Int, headers: Array<Header>?, throwable: Throwable, errorResponse: JSONObject?) {
-                if (progressDialog != null) {
-                    progressDialog!!.dismiss()
-                }
-                throwable.printStackTrace()
-                error()
-            }
-
-            override fun onFailure(statusCode: Int, headers: Array<Header>?, throwable: Throwable, errorResponse: JSONArray?) {
-                if (progressDialog != null) {
-                    progressDialog!!.dismiss()
-                }
-                throwable.printStackTrace()
-                error()
-            }
-
-            override fun onStart() {
-                // show dialog
-                if (progressDialog != null) {
-
-                    progressDialog!!.show()
-                }
-            }
-
-            override fun onFinish() {
-                if (progressDialog != null) {
-                    progressDialog!!.dismiss()
-                }
-            }
-        })
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -536,19 +574,20 @@ class PostWriteActivity : RootActivity() {
                 }
 
             }
-
             CROP_FROM_CAMERA -> {
-                capture = MediaStore.Images.Media.getBitmap(this.contentResolver, imageUriOutput)
+
+                println("imageUriOutput : " + imageUriOutput)
+
+                val capture = MediaStore.Images.Media.getBitmap(this.contentResolver, imageUriOutput)
                 imgIV2.setImageBitmap(capture)
 
             }
-
             CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE -> {
                 val result = CropImage.getActivityResult(data)
                 if(result != null) {
                     imageUriOutput = result.uri
 
-                    capture = MediaStore.Images.Media.getBitmap(this.contentResolver, imageUriOutput)
+                    val capture = MediaStore.Images.Media.getBitmap(this.contentResolver, imageUriOutput)
                     imgIV2.setImageBitmap(capture)
                 }
 
@@ -620,6 +659,10 @@ class PostWriteActivity : RootActivity() {
             }
 
         }
+
+        // intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
+        // startActivityForResult(intent, CROP_FROM_CAMERA)
+
 
     }
 

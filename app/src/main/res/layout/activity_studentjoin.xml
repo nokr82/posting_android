@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
@@ -15,10 +16,10 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/x"/>
-
+            android:src="@mipmap/x" />
 
     </LinearLayout>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -30,16 +31,13 @@
             android:layout_marginRight="72dp"
             android:orientation="vertical">
 
-
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:textSize="16.67dp"
                 android:textColor="#20408C"
-                android:text="회원가입"
-                />
+                android:text="회원가입" />
 
 
             <TextView
@@ -48,7 +46,7 @@
                 android:layout_height="wrap_content"
                 android:text="회원정보입력"
                 android:textSize="16dp"
-                android:textColor="#888888"/>
+                android:textColor="#888888" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -56,7 +54,7 @@
                 android:layout_marginTop="34.71dp"
                 android:orientation="vertical">
 
-            <EditText
+                <EditText
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:id="@+id/idET"
@@ -64,13 +62,13 @@
                     android:inputType="textEmailAddress"
                     android:textSize="14dp"
                     android:background="@null"
-                    android:paddingLeft="7dp"/>
+                    android:paddingLeft="7dp" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
-                    android:background="#888888"
-                    />
+                    android:background="#888888" />
+
                 <EditText
                     android:id="@+id/pwET"
                     android:layout_width="match_parent"
@@ -79,28 +77,28 @@
                     android:textSize="14dp"
                     android:background="@null"
                     android:paddingLeft="7dp"
-                    android:inputType="textPassword"/>
+                    android:inputType="textPassword" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
-                    android:background="#888888"
-                    />
+                    android:background="#888888" />
+
                 <EditText
                     android:id="@+id/pw2ET"
                     android:inputType="textPassword"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:hint="비밀번호 확인"
-                android:textSize="14dp"
-                android:background="@null"
-                android:paddingLeft="7dp"/>
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:hint="비밀번호 확인"
+                    android:textSize="14dp"
+                    android:background="@null"
+                    android:paddingLeft="7dp" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
-                    android:background="#888888"
-                    />
+                    android:background="#888888" />
+
                 <EditText
                     android:id="@+id/nickET"
                     android:layout_width="match_parent"
@@ -109,16 +107,39 @@
                     android:hint="닉네임을 입력해주세요(8자이하)"
                     android:textSize="14dp"
                     android:background="@null"
-                    android:paddingLeft="7dp"/>
+                    android:paddingLeft="7dp" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
-                    android:background="#888888"
-                    />
+                    android:background="#888888" />
+
+                <EditText
+                    android:id="@+id/schoolET"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:maxLength="8"
+                    android:hint="학교명"
+                    android:textSize="14dp"
+                    android:background="@null"
+                    android:paddingLeft="7dp"
+                    android:imeOptions="actionSearch"
+                    android:singleLine="true"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="#888888" />
+
+                <com.github.paolorotolo.expandableheightlistview.ExpandableHeightListView
+                    android:id="@+id/SchoolLV"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center">
+
+                </com.github.paolorotolo.expandableheightlistview.ExpandableHeightListView>
 
             </LinearLayout>
-
 
 
             <TextView
@@ -127,27 +148,29 @@
                 android:layout_height="wrap_content"
                 android:text="개인정보입력"
                 android:textSize="16dp"
-                android:textColor="#888888"/>
+                android:textColor="#888888" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="34.71dp"
                 android:orientation="vertical">
-            <EditText
-                android:id="@+id/nameET"
-                android:paddingLeft="7dp"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:hint="이름"
-                android:textSize="14dp"
-                android:inputType="text"
-                android:background="@null"/>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="#888888"
-                />
+
+                <EditText
+                    android:id="@+id/nameET"
+                    android:paddingLeft="7dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:hint="이름"
+                    android:textSize="14dp"
+                    android:inputType="text"
+                    android:background="@null" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="#888888" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -156,40 +179,40 @@
                     android:gravity="center_vertical">
 
                     <Spinner
-                            android:popupBackground="@drawable/background_border_707070"
-                            android:id="@+id/birthSP"
-                            android:layout_width="0dp"
-                            android:layout_height="40dp"
-                            android:layout_weight="0.7"
-                            android:layout_gravity="center"
-                            android:hint="태어난 연도"
-                            android:textSize="14dp"
-                            android:background="@null"/>
+                        android:popupBackground="@drawable/background_border_707070"
+                        android:id="@+id/birthSP"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_weight="0.7"
+                        android:layout_gravity="center"
+                        android:hint="태어난 연도"
+                        android:textSize="14dp"
+                        android:background="@null" />
 
                     <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1">
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
                         <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@mipmap/semo"/>
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/semo" />
                     </LinearLayout>
 
                 </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="#888888"
-                />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="#888888" />
 
 
                 <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical">
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
 
                     <Spinner
                         android:popupBackground="@drawable/background_border_707070"
@@ -200,7 +223,7 @@
                         android:layout_gravity="center"
                         android:hint="성별"
                         android:textSize="14dp"
-                        android:background="@null"/>
+                        android:background="@null" />
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -208,23 +231,21 @@
                         android:layout_weight="1">
 
                         <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@mipmap/semo"/>
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/semo" />
 
                     </LinearLayout>
 
                 </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="#888888"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="#888888" />
 
 
-
-        </LinearLayout>
-
+            </LinearLayout>
 
 
             <LinearLayout
@@ -234,10 +255,11 @@
                 android:orientation="horizontal">
 
                 <TextView
-                        android:layout_width="24.5dp"
-                        android:layout_height="wrap_content"
-                        android:text="약관"
-                        android:textSize="12.25dp"/>
+                    android:layout_width="24.5dp"
+                    android:layout_height="wrap_content"
+                    android:text="약관"
+                    android:textSize="12.25dp" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -270,7 +292,7 @@
                 <CheckBox
                     android:id="@+id/serviceCK"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -280,9 +302,9 @@
                     android:textSize="9.5dp" />
 
                 <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@mipmap/semo"/>
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/semo" />
 
             </LinearLayout>
 
@@ -300,16 +322,16 @@
                     android:visibility="gone">
 
                     <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="포스팅 이용약관"
-                            android:textSize="11.67dp" />
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="포스팅 이용약관"
+                        android:textSize="11.67dp" />
 
 
                     <WebView
-                            android:id="@+id/agree1WV"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                        android:id="@+id/agree1WV"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
 
                     </WebView>
@@ -328,8 +350,7 @@
                     <CheckBox
                         android:id="@+id/soloCK"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        />
+                        android:layout_height="wrap_content" />
 
                     <TextView
                         android:layout_width="0dp"
@@ -339,9 +360,9 @@
                         android:textSize="9.5dp" />
 
                     <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@mipmap/semo"/>
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/semo" />
 
                 </LinearLayout>
 
@@ -354,10 +375,10 @@
                     android:visibility="gone">
 
                     <WebView
-                            android:id="@+id/agree2WV"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center">
+                        android:id="@+id/agree2WV"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center">
 
                     </WebView>
 
@@ -374,8 +395,7 @@
                     <CheckBox
                         android:id="@+id/agree3CK"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        />
+                        android:layout_height="wrap_content" />
 
                     <TextView
                         android:layout_width="0dp"
@@ -385,9 +405,9 @@
                         android:textSize="9.5dp" />
 
                     <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@mipmap/semo"/>
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/semo" />
 
                 </LinearLayout>
 
@@ -400,10 +420,10 @@
                     android:visibility="gone">
 
                     <WebView
-                            android:id="@+id/agree3WV"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center">
+                        android:id="@+id/agree3WV"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center">
 
                     </WebView>
 
@@ -420,8 +440,7 @@
                     <CheckBox
                         android:id="@+id/agree4CK"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        />
+                        android:layout_height="wrap_content" />
 
                     <TextView
                         android:layout_width="0dp"
@@ -431,9 +450,9 @@
                         android:textSize="9.5dp" />
 
                     <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@mipmap/semo"/>
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/semo" />
 
                 </LinearLayout>
 
@@ -446,10 +465,10 @@
                     android:visibility="gone">
 
                     <WebView
-                            android:id="@+id/agree4WV"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center">
+                        android:id="@+id/agree4WV"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center">
 
                     </WebView>
 
@@ -465,8 +484,7 @@
                     android:textColor="#20408C"
                     android:background="#FEDA44"
                     android:layout_marginTop="52.93dp"
-                    android:layout_marginBottom="50dp"
-                    />
+                    android:layout_marginBottom="50dp" />
 
 
             </LinearLayout>

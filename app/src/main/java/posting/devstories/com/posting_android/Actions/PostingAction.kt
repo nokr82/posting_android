@@ -22,6 +22,10 @@ object PostingAction {
     fun mainlist(params: RequestParams, handler: JsonHttpResponseHandler) {
         HttpClient.post("/main/index.json", params, handler)
     }
+    //메인목록
+    fun new_main(params: RequestParams, handler: JsonHttpResponseHandler) {
+        HttpClient.post("/main/new_main_index.json", params, handler)
+    }
 
     //상세페이지및댓글보기
     fun detail(params: RequestParams, handler: JsonHttpResponseHandler) {

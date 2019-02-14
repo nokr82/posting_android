@@ -65,11 +65,11 @@
 
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginTop="51dp"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:orientation="horizontal">
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/myproIV"
@@ -78,26 +78,23 @@
                         android:src="@mipmap/myimg" />
 
                     <LinearLayout
-
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
+                        android:layout_marginLeft="17dp"
                         android:orientation="vertical">
 
                         <TextView
                             android:id="@+id/nameTV"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:text=""
                             android:textSize="15.6dp" />
 
-
                         <TextView
                             android:id="@+id/infonameTV"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="12.8dp"
                             android:gravity="center"
                             android:text=""
                             android:textColor="#8F8E8A"
@@ -113,7 +110,8 @@
                     android:layout_marginRight="20dp"
                     android:layout_marginTop="51dp"
                     android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <LinearLayout
                         android:layout_width="match_parent"

@@ -522,11 +522,11 @@ class MyPageActivity : FragmentActivity() {
                         school_email_confirmed = Utils.getString(member, "school_email_confirmed")
                         school_confirmed = Utils.getString(member, "school_confirmed")
 
-                        if(school_confirmed == "N" && Utils.getString(member, "member_type") == "2") {
-                            schoolTV.visibility = View.VISIBLE
-                        } else {
-                            schoolTV.visibility = View.GONE
-                        }
+//                        if(school_confirmed == "N" && Utils.getString(member, "member_type") == "2") {
+//                            schoolTV.visibility = View.VISIBLE
+//                        } else {
+//                            schoolTV.visibility = View.GONE
+//                        }
 
                         val writeStudyCnt = Utils.getInt(response, "writeStudyCnt")
                         writeStudyTV.text = writeStudyCnt.toString()
