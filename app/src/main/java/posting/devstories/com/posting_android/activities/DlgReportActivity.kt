@@ -39,6 +39,7 @@ class DlgReportActivity : RootActivity() {
     var count = 0
     var save_id:String?= null
     var report_member_id:String?= null
+    var chatting_yn = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -90,6 +91,8 @@ class DlgReportActivity : RootActivity() {
         }
         else if (dlgtype.equals("Myposting")){
 
+            chatting_yn = intent.getStringExtra("chatting_yn")
+
             recyTV.visibility = View.GONE
             delTV.setOnClickListener {
                 del_posting()
@@ -110,6 +113,7 @@ class DlgReportActivity : RootActivity() {
                 intent.putExtra("contents",contents)
                 intent.putExtra("type",type)
                 intent.putExtra("count",count)
+                intent.putExtra("chatting_yn",chatting_yn)
                 startActivity(intent)
                 finish()
 
@@ -122,8 +126,6 @@ class DlgReportActivity : RootActivity() {
             recyTV.visibility = View.GONE
             modiTV.visibility = View.GONE
 
-            println("type : " + type)
-
             delTV.setOnClickListener {
                 savedel_posting()
                 //이것을 어찌할꼬...
@@ -133,7 +135,6 @@ class DlgReportActivity : RootActivity() {
 
             }
         } else if (dlgtype.equals("police_member")) {
-
 
             titleTV.text = "이 사용자를 신고하는 이유를 선택하세요"
             delTV.text = "불건전합니다"

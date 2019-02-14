@@ -218,11 +218,17 @@ open class HomeFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-//        val image_uri = PrefUtils.getStringPreference(myContext, "current_school_image_uri")
-//        var univimg = Config.url + image_uri
-//        ImageLoader.getInstance().displayImage(univimg, univIV, Utils.UILoptionsUserProfile)
-
         member_id = PrefUtils.getIntPreference(myContext, "member_id")
+
+        current_school_id = PrefUtils.getIntPreference(myContext, "current_school_id")
+
+        if (current_school_id > 0) {
+
+            val image_uri = PrefUtils.getStringPreference(myContext, "current_school_image_uri")
+
+            var univimg = Config.url + image_uri
+            ImageLoader.getInstance().displayImage(univimg, univIV, Utils.UILoptionsUserProfile)
+        }
 
         // 메인 데이터
         mainAdapter = HomePostAdapter(myContext, R.layout.item_post, mainAdapterData)
@@ -674,6 +680,9 @@ open class HomeFragment : Fragment() {
     }
 
     fun mainData() {
+
+        current_school_id = PrefUtils.getIntPreference(context, "current_school_id")
+
         val params = RequestParams()
         params.put("member_id", member_id)
         params.put("current_school_id", current_school_id)
@@ -721,7 +730,6 @@ open class HomeFragment : Fragment() {
                         }
 
                         val list = response.getJSONArray("list")
-                        val current_school_id = Utils.getInt(response, "current_school_id")
 
                         if (current_school_id > 0) {
                             var school = response.getJSONObject("school")
@@ -732,8 +740,11 @@ open class HomeFragment : Fragment() {
 
                             val current_school_image_uri = PrefUtils.getStringPreference(myContext, "current_school_image_uri")
 
-                            var univimg = Config.url + current_school_image_uri
+                            var univimg = Config.url + image_uri
+
                             ImageLoader.getInstance().displayImage(univimg, univIV, Utils.UILoptionsUserProfile)
+                        } else {
+                            univIV.setImageResource(R.mipmap.main_posting_logo)
                         }
 
                         for (i in 0..(list.length() - 1)) {
@@ -846,6 +857,13 @@ open class HomeFragment : Fragment() {
         try {
             if (delPostingReceiver != null) {
                 myContext!!.unregisterReceiver(delPostingReceiver)
+            }
+        } catch (e: IllegalArgumentException) {
+        }
+
+        try {
+            if (writePostReceiver != null) {
+                myContext!!.unregisterReceiver(writePostReceiver)
             }
         } catch (e: IllegalArgumentException) {
         }

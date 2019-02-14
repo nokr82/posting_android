@@ -24,7 +24,7 @@ class MyPageStorageFragment : MyPagePostingStorageFragment() {
 
         tab = 2
 
-        pagerAdapter.setTabType(tab)
+//        pagerAdapter.setTabType(tab)
 
     }
 

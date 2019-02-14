@@ -75,6 +75,8 @@ class DlgDetailActivity : RootActivity() {
     var current_school_id = -1
 
     var confirm_yn = ""
+    var chatting_yn = ""
+
     lateinit var adapterRe: ReAdapter
 
     var postingData:JSONObject = JSONObject();
@@ -88,7 +90,6 @@ class DlgDetailActivity : RootActivity() {
         setContentView(R.layout.dlg_detail)
         this.context = this
         progressDialog = ProgressDialog(context)
-        loadInfo()
 
         intent = getIntent()
         save_id = intent.getIntExtra("save_id", -1)
@@ -266,10 +267,10 @@ class DlgDetailActivity : RootActivity() {
 
         saveLL.setOnClickListener {
 
-            if("N" == confirm_yn) {
-                Toast.makeText(context, "학교 인증 후 이용 가능합니다", Toast.LENGTH_LONG).show()
-                return@setOnClickListener
-            }
+//            if("N" == confirm_yn) {
+//                Toast.makeText(context, "학교 인증 후 이용 가능합니다", Toast.LENGTH_LONG).show()
+//                return@setOnClickListener
+//            }
 
             if(count < 1) {
 
@@ -311,83 +312,6 @@ class DlgDetailActivity : RootActivity() {
 
         detaildata()
 
-    }
-
-    //사용자정보
-    fun loadInfo() {
-        val params = RequestParams()
-        params.put("member_id", PrefUtils.getIntPreference(context, "member_id"))
-
-        MemberAction.my_info(params, object : JsonHttpResponseHandler() {
-
-            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
-                if (progressDialog != null) {
-                    progressDialog!!.dismiss()
-                }
-
-                try {
-                    val result = response!!.getString("result")
-
-                    if ("ok" == result) {
-
-                        var member = response.getJSONObject("member")
-                        nick =  Utils.getString(member, "nick_name")
-                        var image_uri = Utils.getString(member, "image_uri")
-
-                        var image = Config.url + image_uri
-//                        ImageLoader.getInstance().displayImage(image,myIV, Utils.UILoptionsUserProfile)
-//                        mynameTV.text =nick
-
-                    } else {
-                        Toast.makeText(context, "일치하는 회원이 존재하지 않습니다.", Toast.LENGTH_LONG).show()
-                    }
-
-                } catch (e: JSONException) {
-                    e.printStackTrace()
-                }
-
-            }
-
-            override fun onSuccess(statusCode: Int, headers: Array<Header>?, responseString: String?) {
-
-                // System.out.println(responseString);
-            }
-
-            private fun error() {
-                Utils.alert(context, "조회중 장애가 발생하였습니다.")
-            }
-
-            override fun onFailure(
-                    statusCode: Int,
-                    headers: Array<Header>?,
-                    responseString: String?,
-                    throwable: Throwable
-            ) {
-                if (progressDialog != null) {
-                    progressDialog!!.dismiss()
-                }
-
-                // System.out.println(responseString);
-
-                throwable.printStackTrace()
-                error()
-            }
-
-
-            override fun onStart() {
-                // show dialog
-                if (progressDialog != null) {
-
-                    progressDialog!!.show()
-                }
-            }
-
-            override fun onFinish() {
-                if (progressDialog != null) {
-                    progressDialog!!.dismiss()
-                }
-            }
-        })
     }
 
     //댓글
@@ -685,20 +609,9 @@ class DlgDetailActivity : RootActivity() {
                         val member1 = data.getJSONObject("Member")
                         var company_name = Utils.getString(member1, "company_name")
 
+                        chatting_yn = Utils.getString(posting, "chatting_yn")
 
                         postingData = posting
-
-//                        var manager = CardStackLayoutManager(context)
-//                        var setting:SwipeAnimationSetting  = SwipeAnimationSetting.Builder()
-//                            .setDirection(Direction.Right)
-//                            .setDuration(200)
-//                            .setInterpolator(AccelerateInterpolator())
-//                            .build();
-//                        manager.setSwipeAnimationSetting(setting)
-//                        cardSV.adapter = DetailAdapter(context, postingData)
-//                        cardSV.layoutManager = manager
-//                        cardSV.swipe()
-
 
                         posting_save_id  = Utils.getString(posting,"posting_save_id")
 
@@ -738,18 +651,22 @@ class DlgDetailActivity : RootActivity() {
 //                            saveLL.visibility = View.VISIBLE
 //                        }
 
-                        if (count < 1 || member_id == member_id2 || "Y" == save_yn || "3" == member_type) {
-                            saveLL.visibility = View.GONE
+                        if (current_school_id < 1) {
+                            if (count < 1 || member_id == member_id2 || "Y" == save_yn || "3" == member_type) {
+                                saveLL.visibility = View.GONE
+                            } else {
+                                saveLL.visibility = View.VISIBLE
+                            }
                         } else {
-                            saveLL.visibility = View.VISIBLE
+                            saveLL.visibility = View.GONE
                         }
 
-                        if (writer_school_id != school_id){
-                            postingLL.background = getDrawable(R.mipmap.write_bg2)
-                        }
-                        else{
-                            postingLL.background = getDrawable(R.mipmap.wtite_bg)
-                        }
+//                        if (writer_school_id != school_id){
+//                            postingLL.background = getDrawable(R.mipmap.write_bg2)
+//                        }
+//                        else{
+//                            postingLL.background = getDrawable(R.mipmap.wtite_bg)
+//                        }
 
                         current_school_id = PrefUtils.getIntPreference(context, "current_school_id")
 //                        if(current_school_id != me_school_id) {
@@ -895,7 +812,7 @@ class DlgDetailActivity : RootActivity() {
                         //uri를 이미지로 변환시켜준다
                         if (!image_uri.isEmpty() && image_uri != "") {
                             var image = Config.url + image_uri
-                            ImageLoader.getInstance().displayImage(image, imgIV, Utils.UILoptionsUserProfile)
+                            ImageLoader.getInstance().displayImage(image, imgIV, Utils.UILoptionsPosting)
                             imgIV.visibility = View.VISIBLE
                         } else {
                             if (!coupon_type.equals("")){
@@ -972,6 +889,7 @@ class DlgDetailActivity : RootActivity() {
         intent.putExtra("type",type)
         intent.putExtra("count",posting_count)
         intent.putExtra("current_school_id",school_id)
+        intent.putExtra("chatting_yn",chatting_yn)
         startActivityForResult(intent, EDIT_POST)
 
     }

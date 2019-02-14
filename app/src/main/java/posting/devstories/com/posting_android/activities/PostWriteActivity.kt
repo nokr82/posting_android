@@ -64,6 +64,7 @@ class PostWriteActivity : RootActivity() {
     var tabType = -1
     var type = -1
     var count = -1
+    var chatting_yn = "N"
 
     var member_id = -1
 
@@ -101,18 +102,24 @@ class PostWriteActivity : RootActivity() {
         contents = intent.getStringExtra("contents")
         image_uri = intent.getStringExtra("image_uri")
         tabType = intent.getIntExtra("tabType", -1)
-        type = intent.getIntExtra("type", 1)
+        type = intent.getIntExtra("type", -1)
         count = intent.getIntExtra("count", -1)
 
         if (count > -1) {
             countET.setText(count.toString())
         }
 
-        if (posting_id != null && !posting_id.equals("") ) {
+        if (posting_id != null && !posting_id.equals("")) {
             postingType = "M"
             image = Config.url + image_uri
             ImageLoader.getInstance().displayImage(image, imgIV2, Utils.UILoptionsPosting)
             imgIV2.visibility = View.VISIBLE
+
+            chatting_yn = intent.getStringExtra("chatting_yn")
+        }
+
+        if ("Y" == chatting_yn) {
+            chattingCB.isChecked = true
         }
 
         finishLL.setOnClickListener {
@@ -127,7 +134,13 @@ class PostWriteActivity : RootActivity() {
                 Toast.makeText(context, "1개 ~ 10개 한정\n수량을 기입해주세요", Toast.LENGTH_SHORT).show()
             } else {
 
-                if(("G".equals(postingType) || "P".equals(postingType)) && imageUriOutput == null) {
+                if (chattingCB.isChecked) {
+                    chatting_yn = "Y"
+                } else {
+                    chatting_yn = "N"
+                }
+
+                if (("G".equals(postingType) || "P".equals(postingType)) && imageUriOutput == null) {
                     Toast.makeText(context, "이미지를 선택해주세요", Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }
@@ -159,11 +172,16 @@ class PostWriteActivity : RootActivity() {
                     //imageUri = Uri.fromFile(photo);
                     imageUri = FileProvider.getUriForFile(context, packageName + ".provider", photo)
 
-                    val resInfoList = context.getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+                    val resInfoList =
+                        context.getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
                     for (resolveInfo in resInfoList) {
                         val packageName = resolveInfo.activityInfo.packageName;
 
-                        context.grantUriPermission(packageName, imageUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                        context.grantUriPermission(
+                            packageName,
+                            imageUri,
+                            Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION
+                        )
                     }
 
                     intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
@@ -297,7 +315,7 @@ class PostWriteActivity : RootActivity() {
 
     }
 
-    fun write(){
+    fun write() {
 
         val params = RequestParams()
         params.put("member_id", member_id)
@@ -305,6 +323,7 @@ class PostWriteActivity : RootActivity() {
         params.put("contents", contents)
         params.put("count", Utils.getInt(countET))
         params.put("current_school_id", PrefUtils.getIntPreference(context, "current_school_id"))
+        params.put("chatting_yn", chatting_yn)
 
         if (capture != null) {
             params.put("upload", ByteArrayInputStream(Utils.getByteArray(capture)))
@@ -363,7 +382,12 @@ class PostWriteActivity : RootActivity() {
                 Utils.alert(context, "등록중 장애가 발생하였습니다.")
             }
 
-            override fun onFailure(statusCode: Int, headers: Array<Header>?, responseString: String?, throwable: Throwable) {
+            override fun onFailure(
+                statusCode: Int,
+                headers: Array<Header>?,
+                responseString: String?,
+                throwable: Throwable
+            ) {
                 if (progressDialog != null) {
                     progressDialog!!.dismiss()
                 }
@@ -374,7 +398,12 @@ class PostWriteActivity : RootActivity() {
                 error()
             }
 
-            override fun onFailure(statusCode: Int, headers: Array<Header>?, throwable: Throwable, errorResponse: JSONObject?) {
+            override fun onFailure(
+                statusCode: Int,
+                headers: Array<Header>?,
+                throwable: Throwable,
+                errorResponse: JSONObject?
+            ) {
                 if (progressDialog != null) {
                     progressDialog!!.dismiss()
                 }
@@ -382,7 +411,12 @@ class PostWriteActivity : RootActivity() {
                 error()
             }
 
-            override fun onFailure(statusCode: Int, headers: Array<Header>?, throwable: Throwable, errorResponse: JSONArray?) {
+            override fun onFailure(
+                statusCode: Int,
+                headers: Array<Header>?,
+                throwable: Throwable,
+                errorResponse: JSONArray?
+            ) {
                 if (progressDialog != null) {
                     progressDialog!!.dismiss()
                 }
@@ -408,7 +442,7 @@ class PostWriteActivity : RootActivity() {
 
     }
 
-    fun edit_posting(){
+    fun edit_posting() {
 
         val params = RequestParams()
         params.put("posting_id", posting_id)
@@ -416,9 +450,10 @@ class PostWriteActivity : RootActivity() {
         params.put("type", type)
         params.put("contents", contents)
         params.put("count", count)
+        params.put("chatting_yn", chatting_yn)
 
         if (capture != null) {
-            params.put("upload",  ByteArrayInputStream(Utils.getByteArray(capture)))
+            params.put("upload", ByteArrayInputStream(Utils.getByteArray(capture)))
         }
 
         PostingAction.edit_posting(params, object : JsonHttpResponseHandler() {
@@ -434,7 +469,7 @@ class PostWriteActivity : RootActivity() {
                     if ("ok" == result) {
 
                         Utils.hideKeyboard(context)
-                        val intent = Intent(context,MainActivity::class.java)
+                        val intent = Intent(context, MainActivity::class.java)
                         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                         startActivity(intent)
 
@@ -463,7 +498,12 @@ class PostWriteActivity : RootActivity() {
                 Utils.alert(context, "올리는중 장애가 발생하였습니다.")
             }
 
-            override fun onFailure(statusCode: Int, headers: Array<Header>?, responseString: String?, throwable: Throwable) {
+            override fun onFailure(
+                statusCode: Int,
+                headers: Array<Header>?,
+                responseString: String?,
+                throwable: Throwable
+            ) {
                 if (progressDialog != null) {
                     progressDialog!!.dismiss()
                 }
@@ -474,7 +514,12 @@ class PostWriteActivity : RootActivity() {
                 error()
             }
 
-            override fun onFailure(statusCode: Int, headers: Array<Header>?, throwable: Throwable, errorResponse: JSONObject?) {
+            override fun onFailure(
+                statusCode: Int,
+                headers: Array<Header>?,
+                throwable: Throwable,
+                errorResponse: JSONObject?
+            ) {
                 if (progressDialog != null) {
                     progressDialog!!.dismiss()
                 }
@@ -482,7 +527,12 @@ class PostWriteActivity : RootActivity() {
                 error()
             }
 
-            override fun onFailure(statusCode: Int, headers: Array<Header>?, throwable: Throwable, errorResponse: JSONArray?) {
+            override fun onFailure(
+                statusCode: Int,
+                headers: Array<Header>?,
+                throwable: Throwable,
+                errorResponse: JSONArray?
+            ) {
                 if (progressDialog != null) {
                     progressDialog!!.dismiss()
                 }
@@ -512,7 +562,7 @@ class PostWriteActivity : RootActivity() {
 
         when (requestCode) {
             REQUEST_CAMERA -> {
-                if(resultCode == Activity.RESULT_CANCELED) {
+                if (resultCode == Activity.RESULT_CANCELED) {
                     return
                 }
 
@@ -545,7 +595,7 @@ class PostWriteActivity : RootActivity() {
 
             CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE -> {
                 val result = CropImage.getActivityResult(data)
-                if(result != null) {
+                if (result != null) {
                     imageUriOutput = result.uri
 
                     capture = MediaStore.Images.Media.getBitmap(this.contentResolver, imageUriOutput)
@@ -606,10 +656,15 @@ class PostWriteActivity : RootActivity() {
                 //imageUri = Uri.fromFile(photo);
                 imageUriOutput = FileProvider.getUriForFile(context, packageName + ".provider", photo)
 
-                val resInfoList = context.getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+                val resInfoList =
+                    context.getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
                 for (resolveInfo in resInfoList) {
                     val packageName = resolveInfo.activityInfo.packageName;
-                    context.grantUriPermission(packageName, imageUriOutput, Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                    context.grantUriPermission(
+                        packageName,
+                        imageUriOutput,
+                        Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION
+                    )
                 }
 
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUriOutput)

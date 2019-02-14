@@ -157,8 +157,8 @@ class MainActivity : FragmentActivity() {
 
             homeIV.setImageResource(R.mipmap.home)
 
-            val school_id = PrefUtils.getIntPreference(context, "school_id")
-            PrefUtils.setPreference(context, "current_school_id", school_id)
+//            val school_id = PrefUtils.getIntPreference(context, "school_id")
+            PrefUtils.setPreference(context, "current_school_id", -1)
 
 
             val postFragment = supportFragmentManager.findFragmentByTag("post") as? HomeFragment
