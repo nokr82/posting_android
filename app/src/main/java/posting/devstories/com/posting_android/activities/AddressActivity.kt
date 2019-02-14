@@ -24,6 +24,7 @@ import posting.devstories.com.posting_android.base.RootActivity
 
 class AddressActivity : RootActivity(), AbsListView.OnScrollListener {
 
+
     private var context: Context? = null
     private var progressDialog: ProgressDialog? = null
 
@@ -36,7 +37,6 @@ class AddressActivity : RootActivity(), AbsListView.OnScrollListener {
     private var page = 1
     private val itemCount = 0
     private val totalItemCount = 0
-    private val size = 1
     private var lastcount = 0
     private val visibleThreshold = 10
 
