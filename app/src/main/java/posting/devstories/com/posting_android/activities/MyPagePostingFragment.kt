@@ -5,9 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.GridView
-import posting.devstories.com.posting_android.R
-import posting.devstories.com.posting_android.adapter.PostAdapter
 
 class MyPagePostingFragment : MyPagePostingStorageFragment() {
 
@@ -28,7 +25,7 @@ class MyPagePostingFragment : MyPagePostingStorageFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        pagerAdapter.setTabType(tab)
+//        pagerAdapter.setTabType(tab)
 
     }
 

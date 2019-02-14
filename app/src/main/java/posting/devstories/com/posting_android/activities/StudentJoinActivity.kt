@@ -672,8 +672,8 @@ class StudentJoinActivity : RootActivity() {
                         val school_id = Utils.getInt(school, "id")
                         val school_image_uri = Utils.getString(school, "image_uri")
 
-                        PrefUtils.setPreference(context, "current_school_id", school_id)
-                        PrefUtils.setPreference(context, "current_school_image_uri", school_image_uri)
+                        PrefUtils.setPreference(context, "current_school_id", -1)
+                        PrefUtils.setPreference(context, "current_school_image_uri", "")
 
                         PrefUtils.setPreference(context, "school_domain", Utils.getString(school, "domain"))
 

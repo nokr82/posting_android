@@ -58,11 +58,11 @@ open class MyPostingAdapter(context:Context, view:Int, data:ArrayList<JSONObject
         item.storageIV.visibility = View.GONE
         item.storageTV.visibility = View.GONE
 
-        if (current_school_id != school_id){
-            item.postbg2IV.setImageResource(R.mipmap.write_bg2)
-        }else{
-            item.postbg2IV.setImageResource(R.mipmap.bg)
-        }
+//        if (current_school_id != school_id){
+//            item.postbg2IV.setImageResource(R.mipmap.write_bg2)
+//        }else{
+//            item.postbg2IV.setImageResource(R.mipmap.bg)
+//        }
 
         if("" != coupon_type) {
 

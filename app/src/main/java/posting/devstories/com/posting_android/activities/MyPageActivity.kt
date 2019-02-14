@@ -36,17 +36,16 @@ import java.io.IOException
 
 class MyPageActivity : FragmentActivity() {
 
-
-    var thumbnail:Bitmap? = null
+    var thumbnail: Bitmap? = null
     // var gallery:Bitmap? = null
     var nick = ""
-     var name  = ""
-    var push_yn  = ""
+    var name = ""
+    var push_yn = ""
     var birth = ""
     private val GALLERY = 1
     private val CAMERA = 2
     private val VERSION_UPDATE = 3
-    lateinit var context:Context
+    lateinit var context: Context
     private var progressDialog: ProgressDialog? = null
     var autoLogin = false
 
@@ -86,13 +85,12 @@ class MyPageActivity : FragmentActivity() {
         }
         nickTV.setOnClickListener {
             val intent = Intent(this, nickchangeActivity::class.java)
-            intent.putExtra("nick",nick)
+            intent.putExtra("nick", nick)
             startActivity(intent)
         }
         outTV.setOnClickListener {
             dlgView()
-            }
-
+        }
 
         joinoutTV.setOnClickListener {
             joinoutdlgView()
@@ -101,19 +99,17 @@ class MyPageActivity : FragmentActivity() {
         myproIV.setOnClickListener {
             showPictureDialog()
         }
+
         //알람스위치
         alramIV.setOnClickListener {
 
-            if (push_yn.equals("Y")){
+            if (push_yn.equals("Y")) {
                 push_yn = "N"
                 edit_profile()
-            }else{
+            } else {
                 push_yn = "Y"
                 edit_profile()
             }
-
-
-
 
         }
 
@@ -143,13 +139,13 @@ class MyPageActivity : FragmentActivity() {
 
     }
 
-   fun versionCheck() {
+    fun versionCheck() {
 
         val my_version = BuildConfig.VERSION_NAME
         val params = RequestParams()
         params.put("my_version", my_version)
         params.put("device", "A")
-       versionTV.text = my_version
+        versionTV.text = my_version
 
         VersionAction.versionCheck(params, object : JsonHttpResponseHandler() {
 
@@ -167,10 +163,10 @@ class MyPageActivity : FragmentActivity() {
                     } else if ("fail" == result) {
 
                         val version = response.getJSONObject("version")
-                        var android =   Utils.getString(version, "android_version")
-                         upTV.visibility = View.VISIBLE
+                        var android = Utils.getString(version, "android_version")
+                        upTV.visibility = View.VISIBLE
                         upTV.setOnClickListener {
-//                            val intent = Intent(Intent.ACTION_VIEW)
+                            //                            val intent = Intent(Intent.ACTION_VIEW)
 //                            intent.data = Uri.parse("market://details?id=$packageName")
 //                            startActivity(intent)
 //
@@ -197,10 +193,10 @@ class MyPageActivity : FragmentActivity() {
             }
 
             override fun onFailure(
-                    statusCode: Int,
-                    headers: Array<Header>?,
-                    responseString: String?,
-                    throwable: Throwable
+                statusCode: Int,
+                headers: Array<Header>?,
+                responseString: String?,
+                throwable: Throwable
             ) {
                 if (progressDialog != null) {
                     progressDialog!!.dismiss()
@@ -229,7 +225,7 @@ class MyPageActivity : FragmentActivity() {
         })
     }
 
-    fun dlgView(){
+    fun dlgView() {
 
         var intent = Intent(context, DlgYesOrNoCommonActivity::class.java)
         intent.putExtra("contents", "정말 탈퇴하시겠습니까?")
@@ -252,7 +248,7 @@ class MyPageActivity : FragmentActivity() {
 //        builder.show()
     }
 
-    fun joinoutdlgView(){
+    fun joinoutdlgView() {
 
         var intent = Intent(context, DlgYesOrNoCommonActivity::class.java)
         intent.putExtra("contents", "로그아웃 하시겠습니까?")
@@ -287,6 +283,7 @@ class MyPageActivity : FragmentActivity() {
 //        mPopupDlg =  builder.setView(dialogView).show()
 
     }
+
     //회원탈퇴
     fun redout() {
         val params = RequestParams()
@@ -328,10 +325,10 @@ class MyPageActivity : FragmentActivity() {
             }
 
             override fun onFailure(
-                    statusCode: Int,
-                    headers: Array<Header>?,
-                    responseString: String?,
-                    throwable: Throwable
+                statusCode: Int,
+                headers: Array<Header>?,
+                responseString: String?,
+                throwable: Throwable
             ) {
                 if (progressDialog != null) {
                     progressDialog!!.dismiss()
@@ -370,13 +367,13 @@ class MyPageActivity : FragmentActivity() {
         startActivity(intent)
     }
 
-    fun edit_profile(){
+    fun edit_profile() {
 
         val params = RequestParams()
         params.put("member_id", PrefUtils.getIntPreference(context, "member_id"))
         params.put("push_yn", push_yn)
 
-        if (thumbnail != null){
+        if (thumbnail != null) {
             val byteArrayInputStream = ByteArrayInputStream(Utils.getByteArray(thumbnail))
             params.put("upload", byteArrayInputStream)
         }
@@ -428,7 +425,12 @@ class MyPageActivity : FragmentActivity() {
                 Utils.alert(context, "조회중 장애가 발생하였습니다.")
             }
 
-            override fun onFailure(statusCode: Int, headers: Array<Header>?, responseString: String?, throwable: Throwable) {
+            override fun onFailure(
+                statusCode: Int,
+                headers: Array<Header>?,
+                responseString: String?,
+                throwable: Throwable
+            ) {
                 if (progressDialog != null) {
                     progressDialog!!.dismiss()
                 }
@@ -439,7 +441,12 @@ class MyPageActivity : FragmentActivity() {
                 error()
             }
 
-            override fun onFailure(statusCode: Int, headers: Array<Header>?, throwable: Throwable, errorResponse: JSONObject?) {
+            override fun onFailure(
+                statusCode: Int,
+                headers: Array<Header>?,
+                throwable: Throwable,
+                errorResponse: JSONObject?
+            ) {
                 if (progressDialog != null) {
                     progressDialog!!.dismiss()
                 }
@@ -447,7 +454,12 @@ class MyPageActivity : FragmentActivity() {
                 error()
             }
 
-            override fun onFailure(statusCode: Int, headers: Array<Header>?, throwable: Throwable, errorResponse: JSONArray?) {
+            override fun onFailure(
+                statusCode: Int,
+                headers: Array<Header>?,
+                throwable: Throwable,
+                errorResponse: JSONArray?
+            ) {
                 if (progressDialog != null) {
                     progressDialog!!.dismiss()
                 }
@@ -495,26 +507,28 @@ class MyPageActivity : FragmentActivity() {
                     if ("ok" == result) {
 
                         var member = response.getJSONObject("member")
-                        nick =  Utils.getString(member, "nick_name")
-                        name = Utils.getString(member,"name")
-                        birth =  Utils.getString(member,"birth")
-                        push_yn = Utils.getString(member,"push_yn")
+                        nick = Utils.getString(member, "nick_name")
+                        name = Utils.getString(member, "name")
+                        birth = Utils.getString(member, "birth")
+                        push_yn = Utils.getString(member, "push_yn")
 
-                        if (push_yn.equals("Y")){
+                        if (push_yn.equals("Y")) {
                             alramIV.setImageResource(R.mipmap.alrambar)
-                        }else{
+                        } else {
                             alramIV.setImageResource(R.mipmap.alramoff)
                         }
 
                         var image_uri = Utils.getString(member, "image_uri")
                         var image = Config.url + image_uri
-                        ImageLoader.getInstance().displayImage(image,myproIV, Utils.UILoptionsUserProfile)
+                        ImageLoader.getInstance().displayImage(image, myproIV, Utils.UILoptionsUserProfile)
 
-                        infonameTV.text = name+"/"+birth
-                        nameTV.text =nick
+                        nameTV.text = nick
 
                         // school
                         val school = response.getJSONObject("school")
+
+                        infonameTV.text = name + "/" + Utils.getString(school, "name")
+
                         has_branch_yn = Utils.getString(school, "has_branch_yn")
                         school_domain = Utils.getString(school, "domain")
 
@@ -551,7 +565,7 @@ class MyPageActivity : FragmentActivity() {
 
 
                         // 닉네임 변경
-                        if(Utils.getString(member, "member_type") == "3") {
+                        if (Utils.getString(member, "member_type") == "3") {
                             nickTV.visibility = View.GONE
                         }
 
@@ -575,10 +589,10 @@ class MyPageActivity : FragmentActivity() {
             }
 
             override fun onFailure(
-                    statusCode: Int,
-                    headers: Array<Header>?,
-                    responseString: String?,
-                    throwable: Throwable
+                statusCode: Int,
+                headers: Array<Header>?,
+                responseString: String?,
+                throwable: Throwable
             ) {
                 if (progressDialog != null) {
                     progressDialog!!.dismiss()
@@ -611,7 +625,8 @@ class MyPageActivity : FragmentActivity() {
         val pictureDialog = AlertDialog.Builder(this)
         pictureDialog.setTitle("프로필 이미지 변경")
         val pictureDialogItems = arrayOf("갤러리에서 가져오기", "카메라로 사진찍기")
-        pictureDialog.setItems(pictureDialogItems
+        pictureDialog.setItems(
+            pictureDialogItems
         ) { dialog, which ->
             when (which) {
                 0 -> choosePhotoFromGallary()
@@ -622,8 +637,10 @@ class MyPageActivity : FragmentActivity() {
     }
 
     private fun choosePhotoFromGallary() {
-        val galleryIntent = Intent(Intent.ACTION_PICK,
-                MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        val galleryIntent = Intent(
+            Intent.ACTION_PICK,
+            MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+        )
 
         startActivityForResult(galleryIntent, GALLERY)
 
@@ -646,13 +663,18 @@ class MyPageActivity : FragmentActivity() {
                 //imageUri = Uri.fromFile(photo);
                 imageUri = FileProvider.getUriForFile(context, packageName + ".provider", photo)
 
-                val resInfoList = context.getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+                val resInfoList =
+                    context.getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
                 for (resolveInfo in resInfoList) {
                     val packageName = resolveInfo.activityInfo.packageName;
 
                     println("packageName : $packageName")
 
-                    context.grantUriPermission(packageName, imageUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                    context.grantUriPermission(
+                        packageName,
+                        imageUri,
+                        Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION
+                    )
                 }
 
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
@@ -669,44 +691,36 @@ class MyPageActivity : FragmentActivity() {
 
     }
 
-    public override fun onActivityResult(requestCode:Int, resultCode:Int, data: Intent?) {
+    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == GALLERY)
-        {
-            if (data != null)
-            {
+        if (requestCode == GALLERY) {
+            if (data != null) {
                 val contentURI = data!!.data
-                try
-                {
+                try {
                     thumbnail = MediaStore.Images.Media.getBitmap(this.contentResolver, contentURI)
                     thumbnail = Utils.rotate(contentResolver, thumbnail, contentURI)
                     edit_profile()
 
-                }
-                catch (e: IOException) {
+                } catch (e: IOException) {
                     e.printStackTrace()
                     Toast.makeText(this, "바꾸기실패", Toast.LENGTH_SHORT).show()
                 }
 
             }
 
-        }
-        else if (requestCode == CAMERA)
-        {
+        } else if (requestCode == CAMERA) {
             thumbnail = MediaStore.Images.Media.getBitmap(this.contentResolver, imageUri)
             thumbnail = Utils.rotate(contentResolver, thumbnail, imageUri)
             edit_profile()
-        }
-        else if (requestCode == VERSION_UPDATE)
-        {
+        } else if (requestCode == VERSION_UPDATE) {
 
         } else if (requestCode == SECESSION) {
-            if(resultCode == Activity.RESULT_OK) {
+            if (resultCode == Activity.RESULT_OK) {
                 redout()
             }
         } else if (requestCode == LOGOUT) {
-            if(resultCode == Activity.RESULT_OK) {
+            if (resultCode == Activity.RESULT_OK) {
                 PrefUtils.setPreference(context, "autoLogin", autoLogin)
                 val intent = Intent(this, LoginActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK

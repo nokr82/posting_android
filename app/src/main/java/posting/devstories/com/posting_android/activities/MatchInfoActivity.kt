@@ -113,7 +113,7 @@ class MatchInfoActivity : RootActivity() {
         }
 
         postingRL.setOnClickListener {
-            var intent = Intent(context, DetailActivity::class.java);
+            var intent = Intent(context, DlgDetailActivity::class.java);
             intent.putExtra("id", posting_id)
             intent.putExtra("save_id", save_id)
             startActivity(intent)
@@ -151,11 +151,11 @@ class MatchInfoActivity : RootActivity() {
                         var current_school_id = PrefUtils.getIntPreference(context, "current_school_id")
                         val write_member_school_id = Utils.getInt(write_member, "school_id")
 
-                        if (current_school_id != write_member_school_id){
-                            postingRL.setBackgroundResource(R.mipmap.write_bg2)
-                        }else{
-                            postingRL.setBackgroundResource(R.mipmap.bg)
-                        }
+//                        if (current_school_id != write_member_school_id){
+//                            postingRL.setBackgroundResource(R.mipmap.write_bg2)
+//                        }else{
+//                            postingRL.setBackgroundResource(R.mipmap.bg)
+//                        }
 
 
                         for (i in 0..(postingSaves.length() - 1)) {
