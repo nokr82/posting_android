@@ -132,26 +132,8 @@ open class HomeFragment : Fragment() {
     }
     internal var delPostingReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent?) {
-
+            page = 1
             mainData()
-            mainAdapter.notifyDataSetChanged()
-        }
-    }
-
-    internal var setViewReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
-        override fun onReceive(context: Context, intent: Intent?) {
-
-            if (intent != null) {
-                tabType = intent!!.getIntExtra("tabType", 1)
-                val type = tabType - 1
-
-                if (type == pagerVP.currentItem) {
-                    setMenuTabView()
-                }
-
-                pagerVP.currentItem = type
-            }
-
         }
     }
 
@@ -180,8 +162,6 @@ open class HomeFragment : Fragment() {
         mainActivity.registerReceiver(delPostingReceiver, filter2)
         val filter1 = IntentFilter("SAVE_POSTING")
         mainActivity.registerReceiver(savePostingReceiver, filter1)
-        val filter3 = IntentFilter("SET_VIEW")
-        mainActivity.registerReceiver(setViewReceiver, filter3)
         val filter4 = IntentFilter("WRITE_POST")
         mainActivity.registerReceiver(writePostReceiver, filter4)
 
@@ -843,13 +823,6 @@ open class HomeFragment : Fragment() {
         try {
             if (savePostingReceiver != null) {
                 myContext!!.unregisterReceiver(savePostingReceiver)
-            }
-        } catch (e: IllegalArgumentException) {
-        }
-
-        try {
-            if (setViewReceiver != null) {
-                myContext!!.unregisterReceiver(setViewReceiver)
             }
         } catch (e: IllegalArgumentException) {
         }

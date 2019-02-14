@@ -184,11 +184,11 @@ class DlgReportActivity : RootActivity() {
                         setResult(Activity.RESULT_OK, intent)
 
 
-                        //브로드캐스트로 날려주기
-                        val intent = Intent()
-                        intent.putExtra("tabType",type)
-                        intent.action = "SET_VIEW"
-                        sendBroadcast(intent)
+//                        //브로드캐스트로 날려주기
+//                        val intent = Intent()
+//                        intent.putExtra("tabType",type)
+//                        intent.action = "SET_VIEW"
+//                        sendBroadcast(intent)
 
                         finish()
 
