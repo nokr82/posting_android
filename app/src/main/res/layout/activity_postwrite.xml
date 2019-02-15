@@ -79,15 +79,13 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1.5"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginBottom="5dp">
+        android:layout_margin="10dp">
 
         <posting.devstories.com.posting_android.base.RationalRelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_margin="10dp"
             app:ratio="1:1">
 
             <RelativeLayout
@@ -120,74 +118,73 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="5dp"
-        android:layout_weight="0.5"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <GridView
             android:id="@+id/listGV"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_weight="1"
             android:numColumns="4">
 
         </GridView>
 
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="37.15dp"
+            android:orientation="horizontal"
+            android:layout_marginBottom="3dp">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="37.15dp"
-        android:orientation="horizontal"
-        android:layout_marginBottom="3dp">
-
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center">
-
-            <TextView
-                android:layout_width="match_parent"
+            <RelativeLayout
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:textSize="14dp"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textSize="14dp"
+                    android:gravity="center"
+                    android:text="갤러리" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1.5dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="#063588" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/cameraRL"
                 android:gravity="center"
-                android:text="갤러리" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1.5dp"
-                android:layout_alignParentBottom="true"
-                android:background="#063588" />
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/cameraRL"
-            android:gravity="center"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-
-            <TextView
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:text="카메라"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:textSize="14dp" />
+                android:layout_weight="1">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1.5dp"
-                android:layout_alignParentBottom="true"
-                android:background="#D0D0D0"
-                android:visibility="invisible" />
-        </RelativeLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="카메라"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textSize="14dp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1.5dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="#D0D0D0"
+                    android:visibility="invisible" />
+            </RelativeLayout>
+
+        </LinearLayout>
 
     </LinearLayout>
+
 
     <View
         android:layout_width="match_parent"

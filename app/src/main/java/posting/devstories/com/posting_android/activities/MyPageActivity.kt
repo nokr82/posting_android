@@ -45,6 +45,7 @@ class MyPageActivity : FragmentActivity() {
     private val GALLERY = 1
     private val CAMERA = 2
     private val VERSION_UPDATE = 3
+    private  val EDIT_PROFILE = 4
     lateinit var context: Context
     private var progressDialog: ProgressDialog? = null
     var autoLogin = false
@@ -81,7 +82,6 @@ class MyPageActivity : FragmentActivity() {
 
         profileTV.setOnClickListener {
             showPictureDialog()
-
         }
         nickTV.setOnClickListener {
             val intent = Intent(this, nickchangeActivity::class.java)
@@ -502,7 +502,7 @@ class MyPageActivity : FragmentActivity() {
                 try {
                     val result = response!!.getString("result")
 
-                    print("result : $response")
+//                    print("result : $response")
 
                     if ("ok" == result) {
 
@@ -622,18 +622,22 @@ class MyPageActivity : FragmentActivity() {
     }
 
     fun showPictureDialog() {
-        val pictureDialog = AlertDialog.Builder(this)
-        pictureDialog.setTitle("프로필 이미지 변경")
-        val pictureDialogItems = arrayOf("갤러리에서 가져오기", "카메라로 사진찍기")
-        pictureDialog.setItems(
-            pictureDialogItems
-        ) { dialog, which ->
-            when (which) {
-                0 -> choosePhotoFromGallary()
-                1 -> takePhotoFromCamera()
-            }
-        }
-        pictureDialog.show()
+//        val pictureDialog = AlertDialog.Builder(this)
+//        pictureDialog.setTitle("프로필 이미지 변경")
+//        val pictureDialogItems = arrayOf("갤러리에서 가져오기", "카메라로 사진찍기")
+//        pictureDialog.setItems(
+//            pictureDialogItems
+//        ) { dialog, which ->
+//            when (which) {
+//                0 -> choosePhotoFromGallary()
+//                1 -> takePhotoFromCamera()
+//            }
+//        }
+//        pictureDialog.show()
+
+        var intent = Intent(context, DlgEditProfileActivity::class.java)
+        startActivityForResult(intent, EDIT_PROFILE)
+
     }
 
     private fun choosePhotoFromGallary() {
@@ -725,6 +729,10 @@ class MyPageActivity : FragmentActivity() {
                 val intent = Intent(this, LoginActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intent)
+            }
+        } else if (requestCode == EDIT_PROFILE) {
+            if (resultCode == Activity.RESULT_OK) {
+                loadInfo()
             }
         }
     }

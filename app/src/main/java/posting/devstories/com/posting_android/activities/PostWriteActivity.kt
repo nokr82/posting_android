@@ -8,7 +8,8 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.database.Cursor
-import android.graphics.Bitmap
+import android.graphics.*
+import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -217,7 +218,7 @@ class PostWriteActivity : RootActivity() {
             )
             .check()
 
-        loadPhoto()
+//        loadPhoto()
 
     }
 
@@ -292,6 +293,54 @@ class PostWriteActivity : RootActivity() {
 
         }
 
+        // 첫번째 이미지 기본으로 보여지게
+        if ((posting_id == "" || posting_id == null) && photoList.count() > 0) {
+
+            val photo = photoList[0]
+            imgid = photo.photoPath!!
+
+            if (intent.resolveActivity(packageManager) != null) {
+
+                try {
+
+                    imageUri = FileProvider.getUriForFile(context, packageName + ".provider", File(imgid))
+                    imageUriOutput = imageUri
+
+                    var paint = Paint();
+                    paint.setFilterBitmap(true);
+
+                    var bitmapOrg = BitmapFactory.decodeFile(photo.photoPath);
+
+                    var targetWidth  = 500
+                    var targetHeight = 500
+
+                    var targetBitmap = Bitmap.createBitmap(targetWidth, targetHeight, Bitmap.Config.ARGB_8888)
+
+                    var rectf = RectF(0f, 0f, 300f, 300f)
+
+                    var canvas = Canvas(targetBitmap);
+
+                    var path = Path()
+                    path.addRect(rectf, Path.Direction.CW);
+
+                    canvas.clipPath(path);
+                    canvas.drawBitmap(bitmapOrg, Rect(0, 0, bitmapOrg.getWidth(), bitmapOrg.getHeight()), Rect(0, 0, targetWidth, targetHeight), paint)
+
+                    var matrix = Matrix()
+                    matrix.postScale(1f, 1f);
+//                    matrix.postRotate(90f)
+
+                    var resizedBitmap = Bitmap.createBitmap(targetBitmap, 0, 0, 300, 300, matrix, true);
+                    capture = resizedBitmap
+                    /*convert Bitmap to resource */
+                    imgIV2.setImageBitmap(resizedBitmap)
+
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                }
+            }
+
+        }
 
         val imageLoader = ImageLoader(resolver)
 
@@ -322,8 +371,6 @@ class PostWriteActivity : RootActivity() {
         }
 
         imageLoader.setListener(adapter)
-
-
     }
 
     fun write() {
