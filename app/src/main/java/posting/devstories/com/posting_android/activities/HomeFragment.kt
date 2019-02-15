@@ -89,6 +89,9 @@ open class HomeFragment : Fragment() {
     private var adapterData: ArrayList<JSONObject> = ArrayList<JSONObject>()
     private lateinit var adapter: SchoolAdapter
 
+    private val SCROLL_PRESSED_TERM = (1000 * 2).toLong()
+    private var scrollPressedTime: Long = 0
+
     internal var savePostingReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent?) {
             if (intent != null) {
@@ -226,6 +229,7 @@ open class HomeFragment : Fragment() {
             }
 
             override fun onPageSelected(position: Int) {
+
             }
 
             override fun onPageScrollStateChanged(state: Int) {
