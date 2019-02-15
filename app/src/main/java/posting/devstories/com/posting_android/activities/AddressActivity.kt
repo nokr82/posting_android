@@ -24,7 +24,6 @@ import posting.devstories.com.posting_android.base.RootActivity
 
 class AddressActivity : RootActivity(), AbsListView.OnScrollListener {
 
-
     private var context: Context? = null
     private var progressDialog: ProgressDialog? = null
 
