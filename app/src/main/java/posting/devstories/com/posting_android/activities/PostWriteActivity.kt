@@ -36,6 +36,7 @@ import posting.devstories.com.posting_android.adapter.ImageAdapter
 import posting.devstories.com.posting_android.base.*
 import java.io.ByteArrayInputStream
 import java.io.File
+import java.io.FileNotFoundException
 import java.io.IOException
 import java.util.*
 import kotlin.collections.ArrayList
@@ -309,7 +310,7 @@ class PostWriteActivity : RootActivity() {
                     var paint = Paint();
                     paint.setFilterBitmap(true);
 
-                    var bitmapOrg = BitmapFactory.decodeFile(photo.photoPath);
+                    var bitmapOrg = BitmapFactory.decodeFile(photo.photoPath!!);
 
                     var targetWidth  = 500
                     var targetHeight = 500
@@ -337,6 +338,8 @@ class PostWriteActivity : RootActivity() {
 
                 } catch (e: IOException) {
                     e.printStackTrace()
+                } catch (e2: FileNotFoundException) {
+                    e2.printStackTrace()
                 }
             }
 
@@ -401,11 +404,15 @@ class PostWriteActivity : RootActivity() {
 
                         Utils.hideKeyboard(context)
 
-                        try {
-                            contentResolver.delete(imageUri, null, null);
-                        } catch (e: Exception) {
-                            e.printStackTrace()
-                        }
+                        var deleteFile = File(imageUri!!.path)
+                        var deleteOutputFile = File(imageUriOutput!!.path)
+
+//                        try {
+//                            contentResolver.delete(imageUri, null, null);
+//                            contentResolver.delete(imageUriOutput, null, null);
+//                        } catch (e: Exception) {
+//                            e.printStackTrace()
+//                        }
 
                         //브로드캐스트로 날려주기
                         val intent = Intent()
@@ -646,7 +653,7 @@ class PostWriteActivity : RootActivity() {
             }
 
             CROP_FROM_CAMERA -> {
-                capture = MediaStore.Images.Media.getBitmap(this.contentResolver, imageUriOutput)
+                capture = MediaStore.Images.Media.getBitmap(contentResolver, imageUriOutput)
                 imgIV2.setImageBitmap(capture)
 
             }
@@ -656,7 +663,7 @@ class PostWriteActivity : RootActivity() {
                 if (result != null) {
                     imageUriOutput = result.uri
 
-                    capture = MediaStore.Images.Media.getBitmap(this.contentResolver, imageUriOutput)
+                    capture = MediaStore.Images.Media.getBitmap(contentResolver, imageUriOutput)
                     imgIV2.setImageBitmap(capture)
                 }
 
