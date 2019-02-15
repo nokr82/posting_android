@@ -2,6 +2,7 @@ package posting.devstories.com.posting_android.adapter
 
 import android.content.Context
 import android.graphics.Color
+import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
@@ -18,6 +19,12 @@ open class SpinnerAdapter(context:Context, view:Int, data:ArrayList<String>) : A
         val view = super.getDropDownView(position, convertView, parent)
 
         var textTV = view as TextView
+
+        if (position == 0) {
+            textTV.gravity = Gravity.LEFT
+        } else {
+            textTV.gravity = Gravity.CENTER
+        }
 
         var text = data.get(position)
 

@@ -18,6 +18,7 @@ class MyPagePostingFragment : MyPagePostingStorageFragment() {
         var view = super.onCreateView(inflater, container, savedInstanceState)
 
         tab = 1
+        page = 1
 
         return view
     }

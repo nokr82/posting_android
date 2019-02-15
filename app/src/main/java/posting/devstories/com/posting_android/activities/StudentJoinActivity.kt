@@ -40,7 +40,6 @@ class StudentJoinActivity : RootActivity() {
 
     var gendertype =""
     val membertype = 2
-    var schoolid = -1
 
     var getid = ""
     var getPW=""
@@ -67,7 +66,7 @@ class StudentJoinActivity : RootActivity() {
         setContentView(R.layout.activity_studentjoin)
 
         intent = getIntent()
-        schoolid = intent.getIntExtra("school_id",-1)
+        school_id = intent.getIntExtra("school_id",-1)
 
         this.context = this
 
@@ -194,6 +193,10 @@ class StudentJoinActivity : RootActivity() {
                 geterror = "닉네임을 입력해주세요"
 
                 dlgView( geterror)
+            } else if(school_id < 1) {
+                geterror = "학교를 선택해주세요."
+
+                dlgView( geterror)
             }else if(getName==""||getName==null|| getName.isEmpty()){
                 geterror = "이름을 입력해주세요"
 
@@ -210,7 +213,7 @@ class StudentJoinActivity : RootActivity() {
                 geterror = "개인정보처리방침에 동의해주세요"
 
                 dlgView( geterror)
-            }else if(agree3CK.isChecked != true) {
+            } else if(agree3CK.isChecked != true) {
                 geterror = "통합커뮤니티 이용규칙에 동의해주세요"
 
                 dlgView( geterror)
@@ -239,7 +242,9 @@ class StudentJoinActivity : RootActivity() {
         var year = years_str.toInt()
 
         // 시작 연도
-        val start_year = year - 29
+//        var start_year = year - 20
+//        start_year = start_year - (start_year % 10)
+        var start_year = 1990
 
         for (i in start_year..year) {
 
@@ -432,7 +437,7 @@ class StudentJoinActivity : RootActivity() {
         params.put("member_type", membertype)
         params.put("birth", getBirth)
         params.put("gender", gendertype)
-        params.put("school_id",schoolid)
+        params.put("school_id",school_id)
 
         var agree_yn = "N"
         if(agree4CK.isChecked) {

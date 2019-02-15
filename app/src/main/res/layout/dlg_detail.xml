@@ -45,7 +45,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="20dp"
                     android:text=""
-                    android:textSize="13.5dp"
+                    android:textSize="10dp"
                     android:visibility="visible" />
 
                 <TextView
@@ -54,7 +54,7 @@
                     android:layout_height="wrap_content"
                     android:text=" | 신고"
                     android:textColor="#BDBBB8"
-                    android:textSize="13.5dp" />
+                    android:textSize="10dp" />
 
             </LinearLayout>
 
@@ -81,11 +81,6 @@
 
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#A19F9B" />
-
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -107,6 +102,8 @@
                     <posting.devstories.com.posting_android.base.RationalRelativeLayout
                         android:id="@+id/postingLL"
                         android:layout_width="match_parent"
+                        android:layout_marginLeft="1.5dp"
+                        android:layout_marginRight="1.5dp"
                         android:layout_height="0dp"
                         android:layout_gravity="center"
                         android:background="#FEDA44"
@@ -374,29 +371,36 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/saveLL"
                     android:layout_width="match_parent"
-                    android:layout_height="35dp"
-                    android:layout_marginLeft="57dp"
-                    android:layout_marginRight="57dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
-                    android:background="#FAC841"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:visibility="gone">
+                    android:gravity="center">
 
-                    <ImageView
+                    <LinearLayout
+                        android:id="@+id/saveLL"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="21dp"
-                        android:src="@mipmap/mycoupon" />
+                        android:layout_height="35dp"
+                        android:paddingLeft="33dp"
+                        android:paddingRight="33dp"
+                        android:background="#FAC841"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="My Storage로 떼어가기"
-                        android:textColor="#063588"
-                        android:textSize="15dp" />
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="21dp"
+                            android:src="@mipmap/mycoupon" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="My Storage로 떼어가기"
+                            android:textColor="#063588"
+                            android:textSize="15dp" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 

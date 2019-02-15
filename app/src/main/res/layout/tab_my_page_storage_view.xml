@@ -15,6 +15,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_above="@+id/storageV"
             android:text="떼다"
             android:layout_weight="1"
             android:gravity="center"
@@ -23,7 +24,7 @@
         <View
             android:id="@+id/storageV"
             android:layout_width="match_parent"
-            android:layout_height="3dp"
+            android:layout_height="1.5dp"
             android:layout_alignParentBottom="true"
             android:background="#063588"
             android:visibility="invisible"/>

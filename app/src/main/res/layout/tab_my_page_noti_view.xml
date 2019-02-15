@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -13,44 +12,45 @@
         android:gravity="center">
 
         <TextView
-                android:id="@+id/TV"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_centerInParent="true"
-                android:text="알림"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:textSize="14dp"/>
+            android:id="@+id/TV"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:layout_above="@+id/notifyV"
+            android:text="알림"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textSize="14dp" />
 
         <posting.devstories.com.posting_android.base.RationalRelativeLayout
-                android:layout_width="16dp"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                app:ratio="1:1"
-                android:layout_centerInParent="true"
-                android:layout_alignParentTop="true"
-                android:layout_toRightOf="@+id/TV">
+            android:layout_width="16dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            app:ratio="1:1"
+            android:layout_centerInParent="true"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/TV">
 
             <TextView
-                    android:id="@+id/alarmCntTV"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text=""
-                    android:textSize="12dp"
-                    android:textColor="#FFFFFF"
-                    android:gravity="center"
-                    android:visibility="gone"
-                    android:background="@drawable/circle_red"/>
+                android:id="@+id/alarmCntTV"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text=""
+                android:textSize="12dp"
+                android:textColor="#FFFFFF"
+                android:gravity="center"
+                android:visibility="gone"
+                android:background="@drawable/circle_red" />
 
         </posting.devstories.com.posting_android.base.RationalRelativeLayout>
 
         <View
             android:id="@+id/notifyV"
             android:layout_width="match_parent"
-            android:layout_height="3dp"
+            android:layout_height="1.5dp"
             android:layout_alignParentBottom="true"
             android:background="#063588"
-            android:visibility="invisible"/>
+            android:visibility="invisible" />
 
     </RelativeLayout>
 

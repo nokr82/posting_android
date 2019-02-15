@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     
     
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="52dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
         android:paddingLeft="13dp"
@@ -46,17 +46,19 @@
 
         </LinearLayout>
 
-        <RelativeLayout
-            android:layout_width="50.5dp"
-            android:layout_height="48dp"
-            android:background="@mipmap/alram_bg">
+        <posting.devstories.com.posting_android.base.RationalRelativeLayout
+            android:layout_width="49dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="7dp"
+            android:layout_marginBottom="7dp"
+            app:ratio="1:1"
+            android:background="#FEDA44">
 
             <ImageView
                 android:id="@+id/postingIV"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginTop="2.5dp"
-                android:layout_marginLeft="4dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="2dp"
                 android:src="@mipmap/storage_img"
                 android:scaleType="centerCrop"
                 android:visibility="gone"/>
@@ -73,7 +75,7 @@
                 android:layout_margin="6dp"
                 android:gravity="center"/>
 
-        </RelativeLayout>
+        </posting.devstories.com.posting_android.base.RationalRelativeLayout>
 
     </LinearLayout>
 

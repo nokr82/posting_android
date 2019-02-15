@@ -60,6 +60,11 @@
 
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.3dp"
+        android:background="#D0D0D0"/>
+
     <FrameLayout
         android:id="@+id/fragmentFL"
         android:layout_width="match_parent"

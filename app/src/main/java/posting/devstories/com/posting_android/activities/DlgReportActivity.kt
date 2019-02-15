@@ -93,6 +93,8 @@ class DlgReportActivity : RootActivity() {
 
             chatting_yn = intent.getStringExtra("chatting_yn")
 
+            modiTV.visibility = View.GONE
+
             recyTV.visibility = View.GONE
             delTV.setOnClickListener {
                 del_posting()

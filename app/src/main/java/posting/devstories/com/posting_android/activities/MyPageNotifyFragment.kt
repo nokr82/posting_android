@@ -61,9 +61,21 @@ class MyPageNotifyFragment : Fragment() {
             var data = adapterData.get(position)
             var posting= data.getJSONObject("Posting")
 
-            var intent = Intent(myContext, DetailActivity::class.java)
-            intent.putExtra("id", Utils.getString(posting, "id"))
-            startActivity(intent)
+            val chatting_yn = Utils.getString(posting, "chatting_yn")
+            val type = Utils.getInt(posting, "type")
+            val posting_id = Utils.getString(posting, "id")
+
+            if (type == 3 || type == 4 || type == 5 || chatting_yn == "Y") {
+
+                val intent = Intent(myContext, MatchInfoActivity::class.java)
+                intent.putExtra("posting_id", posting_id)
+                startActivity(intent)
+            } else {
+//            var intent = Intent(myContext, DetailActivity::class.java)
+                var intent = Intent(myContext, DlgDetailActivity::class.java)
+                intent.putExtra("id", posting_id)
+                startActivity(intent)
+            }
 
         }
 

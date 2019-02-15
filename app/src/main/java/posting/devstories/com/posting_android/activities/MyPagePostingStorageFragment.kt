@@ -44,10 +44,47 @@ open class MyPagePostingStorageFragment : Fragment() {
         override fun onReceive(context: Context, intent: Intent?) {
 
             if (intent != null) {
+
+                if (tab == 1) {
+                    page = 1
+                    tab = 1
+                    loadData()
+                }
+
+            }
+
+        }
+    }
+
+    internal var savePostReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent?) {
+
+            if (intent != null) {
                 page = 1
+                tab = 2
                 loadData()
             }
 
+        }
+    }
+
+    internal var delPostingReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent?) {
+            if (intent != null) {
+                tab = 1
+                page = 1
+                loadData()
+            }
+        }
+    }
+
+    internal var saveDelPostingReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent?) {
+            if (intent != null) {
+                tab = 2
+                page = 1
+                loadData()
+            }
         }
     }
 
@@ -59,15 +96,19 @@ open class MyPagePostingStorageFragment : Fragment() {
         this.myContext = container!!.context
 
         val filter3 = IntentFilter("SET_VIEW")
-        try {
-            if (writePostReceiver != null) {
-                getActivity()!!.unregisterReceiver(writePostReceiver)
-            }
-        } catch (e: IllegalArgumentException) {
-            e.printStackTrace()
-        }
-
         getActivity()!!.registerReceiver(writePostReceiver, filter3)
+
+        val filter1 = IntentFilter("SAVE_POSTING")
+        getActivity()!!.registerReceiver(savePostReceiver, filter1)
+
+        val filter2 = IntentFilter("DEL_POSTING")
+        getActivity()!!.registerReceiver(delPostingReceiver, filter2)
+
+        val filter4 = IntentFilter("SAVE_DEL_POSTING")
+        getActivity()!!.registerReceiver(saveDelPostingReceiver, filter4)
+
+        val filter5 = IntentFilter("WRITE_POST")
+        getActivity()!!.registerReceiver(writePostReceiver, filter5)
 
         progressDialog = ProgressDialog(myContext)
 
@@ -94,8 +135,8 @@ open class MyPagePostingStorageFragment : Fragment() {
             try {
 
                 val Posting = adapterData[position].getJSONObject("Posting")
-                val type = Utils.getInt(Posting,"type")
-                val chatting_yn = Utils.getString(Posting,"chatting_yn")
+                val type = Utils.getInt(Posting, "type")
+                val chatting_yn = Utils.getString(Posting, "chatting_yn")
 
                 if (tab == 1) {
 
@@ -129,7 +170,7 @@ open class MyPagePostingStorageFragment : Fragment() {
                         val intent = Intent(myContext, DlgDetailActivity::class.java)
                         intent.putExtra("id", Utils.getString(Posting, "id"))
                         intent.putExtra("save_id", Utils.getInt(PostingSave, "id"))
-                        intent.putExtra("taptype",tab)
+                        intent.putExtra("taptype", tab)
                         startActivity(intent)
 
                     }
@@ -166,7 +207,7 @@ open class MyPagePostingStorageFragment : Fragment() {
                         page = response.getInt("page")
                         totalPage = response.getInt("totalPage")
 
-                        if(page == 1) {
+                        if (page == 1) {
                             adapterData.clear()
                             adapterMy.notifyDataSetChanged()
                         }
@@ -238,6 +279,41 @@ open class MyPagePostingStorageFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
 
+        try {
+            if (writePostReceiver != null) {
+                getActivity()!!.unregisterReceiver(writePostReceiver)
+            }
+        } catch (e: IllegalArgumentException) {
+            e.printStackTrace()
+        }
+        try {
+            if (savePostReceiver != null) {
+                getActivity()!!.unregisterReceiver(savePostReceiver)
+            }
+        } catch (e: IllegalArgumentException) {
+            e.printStackTrace()
+        }
+        try {
+            if (delPostingReceiver != null) {
+                getActivity()!!.unregisterReceiver(delPostingReceiver)
+            }
+        } catch (e: IllegalArgumentException) {
+            e.printStackTrace()
+        }
+        try {
+            if (saveDelPostingReceiver != null) {
+                getActivity()!!.unregisterReceiver(saveDelPostingReceiver)
+            }
+        } catch (e: IllegalArgumentException) {
+            e.printStackTrace()
+        }
+        try {
+            if (writePostReceiver != null) {
+                getActivity()!!.unregisterReceiver(writePostReceiver)
+            }
+        } catch (e: IllegalArgumentException) {
+            e.printStackTrace()
+        }
     }
 
 }

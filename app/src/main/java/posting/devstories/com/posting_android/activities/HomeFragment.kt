@@ -95,34 +95,26 @@ open class HomeFragment : Fragment() {
                 var posting_id = intent.getStringExtra("posting_id")
                 var count = intent.getIntExtra("count", 1)
 
-                var index = -1
-
                 for (i in 0..(mainAdapterData.size - 1)) {
                     var data = mainAdapterData[i]
-                    var list = data.getJSONArray("list")
 
-                    for (j in 0..(list.length() - 1)) {
+                    var posting = data.getJSONObject("Posting")
 
-                        var p: JSONObject = list[j] as JSONObject
-                        var posting = p.getJSONObject("Posting")
+                    if (Utils.getString(posting, "id") == posting_id) {
 
-                        if (Utils.getString(posting, "id") == posting_id) {
+                        if (Utils.getInt(posting, "leftCount") != 9999) {
+                            var cnt = Utils.getInt(posting, "count") - count
 
-                            if (Utils.getInt(posting, "leftCount") != 9999) {
-                                var cnt = Utils.getInt(posting, "count") - count
-
-                                if(cnt < 1) {
-                                    list.remove(j)
-
-                                } else {
-                                    posting.put("leftCount", cnt)
-                                }
+                            if(cnt < 1) {
+                                mainAdapterData.removeAt(i)
+                            } else {
+                                posting.put("leftCount", cnt)
                             }
-
-                            break
                         }
 
+                        break
                     }
+
                 }
 
                 mainAdapter.notifyDataSetChanged()
