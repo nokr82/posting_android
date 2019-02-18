@@ -18,7 +18,6 @@ import kotlinx.android.synthetic.main.dlg_detail.*
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
-import posting.devstories.com.posting_android.Actions.MemberAction
 import posting.devstories.com.posting_android.Actions.PostingAction.del_comments
 import posting.devstories.com.posting_android.Actions.PostingAction.detail
 import posting.devstories.com.posting_android.Actions.PostingAction.edit_comments
@@ -85,6 +84,8 @@ class DlgDetailActivity : RootActivity() {
 
     private lateinit var detailAnimationRecyclerAdapterData: ArrayList<JSONObject>
 
+    private var write_school_id = -1
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.dlg_detail)
@@ -104,6 +105,10 @@ class DlgDetailActivity : RootActivity() {
 
         member_type= PrefUtils.getStringPreference(context,"member_type")
         member_id = PrefUtils.getIntPreference(context, "member_id")
+        // 나의 학교 일련번호
+        me_school_id  = PrefUtils.getIntPreference(context,"school_id")
+        // 현재 보고 있는 학교 일련번호
+        current_school_id = PrefUtils.getIntPreference(context, "current_school_id")
 
         confirm_yn = PrefUtils.getStringPreference(context, "confirm_yn")
 
@@ -276,9 +281,12 @@ class DlgDetailActivity : RootActivity() {
 //            }
 
             if(count < 1) {
-
                 Toast.makeText(context, "남은 포스팅 갯수가 없습니다.", Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
 
+            if (me_school_id != current_school_id && current_school_id != -1) {
+                dlgAlert("타 학교의 게시물은 뗄 수 없습니다.")
                 return@setOnClickListener
             }
 
@@ -314,6 +322,14 @@ class DlgDetailActivity : RootActivity() {
         }
 
         detaildata()
+
+    }
+
+    fun dlgAlert(msg: String) {
+
+        var intent = Intent(context, DlgCommonActivity::class.java)
+        intent.putExtra("contents", msg)
+        startActivity(intent)
 
     }
 
@@ -591,8 +607,7 @@ class DlgDetailActivity : RootActivity() {
         params.put("member_id",member_id)
         params.put("posting_id", posting_id)
         params.put("del_yn", del_yn)
-        //나의학교아이디
-        me_school_id  = PrefUtils.getIntPreference(context,"school_id")
+
         detail(params, object : JsonHttpResponseHandler() {
 
             override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
@@ -639,7 +654,6 @@ class DlgDetailActivity : RootActivity() {
                         image_uri = Utils.getString(posting, "image_uri")
                         var leftCount = Utils.getString(posting, "leftCount")
                         var writer_school_id = Utils.getInt(member1, "school_id")
-                        PrefUtils.setPreference(context, "detail_current_school_id", writer_school_id)
 
 
                         //게시물의 학교아이디
@@ -654,16 +668,6 @@ class DlgDetailActivity : RootActivity() {
 //                            saveLL.visibility = View.VISIBLE
 //                        }
 
-                        if (current_school_id < 1) {
-                            if (count < 1 || member_id == member_id2 || "Y" == save_yn || "3" == member_type) {
-                                saveLL.visibility = View.GONE
-                            } else {
-                                saveLL.visibility = View.VISIBLE
-                            }
-                        } else {
-                            saveLL.visibility = View.GONE
-                        }
-
 //                        if (writer_school_id != school_id){
 //                            postingLL.background = getDrawable(R.mipmap.write_bg2)
 //                        }
@@ -671,7 +675,12 @@ class DlgDetailActivity : RootActivity() {
 //                            postingLL.background = getDrawable(R.mipmap.wtite_bg)
 //                        }
 
-                        current_school_id = PrefUtils.getIntPreference(context, "current_school_id")
+                        if (count < 1 || member_id == member_id2 || "Y" == save_yn || "3" == member_type) {
+                            saveLL.visibility = View.GONE
+                        } else {
+                            saveLL.visibility = View.VISIBLE
+                        }
+
 //                        if(current_school_id != me_school_id) {
 //                            // 학교도 다르고 내가 쓴 글이 아니면
 //                            // 커멘트 막기
@@ -684,7 +693,6 @@ class DlgDetailActivity : RootActivity() {
 //                            commentsLL.visibility = View.VISIBLE
 //                        }
 
-                        /*
                         if(6 == type) {
 
                             val ymd = SimpleDateFormat("yy년MM월dd일", Locale.KOREA)
@@ -749,9 +757,8 @@ class DlgDetailActivity : RootActivity() {
 //                                }
 //                            }
                         }
-                        */
 
-                        image_uri = Utils.getString(posting, "image_uri")
+//                        image_uri = Utils.getString(posting, "image_uri")
 
                         if(count == 9999) {
                             leftCntTV.text = "∞"
@@ -811,6 +818,10 @@ class DlgDetailActivity : RootActivity() {
                         val create_date = sdf.format(created)
 
                         upTX.text = create_date
+
+//                        var image = Config.url + image_uri
+//                        ImageLoader.getInstance().displayImage(image, imgIV, Utils.UILoptionsPosting)
+//                        imgIV.visibility = View.VISIBLE
 
                         //uri를 이미지로 변환시켜준다
                         if (!image_uri.isEmpty() && image_uri != "") {
