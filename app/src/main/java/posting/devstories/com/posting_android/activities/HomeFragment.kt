@@ -17,6 +17,7 @@ import android.support.v4.view.ViewPager
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
@@ -89,9 +90,6 @@ open class HomeFragment : Fragment() {
     private var adapterData: ArrayList<JSONObject> = ArrayList<JSONObject>()
     private lateinit var adapter: SchoolAdapter
 
-    private val SCROLL_PRESSED_TERM = (1000 * 2).toLong()
-    private var scrollPressedTime: Long = 0
-
     internal var savePostingReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent?) {
             if (intent != null) {
@@ -140,6 +138,22 @@ open class HomeFragment : Fragment() {
                 mainData()
             }
 
+        }
+    }
+
+    var countDown = 0
+
+    internal var timerHandler: Handler = object : Handler() {
+        override fun handleMessage(msg: android.os.Message) {
+
+            if (countDown == 0) {
+                this.removeMessages(0)
+                handler!!.sendEmptyMessage(0)
+            }
+
+            countDown--
+
+            this.sendEmptyMessageDelayed(0, 1000)
         }
     }
 
@@ -231,19 +245,37 @@ open class HomeFragment : Fragment() {
             }
 
             override fun onPageSelected(position: Int) {
-
-            }
-
-            override fun onPageScrollStateChanged(state: Int) {
                 circleLL.removeAllViews()
                 for (i in adverImagePathObjs.indices) {
-                    if (i == adPosition) {
+                    if (i == position) {
                         addDot(circleLL, true)
                     } else {
                         addDot(circleLL, false)
                     }
                 }
+
             }
+
+            override fun onPageScrollStateChanged(state: Int) {
+            }
+        })
+
+        adverVP.setOnTouchListener(object: View.OnTouchListener {
+            override fun onTouch(v: View?, event: MotionEvent): Boolean {
+
+                when(event.action) {
+                    MotionEvent.ACTION_MOVE -> {
+                        handler!!.removeMessages(0)
+                    }
+                    MotionEvent.ACTION_UP -> {
+                        countDown = 2
+                        timerHandler.sendEmptyMessage(0)
+                    }
+                }
+
+                return false
+            }
+
         })
 
 
@@ -333,8 +365,6 @@ open class HomeFragment : Fragment() {
             }
             return@setOnEditorActionListener true
         }
-
-        timer()
 
         setMainView()
         // mainData()
@@ -705,6 +735,18 @@ open class HomeFragment : Fragment() {
 
                             adverImagePathObjs.add(adverObj);
 
+                        }
+
+                        if (adverImagePathObjs.size > 0) {
+                            circleLL.removeAllViews()
+                            for (i in adverImagePathObjs.indices) {
+                                if (i == 0) {
+                                    addDot(circleLL, true)
+                                } else {
+                                    addDot(circleLL, false)
+                                }
+                            }
+                            timer()
                         }
 
                         val list = response.getJSONArray("list")
