@@ -26,17 +26,17 @@ class DlgAdverActivity : RootActivity() {
         progressDialog!!.setProgressStyle(android.R.style.Widget_DeviceDefault_Light_ProgressBar_Large)
         progressDialog!!.setCancelable(false)
 
-
         val link = intent.getStringExtra("link")
 
         backLL.setOnClickListener {
             finish()
         }
 
-        webWV.setWebViewClient(WebViewClientClass())
-        webWV.setVerticalScrollBarEnabled(true)
-        webWV.setBackgroundColor(Color.parseColor("#00000000"))
         webWV.loadUrl(link)
+        webWV.webViewClient = WebViewClientClass()
+        webWV.isVerticalScrollBarEnabled = true
+        webWV.settings.useWideViewPort = true
+        webWV.setBackgroundColor(Color.parseColor("#00000000"))
 
     }
 
@@ -50,18 +50,18 @@ class DlgAdverActivity : RootActivity() {
         override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
             super.onPageStarted(view, url, favicon)
 
-            if (progressDialog != null) {
-                progressDialog!!.show()
-            }
+//            if (progressDialog != null) {
+//                progressDialog!!.show()
+//            }
 
         }
 
         override fun onPageFinished(view: WebView?, url: String?) {
             super.onPageFinished(view, url)
 
-            if (progressDialog != null) {
-                progressDialog!!.dismiss()
-            }
+//            if (progressDialog != null) {
+//                progressDialog!!.dismiss()
+//            }
 
         }
 

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -7,8 +8,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
         android:background="#FFFFFF"
         android:orientation="vertical">
 
@@ -37,18 +38,23 @@
             android:layout_height="1dp"
             android:background="#A19F9B" />
 
-        <ScrollView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:fillViewport="true">
+            android:layout_height="match_parent">
 
-            <WebView
-                android:id="@+id/webWV"
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"></WebView>
+                android:layout_height="match_parent"
+                android:fillViewport="true">
 
-        </ScrollView>
+                <WebView
+                    android:id="@+id/webWV"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"></WebView>
+
+            </ScrollView>
+
+        </LinearLayout>
 
     </LinearLayout>
 
