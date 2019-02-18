@@ -313,7 +313,8 @@ class PostWriteActivity : RootActivity() {
                     var paint = Paint();
                     paint.setFilterBitmap(true);
 
-                    var bitmapOrg = BitmapFactory.decodeFile(photo.photoPath!!);
+//                    var bitmapOrg = BitmapFactory.decodeFile(photo.photoPath!!);
+                    var bitmapOrg = Utils.getImage(contentResolver, photo.photoPath!!);
 
                     val oWidth = bitmapOrg.width
                     val oHeight = bitmapOrg.height
@@ -322,6 +323,13 @@ class PostWriteActivity : RootActivity() {
 
                     var targetWidth  = 850
                     var targetHeight = 850
+
+                    var check = Math.min(oWidth, oHeight)
+
+                    if (check < 850) {
+                        targetWidth = check
+                        targetHeight = check
+                    }
 
                     val resizedBitmap = Bitmap.createBitmap(bitmapOrg, ((oWidth - targetWidth) / 2), ((oHeight - targetHeight) / 2), targetWidth, targetHeight);
 
