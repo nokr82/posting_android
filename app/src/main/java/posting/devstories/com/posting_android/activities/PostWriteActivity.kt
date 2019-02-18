@@ -8,8 +8,9 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.database.Cursor
-import android.graphics.*
-import android.graphics.drawable.BitmapDrawable
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Paint
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -314,29 +315,19 @@ class PostWriteActivity : RootActivity() {
 
                     var bitmapOrg = BitmapFactory.decodeFile(photo.photoPath!!);
 
-                    var targetWidth  = 500
-                    var targetHeight = 500
+                    val oWidth = bitmapOrg.width
+                    val oHeight = bitmapOrg.height
 
-                    var targetBitmap = Bitmap.createBitmap(targetWidth, targetHeight, Bitmap.Config.ARGB_8888)
+                    println("oWidth : $oWidth, oHeight : $oHeight")
 
-                    var rectf = RectF(0f, 0f, 300f, 300f)
+                    var targetWidth  = 850
+                    var targetHeight = 850
 
-                    var canvas = Canvas(targetBitmap);
+                    val resizedBitmap = Bitmap.createBitmap(bitmapOrg, ((oWidth - targetWidth) / 2), ((oHeight - targetHeight) / 2), targetWidth, targetHeight);
 
-                    var path = Path()
-                    path.addRect(rectf, Path.Direction.CW);
-
-                    canvas.clipPath(path);
-                    canvas.drawBitmap(bitmapOrg, Rect(0, 0, bitmapOrg.getWidth(), bitmapOrg.getHeight()), Rect(0, 0, targetWidth, targetHeight), paint)
-
-                    var matrix = Matrix()
-                    matrix.postScale(1f, 1f);
-//                    matrix.postRotate(90f)
-
-                    var resizedBitmap = Bitmap.createBitmap(targetBitmap, 0, 0, 300, 300, matrix, true);
                     capture = resizedBitmap
                     /*convert Bitmap to resource */
-                    imgIV2.setImageBitmap(resizedBitmap)
+                    imgIV2.setImageBitmap(capture)
 
                 } catch (e: IOException) {
                     e.printStackTrace()
