@@ -25,8 +25,12 @@ class OrderMapActivity : RootActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_order_map)
+
         this.context = this
-        progressDialog = ProgressDialog(context)
+        progressDialog = ProgressDialog(context, R.style.progressDialogTheme)
+        progressDialog!!.setProgressStyle(android.R.style.Widget_DeviceDefault_Light_ProgressBar_Large)
+        progressDialog!!.setCancelable(false)
+
 
         lat = intent.getDoubleExtra("lat", 0.0)
         lng = intent.getDoubleExtra("lng", 0.0)

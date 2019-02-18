@@ -36,8 +36,12 @@ class nickchangeActivity : RootActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.nickchange_activity)
+
         this.context = this
-        progressDialog = ProgressDialog(context)
+        progressDialog = ProgressDialog(context, R.style.progressDialogTheme)
+        progressDialog!!.setProgressStyle(android.R.style.Widget_DeviceDefault_Light_ProgressBar_Large)
+        progressDialog!!.setCancelable(false)
+
         intent = getIntent()
         nick = intent.getStringExtra("nick")
 

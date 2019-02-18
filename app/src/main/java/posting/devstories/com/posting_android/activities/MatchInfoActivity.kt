@@ -92,7 +92,9 @@ class MatchInfoActivity : RootActivity() {
         setContentView(R.layout.activity_match_info)
 
         this.context = this
-        progressDialog = ProgressDialog(context)
+        progressDialog = ProgressDialog(context, R.style.progressDialogTheme)
+        progressDialog!!.setProgressStyle(android.R.style.Widget_DeviceDefault_Light_ProgressBar_Large)
+        progressDialog!!.setCancelable(false)
 
         var filter1 = IntentFilter("MATCH_UPDATE")
         registerReceiver(matchCntUpdate, filter1)

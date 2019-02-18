@@ -22,26 +22,26 @@ class NoticeActivity : RootActivity() {
     lateinit var context: Context
     private var progressDialog: ProgressDialog? = null
 
-  lateinit var adapter: NoticeAdapter
-   var adapterData: ArrayList<JSONObject> = ArrayList<JSONObject>()
+    lateinit var adapter: NoticeAdapter
+    var adapterData: ArrayList<JSONObject> = ArrayList<JSONObject>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_notice)
+
         this.context = this
-        progressDialog = ProgressDialog(context)
-       adapter = NoticeAdapter(this,R.layout.item_notice, adapterData)
+        progressDialog = ProgressDialog(context, R.style.progressDialogTheme)
+        progressDialog!!.setProgressStyle(android.R.style.Widget_DeviceDefault_Light_ProgressBar_Large)
+        progressDialog!!.setCancelable(false)
+
+        adapter = NoticeAdapter(this, R.layout.item_notice, adapterData)
         noticeLV.adapter = adapter
         mainData()
 
         finish3LL.setOnClickListener {
             finish()
         }
-
-
-
-
 
 
     }
@@ -60,11 +60,10 @@ class NoticeActivity : RootActivity() {
                 try {
                     val list = response!!.getJSONArray("result")
 
-                        for (i in 0..(list.length()-1)){
-                            adapterData.add(list[i] as JSONObject)
-                        }
+                    for (i in 0..(list.length() - 1)) {
+                        adapterData.add(list[i] as JSONObject)
+                    }
                     adapter.notifyDataSetChanged()
-
 
 
                 } catch (e: JSONException) {
@@ -86,7 +85,12 @@ class NoticeActivity : RootActivity() {
                 Utils.alert(context, "조회중 장애가 발생하였습니다.")
             }
 
-            override fun onFailure(statusCode: Int, headers: Array<Header>?, responseString: String?, throwable: Throwable) {
+            override fun onFailure(
+                statusCode: Int,
+                headers: Array<Header>?,
+                responseString: String?,
+                throwable: Throwable
+            ) {
                 if (progressDialog != null) {
                     progressDialog!!.dismiss()
                 }
@@ -97,7 +101,12 @@ class NoticeActivity : RootActivity() {
                 error()
             }
 
-            override fun onFailure(statusCode: Int, headers: Array<Header>?, throwable: Throwable, errorResponse: JSONObject?) {
+            override fun onFailure(
+                statusCode: Int,
+                headers: Array<Header>?,
+                throwable: Throwable,
+                errorResponse: JSONObject?
+            ) {
                 if (progressDialog != null) {
                     progressDialog!!.dismiss()
                 }
@@ -105,7 +114,12 @@ class NoticeActivity : RootActivity() {
                 error()
             }
 
-            override fun onFailure(statusCode: Int, headers: Array<Header>?, throwable: Throwable, errorResponse: JSONArray?) {
+            override fun onFailure(
+                statusCode: Int,
+                headers: Array<Header>?,
+                throwable: Throwable,
+                errorResponse: JSONArray?
+            ) {
                 if (progressDialog != null) {
                     progressDialog!!.dismiss()
                 }
@@ -128,8 +142,6 @@ class NoticeActivity : RootActivity() {
             }
         })
     }
-
-
 
 
     override fun onDestroy() {

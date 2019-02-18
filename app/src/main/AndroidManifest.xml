@@ -181,7 +181,7 @@
         <activity
             android:name=".activities.DlgAdverActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/full_screen_dialog1"/>
+            android:theme="@style/full_screen_dialog2"/>
 
         <activity
             android:name=".activities.DlgDetailActivity"

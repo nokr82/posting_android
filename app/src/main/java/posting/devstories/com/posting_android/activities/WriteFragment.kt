@@ -74,7 +74,9 @@ open class WriteFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         this.myContext = container!!.context
 
-        progressDialog = ProgressDialog(myContext)
+        progressDialog = ProgressDialog(myContext, R.style.progressDialogTheme)
+        progressDialog!!.setProgressStyle(android.R.style.Widget_DeviceDefault_Light_ProgressBar_Large)
+        progressDialog!!.setCancelable(false)
 
         mainActivity = activity as MainActivity
 

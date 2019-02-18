@@ -43,6 +43,9 @@ class SchoolagreeActivity : RootActivity() {
         setContentView(R.layout.activity_schoolagree)
 
         this.context = this
+        progressDialog = ProgressDialog(context, R.style.progressDialogTheme)
+        progressDialog!!.setProgressStyle(android.R.style.Widget_DeviceDefault_Light_ProgressBar_Large)
+        progressDialog!!.setCancelable(false)
 
         has_branch_yn = intent.getStringExtra("has_branch_yn")
         school_email_confirmed = intent.getStringExtra("school_email_confirmed")

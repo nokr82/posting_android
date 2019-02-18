@@ -44,7 +44,9 @@ class IntroActivity : RootActivity() {
         setContentView(R.layout.activity_intro)
 
         this.context = this
-        progressDialog = ProgressDialog(context)
+        progressDialog = ProgressDialog(context, R.style.progressDialogTheme)
+        progressDialog!!.setProgressStyle(android.R.style.Widget_DeviceDefault_Light_ProgressBar_Large)
+        progressDialog!!.setCancelable(false)
 
         // clear all notification
         val nm = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager

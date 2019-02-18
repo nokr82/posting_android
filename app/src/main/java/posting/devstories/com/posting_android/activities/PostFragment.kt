@@ -181,7 +181,9 @@ open class PostFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         this.myContext = container!!.context
 
-        progressDialog = ProgressDialog(myContext)
+        progressDialog = ProgressDialog(context, R.style.progressDialogTheme)
+        progressDialog!!.setProgressStyle(android.R.style.Widget_DeviceDefault_Light_ProgressBar_Large)
+        progressDialog!!.setCancelable(false)
 
         mainActivity = activity as MainActivity
         val filter2 = IntentFilter("DEL_POSTING")

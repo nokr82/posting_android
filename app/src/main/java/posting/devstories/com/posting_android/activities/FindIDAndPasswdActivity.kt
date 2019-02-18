@@ -31,7 +31,9 @@ class FindIDAndPasswdActivity : RootActivity() {
         setContentView(R.layout.find_id_and_passwd_activity)
 
         this.context = this
-        progressDialog = ProgressDialog(context)
+        progressDialog = ProgressDialog(context, R.style.progressDialogTheme)
+        progressDialog!!.setProgressStyle(android.R.style.Widget_DeviceDefault_Light_ProgressBar_Large)
+        progressDialog!!.setCancelable(false)
 
 
         finishLL.setOnClickListener {

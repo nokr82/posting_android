@@ -39,7 +39,9 @@ class DlgReviewActivity : RootActivity() {
         setContentView(R.layout.myposting_dlg)
 
         this.context = this
-        progressDialog = ProgressDialog(context)
+        progressDialog = ProgressDialog(context, R.style.progressDialogTheme)
+        progressDialog!!.setProgressStyle(android.R.style.Widget_DeviceDefault_Light_ProgressBar_Large)
+        progressDialog!!.setCancelable(false)
 
         intent = getIntent()
 

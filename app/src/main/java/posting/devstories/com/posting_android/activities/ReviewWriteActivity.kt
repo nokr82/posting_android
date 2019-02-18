@@ -76,7 +76,9 @@ class ReviewWriteActivity : RootActivity() {
         registerReceiver(setViewReceiver, filter1)
 
         this.context = this
-        progressDialog = ProgressDialog(context)
+        progressDialog = ProgressDialog(context, R.style.progressDialogTheme)
+        progressDialog!!.setProgressStyle(android.R.style.Widget_DeviceDefault_Light_ProgressBar_Large)
+        progressDialog!!.setCancelable(false)
 
         intent = getIntent()
         company_member_id = intent.getIntExtra("company_member_id", -1)

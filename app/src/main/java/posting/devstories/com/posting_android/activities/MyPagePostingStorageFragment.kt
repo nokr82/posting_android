@@ -110,7 +110,9 @@ open class MyPagePostingStorageFragment : Fragment() {
         val filter5 = IntentFilter("WRITE_POST")
         getActivity()!!.registerReceiver(writePostReceiver, filter5)
 
-        progressDialog = ProgressDialog(myContext)
+        progressDialog = ProgressDialog(context, R.style.progressDialogTheme)
+        progressDialog!!.setProgressStyle(android.R.style.Widget_DeviceDefault_Light_ProgressBar_Large)
+        progressDialog!!.setCancelable(false)
 
         return inflater.inflate(R.layout.fra_new_my_page_posting_storage, container, false)
     }

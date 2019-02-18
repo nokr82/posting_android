@@ -80,6 +80,9 @@ open class OrderPageActivity : RootActivity() {
         setContentView(R.layout.activity_order_page)
 
         this.context = this
+        progressDialog = ProgressDialog(context, R.style.progressDialogTheme)
+        progressDialog!!.setProgressStyle(android.R.style.Widget_DeviceDefault_Light_ProgressBar_Large)
+        progressDialog!!.setCancelable(false)
 
         company_id = intent.getIntExtra("company_id", -1)
 

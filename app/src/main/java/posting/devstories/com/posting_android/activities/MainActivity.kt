@@ -91,6 +91,9 @@ class MainActivity : FragmentActivity() {
         setContentView(R.layout.activity_main)
 
         this.context = this
+        progressDialog = ProgressDialog(context, R.style.progressDialogTheme)
+        progressDialog!!.setProgressStyle(android.R.style.Widget_DeviceDefault_Light_ProgressBar_Large)
+        progressDialog!!.setCancelable(false)
 
         posting_id = intent.getStringExtra("posting_id")
         is_push = intent.getBooleanExtra("is_push", false)

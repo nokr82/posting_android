@@ -22,7 +22,9 @@ class DlgJoinActivity : RootActivity() {
         setContentView(R.layout.join_dlg)
 
         this.context = this
-        progressDialog = ProgressDialog(context)
+        progressDialog = ProgressDialog(context, R.style.progressDialogTheme)
+        progressDialog!!.setProgressStyle(android.R.style.Widget_DeviceDefault_Light_ProgressBar_Large)
+        progressDialog!!.setCancelable(false)
 
         intent = getIntent()
         type = intent.getStringExtra("type")

@@ -37,7 +37,9 @@ class SchoolActivity : RootActivity() {
         setContentView(R.layout.activity_schooljoin)
 
         this.context = this
-        progressDialog = ProgressDialog(context)
+        progressDialog = ProgressDialog(context, R.style.progressDialogTheme)
+        progressDialog!!.setProgressStyle(android.R.style.Widget_DeviceDefault_Light_ProgressBar_Large)
+        progressDialog!!.setCancelable(false)
 
         intent = getIntent()
         member_type = intent.getStringExtra("member_type")

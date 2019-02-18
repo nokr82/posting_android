@@ -93,6 +93,9 @@ open class OrderPageFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         this.myContext = container!!.context
+        progressDialog = ProgressDialog(myContext, R.style.progressDialogTheme)
+        progressDialog!!.setProgressStyle(android.R.style.Widget_DeviceDefault_Light_ProgressBar_Large)
+        progressDialog!!.setCancelable(false)
 
         val filter1 = IntentFilter("EDIT_PROFILE")
         myContext!!.registerReceiver(editProfileReceiver, filter1)

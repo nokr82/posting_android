@@ -38,8 +38,9 @@ class MyPageNotifyFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         this.myContext = container!!.context
-
-        progressDialog = ProgressDialog(myContext)
+        progressDialog = ProgressDialog(myContext, R.style.progressDialogTheme)
+        progressDialog!!.setProgressStyle(android.R.style.Widget_DeviceDefault_Light_ProgressBar_Large)
+        progressDialog!!.setCancelable(false)
 
         return inflater.inflate(R.layout.fra_alarm, container, false)
     }

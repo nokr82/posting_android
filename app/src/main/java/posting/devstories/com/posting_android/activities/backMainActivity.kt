@@ -30,6 +30,9 @@ class backMainActivity : FragmentActivity() {
         setContentView(R.layout.activity_back_main)
 
         this.context = this
+        progressDialog = ProgressDialog(context, R.style.progressDialogTheme)
+        progressDialog!!.setProgressStyle(android.R.style.Widget_DeviceDefault_Light_ProgressBar_Large)
+        progressDialog!!.setCancelable(false)
 
         pagerAdapter = PagerAdapter(supportFragmentManager)
         pagerVP.adapter = pagerAdapter
