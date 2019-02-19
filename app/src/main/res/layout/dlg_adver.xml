@@ -38,23 +38,10 @@
             android:layout_height="1dp"
             android:background="#A19F9B" />
 
-        <LinearLayout
+        <WebView
+            android:id="@+id/webWV"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fillViewport="true">
-
-                <WebView
-                    android:id="@+id/webWV"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"></WebView>
-
-            </ScrollView>
-
-        </LinearLayout>
+            android:layout_height="500dp"></WebView>
 
     </LinearLayout>
 
