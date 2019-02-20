@@ -37,7 +37,6 @@ class MainActivity : FragmentActivity() {
     val CONFRIM_SCHOOL = 301;
 
     var tabType = 1
-    var type :String?= null
     var tabWriteV: View? = null
     var member_id = -1
     var member_type = ""
@@ -95,9 +94,8 @@ class MainActivity : FragmentActivity() {
         progressDialog!!.setProgressStyle(android.R.style.Widget_DeviceDefault_Light_ProgressBar_Large)
         progressDialog!!.setCancelable(false)
 
-        posting_id = intent.getStringExtra("posting_id")
+//        posting_id = intent.getStringExtra("posting_id")
         is_push = intent.getBooleanExtra("is_push", false)
-        type = intent.getStringExtra("intent")
 
         confirm_yn = PrefUtils.getStringPreference(context, "confirm_yn")
         active_yn = PrefUtils.getStringPreference(context, "active_yn")
@@ -108,7 +106,8 @@ class MainActivity : FragmentActivity() {
             chatting_member_id = intent.getStringExtra("chatting_member_id")
 
             if(posting_id != "" && posting_id != null && posting_id != "-1") {
-                var intent = Intent(context, DetailActivity::class.java)
+//                var intent = Intent(context, DetailActivity::class.java)
+                var intent = Intent(context, DlgDetailActivity::class.java)
                 intent.putExtra("id", posting_id)
                 startActivity(intent)
             } else if (chatting_member_id != "" && chatting_member_id != null && chatting_member_id != "-1") {
