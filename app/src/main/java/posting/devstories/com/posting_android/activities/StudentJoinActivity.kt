@@ -40,7 +40,7 @@ class StudentJoinActivity : RootActivity() {
 
     var gendertype =""
     val membertype = 2
-
+    var first = false
     var getid = ""
     var getPW=""
     var getPW2 = ""
@@ -695,9 +695,16 @@ class StudentJoinActivity : RootActivity() {
                         PrefUtils.setPreference(context, "active_yn", Utils.getString(data, "active_yn"))
                         PrefUtils.setPreference(context, "autoLogin", true)
 
-                        val intent = Intent(context, MainActivity::class.java)
-                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                        startActivity(intent)
+                        first =  PrefUtils.getBooleanPreference(context, "first")
+                        if (first==false){
+                            val intent = Intent(context, GuideActivity::class.java)
+                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                            startActivity(intent)
+                        }else{
+                            val intent = Intent(context, MainActivity::class.java)
+                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                            startActivity(intent)
+                        }
 
                     } else if("confirm_no" == result) {
                         Toast.makeText(context, "관리자 승인 후 로그인이 가능합니다.", Toast.LENGTH_LONG).show()
