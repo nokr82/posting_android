@@ -21,7 +21,6 @@ import posting.devstories.com.posting_android.base.RootActivity
 /**
  * Created by dev1 on 2018-02-28.
  */
-
 class AddressActivity : RootActivity(), AbsListView.OnScrollListener {
 
     private var context: Context? = null
