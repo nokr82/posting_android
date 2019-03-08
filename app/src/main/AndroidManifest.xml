@@ -71,6 +71,11 @@
                 android:screenOrientation="portrait"
                 android:theme="@style/NoTitleDialog"
                 android:windowSoftInputMode="adjustResize|stateHidden"/>
+        <activity
+                android:name=".activities.GuideActivity"
+                android:screenOrientation="portrait"
+                android:theme="@style/NoTitleDialog"
+                android:windowSoftInputMode="stateHidden|adjustResize"/>
 
 
         <activity
