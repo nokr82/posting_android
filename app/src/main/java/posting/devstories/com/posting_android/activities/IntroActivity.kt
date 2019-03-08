@@ -38,7 +38,6 @@ class IntroActivity : RootActivity() {
     private var is_push:Boolean = false
 
     val SHOW_DLG = 301
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_intro)
@@ -86,10 +85,12 @@ class IntroActivity : RootActivity() {
     private fun stopIntro() {
 
         val autoLogin = PrefUtils.getBooleanPreference(context, "autoLogin")
-//        val first = PrefUtils.getBooleanPreference(context, "first")
+        val first = PrefUtils.getBooleanPreference(context, "first")
+
 
         if (!autoLogin) {
             PrefUtils.clear(context)
+            PrefUtils.setPreference(context,"first",first)
             val intent = Intent(context, LoginActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
@@ -132,12 +133,12 @@ class IntroActivity : RootActivity() {
                         val school_id = Utils.getInt(school, "id")
                         val school_image_uri = Utils.getString(school, "image_uri")
 
-                        PrefUtils.setPreference(context, "school_domain", Utils.getString(school, "domain"))
 
+
+                        PrefUtils.setPreference(context, "school_domain", Utils.getString(school, "domain"))
 //                        PrefUtils.setPreference(context, "current_school_id", school_id)
                         PrefUtils.setPreference(context, "current_school_id", -1)
                         PrefUtils.setPreference(context, "current_school_image_uri", "")
-
                         PrefUtils.setPreference(context, "member_id", Utils.getInt(data, "id"))
                         PrefUtils.setPreference(context, "email", Utils.getString(data, "email"))
                         PrefUtils.setPreference(context, "passwd", Utils.getString(data, "passwd"))
@@ -157,12 +158,28 @@ class IntroActivity : RootActivity() {
                             intent.putExtra("chatting_member_id", chatting_member_id)
                             startActivity(intent)
                         }else{
-                            val intent = Intent(context, MainActivity::class.java)
+                            val first =  PrefUtils.getBooleanPreference(context, "first")
+                            if (first==false){
+                                val intent = Intent(context, GuideActivity::class.java)
+                                intent.putExtra("is_push", is_push)
+                                intent.putExtra("posting_id", posting_id)
+                                intent.putExtra("chatting_member_id", chatting_member_id)
+                                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                startActivity(intent)
+                            }else{
+                                val intent = Intent(context, MainActivity::class.java)
+                                intent.putExtra("is_push", is_push)
+                                intent.putExtra("posting_id", posting_id)
+                                intent.putExtra("chatting_member_id", chatting_member_id)
+                                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                startActivity(intent)
+                            }
+                           /* val intent = Intent(context, MainActivity::class.java)
                             intent.putExtra("is_push", is_push)
                             intent.putExtra("posting_id", posting_id)
                             intent.putExtra("chatting_member_id", chatting_member_id)
                             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                            startActivity(intent)
+                            startActivity(intent)*/
                         }
 
                     } else if ("block" == result) {

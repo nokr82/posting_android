@@ -24,6 +24,8 @@ class LoginActivity : RootActivity() {
     private var progressDialog: ProgressDialog? = null
     var autoLogin = false
 
+    var first = false
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -104,9 +106,11 @@ class LoginActivity : RootActivity() {
                         val loginID = response.getString("loginID")
                         val data = response.getJSONObject("member")
                         val school = response.getJSONObject("school")
-
                         val school_id = Utils.getInt(school, "id")
                         val school_image_uri = Utils.getString(school, "image_uri")
+
+
+
 
 //                        PrefUtils.setPreference(context, "current_school_id", school_id)
                         PrefUtils.setPreference(context, "current_school_id", -1)
@@ -124,9 +128,19 @@ class LoginActivity : RootActivity() {
                         PrefUtils.setPreference(context, "active_yn", Utils.getString(data, "active_yn"))
                         PrefUtils.setPreference(context, "autoLogin", autoLogin)
 
-                        val intent = Intent(context, MainActivity::class.java)
-                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                        startActivity(intent)
+
+                        first =  PrefUtils.getBooleanPreference(context, "first")
+                        if (first==false){
+                            val intent = Intent(context, GuideActivity::class.java)
+                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                            startActivity(intent)
+                        }else{
+                            val intent = Intent(context, MainActivity::class.java)
+                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                            startActivity(intent)
+                        }
+
+
 
                     } else if("confirm_no" == result) {
                         Toast.makeText(context, "관리자 승인 후 로그인이 가능합니다.", Toast.LENGTH_LONG).show()

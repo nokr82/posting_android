@@ -14,13 +14,16 @@ import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import posting.devstories.com.posting_android.R
+import posting.devstories.com.posting_android.activities.LoginActivity
 import posting.devstories.com.posting_android.activities.MainActivity
+import posting.devstories.com.posting_android.base.PrefUtils
 
 class GuideAdapter(activity:Activity, imagePaths: ArrayList<String>) : PagerAdapter() {
 
     private val _activity: Activity = activity
     private val _imagePaths: ArrayList<String> = imagePaths
     private lateinit var inflater: LayoutInflater
+
 
     override fun getCount(): Int {
         return this._imagePaths.size
@@ -79,6 +82,7 @@ class GuideAdapter(activity:Activity, imagePaths: ArrayList<String>) : PagerAdap
         }
 
         guidestartLL.setOnClickListener {
+            PrefUtils.setPreference(_activity,"first",true)
             val intent = Intent(_activity, MainActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             _activity.startActivity(intent)
